@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens extracted directly from the Figma PDF export (vector text
+ * colors + get_drawings() fills + pixel-sampled dividers). See PROJECT
+ * memory "jamspace-design-system" for the extraction method.
+ */
+:root {
+  --background: #f7f6f1;
+  --foreground: #191919;
+  --accent: #e92a7b; /* pink/magenta — primary CTA, brand color */
+  --accent-foreground: #ffffff;
+  --accent-yellow: #fac551; /* stat/tag glyph: Years of Experience */
+  --accent-teal: #35c9b4; /* stat/quote glyph: Client Satisfaction */
+  --muted: #444444; /* secondary/body copy on cream */
+  /* hairline dividers, accordion rows */
+  /* use 8-digit hex for consistent alpha across platforms */
+  --border: #4444441A;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-teal: var(--accent-teal);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+
+  --font-display: var(--font-helvetica-now);
+  --font-sans: var(--font-helvetica-now);
+
+  --text-stat: 6.25rem; /* 100px — stat numbers, marquee words */
+  --text-hero: 5rem; /* 80px — hero headline */
+  --text-heading: 3.8125rem; /* 61px — section headings */
+  --text-subheading: 2.9375rem; /* 47px — services/CTA sub-heading, counters */
+}
+
+body {
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--foreground);
+}
