@@ -25,15 +25,34 @@ function QuoteMark() {
   );
 }
 
+interface StackOffsets {
+  x: number;
+  y: number;
+}
+
+function readStackOffsets(el: HTMLElement | null): StackOffsets {
+  const cs = el ? getComputedStyle(el) : null;
+  return {
+    x: parseFloat(cs?.getPropertyValue("--stack-offset-x") || "20"),
+    y: parseFloat(cs?.getPropertyValue("--stack-offset-y") || "-8"),
+  };
+}
+
 function stackStyle(position: number): CSSProperties {
   return {
-    transform: `translate(calc(var(--stack-offset-x, 20px) * ${position}), calc(var(--stack-offset-y, 10px) * ${position}))`,
+    transform: `translate(calc(var(--stack-offset-x, 20px) * ${position}), calc(var(--stack-offset-y, -8px) * ${position}))`,
     zIndex: testimonials.length - position,
   };
 }
 
 export function Testimonials() {
   const containerRef = useRef<HTMLElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const isAnimating = useRef(false);
+  // `order` holds testimonial array-indices front-to-back. Only its initial
+  // value ever feeds the plain inline `style` below — every cycle after
+  // that is driven entirely by the GSAP timelines in goNext/goPrev.
   const [order, setOrder] = useState<number[]>(() =>
     testimonials.map((_, i) => i),
   );
@@ -66,16 +85,101 @@ export function Testimonials() {
     { scope: containerRef },
   );
 
+  const { contextSafe } = useGSAP({ scope: containerRef });
+
   const canCycle = testimonials.length > 1;
 
+  // Ease-out (not ease-in-out) is deliberate: it starts at full speed the
+  // instant you click, instead of winding up slowly first, which read as a
+  // ~1s delay before the card visibly moved.
   const goNext = () => {
-    if (!canCycle) return;
-    setOrder((o) => [...o.slice(1), o[0]]);
+    if (!canCycle || isAnimating.current) return;
+    isAnimating.current = true;
+
+    const [frontIndex, ...restIndices] = order;
+    const frontEl = cardRefs.current[frontIndex];
+    const offsets = readStackOffsets(stackRef.current);
+
+    contextSafe(() => {
+      const tl = gsap.timeline({
+        defaults: { duration: 0.6, ease: "power2.out" },
+        onComplete: () => {
+          setOrder((o) => [...o.slice(1), o[0]]);
+          isAnimating.current = false;
+        },
+      });
+
+      // The departing card doesn't travel across the visible stack — it
+      // jumps straight to its back-of-stack resting spot (position + z-index
+      // together, so it's never briefly rendered on top of the cards it's
+      // supposed to be behind). Only the incoming cards — the 2nd card
+      // becoming active, and everyone else easing forward one slot — are
+      // actually animated.
+      if (frontEl) {
+        const lastPos = restIndices.length;
+        tl.set(
+          frontEl,
+          {
+            x: offsets.x * lastPos,
+            y: offsets.y * lastPos,
+            zIndex: testimonials.length - lastPos,
+          },
+          0,
+        );
+      }
+
+      restIndices.forEach((testimonialIndex, i) => {
+        const el = cardRefs.current[testimonialIndex];
+        if (!el) return;
+        tl.to(el, { x: offsets.x * i, y: offsets.y * i }, 0);
+      });
+    })();
   };
 
   const goPrev = () => {
-    if (!canCycle) return;
-    setOrder((o) => [o[o.length - 1], ...o.slice(0, -1)]);
+    if (!canCycle || isAnimating.current) return;
+    isAnimating.current = true;
+
+    const lastIndex = order[order.length - 1];
+    const restIndices = order.slice(0, -1);
+    const offsets = readStackOffsets(stackRef.current);
+
+    contextSafe(() => {
+      const tl = gsap.timeline({
+        defaults: { duration: 0.6, ease: "power2.out" },
+        onComplete: () => {
+          setOrder((o) => [o[o.length - 1], ...o.slice(0, -1)]);
+          isAnimating.current = false;
+        },
+      });
+
+      // The incoming card — waiting at the back, about to become active —
+      // is the one that's actually animated, same as the 2nd-card case in
+      // goNext. The card losing "active" status doesn't travel across the
+      // stack either: it jumps straight to its new resting spot (position +
+      // z-index together). Everyone shifting deeper into the stack keeps
+      // easing smoothly.
+      const lastEl = cardRefs.current[lastIndex];
+      if (lastEl) {
+        tl.to(lastEl, { x: 0, y: 0 }, 0);
+      }
+
+      const [oldFrontIndex, ...deeperIndices] = restIndices;
+      const oldFrontEl = cardRefs.current[oldFrontIndex];
+      if (oldFrontEl) {
+        tl.set(
+          oldFrontEl,
+          { x: offsets.x, y: offsets.y, zIndex: testimonials.length - 1 },
+          0,
+        );
+      }
+
+      deeperIndices.forEach((testimonialIndex, i) => {
+        const el = cardRefs.current[testimonialIndex];
+        if (!el) return;
+        tl.to(el, { x: offsets.x * (i + 2), y: offsets.y * (i + 2) }, 0);
+      });
+    })();
   };
 
   return (
@@ -96,15 +200,21 @@ export function Testimonials() {
       </Container>
 
       <Container>
-        <div className="relative overflow-y-clip mx-auto min-h-140 max-w-[1140px] [--stack-offset-x:20px] [--stack-offset-y:-8px] sm:[--stack-offset-x:14px] sm:[--stack-offset-y:-6px] md:min-h-95 lg:[--stack-offset-x:24px] lg:[--stack-offset-y:10px]">
+        <div
+          ref={stackRef}
+          className="relative mx-auto min-h-140 max-w-285 [--stack-offset-x:20px] [--stack-offset-y:-8px] sm:[--stack-offset-x:14px] sm:[--stack-offset-y:-6px] md:min-h-95 lg:[--stack-offset-x:24px] lg:[--stack-offset-y:10px]"
+        >
           {testimonials.map((testimonial, i) => {
             const position = order.indexOf(i);
             const isActive = position === 0;
             return (
               <div
                 key={testimonial.name}
+                ref={(el) => {
+                  cardRefs.current[i] = el;
+                }}
                 style={stackStyle(position)}
-                className={`testimonial-card absolute inset-0 ${isActive ? "flex" : "hidden sm:flex"} flex-col overflow-hidden rounded-2xl bg-white border border-border p-6  duration-[400ms] ease-in-out transition-transform md:flex-row`}
+                className={`testimonial-card absolute inset-0 ${isActive ? "flex" : "hidden sm:flex"} flex-col overflow-hidden rounded-2xl border border-border bg-white p-6 md:flex-row`}
               >
                 <div className="relative h-64 w-full shrink-0 md:h-auto md:w-2/5">
                   <Image

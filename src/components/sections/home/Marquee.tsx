@@ -4,11 +4,44 @@ import { useRef } from "react";
 import { useLenis } from "lenis/react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
-import { BrandGlyph } from "@/components/ui/BrandGlyph";
 
 const words = ["TIMELESS", "ELEGANT", "MODERN", "BOLD"];
-const glyphs = ["step", "triangle", "chevron", "step"] as const;
+const glyphShapes = ["sparkle", "diamond", "triangle", "sparkle"] as const;
 const glyphColors = ["pink", "yellow", "teal", "pink"] as const;
+const glyphColorClass = {
+  pink: "text-accent",
+  yellow: "text-accent-yellow",
+  teal: "text-accent-teal",
+} as const;
+
+// Three custom marquee separators, each built from straight lines only (no
+// curves), matching the brand's all-polygon glyph style.
+const glyphPaths = {
+  sparkle: "M60 0L60 60L0 60L0 29.9982L30.0036 29.9982L30.0036 0L60 0Z",
+  diamond: "M60 60L0 60L29.9982 0L60 60Z",
+  triangle: "M60 60L0 60L0 0L29.9982 29.9982L60 0L60 60Z",
+} as const;
+
+type GlyphShape = keyof typeof glyphPaths;
+
+function MarqueeGlyph({
+  shape,
+  className = "",
+}: {
+  shape: GlyphShape;
+  className?: string;
+}) {
+  return (
+    <svg
+      // viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d={glyphPaths[shape]} />
+    </svg>
+  );
+}
 
 export function Marquee() {
   const containerRef = useRef<HTMLElement>(null);
@@ -40,10 +73,9 @@ export function Marquee() {
       <span className="text-stat font-normal uppercase leading-none">
         {words[i % words.length]}
       </span>
-      <BrandGlyph
-        shape={glyphs[i % glyphs.length]}
-        color={glyphColors[i % glyphColors.length]}
-        className="w-15 h-15 shrink-0"
+      <MarqueeGlyph
+        shape={glyphShapes[i % glyphShapes.length]}
+        className={`w-15 h-15 shrink-0 ${glyphColorClass[glyphColors[i % glyphColors.length]]}`}
       />
     </span>
   );

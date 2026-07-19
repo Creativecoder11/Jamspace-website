@@ -6,7 +6,7 @@ export function BlogCard({ post, priority = false }: { post: BlogPost; priority?
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="blog-card group relative flex h-[420px] flex-col justify-end overflow-hidden rounded-2xl p-6"
+      className="blog-card group border border-border relative flex h-[420px] flex-col justify-end overflow-hidden p-6"
     >
       <div className="absolute inset-0 overflow-hidden">
         <Image
@@ -15,7 +15,7 @@ export function BlogCard({ post, priority = false }: { post: BlogPost; priority?
           fill
           priority={priority}
           sizes="(min-width: 768px) 33vw, 100vw"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.08]"
+          className="object-cover opacity-0 duration-500 ease-out group-hover:scale-[1.08] group-hover:opacity-100"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
       </div>

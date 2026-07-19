@@ -66,7 +66,7 @@ export function Blog() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-1  md:grid-cols-3">
         {blogs.map((post, i) => (
           <BlogCard key={post.slug} post={post} priority={i === 0} />
         ))}

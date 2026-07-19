@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
 
-const CIRCLE_TEXT = "PLAY THE VIDEO * PLAY THE VIDEO * ";
+const CIRCLE_TEXT = "PLAY THE VIDEO * PLAY THE VIDEO * PLAY THE VIDEO * ";
 
 export function VideoShowcase() {
   const containerRef = useRef<HTMLElement>(null);
@@ -77,8 +77,8 @@ export function VideoShowcase() {
         <div className="absolute inset-0 bg-black/35" />
 
         <div className="relative flex h-full flex-col justify-between p-6 text-white md:p-16">
-          <h2 className="text-3xl font-medium md:text-heading">The Jam Journey</h2>
-          <h2 className="self-end text-3xl font-medium md:text-heading">
+          <h2 className="text-3xl font-normal md:text-heading">The Jam Journey</h2>
+          <h2 className="self-end text-3xl font-normal md:text-heading">
             Behind Every Space.
           </h2>
         </div>
@@ -98,7 +98,7 @@ export function VideoShowcase() {
                 d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"
               />
             </defs>
-            <text fill="white" fontSize="6.5" letterSpacing="2">
+            <text fill="white" fontSize="15" letterSpacing="2">
               <textPath href={`#${pathId}`}>{CIRCLE_TEXT}</textPath>
             </text>
           </svg>
