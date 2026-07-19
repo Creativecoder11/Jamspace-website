@@ -10,7 +10,13 @@ import { testimonials } from "@/lib/data/testimonials";
 
 function QuoteMark() {
   return (
-    <svg width="32" height="24" viewBox="0 0 32 24" fill="none" aria-hidden="true">
+    <svg
+      width="32"
+      height="24"
+      viewBox="0 0 32 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M0 24V14.4C0 6.4 4.8 1.2 12.8 0l1.6 3.6C9.2 5.2 6.8 8 6.8 12h6.8V24H0Zm17.6 0V14.4c0-8 4.8-13.2 12.8-14.4l1.6 3.6c-5.2 1.6-7.6 4.4-7.6 8.4h6.8V24H17.6Z"
         fill="var(--color-accent-teal)"
@@ -19,27 +25,15 @@ function QuoteMark() {
   );
 }
 
-// Queue stack: each depth shifts right and slightly up, dropping one
-// z-index behind the card in front of it. Cards are all the same size (no
-// scale, no rotation) — since each successive layer sits higher than the
-// one in front of it, only its top-right corner peeks out above/beside the
-// front card; the rest stays hidden behind it. --stack-offset-x/y are set
-// responsively in the wrapper's className (smaller on tablet, cards beyond
-// the active one are hidden outright on mobile) so this function only
-// needs the per-depth multiplier.
 function stackStyle(position: number): CSSProperties {
   return {
-    transform: `translate(calc(var(--stack-offset-x, 20px) * ${position}), calc(var(--stack-offset-y, 100px) * ${position}))`,
+    transform: `translate(calc(var(--stack-offset-x, 20px) * ${position}), calc(var(--stack-offset-y, 10px) * ${position}))`,
     zIndex: testimonials.length - position,
   };
 }
 
 export function Testimonials() {
   const containerRef = useRef<HTMLElement>(null);
-  // `order` holds testimonial array-indices front-to-back. Cycling just
-  // rewrites this array — every card's own CSS `transition: transform` (see
-  // className below) does the actual animating, no JS animation library
-  // involved in the queue-shift itself.
   const [order, setOrder] = useState<number[]>(() =>
     testimonials.map((_, i) => i),
   );
@@ -85,7 +79,10 @@ export function Testimonials() {
   };
 
   return (
-    <section ref={containerRef} className="border-t border-border py-24 md:py-32">
+    <section
+      ref={containerRef}
+      className="border-t border-border py-24 md:py-32"
+    >
       <Container className="flex flex-col gap-8 pb-16 md:flex-row md:items-end md:justify-between">
         <AnimatedHeading
           as="h2"
@@ -99,7 +96,7 @@ export function Testimonials() {
       </Container>
 
       <Container>
-        <div className="relative mx-auto min-h-140 max-w-[1140px] [--stack-offset-x:20px] [--stack-offset-y:-8px] sm:[--stack-offset-x:14px] sm:[--stack-offset-y:-6px] md:min-h-95 lg:[--stack-offset-x:20px] lg:[--stack-offset-y:-8px]">
+        <div className="relative overflow-y-clip mx-auto min-h-140 max-w-[1140px] [--stack-offset-x:20px] [--stack-offset-y:-8px] sm:[--stack-offset-x:14px] sm:[--stack-offset-y:-6px] md:min-h-95 lg:[--stack-offset-x:24px] lg:[--stack-offset-y:10px]">
           {testimonials.map((testimonial, i) => {
             const position = order.indexOf(i);
             const isActive = position === 0;
@@ -107,7 +104,7 @@ export function Testimonials() {
               <div
                 key={testimonial.name}
                 style={stackStyle(position)}
-                className={`testimonial-card absolute inset-0 ${isActive ? "flex" : "hidden sm:flex"} flex-col overflow-hidden rounded-2xl bg-white border border-border  duration-[400ms] ease-in-out transition-transform md:flex-row`}
+                className={`testimonial-card absolute inset-0 ${isActive ? "flex" : "hidden sm:flex"} flex-col overflow-hidden rounded-2xl bg-white border border-border p-6  duration-[400ms] ease-in-out transition-transform md:flex-row`}
               >
                 <div className="relative h-64 w-full shrink-0 md:h-auto md:w-2/5">
                   <Image
@@ -115,12 +112,14 @@ export function Testimonials() {
                     alt={`${testimonial.name} project`}
                     fill
                     sizes="(min-width: 768px) 40vw, 100vw"
-                    className="object-cover"
+                    className="object-cover rounded-lg"
                   />
                 </div>
                 <div className="flex flex-col justify-center gap-6 p-8 md:p-12">
                   <QuoteMark />
-                  <p className="text-lg text-muted md:text-2xl">{testimonial.quote}</p>
+                  <p className="text-lg text-muted md:text-2xl">
+                    {testimonial.quote}
+                  </p>
                   <div>
                     <p className="font-normal">{testimonial.name}</p>
                     <p className="text-sm text-muted">{testimonial.role}</p>

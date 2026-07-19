@@ -8,6 +8,7 @@ import { VideoShowcase } from "@/components/sections/home/VideoShowcase";
 import { Marquee } from "@/components/sections/home/Marquee";
 import { Blog } from "@/components/sections/home/Blog";
 import { CTA } from "@/components/sections/home/CTA";
+import TestimonialsSection from "@/components/sections/home/TestimonialsSection";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Services />
       <Projects />
       <Testimonials />
+      <TestimonialsSection/>
       <VideoShowcase />
       <Marquee />
       <Blog />
