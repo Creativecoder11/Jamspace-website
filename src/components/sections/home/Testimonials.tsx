@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
@@ -19,29 +19,27 @@ function QuoteMark() {
   );
 }
 
-// Transform recipe for each visible stack slot (front, then two peeking
-// layers behind), matching the reference's fanned-deck look. Anything
-// beyond the last defined slot sits at the deepest offset with opacity 0,
-// waiting off-stage until it cycles back into view.
-const STACK_POSITIONS = [
-  { x: 0, y: 0, rotate: 0, opacity: 1 },
-  { x: 6, y: 6, rotate: -1, opacity: 1 },
-  { x: 12, y: 12, rotate: 1, opacity: 1 },
-] as const;
-const HIDDEN_STACK_POSITION = { x: 12, y: 12, rotate: 1, opacity: 0 };
-
-function stackTarget(position: number) {
-  return STACK_POSITIONS[position] ?? HIDDEN_STACK_POSITION;
+// Queue stack: each depth shifts right and slightly up, dropping one
+// z-index behind the card in front of it. Cards are all the same size (no
+// scale, no rotation) — since each successive layer sits higher than the
+// one in front of it, only its top-right corner peeks out above/beside the
+// front card; the rest stays hidden behind it. --stack-offset-x/y are set
+// responsively in the wrapper's className (smaller on tablet, cards beyond
+// the active one are hidden outright on mobile) so this function only
+// needs the per-depth multiplier.
+function stackStyle(position: number): CSSProperties {
+  return {
+    transform: `translate(calc(var(--stack-offset-x, 20px) * ${position}), calc(var(--stack-offset-y, 100px) * ${position}))`,
+    zIndex: testimonials.length - position,
+  };
 }
 
 export function Testimonials() {
   const containerRef = useRef<HTMLElement>(null);
-  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const isAnimating = useRef(false);
-  // `order` holds testimonial indices front-to-back; only its own initial
-  // value ever feeds React-rendered state (z-index below) — every position
-  // change after mount is driven entirely by the GSAP timelines in
-  // goNext/goPrev, so React never fights GSAP over the same properties.
+  // `order` holds testimonial array-indices front-to-back. Cycling just
+  // rewrites this array — every card's own CSS `transition: transform` (see
+  // className below) does the actual animating, no JS animation library
+  // involved in the queue-shift itself.
   const [order, setOrder] = useState<number[]>(() =>
     testimonials.map((_, i) => i),
   );
@@ -60,27 +58,10 @@ export function Testimonials() {
         },
       });
 
-      // Seed every card's stacked transform up front so the scroll-reveal
-      // below (and later cycle tweens) animate from/to the correct stacked
-      // x/y/rotate instead of a bare 0.
-      order.forEach((testimonialIndex, position) => {
-        const el = cardRefs.current[testimonialIndex];
-        if (!el) return;
-        const target = stackTarget(position);
-        gsap.set(el, {
-          x: target.x,
-          y: target.y,
-          rotate: target.rotate,
-          opacity: target.opacity,
-          zIndex: testimonials.length - position,
-        });
-      });
-
       gsap.from(".testimonial-card", {
-        y: "+=40",
         opacity: 0,
         duration: 0.9,
-        ease: "power3.out",
+        ease: "power2.out",
         scrollTrigger: {
           trigger: ".testimonial-card",
           start: "top 85%",
@@ -91,112 +72,16 @@ export function Testimonials() {
     { scope: containerRef },
   );
 
-  const { contextSafe } = useGSAP({ scope: containerRef });
-
   const canCycle = testimonials.length > 1;
 
   const goNext = () => {
-    if (!canCycle || isAnimating.current) return;
-    isAnimating.current = true;
-
-    const [frontIndex, ...restIndices] = order;
-    const frontEl = cardRefs.current[frontIndex];
-
-    contextSafe(() => {
-      const tl = gsap.timeline({
-        defaults: { ease: "power3.inOut", duration: 0.6 },
-        onComplete: () => {
-          if (frontEl) {
-            gsap.set(frontEl, {
-              x: HIDDEN_STACK_POSITION.x,
-              y: HIDDEN_STACK_POSITION.y,
-              rotate: HIDDEN_STACK_POSITION.rotate,
-              opacity: HIDDEN_STACK_POSITION.opacity,
-              zIndex: testimonials.length - restIndices.length,
-            });
-          }
-          setOrder((o) => [...o.slice(1), o[0]]);
-          isAnimating.current = false;
-        },
-      });
-
-      // Current front card flies out to the top-right and tucks in behind
-      // the stack; everyone else slides forward one slot.
-      if (frontEl) {
-        tl.to(
-          frontEl,
-          { x: 90, y: -18, rotate: 10, opacity: 0, ease: "power2.in", duration: 0.45 },
-          0,
-        );
-      }
-
-      restIndices.forEach((testimonialIndex, i) => {
-        const el = cardRefs.current[testimonialIndex];
-        if (!el) return;
-        const target = stackTarget(i);
-        tl.to(
-          el,
-          {
-            x: target.x,
-            y: target.y,
-            rotate: target.rotate,
-            opacity: target.opacity,
-            zIndex: testimonials.length - i,
-          },
-          0.08,
-        );
-      });
-    })();
+    if (!canCycle) return;
+    setOrder((o) => [...o.slice(1), o[0]]);
   };
 
   const goPrev = () => {
-    if (!canCycle || isAnimating.current) return;
-    isAnimating.current = true;
-
-    const lastIndex = order[order.length - 1];
-    const lastEl = cardRefs.current[lastIndex];
-    const restIndices = order.slice(0, -1);
-
-    contextSafe(() => {
-      if (lastEl) {
-        gsap.set(lastEl, { x: -90, y: -18, rotate: -15, opacity: 0 });
-      }
-
-      const tl = gsap.timeline({
-        defaults: { ease: "power3.inOut", duration: 0.6 },
-        onComplete: () => {
-          setOrder((o) => [o[o.length - 1], ...o.slice(0, -1)]);
-          isAnimating.current = false;
-        },
-      });
-
-      // The card waiting behind the stack slides in to become the new
-      // front card; everyone else shifts back one slot.
-      if (lastEl) {
-        tl.to(
-          lastEl,
-          { x: 0, y: 0, rotate: 0, opacity: 1, zIndex: testimonials.length, ease: "power2.out" },
-          0,
-        );
-      }
-
-      restIndices.forEach((testimonialIndex, i) => {
-        const el = cardRefs.current[testimonialIndex];
-        if (!el) return;
-        const target = stackTarget(i + 1);
-        tl.to(
-          el,
-          {
-            x: target.x,
-            y: target.y,
-            rotate: target.rotate,
-            opacity: target.opacity,
-            zIndex: testimonials.length - (i + 1),
-          },
-          0,
-        );
-      });
-    })();
+    if (!canCycle) return;
+    setOrder((o) => [o[o.length - 1], ...o.slice(0, -1)]);
   };
 
   return (
@@ -205,7 +90,7 @@ export function Testimonials() {
         <AnimatedHeading
           as="h2"
           lines={["Words", "from Our Clients."]}
-          className="text-4xl font-medium leading-[1.05] md:text-heading"
+          className="text-4xl font-normal leading-[1.05] md:text-heading"
         />
         <p className="max-w-md text-muted">
           Every project is built on collaboration, trust, and exceptional
@@ -214,41 +99,43 @@ export function Testimonials() {
       </Container>
 
       <Container>
-        <div className="relative mx-auto min-h-140 max-w-[1140px] md:min-h-95">
-          {testimonials.map((testimonial, i) => (
-            <div
-              key={testimonial.name}
-              ref={(el) => {
-                cardRefs.current[i] = el;
-              }}
-              className="testimonial-card absolute inset-0 flex flex-col overflow-hidden rounded-2xl bg-background shadow-xl md:flex-row"
-            >
-              <div className="relative h-64 w-full shrink-0 md:h-auto md:w-2/5">
-                <Image
-                  src={testimonial.image}
-                  alt={`${testimonial.name} project`}
-                  fill
-                  sizes="(min-width: 768px) 40vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex flex-col justify-center gap-6 p-8 md:p-12">
-                <QuoteMark />
-                <p className="text-lg text-muted md:text-2xl">{testimonial.quote}</p>
-                <div>
-                  <p className="font-normal">{testimonial.name}</p>
-                  <p className="text-sm text-muted">{testimonial.role}</p>
+        <div className="relative mx-auto min-h-140 max-w-[1140px] [--stack-offset-x:20px] [--stack-offset-y:-8px] sm:[--stack-offset-x:14px] sm:[--stack-offset-y:-6px] md:min-h-95 lg:[--stack-offset-x:20px] lg:[--stack-offset-y:-8px]">
+          {testimonials.map((testimonial, i) => {
+            const position = order.indexOf(i);
+            const isActive = position === 0;
+            return (
+              <div
+                key={testimonial.name}
+                style={stackStyle(position)}
+                className={`testimonial-card absolute inset-0 ${isActive ? "flex" : "hidden sm:flex"} flex-col overflow-hidden rounded-2xl bg-white border border-border  duration-[400ms] ease-in-out transition-transform md:flex-row`}
+              >
+                <div className="relative h-64 w-full shrink-0 md:h-auto md:w-2/5">
+                  <Image
+                    src={testimonial.image}
+                    alt={`${testimonial.name} project`}
+                    fill
+                    sizes="(min-width: 768px) 40vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-col justify-center gap-6 p-8 md:p-12">
+                  <QuoteMark />
+                  <p className="text-lg text-muted md:text-2xl">{testimonial.quote}</p>
+                  <div>
+                    <p className="font-normal">{testimonial.name}</p>
+                    <p className="text-sm text-muted">{testimonial.role}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           <button
             type="button"
             aria-label="Previous testimonial"
             disabled={!canCycle}
             onClick={goPrev}
-            className="absolute left-0 top-1/2 z-40 hidden h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-accent text-accent transition-opacity hover:bg-accent hover:text-white disabled:opacity-30 md:flex"
+            className="absolute left-0 top-1/2 z-50 hidden h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-accent text-accent transition-opacity hover:bg-accent hover:text-white disabled:opacity-30 md:flex"
           >
             ←
           </button>
@@ -257,7 +144,7 @@ export function Testimonials() {
             aria-label="Next testimonial"
             disabled={!canCycle}
             onClick={goNext}
-            className="absolute right-0 top-1/2 z-40 hidden h-10 w-10 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-accent text-accent transition-opacity hover:bg-accent hover:text-white disabled:opacity-30 md:flex"
+            className="absolute right-0 top-1/2 z-50 hidden h-10 w-10 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-accent text-accent transition-opacity hover:bg-accent hover:text-white disabled:opacity-30 md:flex"
           >
             →
           </button>

@@ -43,29 +43,34 @@ export function Blog() {
   );
 
   return (
-    <section ref={containerRef} className="border-t border-border py-24 md:py-32">
-      <Container className="flex flex-col gap-8 pb-12 md:flex-row md:items-start md:justify-between">
-        <AnimatedHeading
-          as="h2"
-          lines={["Design", "Insights."]}
-          className="text-4xl font-medium leading-[1.05] md:text-heading"
-        />
-        <div className="max-w-md">
+    <section
+      ref={containerRef}
+      className="border-t border-border  mt-13 w-full"
+    >
+      <div className="flex max-w-[1340px] mx-auto items-start justify-between">
+        <div className="w-2/3 border-r border-border py-8">
+          <AnimatedHeading
+            as="h2"
+            lines={["Design", "Insights."]}
+            className="text-6xl font-normal leading-18"
+          />
+        </div>
+        <div className="w-1/3 pl-8 py-8">
           <p className="text-muted">
-            Explore expert tips, design trends, and practical ideas to help
-            you create spaces that are both beautiful and functional.
+            Explore expert tips, design trends, and practical ideas to help you
+            create spaces that are both beautiful and functional.
           </p>
           <div className="mt-6">
-            <Button href="/blog">See All Blogs</Button>
+            <Button href="/about">Learn More About Us</Button>
           </div>
         </div>
-      </Container>
+      </div>
 
-      <Container className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {blogs.map((post, i) => (
           <BlogCard key={post.slug} post={post} priority={i === 0} />
         ))}
-      </Container>
+      </div>
     </section>
   );
 }
