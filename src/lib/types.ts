@@ -60,8 +60,11 @@ export interface StripImage {
   alt: string;
 }
 
-export interface HeroPreviewCard {
+export interface HeroSlide {
   name: string;
   location: string;
+  /** Full-bleed background photo shown when this slide is active. */
   image: string;
+  /** Portrait crop used in the "next up" preview card; falls back to `image`. */
+  thumb?: string;
 }

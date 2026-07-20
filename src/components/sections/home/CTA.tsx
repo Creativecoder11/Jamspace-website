@@ -17,9 +17,20 @@ const sideImages = [
 
 export function CTA() {
   const containerRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
+      // Background image strip loops continuously and independently of the
+      // scroll-in reveal below (track duplicated, xPercent -50 for a
+      // seamless loop).
+      gsap.to(trackRef.current, {
+        xPercent: -50,
+        duration: 30,
+        repeat: -1,
+        ease: "none",
+      });
+
       gsap
         .timeline({
           scrollTrigger: {
@@ -40,26 +51,38 @@ export function CTA() {
   );
 
   return (
-    <section ref={containerRef} className="py-24 md:py-32">
+    <section ref={containerRef} className="py-25">
       <p className="mb-8 text-center text-sm text-muted">
         Bring Your Vision to Life
       </p>
 
-      <div className="grid grid-cols-5 gap-2 px-2 md:gap-3 md:px-3">
-        {sideImages.slice(0, 2).map((src, i) => (
-          <div key={src} className="relative col-span-1 aspect-[3/4] overflow-hidden rounded-xl md:aspect-[4/5]">
-            <Image
-              src={src}
-              alt=""
-              fill
-              sizes="20vw"
-              className="object-cover"
-              priority={i === 0}
-            />
-          </div>
-        ))}
+      <div className="relative h-[400px] overflow-hidden">
+        {/* Looping image strip, behind everything. Heights alternate full/300px
+            (even index = full, odd index = 300px, vertically centered) —
+            the source array has an even count so the rhythm stays
+            consistent across the seam where the duplicated half loops. */}
+        <div ref={trackRef} className="flex h-full w-max items-center gap-6">
+          {[...sideImages, ...sideImages].map((src, i) => (
+            <div
+              key={i}
+              className={`relative w-75 shrink-0 md:w-105 ${i % 2 === 0 ? "h-full" : "h-75"}`}
+            >
+              <Image
+                src={src}
+                alt=""
+                fill
+                sizes="420px"
+                className="object-cover"
+                priority={i === 0}
+              />
+            </div>
+          ))}
+        </div>
 
-        <div className="cta-panel col-span-1 flex aspect-[3/4] flex-col items-center justify-center gap-6 rounded-xl bg-accent p-4 text-center md:aspect-[4/5]">
+        {/* <div className="absolute inset-0 bg-black/45" /> */}
+
+        {/* CTA panel, z-index stacked on top of the marquee, centered */}
+        <div className="cta-panel absolute left-1/2 top-1/2 z-10 flex aspect-3/4 w-70 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 bg-accent p-4 text-center md:aspect-4/5 md:w-90">
           <AnimatedHeading
             as="h2"
             lines={["Let's Design", "Your", "Dream Space."]}
@@ -67,18 +90,12 @@ export function CTA() {
           />
           <div className="cta-button">
             <MagneticButton>
-              <Button href="/contact" variant="inverse">
+              <Button href="/contact" variant="inverse" className="font-medium">
                 Contact Us Now
               </Button>
             </MagneticButton>
           </div>
         </div>
-
-        {sideImages.slice(2, 4).map((src) => (
-          <div key={src} className="relative col-span-1 aspect-[3/4] overflow-hidden rounded-xl md:aspect-[4/5]">
-            <Image src={src} alt="" fill sizes="20vw" className="object-cover" />
-          </div>
-        ))}
       </div>
     </section>
   );

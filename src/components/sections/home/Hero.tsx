@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
@@ -8,12 +8,18 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
-import { heroPreviewCards, heroSlideCount } from "@/lib/data/hero";
+import { heroSlides, heroSlideCount } from "@/lib/data/hero";
 import { usePreloaderDone } from "@/hooks/usePreloaderDone";
 
 function PinIcon() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M12 22s7-7.4 7-13a7 7 0 1 0-14 0c0 5.6 7 13 7 13Z"
         stroke="currentColor"
@@ -27,8 +33,20 @@ function PinIcon() {
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const imageCrossfadeRef = useRef<HTMLDivElement>(null);
+  const lastAnimatedSlide = useRef(1);
   const [slide, setSlide] = useState(1);
+  const [isHovered, setIsHovered] = useState(false);
   const preloaderDone = usePreloaderDone();
+
+  const activeSlide = heroSlides[slide - 1];
+  // The two upcoming slides, wrapping past the end — what the "next projects"
+  // preview cards show. Only slide/counter/preview cards react to arrow
+  // clicks; the fixed text card and Jam logo are static markup below.
+  const upcomingSlides = [1, 2].map((offset) => {
+    const index = (slide - 1 + offset) % heroSlideCount;
+    return { index, ...heroSlides[index] };
+  });
 
   // Intro reveal (image clip/scale-in, line-by-line headline, subcopy, CTA,
   // preview cards) plus a continuous scroll parallax on the hero image.
@@ -106,21 +124,80 @@ export function Hero() {
     { scope: containerRef, dependencies: [preloaderDone] },
   );
 
+  // Crossfade the background photo + restage the preview cards whenever the
+  // slide changes via the arrow buttons or a card click. Compares against
+  // the last slide it actually animated (rather than a one-shot "first
+  // render" flag) so a click that lands before the preloader gate opens
+  // still gets its transition once preloaderDone flips true, instead of
+  // being silently swallowed. The cards remount on every slide change
+  // (their key is the absolute slide index), so by the time this runs the
+  // new card markup is already in the DOM — the timeline just animates it
+  // in instead of letting it pop in instantly.
+  useGSAP(
+    () => {
+      if (!preloaderDone) return;
+      if (slide === lastAnimatedSlide.current) return;
+      lastAnimatedSlide.current = slide;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set([imageCrossfadeRef.current, ".preview-card"], {
+          clearProps: "all",
+          opacity: 1,
+        });
+        return;
+      }
+
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .fromTo(
+          imageCrossfadeRef.current,
+          { opacity: 0, scale: 1.06 },
+          { opacity: 1, scale: 1, duration: 0.9 },
+        )
+        .fromTo(
+          ".preview-card",
+          { opacity: 0, x: 30 },
+          { opacity: 1, x: 0, stagger: 0.12, duration: 0.6 },
+          "-=0.7",
+        );
+    },
+    { scope: containerRef, dependencies: [slide, preloaderDone] },
+  );
+
+  // Auto-advance every 4s. Resets on every slide change (manual or auto) and
+  // pauses while the pointer is over the hero; skipped entirely for
+  // prefers-reduced-motion.
+  useEffect(() => {
+    if (isHovered) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const id = window.setInterval(() => {
+      setSlide((s) => (s === heroSlideCount ? 1 : s + 1));
+    }, 4000);
+
+    return () => window.clearInterval(id);
+  }, [slide, isHovered]);
+
   return (
     <section
       ref={containerRef}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className="relative h-[100vh] min-h-[700px]  mx-auto overflow-x-hidden overflow-y-hidden"
     >
-      <div ref={imageRef} className="absolute inset-0 overflow-x-hidden">
-        <Image
-          src="/images/hero-01.webp"
-          alt="Warm, softly lit bedroom interior designed by JamSpace"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+      {/* Image Container */}
+      <div ref={imageRef} className="absolute inset-0 overflow-x-hidden overflow-y-hidden">
+        <div ref={imageCrossfadeRef} className="absolute inset-0">
+          <Image
+            src={activeSlide.image}
+            alt={`Interior design project ${slide} of ${heroSlideCount} by JamSpace`}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/10 to-transparent" />
       </div>
 
       <div className="relative z-10 flex  items-end h-full overflow-x-hidden">
@@ -159,9 +236,9 @@ export function Hero() {
 
             {/* Project Container */}
             <div className="flex flex-col pb-10 items-start gap-4">
-              <p className="text-sm text-white/80">Our Recent Projects</p>
+              <p className="text-lg text-white/80 ml-30">Our Recent Projects</p>
               <div className="flex items-end ">
-                <div className="mr-6 flex flex-col items-center gap-3 text-white">
+                <div className="mr-6 w-[100px] flex flex-col items-center gap-3 text-white">
                   <span className="text-5xl font-sans font-normal">
                     {String(slide).padStart(2, "0")}/
                     <span className="text-lg font-sans text-white/60">
@@ -177,7 +254,12 @@ export function Hero() {
                       }
                       className="flex h-8 w-8 items-center justify-center border-white/40 "
                     >
-                      <Image src="/icons/left-arrow.svg" alt="" width={30} height={30} />
+                      <Image
+                        src="/icons/left-arrow.svg"
+                        alt=""
+                        width={30}
+                        height={30}
+                      />
                     </button>
                     <button
                       type="button"
@@ -187,16 +269,21 @@ export function Hero() {
                       }
                       className="flex h-8 w-8 items-center justify-center border-white/40"
                     >
-                      <Image src="/icons/right-arrow.svg" alt="" width={30} height={30} />
+                      <Image
+                        src="/icons/right-arrow.svg"
+                        alt=""
+                        width={30}
+                        height={30}
+                      />
                     </button>
                   </div>
                 </div>
 
                 <div className="flex gap-3">
-                  {heroPreviewCards.map((card, i) => (
+                  {upcomingSlides.map((card) => (
                     <div
-                      key={i}
-                      className="preview-card flex h-62.5 w-55 flex-col rounded-2xl border border-white/25 bg-white/10 p-3 backdrop-blur-md"
+                      key={card.index}
+                      className="preview-card group flex h-72 w-55 flex-col rounded-lg border border-white/25 bg-white/10 p-3 backdrop-blur-md"
                     >
                       <div className="text-white">
                         <p className="text-sm font-medium uppercase tracking-wide">
@@ -208,26 +295,34 @@ export function Hero() {
                         </p>
                       </div>
 
-                      <div className="relative mt-3 flex-1 overflow-hidden rounded-xl">
+                      <div className="relative mt-3 flex-1 overflow-hidden rounded-sm">
                         <Image
-                          src={card.image}
+                          src={card.thumb ?? card.image}
                           alt={`${card.name} — ${card.location}`}
                           fill
                           sizes="220px"
                           className="object-cover"
                         />
 
-                        {i === 0 && (
-                          <button
-                            type="button"
-                            aria-label="View project"
-                            className="absolute opacity-100 left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2  items-center justify-center rounded-2xl"
-                          >
-                            <span className="text-[10px] font-medium text-white">
-                              <Image src="/icons/hover-btn.svg" alt="" width={40} height={40} />
+                        <button
+                          type="button"
+                          aria-label={`View ${card.name} — ${card.location}`}
+                          onClick={() => setSlide(card.index + 1)}
+                          className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/0 pointer-events-none opacity-0 transition-all duration-300 group-hover:bg-black/20 group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto"
+                        >
+                          <span className="relative flex items-center justify-center">
+                            <Image
+                              src="/icons/View - Vector.png"
+                              alt=""
+                              width={60}
+                              height={60}
+                            />
+
+                            <span className="absolute inset-0 pt-6 flex items-center justify-center text-sm font-medium text-white">
+                              View
                             </span>
-                          </button>
-                        )}
+                          </span>
+                        </button>
                       </div>
                     </div>
                   ))}

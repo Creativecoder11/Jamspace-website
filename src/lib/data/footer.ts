@@ -31,7 +31,7 @@ export const footerColumns: FooterColumn[] = [
 ];
 
 export const contactInfo = {
-  address: "H: 654, R: 09 Ave: 04, Mirpur DOHS, Dhaka 1216",
+  address: `H: 654, R: 09 Ave: 04, Mirpur DOHS, Dhaka 1216`,
   phone: "+880 XXX XXX XXXX",
   email: "demo@jamroll.space",
 };

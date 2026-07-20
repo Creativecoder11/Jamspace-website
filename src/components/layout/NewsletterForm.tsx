@@ -12,26 +12,18 @@ export function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-end gap-4">
-      <label className="peer-container flex-1">
-        <span className="mb-2 block text-xs uppercase tracking-wide text-muted">
-          Email
-        </span>
-        <span className="relative block">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@email.com"
-            className="peer w-full border-b border-border bg-transparent py-2 text-sm text-foreground outline-none"
-          />
-          <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-accent transition-transform duration-300 peer-focus:scale-x-100" />
-        </span>
-      </label>
+    <form onSubmit={handleSubmit} className="flex items-center gap-3">
+      <input
+        type="email"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        className="w-full flex-1 rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none placeholder:text-muted focus:border-accent"
+      />
       <button
         type="submit"
-        className="whitespace-nowrap border-b border-foreground pb-2 text-sm font-normal hover:border-accent hover:text-accent"
+        className="shrink-0 whitespace-nowrap rounded-xl bg-accent px-6 py-3 text-sm font-normal text-white transition-colors hover:bg-foreground"
       >
         Subscribe
       </button>

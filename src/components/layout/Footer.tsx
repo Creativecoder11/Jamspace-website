@@ -8,6 +8,7 @@ import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { footerColumns, contactInfo } from "@/lib/data/footer";
+import Image from "next/image";
 
 const socialLinks = [
   {
@@ -27,11 +28,40 @@ const socialLinks = [
   },
 ];
 
-/**
- * Columns/contact/newsletter fade-up on scroll. No giant background
- * wordmark — the source design's footer doesn't have one (see PROJECT
- * memory: an earlier pass invented one, this removes it).
- */
+// Same three brand accent shapes used everywhere else (logo mark, stat
+// icons, marquee), rendered here as large outlines instead of solid fills —
+// a decorative column between the intro and the link columns.
+const glyphShapes = {
+  chevron: {
+    viewBox: "53.4797 0 22.8595 22.8595",
+    d: "M76.3392 22.8595H53.4797V0L64.9088 11.429L76.3392 0V22.8595Z",
+  },
+  triangle: {
+    viewBox: "26.7537 0 22.8594 22.8595",
+    d: "M49.6131 22.8595H26.7537L38.1827 0L49.6131 22.8595Z",
+  },
+  step: {
+    viewBox: "0 0 60 60",
+    d: "M60 0L60 60L0 60L0 29.9982L30.0036 29.9982L30.0036 0L60 0Z",
+  },
+} as const;
+
+function FooterGlyph({
+  shape,
+  className = "",
+}: {
+  shape: keyof typeof glyphShapes;
+  className?: string;
+}) {
+  const { viewBox, d } = glyphShapes[shape];
+  return (
+    <svg viewBox={viewBox} className={className} aria-hidden="true">
+      <path d={d} fill="none" stroke="currentColor" strokeWidth="1" />
+    </svg>
+  );
+}
+
+/** Columns/contact/newsletter fade-up on scroll. */
 export function Footer() {
   const containerRef = useRef<HTMLElement>(null);
 
@@ -54,102 +84,123 @@ export function Footer() {
   );
 
   return (
-    <footer ref={containerRef} className="relative overflow-hidden border-t border-border bg-background">
-      {/* Decorative line-art, echoes the outlined triangle/chevron motif from the hero photo overlay. */}
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 200 400"
-        className="pointer-events-none absolute left-[28%] top-0 hidden h-full w-40 text-border md:block"
-      >
-        <polygon points="20,40 90,40 90,110" fill="none" stroke="currentColor" />
-        <polygon points="10,160 90,200 10,240" fill="none" stroke="currentColor" />
-        <path d="M20 300h50v50h-50z M20 350h50" fill="none" stroke="currentColor" />
-      </svg>
-
-      <Container className="grid grid-cols-1 gap-12 py-20 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-        <div className="footer-col max-w-xs">
-          <Logo />
-          <p className="mt-4 text-sm text-muted">
-            JamSpace creates timeless interiors that blend creativity,
-            functionality, and exceptional craftsmanship.
-          </p>
-          <div className="mt-6 flex gap-3">
-            {socialLinks.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={social.label}
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-foreground/20 transition-colors hover:border-accent hover:text-accent"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d={social.path} />
-                </svg>
-              </a>
-            ))}
+    <footer ref={containerRef} className="border-t border-border bg-background">
+      <Container className="flex flex-row md:gap-x-0 md:divide-x md:divide-border">
+        <div className="flex flex-col w-[30%] space-between  py-13 md:pr-8">
+          <div className="flex-1">
+            <Logo />
           </div>
-        </div>
-
-        {footerColumns.map((column) => (
-          <div key={column.title} className="footer-col">
-            <h3 className="text-sm font-medium">{column.title}</h3>
-            <ul className="mt-4 space-y-3 text-sm text-muted">
-              {column.links.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="hover:text-accent">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-
-        <div className="footer-col">
-          <h3 className="text-sm font-medium">Contact Us</h3>
-          <ul className="mt-4 space-y-3 text-sm text-muted">
-            <li>Address: {contactInfo.address}</li>
-            <li>
-              Phone:{" "}
-              <a
-                href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
-                className="hover:text-accent"
-              >
-                {contactInfo.phone}
-              </a>
-            </li>
-            <li>
-              Email:{" "}
-              <a
-                href={`mailto:${contactInfo.email}`}
-                className="hover:text-accent"
-              >
-                {contactInfo.email}
-              </a>
-            </li>
-          </ul>
-        </div>
-      </Container>
-
-      <Container className="footer-col border-t border-border py-10">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <h3 className="text-lg font-medium">Stay informed</h3>
-            <p className="mt-2 max-w-md text-sm text-muted">
-              Stay inspired with the latest design trends, expert insights,
-              and exclusive updates from JamSpace.
+            <p className="mt-4 text-sm text-muted">
+              JamSpace creates timeless interiors that blend creativity,
+              functionality, and exceptional craftsmanship.
             </p>
+            <div className="mt-6 flex gap-3">
+              <Image
+                src="/icons/facebook.svg"
+                alt=""
+                width={24}
+                height={24}
+                className="w-auto object-contain"
+              />
+              <Image
+                src="/icons/linkedin.svg"
+                alt=""
+                width={24}
+                height={24}
+                className="w-auto object-contain"
+              />
+              <Image
+                src="/icons/insta.svg"
+                alt=""
+                width={24}
+                height={24}
+                className="w-auto object-contain"
+              />
+            </div>
           </div>
-          <div className="w-full max-w-sm">
-            <NewsletterForm />
+        </div>
+
+        <div className="flex items-start w-[15%] pt-14 pr-6 justify-end text-border">
+          <Image
+            src="/footer-jam.svg"
+            alt=""
+            width={24}
+            height={24}
+            className="w-auto object-contain"
+          />
+        </div>
+
+        <div className="py-13 w-[55%] md:pl-8">
+          <div className="flex gap-8">
+            {footerColumns.map((column) => (
+              <div key={column.title} className="w-[30%]">
+                <h3 className="text-sm font-medium">{column.title}</h3>
+                <ul className="mt-4 space-y-3 text-sm text-muted">
+                  {column.links.map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href} className="hover:text-accent">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            <div>
+              <h3 className="text-sm font-medium">Contact Us</h3>
+              <ul className="mt-4 space-y-3 text-sm text-muted">
+                <li>Address: {contactInfo.address}</li>
+                <li>
+                  Phone:{" "}
+                  <a
+                    href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
+                    className="hover:text-accent"
+                  >
+                    {contactInfo.phone}
+                  </a>
+                </li>
+                <li>
+                  Email:{" "}
+                  <a
+                    href={`mailto:${contactInfo.email}`}
+                    className="hover:text-accent"
+                  >
+                    {contactInfo.email}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-13 w-full">
+            <h3 className="text-lg font-medium">Stay informed</h3>
+            <p className="mt-2 w-full text-sm text-muted">
+              Stay inspired with the latest design trends, expert insights, and
+              exclusive updates from JamSpace. Discover ideas that help you
+              create beautiful, functional spaces.
+            </p>
+            <div className="mt-4 w-full">
+              <NewsletterForm />
+            </div>
           </div>
         </div>
       </Container>
 
-      <Container className="flex flex-col gap-2 border-t border-border py-6 text-xs text-muted md:flex-row md:items-center md:justify-between">
+      <Container className="footer-col flex flex-col gap-2 border-t border-border py-6 text-xs text-muted md:flex-row md:items-center md:justify-between">
         <p>&copy; {new Date().getFullYear()} Jamspace, All Rights Reserved</p>
-        <p>Design &amp; Developed by Jamroll Studio</p>
+        <p>
+          Design &amp; Developed by{" "}
+          <a
+            href="https://jamroll.space"
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:text-accent"
+          >
+            Jamroll Studio
+          </a>
+        </p>
       </Container>
     </footer>
   );
