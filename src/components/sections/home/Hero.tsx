@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { heroSlides, heroSlideCount } from "@/lib/data/hero";
-import { usePreloaderDone } from "@/hooks/usePreloaderDone";
 
 function PinIcon() {
   return (
@@ -37,7 +36,6 @@ export function Hero() {
   const lastAnimatedSlide = useRef(1);
   const [slide, setSlide] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
-  const preloaderDone = usePreloaderDone();
 
   const activeSlide = heroSlides[slide - 1];
   // The two upcoming slides, wrapping past the end — what the "next projects"
@@ -50,10 +48,10 @@ export function Hero() {
 
   // Intro reveal (image clip/scale-in, line-by-line headline, subcopy, CTA,
   // preview cards) plus a continuous scroll parallax on the hero image.
-  // Gated on the preloader finishing first (dependencies: [preloaderDone]).
+  // Runs on its own mount — not gated behind the Preloader, which is
+  // currently disabled (see layout.tsx), so this plays immediately.
   useGSAP(
     () => {
-      if (!preloaderDone) return;
       const mm = gsap.matchMedia();
 
       mm.add(
@@ -121,21 +119,20 @@ export function Hero() {
 
       return () => mm.revert();
     },
-    { scope: containerRef, dependencies: [preloaderDone] },
+    { scope: containerRef },
   );
 
   // Crossfade the background photo + restage the preview cards whenever the
   // slide changes via the arrow buttons or a card click. Compares against
   // the last slide it actually animated (rather than a one-shot "first
-  // render" flag) so a click that lands before the preloader gate opens
-  // still gets its transition once preloaderDone flips true, instead of
-  // being silently swallowed. The cards remount on every slide change
-  // (their key is the absolute slide index), so by the time this runs the
-  // new card markup is already in the DOM — the timeline just animates it
-  // in instead of letting it pop in instantly.
+  // render" flag) so it never double-fires on mount — the intro reveal
+  // above already handles the very first paint of imageRef/.preview-card.
+  // The cards remount on every slide change (their key is the absolute
+  // slide index), so by the time this runs the new card markup is already
+  // in the DOM — the timeline just animates it in instead of letting it
+  // pop in instantly.
   useGSAP(
     () => {
-      if (!preloaderDone) return;
       if (slide === lastAnimatedSlide.current) return;
       lastAnimatedSlide.current = slide;
 
@@ -161,7 +158,7 @@ export function Hero() {
           "-=0.7",
         );
     },
-    { scope: containerRef, dependencies: [slide, preloaderDone] },
+    { scope: containerRef, dependencies: [slide] },
   );
 
   // Auto-advance every 4s. Resets on every slide change (manual or auto) and
