@@ -44,7 +44,11 @@ export function CTA() {
           { scale: 0.85, opacity: 0 },
           { scale: 1, opacity: 1, duration: 0.8, ease: "power3.out" },
         )
-        .from(".line", { yPercent: 110, stagger: 0.1, duration: 0.7, ease: "power3.out" }, "-=0.4")
+        .from(
+          ".line",
+          { yPercent: 110, stagger: 0.1, duration: 0.7, ease: "power3.out" },
+          "-=0.4",
+        )
         .from(".cta-button", { opacity: 0, y: 10, duration: 0.5 }, "-=0.3");
     },
     { scope: containerRef },
@@ -82,20 +86,25 @@ export function CTA() {
         {/* <div className="absolute inset-0 bg-black/45" /> */}
 
         {/* CTA panel, z-index stacked on top of the marquee, centered */}
-        <div className="cta-panel absolute left-1/2 top-1/2 z-10 flex aspect-3/4 w-70 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 bg-accent p-4 text-center md:aspect-4/5 md:w-90">
-          <AnimatedHeading
-            as="h2"
-            lines={["Let's Design", "Your", "Dream Space."]}
-            className="text-2xl font-medium leading-tight text-white md:text-subheading"
-          />
-          <div className="cta-button">
-            <MagneticButton>
-              <Button href="/contact" variant="inverse" className="font-medium">
-                Contact Us Now
-              </Button>
-            </MagneticButton>
+        
+          <div className="cta-panel absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center border-l-[24px] border-r-[24px] border-[#F7F6F1] gap-6 bg-accent p-4 text-center md:aspect-4/5 md:w-100">
+            <AnimatedHeading
+              as="h2"
+              lines={["Let's Design", "Your", "Dream Space."]}
+              className="text-2xl font-medium leading-tight text-white md:text-subheading"
+            />
+            <div className="cta-button">
+              <MagneticButton>
+                <Button
+                  href="/contact"
+                  variant="inverse"
+                  className="font-medium"
+                >
+                  Contact Us Now
+                </Button>
+              </MagneticButton>
+            </div>
           </div>
-        </div>
       </div>
     </section>
   );
