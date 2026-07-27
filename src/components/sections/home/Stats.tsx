@@ -8,6 +8,7 @@ import { StatIcon } from "@/components/ui/StatIcon";
 import { stats } from "@/lib/data/stats";
 
 const accentTextClass = {
+  white: "text-foreground",
   pink: "text-accent",
   yellow: "text-accent-yellow",
   teal: "text-accent-teal",

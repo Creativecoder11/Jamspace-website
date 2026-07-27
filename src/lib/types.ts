@@ -12,8 +12,8 @@ export interface StatItem {
   value: number;
   suffix: string;
   label: string;
-  accent: "pink" | "yellow" | "teal";
-  icon: "experience" | "projects" | "satisfaction";
+  accent: "pink" | "yellow" | "teal" | "white";
+  icon: "lshape" | "traiangle" | "mshape";
 }
 
 export interface SubService {

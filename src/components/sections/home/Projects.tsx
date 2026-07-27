@@ -27,6 +27,8 @@ function PinIcon() {
 export function Projects() {
   const containerRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lastAnimatedIndex = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showKeepScrolling, setShowKeepScrolling] = useState(true);
 
@@ -70,11 +72,48 @@ export function Projects() {
     { scope: containerRef },
   );
 
+  // Parallax reveal whenever the pinned scrub swaps the active project: the
+  // incoming image rises/falls in (direction follows scroll direction) while
+  // the outgoing image parallaxes out the opposite way, replacing the old
+  // instant opacity swap. Guarded the same way as Hero's slide-change effect
+  // so it never fires on mount (both refs start at 0).
+  useGSAP(
+    () => {
+      if (activeIndex === lastAnimatedIndex.current) return;
+      const prevIndex = lastAnimatedIndex.current;
+      lastAnimatedIndex.current = activeIndex;
+
+      const outgoing = slideRefs.current[prevIndex];
+      const incoming = slideRefs.current[activeIndex];
+      const direction = activeIndex > prevIndex ? 1 : -1;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(outgoing, { clearProps: "all", opacity: 0 });
+        gsap.set(incoming, { clearProps: "all", opacity: 1 });
+        return;
+      }
+
+      gsap.to(outgoing, {
+        opacity: 0,
+        yPercent: direction * -8,
+        scale: 1.06,
+        duration: 1,
+        ease: "power3.out",
+      });
+      gsap.fromTo(
+        incoming,
+        { opacity: 0, yPercent: direction * 8, scale: 1.12 },
+        { opacity: 1, yPercent: 0, scale: 1, duration: 1.1, ease: "power3.out" },
+      );
+    },
+    { scope: pinRef, dependencies: [activeIndex] },
+  );
+
   const project = projects[activeIndex];
 
   return (
     <section ref={containerRef} className="">
-      <Container className="flex flex-col gap-8 pb-12 md:flex-row md:items-end md:justify-between">
+      <Container className="flex flex-col gap-8 pb-12 pt-24 md:flex-row md:items-end md:justify-between">
         <AnimatedHeading
           as="h2"
           lines={["Spaces", "We've Transformed."]}
@@ -88,13 +127,15 @@ export function Projects() {
 
       <div
         ref={pinRef}
-        className="relative h-screen min-h-[600px] w-full overflow-hidden"
+        className="relative h-screen min-h-[540px] w-full overflow-hidden"
       >
         {projects.map((p, i) => (
           <div
             key={p.slug}
-            className="absolute inset-0 transition-opacity duration-700"
-            style={{ opacity: i === activeIndex ? 1 : 0 }}
+            ref={(el) => {
+              slideRefs.current[i] = el;
+            }}
+            className={`absolute inset-0 ${i === 0 ? "opacity-100" : "opacity-0"}`}
           >
             <Image
               src={p.image}
@@ -104,7 +145,7 @@ export function Projects() {
               priority={i === 0}
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute inset-0 bg-black/30 backdrop-blur-xs" />
           </div>
         ))}
 
@@ -124,7 +165,7 @@ export function Projects() {
         </Link>
 
         <div className="absolute inset-0 flex items-center justify-center px-6">
-          <div className="w-full max-w-sm h-[500px] rounded-2xl bg-background p-6 shadow-xl">
+          <div className="w-full max-w-sm h-[460px] rounded-xl bg-background p-6 shadow-xl">
             <h3 className="text-2xl font-medium">{project.name}</h3>
             <p className="mt-1 flex items-center gap-1.5 text-sm text-muted">
               <span className="text-accent-teal">
@@ -132,7 +173,7 @@ export function Projects() {
               </span>
               {project.location}
             </p>
-            <div className="relative mt-4 h-[320px] w-full overflow-hidden rounded-lg">
+            <div className="relative mt-4 h-[280px] w-full overflow-hidden rounded-lg">
               <Image
                 src={project.image}
                 alt={project.name}
@@ -152,10 +193,10 @@ export function Projects() {
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white">
-          <span className="text-3xl font-normal">
-            {String(activeIndex + 1).padStart(2, "0")}
-            <span className="text-lg text-white/60">
-              /{String(projects.length).padStart(2, "0")}
+          <span className="text-5xl font-normal">
+            {String(activeIndex + 1).padStart(2, "0")}/
+            <span className="text-xl text-white/60">
+              {String(projects.length).padStart(2, "0")}
             </span>
           </span>
         </div>

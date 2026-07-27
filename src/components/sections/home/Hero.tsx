@@ -34,6 +34,9 @@ export function Hero() {
   const imageRef = useRef<HTMLDivElement>(null);
   const imageCrossfadeRef = useRef<HTMLDivElement>(null);
   const lastAnimatedSlide = useRef(1);
+  // 1 = advancing (Next/autoplay/card), -1 = Previous. Drives which side the
+  // incoming image parallaxes in from.
+  const slideDirection = useRef<1 | -1>(1);
   const [slide, setSlide] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -122,15 +125,18 @@ export function Hero() {
     { scope: containerRef },
   );
 
-  // Crossfade the background photo + restage the preview cards whenever the
-  // slide changes via the arrow buttons or a card click. Compares against
-  // the last slide it actually animated (rather than a one-shot "first
-  // render" flag) so it never double-fires on mount — the intro reveal
-  // above already handles the very first paint of imageRef/.preview-card.
-  // The cards remount on every slide change (their key is the absolute
-  // slide index), so by the time this runs the new card markup is already
-  // in the DOM — the timeline just animates it in instead of letting it
-  // pop in instantly.
+  // Parallax-slide the background photo + restage the preview cards whenever
+  // the slide changes via the arrow buttons or a card click. The incoming
+  // image enters from the side matching slideDirection (right for
+  // Next/autoplay/card clicks, left for Previous) while zooming out from a
+  // 15% overscan — the overscan margin keeps the translate from ever
+  // exposing an edge. Compares against the last slide it actually animated
+  // (rather than a one-shot "first render" flag) so it never double-fires
+  // on mount — the intro reveal above already handles the very first paint
+  // of imageRef/.preview-card. The cards remount on every slide change
+  // (their key is the absolute slide index), so by the time this runs the
+  // new card markup is already in the DOM — the timeline just animates it
+  // in instead of letting it pop in instantly.
   useGSAP(
     () => {
       if (slide === lastAnimatedSlide.current) return;
@@ -148,14 +154,14 @@ export function Hero() {
         .timeline({ defaults: { ease: "power3.out" } })
         .fromTo(
           imageCrossfadeRef.current,
-          { opacity: 0, scale: 1.06 },
-          { opacity: 1, scale: 1, duration: 0.9 },
+          { xPercent: slideDirection.current * 6, scale: 1.15 },
+          { xPercent: 0, scale: 1, duration: 1 },
         )
         .fromTo(
           ".preview-card",
           { opacity: 0, x: 30 },
           { opacity: 1, x: 0, stagger: 0.12, duration: 0.6 },
-          "-=0.7",
+          "-=0.75",
         );
     },
     { scope: containerRef, dependencies: [slide] },
@@ -169,6 +175,7 @@ export function Hero() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const id = window.setInterval(() => {
+      slideDirection.current = 1;
       setSlide((s) => (s === heroSlideCount ? 1 : s + 1));
     }, 4000);
 
@@ -246,9 +253,10 @@ export function Hero() {
                     <button
                       type="button"
                       aria-label="Previous slide"
-                      onClick={() =>
-                        setSlide((s) => (s === 1 ? heroSlideCount : s - 1))
-                      }
+                      onClick={() => {
+                        slideDirection.current = -1;
+                        setSlide((s) => (s === 1 ? heroSlideCount : s - 1));
+                      }}
                       className="flex h-8 w-8 items-center justify-center border-white/40 "
                     >
                       <Image
@@ -261,9 +269,10 @@ export function Hero() {
                     <button
                       type="button"
                       aria-label="Next slide"
-                      onClick={() =>
-                        setSlide((s) => (s === heroSlideCount ? 1 : s + 1))
-                      }
+                      onClick={() => {
+                        slideDirection.current = 1;
+                        setSlide((s) => (s === heroSlideCount ? 1 : s + 1));
+                      }}
                       className="flex h-8 w-8 items-center justify-center border-white/40"
                     >
                       <Image
@@ -304,7 +313,10 @@ export function Hero() {
                         <button
                           type="button"
                           aria-label={`View ${card.name} — ${card.location}`}
-                          onClick={() => setSlide(card.index + 1)}
+                          onClick={() => {
+                            slideDirection.current = 1;
+                            setSlide(card.index + 1);
+                          }}
                           className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/0 pointer-events-none opacity-0 transition-all duration-300 group-hover:bg-black/20 group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto"
                         >
                           <span className="relative flex items-center justify-center">

@@ -6,20 +6,20 @@ export const stats: StatItem[] = [
     suffix: "+",
     label: "Years of Experience",
     accent: "pink",
-    icon: "experience",
+    icon: "lshape",
   },
   {
     value: 44,
     suffix: "+",
     label: "Projects Completed",
     accent: "yellow",
-    icon: "projects",
+    icon: "traiangle",
   },
   {
     value: 95,
     suffix: "%",
     label: "Client Satisfaction",
     accent: "teal",
-    icon: "satisfaction",
+    icon: "mshape",
   },
 ];
