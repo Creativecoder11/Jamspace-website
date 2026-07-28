@@ -32,9 +32,6 @@ export function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showKeepScrolling, setShowKeepScrolling] = useState(true);
 
-  // Heading reveal on scroll, plus a pinned scrub-driven project switcher on
-  // desktop only (matchMedia — disabled on mobile to avoid a scroll-jack
-  // feel on small screens; mobile gets a plain stacked list instead).
   useGSAP(
     () => {
       gsap.from(".line", {
@@ -72,11 +69,6 @@ export function Projects() {
     { scope: containerRef },
   );
 
-  // Parallax reveal whenever the pinned scrub swaps the active project: the
-  // incoming image rises/falls in (direction follows scroll direction) while
-  // the outgoing image parallaxes out the opposite way, replacing the old
-  // instant opacity swap. Guarded the same way as Hero's slide-change effect
-  // so it never fires on mount (both refs start at 0).
   useGSAP(
     () => {
       if (activeIndex === lastAnimatedIndex.current) return;

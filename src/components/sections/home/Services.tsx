@@ -10,43 +10,19 @@ import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { BrandGlyph } from "@/components/ui/BrandGlyph";
 import { services } from "@/lib/data/services";
 
-function ChevronDown({ className = "" }: { className?: string }) {
+function ArrowIcon({ className = "" }: { className?: string }) {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="12"
-      height="8"
-      viewBox="0 0 12 8"
-      fill="none"
+      width="24"
+      height="24"
       className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M1 1.5L6 6.5L11 1.5"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ChevronUp({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="12"
-      height="8"
-      viewBox="0 0 12 8"
-      fill="none"
-      className={className}
-    >
-      <path
-        d="M1 6.5L6 1.5L11 6.5"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M16.1605 9H7.8494C7.62675 9 7.41322 9.08845 7.25578 9.24589C7.09834 9.40332 7.0099 9.61685 7.0099 9.8395C7.0099 10.0622 7.09834 10.2757 7.25578 10.4331C7.41322 10.5906 7.62675 10.679 7.8494 10.679H14.1331L7.25629 17.5567C7.17611 17.6341 7.11215 17.7267 7.06816 17.8291C7.02416 17.9316 7.001 18.0417 7.00003 18.1532C6.99906 18.2647 7.0203 18.3752 7.06252 18.4784C7.10473 18.5816 7.16706 18.6753 7.24589 18.7541C7.32471 18.8329 7.41844 18.8953 7.52161 18.9375C7.62478 18.9797 7.73533 19.0009 7.8468 19C7.95827 18.999 8.06843 18.9758 8.17085 18.9318C8.27327 18.8878 8.36591 18.8239 8.44335 18.7437L15.321 11.8665V18.1506C15.321 18.3733 15.4094 18.5868 15.5669 18.7442C15.7243 18.9017 15.9378 18.9901 16.1605 18.9901C16.3831 18.9901 16.5967 18.9017 16.7541 18.7442C16.9116 18.5868 17 18.3733 17 18.1506V9.8395C17 9.61685 16.9116 9.40332 16.7541 9.24589C16.5967 9.08845 16.3831 9 16.1605 9Z"
+        fill="currentColor"
       />
     </svg>
   );
@@ -59,7 +35,6 @@ export function Services() {
 
   useGSAP(
     () => {
-      // Row divider lines draw in (scaleX 0→1) as the list scrolls into view.
       gsap.from(".service-divider", {
         scaleX: 0,
         transformOrigin: "left center",
@@ -85,26 +60,37 @@ export function Services() {
       const prevEl = openIndex !== null ? panelRefs.current[openIndex] : null;
       const nextEl = nextIndex !== null ? panelRefs.current[nextIndex] : null;
 
+      const tl = gsap.timeline();
+
       if (prevEl) {
-        gsap.to(prevEl, {
-          height: 0,
-          opacity: 0,
-          duration: 0.5,
-          ease: "power2.inOut",
-        });
+        gsap.set(prevEl, { height: prevEl.scrollHeight });
+        tl.to(
+          prevEl,
+          {
+            height: 0,
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.inOut",
+            overwrite: "auto",
+          },
+          0,
+        );
       }
+
       if (nextEl) {
         const targetHeight = nextEl.scrollHeight;
-        gsap.fromTo(
+        gsap.set(nextEl, { height: 0, opacity: 0 });
+        tl.to(
           nextEl,
-          { height: 0, opacity: 0 },
           {
             height: targetHeight,
             opacity: 1,
-            duration: 0.6,
+            duration: 0.5,
             ease: "power2.inOut",
+            overwrite: "auto",
             onComplete: () => gsap.set(nextEl, { height: "auto" }),
           },
+          0,
         );
       }
     })();
@@ -152,41 +138,38 @@ export function Services() {
                       the wrong row. */}
                   <div
                     aria-hidden="true"
-                    className={`pointer-events-none absolute inset-0 z-0 origin-bottom scale-y-0 bg-foreground transition-transform duration-500 ease-out ${
-                      isOpen ? "" : "group-hover:scale-y-100"
-                    }`}
+                    className={`pointer-events-none absolute inset-0 z-0 origin-bottom scale-y-0 bg-foreground transition-transform duration-500 ease-out ${isOpen ? "" : "group-hover:scale-y-100"
+                      }`}
                   />
 
                   <div className="relative z-10 flex w-full items-center justify-between">
                     <span
-                      className={`text-xl transition-colors duration-300 ${
-                        isOpen
-                          ? "text-white"
-                          : "text-foreground group-hover:text-white"
-                      }`}
+                      className={`text-xl transition-colors duration-300 ${isOpen
+                        ? "text-white"
+                        : "text-foreground group-hover:text-white"
+                        }`}
                     >
                       ({service.index})
                     </span>
 
                     <span
-                      className={`text-center px-2 text-xl font-normal transition-colors duration-300 md:px-4 md:text-[27px] ${
-                        isOpen
-                          ? "text-white"
-                          : "text-foreground group-hover:text-white"
-                      }`}
+                      className={`text-center px-2 text-xl font-normal transition-colors duration-300 md:px-4 md:text-[27px] ${isOpen
+                        ? "text-white"
+                        : "text-foreground group-hover:text-white"
+                        }`}
                     >
                       {service.title}
                     </span>
 
                     <span
-                      className={`hidden w-20 items-center gap-2 text-lg font-normal transition-colors duration-300 md:inline-flex ${
-                        isOpen
-                          ? "text-white"
-                          : "text-accent group-hover:text-white"
-                      }`}
+                      onClick={(e) => e.stopPropagation()}
+                      className={`hidden items-center gap-2 text-lg font-normal transition-colors duration-300 md:inline-flex ${isOpen ? "text-white" : "text-pink-500"
+                        }`}
                     >
-                      {isOpen ? "Close" : "Expand"}
-                      {isOpen ? <ChevronUp /> : <ChevronDown />}
+                      <a href="/services" className="inline-flex items-center gap-2">
+                        Learn More
+                        <ArrowIcon />
+                      </a>
                     </span>
                   </div>
                 </button>
@@ -260,15 +243,6 @@ export function Services() {
                               )}
                             </div>
                           </div>
-                          {/* <div>
-                            <Button
-                              variant="light"
-                              showArrow={true}
-                              className=""
-                            >
-                              Learn More
-                            </Button>
-                          </div> */}
                         </div>
                       </div>
                     </div>

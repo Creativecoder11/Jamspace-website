@@ -125,9 +125,8 @@ export function AboutPillars() {
             className="pillar-card relative flex h-85 flex-col justify-between border border-border bg-background p-6"
           >
             <h3
-              className={`flex flex-col justify-between text-3xl font-medium ${
-                accentTextClass[pillar.accent]
-              }`}
+              className={`flex flex-col justify-between text-3xl font-medium ${accentTextClass[pillar.accent]
+                }`}
             >
               {pillar.title}
             </h3>

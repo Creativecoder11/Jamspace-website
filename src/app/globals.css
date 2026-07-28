@@ -15,7 +15,7 @@
   --muted: #444444; /* secondary/body copy on cream */
   /* hairline dividers, accordion rows */
   /* use 8-digit hex for consistent alpha across platforms */
-  --border: #4444441A;
+  --border: #4444441a;
 }
 
 @theme inline {
@@ -41,4 +41,12 @@ body {
   overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
+}
+
+.story-fill-line {
+  overflow: hidden;
+}
+
+.story-fill .char {
+  will-change: color;
 }

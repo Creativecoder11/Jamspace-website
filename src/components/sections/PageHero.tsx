@@ -47,9 +47,9 @@ export function PageHero({
   );
 
   return (
-    <section ref={containerRef} className="pt-20">
+    <section ref={containerRef} className="pt-22 mx-2.5">
       <div>
-        <div className="page-hero-banner  relative w-full overflow-hidden h-90">
+        <div className="page-hero-banner relative w-full overflow-hidden h-90 rounded-3xl">
           <Image
             src={image}
             alt=""
@@ -58,7 +58,8 @@ export function PageHero({
             sizes="(min-width: 1340px) 1340px, 100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black/65" />
+
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(25,25,25,0)_-28.5%,#191919_100%)]" />
 
           <div className="relative  flex h-full items-center justify-between px-8 md:px-14">
             <h1 className="text-5xl font-normal text-white md:text-7xl">

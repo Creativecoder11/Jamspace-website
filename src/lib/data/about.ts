@@ -17,19 +17,19 @@ export const aboutMissionVision: {
   lead: string;
   text: string;
 }[] = [
-  {
-    key: "mission",
-    label: "Mission",
-    lead: "Our mission",
-    text: "is to create thoughtfully designed spaces that enrich everyday living by combining creativity, functionality, and timeless craftsmanship. Through close collaboration and attention to detail, we transform every client's vision into meaningful environments that inspire for years to come.",
-  },
-  {
-    key: "vision",
-    label: "Vision",
-    lead: "Our vision",
-    text: "is to become a leading name in interior design, recognized for redefining everyday spaces with creativity and craftsmanship, and for setting new standards of quality across Bangladesh and beyond.",
-  },
-];
+    {
+      key: "mission",
+      label: "Mission",
+      lead: "Our mission",
+      text: "is to create thoughtfully designed spaces that enrich everyday living by combining creativity, functionality, and timeless craftsmanship. Through close collaboration and attention to detail, we transform every client's vision into meaningful environments that inspire for years to come.",
+    },
+    {
+      key: "vision",
+      label: "Vision",
+      lead: "Our vision",
+      text: "is to become a leading name in interior design, recognized for redefining everyday spaces with creativity and craftsmanship, and for setting new standards of quality across Bangladesh and beyond.",
+    },
+  ];
 
 type Accent = "pink" | "yellow" | "teal";
 
@@ -68,32 +68,32 @@ export const aboutStorySnapshots: {
   accent: Accent;
   icon: "lshape" | "traiangle" | "mshape";
 }[] = [
-  {
-    value: 3,
-    suffix: "+",
-    label: "Years of Experience",
-    description: "Over 20+ successful projects completed.",
-    accent: "yellow",
-    icon: "lshape",
-  },
-  {
-    value: 44,
-    suffix: "+",
-    label: "Projects",
-    description:
-      "From homes to workplaces, we're creating thoughtfully designed spaces across Dhaka, one project at a time.",
-    accent: "pink",
-    icon: "traiangle",
-  },
-  {
-    value: 95,
-    suffix: "%",
-    label: "Client Satisfaction",
-    description: "Consistently earning the trust and confidence of our clients.",
-    accent: "teal",
-    icon: "mshape",
-  },
-];
+    {
+      value: 3,
+      suffix: "+",
+      label: "Years of Experience",
+      description: "Over 20+ successful projects completed.",
+      accent: "yellow",
+      icon: "lshape",
+    },
+    {
+      value: 44,
+      suffix: "+",
+      label: "Projects",
+      description:
+        "From homes to workplaces, we're creating thoughtfully designed spaces across Dhaka, one project at a time.",
+      accent: "pink",
+      icon: "traiangle",
+    },
+    {
+      value: 95,
+      suffix: "%",
+      label: "Client Satisfaction",
+      description: "Consistently earning the trust and confidence of our clients.",
+      accent: "teal",
+      icon: "mshape",
+    },
+  ];
 
 export const aboutValues: { label: string; accent: Accent }[] = [
   { label: "Creativity", accent: "pink" },
@@ -113,60 +113,70 @@ export const aboutJourneySteps: {
   description: string;
   accent: Accent;
 }[] = [
-  {
-    index: "01",
-    title: "Discover",
-    description:
-      "We understand your vision, lifestyle, and space before every design decision.",
-    accent: "yellow",
-  },
-  {
-    index: "02",
-    title: "Design",
-    description: "Ideas evolve into detailed layouts and realistic 3D visualizations.",
-    accent: "pink",
-  },
-  {
-    index: "03",
-    title: "Deliver",
-    description:
-      "Every detail is managed with precision, quality, and seamless coordination.",
-    accent: "pink",
-  },
-  {
-    index: "04",
-    title: "Reveal",
-    description: "A final walkthrough ensures every space is complete and ready to enjoy.",
-    accent: "teal",
-  },
-];
+    {
+      index: "01",
+      title: "Discover",
+      description:
+        "We understand your vision, lifestyle, and space before every design decision.",
+      accent: "yellow",
+    },
+    {
+      index: "02",
+      title: "Design",
+      description: "Ideas evolve into detailed layouts and realistic 3D visualizations.",
+      accent: "pink",
+    },
+    {
+      index: "03",
+      title: "Deliver",
+      description:
+        "Every detail is managed with precision, quality, and seamless coordination.",
+      accent: "pink",
+    },
+    {
+      index: "04",
+      title: "Reveal",
+      description: "A final walkthrough ensures every space is complete and ready to enjoy.",
+      accent: "teal",
+    },
+  ];
 
-export const aboutTeam: { name: string; role: string; caption: string; accent: Accent }[] = [
-  {
-    name: "Soumik Ahmed",
-    role: "Creative Director",
-    caption: "Watashi wa Banguradeshu Chū o tabi shite imasu",
-    accent: "pink",
-  },
-  {
-    name: "Soumik Ahmed",
-    role: "Creative Director",
-    caption: "Watashi wa Banguradeshu Chū o tabi shite imasu",
-    accent: "yellow",
-  },
-  {
-    name: "Soumik Ahmed",
-    role: "Creative Director",
-    caption: "Watashi wa Banguradeshu Chū o tabi shite imasu",
-    accent: "teal",
-  },
-  {
-    name: "Soumik Ahmed",
-    role: "Creative Director",
-    caption: "Watashi wa Banguradeshu Chū o tabi shite imasu",
-    accent: "pink",
-  },
-];
+export const aboutTeam: {
+  name: string;
+  role: string;
+  caption: string;
+  image: string;
+  linkedin: string;
+}[] = [
+    {
+      name: "Soumik Ahmed",
+      role: "Creative Director",
+      caption: "Watashi wa Banguradeshu Chū o tabi shite imasu",
+      image: "/images/soumik-1.png",
+      linkedin: "https://linkedin.com/in/soumikahmed",
+    },
+    {
+      name: "Soumik Ahmed",
+      role: "Creative Director",
+      caption: "Watashi wa Banguradeshu Chū o tabi shite imasu",
+      image: "/images/soumik-1.png",
+      linkedin: "https://linkedin.com/in/soumikahmed",
+    },
+    {
+      name: "Soumik Ahmed",
+      role: "Creative Director",
+      caption: "Watashi wa Banguradeshu Chū o tabi shite imasu",
+      image: "/images/soumik-1.png",
+      linkedin: "https://linkedin.com/in/soumikahmed",
+    },
+    {
+      name: "Soumik Ahmed",
+      role: "Creative Director",
+      caption: "Watashi wa Banguradeshu Chū o tabi shite imasu",
+      image: "/images/soumik-1.png",
+      linkedin: "https://linkedin.com/in/soumikahmed",
+    },
+  ];
 
 export const aboutSustainability: { index: string; title: string; description: string }[] = [
   {

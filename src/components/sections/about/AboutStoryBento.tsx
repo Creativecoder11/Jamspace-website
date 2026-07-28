@@ -105,32 +105,26 @@ export function AboutStoryBento() {
       });
 
       const split = SplitText.create(".story-fill", {
-        type: "lines, chars",
-        linesClass: "story-fill-line",
+        type: "chars",
       });
 
       gsap.set(split.chars, {
-        color: "var(--color-unfilled)",
+        color: "#1919194D",
       });
 
-      split.lines.forEach((line) => {
-        const chars = line.querySelectorAll(".char");
-
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: line,
-              start: "top center",
-              end: "bottom center",
-              scrub: 0.3,
-            },
-          })
-          .to(chars, {
-            color: "var(--color-foreground)",
-            stagger: 0.1,
-            ease: "none",
-          });
+      gsap.to(split.chars, {
+        color: "#191919",
+        stagger: 0.02,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".story-fill",
+          start: "top 80%",
+          end: "bottom 35%",
+          scrub: true,
+        },
       });
+
+      ScrollTrigger.refresh();
 
       return () => {
         badgeRotationTween.current?.kill();
@@ -145,7 +139,7 @@ export function AboutStoryBento() {
   return (
     <section ref={containerRef} className="py-20">
       <Container className="flex flex-col pt-14">
-        <p className="story-copy story-fill text-2xl leading-relaxed">
+        <p className="story-fill text-[27px] leading-[124%]">
           Founded in 2022, JamSpace is an interior design studio creating
           thoughtful residential and commercial spaces through creativity,
           functionality, and timeless craftsmanship. We transform ideas into
@@ -201,31 +195,28 @@ export function AboutStoryBento() {
                       d="M23 1V23H1V12.999H13.001V1H23Z"
                       fill="#ffffff"
                       stroke="#ffffff"
-                      stroke-width="2"
+                      strokeWidth="2"
                     />
                   </svg>
 
                   <span
-                    className={`stat-number flex text-start text-6xl font-medium leading-none ${
-                      accentTextClass[stat.accent]
-                    }`}
+                    className={`stat-number flex text-start text-6xl font-medium leading-none ${accentTextClass[stat.accent]
+                      }`}
                   >
                     <p>03</p>
                   </span>
 
                   <span
-                    className={`text-6xl font-medium ${
-                      accentTextClass[stat.accent]
-                    }`}
+                    className={`text-6xl font-medium ${accentTextClass[stat.accent]
+                      }`}
                   >
                     {stat.suffix}
                   </span>
                 </div>
 
                 <p
-                  className={`text-center text-xl text-foreground ${
-                    accentTextClass[stat.accent]
-                  }`}
+                  className={`text-center text-xl text-foreground ${accentTextClass[stat.accent]
+                    }`}
                 >
                   {stat.label}
                 </p>
@@ -354,17 +345,15 @@ export function AboutStoryBento() {
                   </svg>
 
                   <span
-                    className={`stat-number flex text-start text-6xl font-medium leading-none ${
-                      accentTextClass[stat.accent]
-                    }`}
+                    className={`stat-number flex text-start text-6xl font-medium leading-none ${accentTextClass[stat.accent]
+                      }`}
                   >
                     <p>44</p>
                   </span>
 
                   <span
-                    className={`text-6xl font-medium ${
-                      accentTextClass[stat.accent]
-                    }`}
+                    className={`text-6xl font-medium ${accentTextClass[stat.accent]
+                      }`}
                   >
                     +
                   </span>
@@ -387,7 +376,7 @@ export function AboutStoryBento() {
                 {/* text */}
                 <div>
                   <p className="text-[16px]">
-                    From homes to workplaces, we're creating thoughtfully
+                    From homes to workplaces, we&apos;re creating thoughtfully
                     designed spaces across Dhaka, one project at a time.
                   </p>
                   <div className="h-1 my-5 border-b border-[#FFFFFF]/40"></div>
@@ -396,17 +385,16 @@ export function AboutStoryBento() {
                 <div className="flex gap-5 items-center">
                   <div className="flex flex-col gap-2.5">
                     <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(01)</span> // Jolshiri
+                      <span className="text-[#E92A7B]">(01)</span> {"// Jolshiri"}
                     </p>
                     <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(02)</span> // Gulshan
+                      <span className="text-[#E92A7B]">(02)</span> {"// Gulshan"}
                     </p>
                     <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(03)</span> // Nikunjo
+                      <span className="text-[#E92A7B]">(03)</span> {"// Nikunjo"}
                     </p>
                     <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(04)</span> //
-                      Bashundhara
+                      <span className="text-[#E92A7B]">(04)</span> {"// Bashundhara"}
                     </p>
                   </div>
                   <div>
@@ -458,17 +446,16 @@ export function AboutStoryBento() {
                   </div>
                   <div className="flex flex-col gap-2.5">
                     <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(01)</span> // Rampura
+                      <span className="text-[#E92A7B]">(01)</span> {"// Rampura"}
                     </p>
                     <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(01)</span> // Dhanmondi
+                      <span className="text-[#E92A7B]">(01)</span> {"// Dhanmondi"}
                     </p>
                     <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(01)</span> // Mirpur
-                      DOHS
+                      <span className="text-[#E92A7B]">(01)</span> {"// Mirpur DOHS"}
                     </p>
                     <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(01)</span> // Banani
+                      <span className="text-[#E92A7B]">(01)</span> {"// Banani"}
                     </p>
                   </div>
                 </div>
@@ -495,7 +482,7 @@ export function AboutStoryBento() {
                       d="M23 23H1V2.41406L11.999 13.4131L12.7061 12.7061L23 2.41309V23Z"
                       fill="white"
                       stroke="white"
-                      stroke-width="2"
+                      strokeWidth="2"
                     />
                   </svg>
 

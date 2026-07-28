@@ -56,7 +56,7 @@ export function AboutSustainability() {
   );
 
   return (
-    <section ref={containerRef} className="py-20">
+    <section ref={containerRef} className="pt-20">
       <Container className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
         <AnimatedHeading
           as="h2"
@@ -76,25 +76,29 @@ export function AboutSustainability() {
         </div>
       </Container>
 
-      <Container className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-16">
-        <div className="sustain-photo relative h-80 w-full overflow-hidden rounded-xl md:h-full">
+      <Container className="mt-14 flex flex-col gap-10 md:flex-row md:gap-[100px]">
+        <div className="sustain-photo relative h-[360px] w-[360px] shrink-0 overflow-hidden">
           <Image
-            src="/images/about-strip-04.webp"
+            src="/images/about-strip-06.png"
             alt="A durable, thoughtfully planned JamSpace interior"
             fill
-            sizes="(min-width: 768px) 50vw, 100vw"
+            sizes="360px"
             className="object-cover"
           />
         </div>
 
-        <div className="flex flex-col divide-y divide-border">
+        <div className="flex flex-1 flex-col gap-5">
           {aboutSustainability.map((item) => (
-            <div key={item.index} className="sustain-row py-6 first:pt-0">
-              <div className="flex items-baseline gap-4">
-                <span className="text-sm text-accent">({item.index})</span>
-                <h3 className="text-xl font-medium">{item.title}</h3>
-              <p className="mt-3 text-muted">{item.description}</p>
+            <div
+              key={item.index}
+              className="sustain-row grid grid-cols-1 gap-6 border-t border-border py-6 md:grid-cols-[400px_1fr]"
+            >
+              <div className="flex items-center gap-12.5">
+                <span className="text-xl text-accent">({item.index})</span>
+                <h3 className="text-[27px]">{item.title}</h3>
               </div>
+
+              <p className="text-muted">{item.description}</p>
             </div>
           ))}
         </div>
