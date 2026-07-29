@@ -56,6 +56,8 @@ export function Services() {
   const toggle = (index: number) => {
     const nextIndex = index === openIndex ? null : index;
 
+    setOpenIndex(nextIndex);
+
     contextSafe(() => {
       const prevEl = openIndex !== null ? panelRefs.current[openIndex] : null;
       const nextEl = nextIndex !== null ? panelRefs.current[nextIndex] : null;
@@ -99,19 +101,19 @@ export function Services() {
   };
 
   return (
-    <section ref={containerRef} className="pt-20">
-      <Container className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+    <section ref={containerRef} className="pt-15 md:pt-20 mx-4 md:mx-0">
+      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-start md:justify-between">
         <AnimatedHeading
           as="h2"
           lines={["Designed", "for Every Space."]}
-          className="text-6xl font-normal leading-18"
+          className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
         />
-        <div className="max-w-md">
+        <div className="max-w-md ms-12 md:ms-0">
           <p className="text-muted">
             From concept to completion, we deliver thoughtful design solutions
             tailored to every space and every vision.
           </p>
-          <div className="mt-6">
+          <div className="mt-3 md:mt-6">
             <Button href="/services">View All Services</Button>
           </div>
         </div>
@@ -123,28 +125,23 @@ export function Services() {
           const initiallyOpen = index === 0;
           return (
             <div key={service.slug}>
-              <div className="relative mb-5 min-h-20">
+              <div className="relative pb-4 md:mb-5 min-h-12 md:min-h-20">
                 <button
                   type="button"
                   onClick={() => toggle(index)}
                   aria-expanded={isOpen}
                   aria-controls={`service-panel-${service.slug}`}
-                  className="group absolute inset-x-0 z-10 w-full overflow-hidden p-8 text-left"
+                  className="group absolute inset-x-0 z-40 w-full overflow-hidden p-3 md:p-8 text-left"
                 >
-                  {/* Native :hover-driven (not GSAP): stays perfectly in sync
-                      with the group-hover text colors below across the
-                      accordion's own open/close reflow, which can otherwise
-                      leave a JS mouseenter/mouseleave-tracked fill stuck on
-                      the wrong row. */}
                   <div
                     aria-hidden="true"
                     className={`pointer-events-none absolute inset-0 z-0 origin-bottom scale-y-0 bg-foreground transition-transform duration-500 ease-out ${isOpen ? "" : "group-hover:scale-y-100"
                       }`}
                   />
 
-                  <div className="relative z-10 flex w-full items-center justify-between">
+                  <div className="relative z-10 flex w-full items-center justify-between gap-0 md:gap-4">
                     <span
-                      className={`text-xl transition-colors duration-300 ${isOpen
+                      className={`text-base md:text-xl transition-colors duration-300 ${isOpen
                         ? "text-white"
                         : "text-foreground group-hover:text-white"
                         }`}
@@ -153,7 +150,7 @@ export function Services() {
                     </span>
 
                     <span
-                      className={`text-center px-2 text-xl font-normal transition-colors duration-300 md:px-4 md:text-[27px] ${isOpen
+                      className={`flex-1 text-center px-2 text-xl font-normal transition-colors duration-300 md:px-4 md:text-[27px] ${isOpen
                         ? "text-white"
                         : "text-foreground group-hover:text-white"
                         }`}
@@ -163,15 +160,16 @@ export function Services() {
 
                     <span
                       onClick={(e) => e.stopPropagation()}
-                      className={`hidden items-center gap-2 text-lg font-normal transition-colors duration-300 md:inline-flex ${isOpen ? "text-white" : "text-pink-500"
+                      className={`inline-flex items-center gap-2 text-sm md:text-lg font-normal transition-colors duration-300 ${isOpen ? "text-white" : "text-pink-500"
                         }`}
                     >
-                      <a href="/services" className="inline-flex items-center gap-2">
-                        Learn More
-                        <ArrowIcon />
+                      <a href="/services" className="inline-flex items-center gap-1 md:gap-2">
+                        <span className="hidden md:block">Learn More</span> <span className="block md:hidden">Details</span>
+                        <ArrowIcon className="w-5 h-5 md:w-6 md:h-6" />
                       </a>
                     </span>
                   </div>
+
                 </button>
 
                 <div
@@ -187,7 +185,7 @@ export function Services() {
                   className="overflow-hidden "
                 >
                   {service.image && (
-                    <div className="relative min-h-105 w-full overflow-hidden md:min-h-130">
+                    <div className="relative min-h-85 w-full overflow-hidden md:min-h-130">
                       <Image
                         src={service.image}
                         alt={service.heading ?? service.title}
@@ -196,27 +194,27 @@ export function Services() {
                         className="object-cover"
                       />
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                      <div className="absolute inset-0 z-10 bg-[#0000004D]" />
 
-                      <div className="relative flex md:min-h-130 items-end justify-center">
-                        <div className="border-t border-white/40 w-full flex justify-center items-end gap-4 md:gap-8">
-                          <div className="border-l border-white/40 pl-8 pt-8 pb-8">
+                      <div className="relative z-20 flex min-h-85 md:min-h-130 items-end justify-center">
+                        <div className="w-full border-t border-white/60 flex justify-center items-end gap-4 md:gap-8">
+                          <div className="border-l border-white/60 pl-6 md:pl-8 pt-4 md:pt-8 pb-4 md:pb-8 pr-4 md:pr-0">
                             {service.heading && (
-                              <h3 className="max-w-md text-3xl font-normal leading-16 text-white md:text-subheading">
+                              <h3 className="max-w-md text-3xl font-normal leading-[120%] md:leading-16 text-white md:text-subheading">
                                 {service.heading}
                               </h3>
                             )}
 
-                            <div className="mt-6 max-w-lg rounded-xl p-6 text-white border border-white/25 bg-white/10 backdrop-blur-md">
+                            <div className="mt-3 md:mt-6 max-w-lg rounded-xl p-2.5 md:p-6 text-white border border-white/25 bg-white/10 backdrop-blur-md">
                               <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
                                 {service.description && (
-                                  <p className="text-white/90 text-[16px]">
+                                  <p className="text-white/90 text-sm md:text-[16px]">
                                     {service.description}
                                   </p>
                                 )}
                               </div>
                               {service.subServices && (
-                                <div className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+                                <div className="mt-2 md:mt-4 grid grid-cols-1 gap-x-2 md:gap-x-8 gap-y-1 md:gap-y-3 sm:grid-cols-2">
                                   {service.subServices.map((sub) => (
                                     <div
                                       key={sub.label}
@@ -228,13 +226,14 @@ export function Services() {
                                         height="14"
                                         viewBox="0 0 14 14"
                                         fill="none"
+                                        className="w-2.5 h-2.5 md:w-3.5 md:3.5"
                                       >
                                         <path
                                           d="M14 0V14H0V6.99959H7.00083V0H14Z"
                                           fill="white"
                                         />
                                       </svg>
-                                      <span className="text-[16px]">
+                                      <span className="text-sm md:text-[16px]">
                                         {sub.label}
                                       </span>
                                     </div>

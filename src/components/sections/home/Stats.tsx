@@ -19,10 +19,6 @@ export function Stats() {
 
   useGSAP(
     () => {
-      // Staggered fade-up as each card enters, plus a one-shot odometer-style
-      // digit roll per stat number (both `once: true`, no scrub). Each digit
-      // is a clipped "reel" stacked 0..target; rolling it up by exactly
-      // (digit count - 1) digit-heights lands on the real value.
       ScrollTrigger.batch(".stat-card", {
         start: "top 85%",
         once: true,
@@ -70,22 +66,20 @@ export function Stats() {
   );
 
   return (
-    <section ref={containerRef} className="border-t border-b  border-border">
+    <section ref={containerRef} className="border-t border-b border-r md:border-r-0 border-l md:border-l-0 border-border mx-4 md:mx-0">
       <Container className="grid grid-cols-1 md:grid-cols-3">
         {stats.map((stat, i) => (
           <div
             key={stat.label}
-            className={`stat-card flex flex-col gap-4 px-4 py-16 ${
-              i > 0 ? "md:border-l md:border-border" : ""
-            }`}
+            className={`stat-card flex flex-col gap-2 md:gap-4 px-4 py-6 md:py-16 ${i !== stats.length - 1 ? "border-b border-border md:border-b-0" : ""} ${i > 0 ? "md:border-l md:border-border" : ""} `}
           >
-            <div className="flex justify-center items-center gap-3">
+            <div className="flex justify-center items-center gap-1.5 md:gap-3">
               <StatIcon
                 type={stat.icon}
                 className={`stat-icon h-6 w-6 ${accentTextClass[stat.accent]}`}
               />
               <span
-                className={`stat-number flex text-8xl font-medium leading-none text-start ${accentTextClass[stat.accent]}`}
+                className={`stat-number flex text-7xl md:text-8xl font-medium leading-none text-start ${accentTextClass[stat.accent]}`}
               >
                 {String(stat.value)
                   .padStart(2, "0")
@@ -108,11 +102,11 @@ export function Stats() {
                     </span>
                   ))}
               </span>
-              <span className={`text-8xl font-medium ${accentTextClass[stat.accent]}`}>
+              <span className={`text-7xl md:text-8xl font-medium ${accentTextClass[stat.accent]}`}>
                 {stat.suffix}
               </span>
             </div>
-            <p className="text-foreground text-center text-3xl">{stat.label}</p>
+            <p className="text-foreground text-center text-xl md:text-3xl">{stat.label}</p>
           </div>
         ))}
       </Container>

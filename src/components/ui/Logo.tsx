@@ -1,17 +1,19 @@
 import Link from "next/link";
 
-/**
- * Exact brand lockup traced from the source logo SVG: 3-shape glyph row
- * (pink/yellow/teal) stacked above the custom "SPACE" wordmark letterforms.
- */
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({
+  className = "",
+  svgClassName = "",
+}: {
+  className?: string;
+  svgClassName?: string;
+}) {
   return (
-    <Link href="/" aria-label="JamSpace — home" className="inline-flex">
+    <Link href="/" aria-label="JamSpace — home" className={`inline-flex ${className}`}>
       <svg
         viewBox="0 0 77 40"
         fill="none"
         aria-hidden="true"
-        className={`h-12 w-auto ${className}`}
+        className={`h-12 w-auto ${svgClassName}`}
       >
         <path d="M22.8857 0V22.8595H0.0275879V11.429H11.458V0H22.8857Z" fill="var(--color-accent)" />
         <path

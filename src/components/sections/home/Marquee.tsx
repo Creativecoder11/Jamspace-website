@@ -14,8 +14,6 @@ const glyphColorClass = {
   teal: "text-accent-teal",
 } as const;
 
-// Three custom marquee separators, each built from straight lines only (no
-// curves), matching the brand's all-polygon glyph style.
 const glyphPaths = {
   sparkle: "M60 0L60 60L0 60L0 29.9982L30.0036 29.9982L30.0036 0L60 0Z",
   diamond: "M60 60L0 60L29.9982 0L60 60Z",
@@ -33,7 +31,7 @@ function MarqueeGlyph({
 }) {
   return (
     <svg
-      // viewBox="0 0 24 24"
+      viewBox="0 0 60 60"
       fill="currentColor"
       className={className}
       aria-hidden="true"
@@ -69,13 +67,14 @@ export function Marquee() {
   });
 
   const item = (i: number) => (
-    <span key={i} className="flex items-center gap-6 px-6">
-      <span className="text-stat font-normal uppercase leading-none">
+    <span key={i} className="flex items-center gap-3.5 px-2 md:gap-6 md:px-6">
+      <span className="text-[36px] leading-[120%] font-normal uppercase md:text-stat md:leading-none">
         {words[i % words.length]}
       </span>
+
       <MarqueeGlyph
         shape={glyphShapes[i % glyphShapes.length]}
-        className={`w-15 h-15 shrink-0 ${glyphColorClass[glyphColors[i % glyphColors.length]]}`}
+        className={`w-6 h-6 shrink-0 md:w-15 md:h-15 ${glyphColorClass[glyphColors[i % glyphColors.length]]}`}
       />
     </span>
   );

@@ -27,8 +27,6 @@ export function VideoShowcase() {
           const { reduced } = context.conditions as { reduced: boolean };
 
           if (!reduced) {
-            // Classic Awwwards reveal: rounded/scaled-down photo grows to a
-            // full-bleed square-corner frame, scrubbed to scroll position.
             gsap.fromTo(
               frameRef.current,
               { scale: 0.85, borderRadius: 32 },
@@ -50,7 +48,6 @@ export function VideoShowcase() {
               duration: 30,
               repeat: -1,
               ease: "none",
-              // transformOrigin: "50% 50%",
             });
           }
         },
@@ -67,7 +64,7 @@ export function VideoShowcase() {
   return (
     <section
       ref={containerRef}
-      className="relative h-screen min-h-[600px] w-full"
+      className="relative md:h-screen min-h-65 w-full"
     >
       <div
         ref={frameRef}
@@ -82,7 +79,7 @@ export function VideoShowcase() {
         />
         <div className="absolute inset-0 bg-black/35" />
 
-        <div className="relative flex h-full flex-col justify-between p-6 text-white md:p-16">
+        <div className="relative flex h-full flex-col justify-between p-4 text-white md:p-16">
           <h2 className="text-3xl font-normal md:text-heading">
             The Jam Journey
           </h2>
@@ -97,7 +94,7 @@ export function VideoShowcase() {
           onMouseEnter={() => badgeRotationTween.current?.timeScale(4)}
           onMouseLeave={() => badgeRotationTween.current?.timeScale(1)}
           aria-label="Play the video"
-          className="absolute left-1/2 top-1/2 flex h-32 w-32 -translate-x-1/2 -translate-y-1/2 items-center justify-center md:h-40 md:w-40"
+          className="absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center md:h-40 md:w-40"
         >
           {/* Animated Circular Text */}
           <svg
@@ -125,7 +122,7 @@ export function VideoShowcase() {
             width={140}
             height={140}
             alt="Play video icon"
-            className="relative z-10"
+            className="relative z-10 h-20 w-20 md:h-[140px] md:w-[140px]"
           />
         </button>
       </div>

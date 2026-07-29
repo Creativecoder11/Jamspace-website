@@ -130,12 +130,12 @@ export function Footer() {
 
   return (
     <footer ref={containerRef} className="bg-background">
-      <div className="pt-25 pb-13">
+      <div className="pt-13 md:pt-25 pb-13">
         <p className="mb-8 text-center text-sm text-muted">
           Bring Your Vision to Life
         </p>
 
-        <div className="relative h-[400px] overflow-hidden">
+        <div className="relative h-[260px] md:h-[400px] overflow-hidden">
           {/* Looping image strip, behind everything. Heights alternate
               full/300px (even index = full, odd index = 300px, vertically
               centered) — the source array has an even count so the rhythm
@@ -163,11 +163,11 @@ export function Footer() {
           </div>
 
           {/* CTA panel, z-index stacked on top of the strip, centered */}
-          <div className="footer-cta-panel absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center border-l-[24px] border-r-[24px] border-[#F7F6F1] gap-6 bg-accent p-4 text-center md:aspect-4/5 md:w-100">
+          <div className="footer-cta-panel absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center border-l-[24px] border-r-[24px] border-[#F7F6F1] gap-6 bg-accent p-4 text-center md:aspect-4/5 w-3/4 md:w-100">
             <AnimatedHeading
               as="h2"
               lines={["Let's Design", "Your", "Dream Space."]}
-              className="text-2xl font-medium leading-tight text-white md:text-subheading"
+              className="text-xl font-medium leading-tight text-white md:text-subheading"
             />
             <div className="footer-cta-button">
               <MagneticButton>
@@ -180,17 +180,19 @@ export function Footer() {
         </div>
       </div>
 
-      <Container className="flex flex-row border-t border-border md:gap-x-0 md:divide-x md:divide-border">
-        <div className="flex flex-col w-[30%] space-between  py-13 md:pr-8">
-          <div className="flex-1">
-            <Logo />
+      <Container className="flex flex-col md:flex-row border-t border-border md:gap-x-0 md:divide-x md:divide-border">
+        <div className="flex flex-col w-full md:w-[30%] space-between py-8 md:py-13 md:pr-8 mx-4 md:mx-0">
+          <div className="md:flex-1">
+            <div className="relative w-[126px] h-[66px] md:w-[160px] md:h-auto">
+              <Logo />
+            </div>
           </div>
           <div>
-            <p className="mt-4 text-sm text-muted">
+            <p className="mt-10 md:mt-4 text-base text-muted mr-4">
               JamSpace creates timeless interiors that blend creativity,
               functionality, and exceptional craftsmanship.
             </p>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-4 md:mt-6 flex gap-3">
               <Image
                 src="/icons/facebook.svg"
                 alt=""
@@ -216,7 +218,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex items-start w-[15%] pt-14 pr-6 justify-end text-border">
+        <div className="hidden md:flex items-start w-[15%] pt-14 pr-6 justify-end text-border">
           <Image
             src="/footer-jam.svg"
             alt=""
@@ -226,12 +228,22 @@ export function Footer() {
           />
         </div>
 
-        <div className="py-13 w-[55%] md:pl-8">
-          <div className="flex gap-8">
+        <div className="md:hidden flex items-start w-full py-8 px-4 justify-end text-border border-t border-b">
+          <Image
+            src="/jam-footer-icon.svg"
+            alt=""
+            width={24}
+            height={24}
+            className="w-auto object-contain"
+          />
+        </div>
+
+        <div className="py-13 md:w-[55%] md:pl-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 space-y-8 mx-4 md:mx-0">
             {footerColumns.map((column) => (
-              <div key={column.title} className="w-[30%]">
-                <h3 className="text-sm font-medium">{column.title}</h3>
-                <ul className="mt-4 space-y-3 text-sm text-muted">
+              <div key={column.title}>
+                <h3 className="text-base font-medium">{column.title}</h3>
+                <ul className="mt-3 md:mt-4 space-y-1.5 md:space-y-3 text-sm text-muted">
                   {column.links.map((link) => (
                     <li key={link.href}>
                       <Link href={link.href} className="hover:text-accent">
@@ -244,8 +256,8 @@ export function Footer() {
             ))}
 
             <div>
-              <h3 className="text-sm font-medium">Contact Us</h3>
-              <ul className="mt-4 space-y-3 text-sm text-muted">
+              <h3 className="text-base font-medium">Contact Us</h3>
+              <ul className="mt-3 md:mt-4 space-y-1.5 md:space-y-3 text-sm text-muted">
                 <li>Address: {contactInfo.address}</li>
                 <li>
                   Phone:{" "}
@@ -269,9 +281,9 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="mt-13 w-full">
+          <div className="mt-6 md:mt-13 w-full mx-4 md:mx-0 pr-8 md:pr-0">
             <h3 className="text-lg font-medium">Stay informed</h3>
-            <p className="mt-2 w-full text-sm text-muted">
+            <p className="mt-2 w-full text-sm text-muted ">
               Stay inspired with the latest design trends, expert insights, and
               exclusive updates from JamSpace. Discover ideas that help you
               create beautiful, functional spaces.
@@ -283,7 +295,7 @@ export function Footer() {
         </div>
       </Container>
 
-      <Container className="footer-col flex flex-col gap-2 border-t border-border py-6 text-xs text-muted md:flex-row md:items-center md:justify-between">
+      <Container className="footer-col flex flex-col gap-2 border-t border-border py-3 md:py-6 text-xs text-muted md:flex-row md:items-center md:justify-between px-4 md:px-0">
         <p>&copy; {new Date().getFullYear()} Jamspace, All Rights Reserved</p>
         <p>
           Design &amp; Developed by{" "}
