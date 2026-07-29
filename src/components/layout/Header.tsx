@@ -12,11 +12,6 @@ import { BrandGlyph } from "@/components/ui/BrandGlyph";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { mainNav } from "@/lib/data/navigation";
 
-/**
- * Solid cream header (the source design has an opaque 80px bar from the
- * very top, not a transparent-over-hero treatment). Hide-on-scroll-down /
- * reveal-on-scroll-up lands with the Header/Nav animation iteration.
- */
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lenis = useLenis();
@@ -32,8 +27,8 @@ export function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 h-20 bg-background">
-      <Container className="flex h-full items-center justify-between">
-        <Logo />
+      <Container className="flex h-full items-center justify-between px-4 md:px-0">
+        <Logo svgClassName="w-[77px] h-[40px] md:w-auto md:h-12" />
 
         <nav aria-label="Main" className="hidden md:block">
           <ul className="flex items-center gap-15 text-[16px] font-normal">
@@ -99,14 +94,12 @@ export function Header() {
           className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
         >
           <span
-            className={`h-px w-6 bg-foreground transition-transform duration-300 ${
-              isMenuOpen ? "translate-y-[3.5px] rotate-45" : ""
-            }`}
+            className={`h-px w-6 bg-foreground transition-transform duration-300 ${isMenuOpen ? "translate-y-[3.5px] rotate-45" : ""
+              }`}
           />
           <span
-            className={`h-px w-6 bg-foreground transition-transform duration-300 ${
-              isMenuOpen ? "translate-y-[-3.5px] -rotate-45" : ""
-            }`}
+            className={`h-px w-6 bg-foreground transition-transform duration-300 ${isMenuOpen ? "translate-y-[-3.5px] -rotate-45" : ""
+              }`}
           />
         </button>
       </Container>

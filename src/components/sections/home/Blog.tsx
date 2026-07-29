@@ -45,22 +45,22 @@ export function Blog() {
   return (
     <section
       ref={containerRef}
-      className="border-t border-border  mt-13 w-full"
+      className="border-t border-border mt-13 w-full"
     >
-      <div className="flex max-w-[1340px] mx-auto items-start justify-between">
+      <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
         <div className="w-2/3 border-r border-border py-8">
           <AnimatedHeading
             as="h2"
             lines={["Design", "Insights."]}
-            className="text-6xl font-normal leading-18"
+            className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 mx-4 md:mx-0"
           />
         </div>
-        <div className="w-1/3 pl-8 py-8">
+        <div className="border-t md:border-t-0 border-l border-border md:w-1/3 pl-8 md:pl-8 py-4 md:py-8 mx-4 md:mx-0">
           <p className="text-muted">
             Explore expert tips, design trends, and practical ideas to help you
             create spaces that are both beautiful and functional.
           </p>
-          <div className="mt-6">
+          <div className="mt-3 md:mt-6">
             <Button href="/about">Learn More About Us</Button>
           </div>
         </div>

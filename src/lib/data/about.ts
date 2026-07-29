@@ -11,6 +11,13 @@ export const aboutStripImages: StripImage[] = [
 export const aboutTickerText =
   "Residential Design . Bedroom . Residential Design . Bedroom . Residential Design";
 
+export const aboutMobileTexts = [
+  "Residential Design",
+  "Bedroom",
+  "Living Room",
+  "Interior Styling",
+];
+
 export const aboutMissionVision: {
   key: "mission" | "vision";
   label: string;

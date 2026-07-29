@@ -12,7 +12,7 @@ export function BlogCard({
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="blog-card group border border-border relative flex h-[420px] flex-col justify-end overflow-hidden p-6"
+      className="blog-card group border border-border relative flex md:h-[420px] flex-col justify-end overflow-hidden p-4 md:p-6"
     >
       <div className="absolute inset-0 overflow-hidden">
         <Image
@@ -25,7 +25,7 @@ export function BlogCard({
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-black/10 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100" />
       </div>
-      
+
       <div className="relative flex flex-col w-full h-full justify-between gap-20 text-black">
         <div>
           <span className="inline-block rounded-full bg-accent-yellow px-3 py-1 text-xs font-normal  text-foreground">

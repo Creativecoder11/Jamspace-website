@@ -196,7 +196,7 @@ export function Testimonials() {
       ref={containerRef}
       className="border-t border-border py-15 md:py-25 mx-4 md:mx-0"
     >
-      <Container className="flex flex-col gap-4 md:gap-8 pb-8 md:pb-16 md:flex-row md:items-end md:justify-between">
+      <Container className="flex flex-col gap-3 md:gap-8 pb-4 md:pb-16 md:flex-row md:items-end md:justify-between">
         <AnimatedHeading
           as="h2"
           lines={["Words", "from Our Clients."]}
@@ -225,7 +225,7 @@ export function Testimonials() {
                 style={stackStyle(position)}
                 className={`testimonial-card absolute inset-0 ${isActive ? "flex" : "hidden sm:flex"} flex-col overflow-hidden rounded-2xl border border-border bg-white p-3 md:p-6 md:flex-row`}
               >
-                <div className="relative h-64 w-full shrink-0 md:h-auto md:w-2/5">
+                <div className="relative h-60 w-full shrink-0 md:h-auto md:w-2/5">
                   <Image
                     src={testimonial.image}
                     alt={`${testimonial.name} project`}
@@ -234,14 +234,14 @@ export function Testimonials() {
                     className="object-cover rounded-lg"
                   />
                 </div>
-                <div className="flex flex-col justify-center gap-6 py-8 md:p-12">
+                <div className="flex flex-col justify-center gap-3 md:gap-6 py-8 md:p-12">
                   <QuoteMark />
-                  <p className="text-lg text-muted md:text-2xl">
+                  <p className="text-base text-muted md:text-2xl">
                     {testimonial.quote}
                   </p>
                   <div>
-                    <p className="font-normal">{testimonial.name}</p>
-                    <p className="text-sm text-muted">{testimonial.role}</p>
+                    <p className="text-base md:text-2xl font-bold">{testimonial.name}</p>
+                    <p className="text-sm md:text-base text-muted">{testimonial.role}</p>
                   </div>
                 </div>
               </div>
@@ -253,7 +253,7 @@ export function Testimonials() {
             aria-label="Previous testimonial"
             disabled={!canCycle}
             onClick={goPrev}
-            className="absolute left-0 top-1/2 z-50 hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center md:flex"
+            className="absolute left-2 top-1/2 z-50 flex -translate-y-1/2 items-center justify-center sm:left-0 sm:-translate-x-1/2 pb-12 md:pb-0"
           >
             <Image
               src="/left.svg"
@@ -268,7 +268,7 @@ export function Testimonials() {
             aria-label="Next testimonial"
             disabled={!canCycle}
             onClick={goNext}
-            className="absolute right-0 top-1/2 z-50 hidden -translate-y-1/2 translate-x-1/2 items-center justify-center md:flex"
+            className="absolute right-2 top-1/2 z-50 flex -translate-y-1/2 items-center justify-center sm:right-0 sm:translate-x-1/2 pb-12 md:pb-0"
           >
             <Image
               src="/right.svg"
