@@ -5,9 +5,7 @@ import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
 import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
-import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
-import { services } from "@/lib/data/services";
+import type { Service } from "@/lib/types";
 
 function ArrowIcon({ className = "" }: { className?: string }) {
   return (
@@ -27,7 +25,7 @@ function ArrowIcon({ className = "" }: { className?: string }) {
   );
 }
 
-export function Services() {
+export function OtherServices({ services }: { services: Service[] }) {
   const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -48,54 +46,38 @@ export function Services() {
     { scope: containerRef },
   );
 
-  return (
-    <section ref={containerRef} className="pt-20">
-      <Container className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-        <AnimatedHeading
-          as="h2"
-          lines={["Designed", "for Every Space."]}
-          className="text-6xl font-normal leading-18"
-        />
-        <div className="max-w-md">
-          <p className="text-muted">
-            From concept to completion, we deliver thoughtful design solutions
-            tailored to every space and every vision.
-          </p>
-          <div className="mt-6">
-            <Button href="/services">View All Services</Button>
-          </div>
-        </div>
-      </Container>
+  if (services.length === 0) return null;
 
+  return (
+    <section ref={containerRef} className="pb-24 pt-10">
       <Container>
+        <h2 className="mb-8 text-2xl font-normal text-foreground md:text-3xl">
+          Explore Other Services
+        </h2>
+
         {services.map((service, index) => (
           <div key={service.slug}>
-            <div className="group relative overflow-hidden p-8">
-              {/* Native :hover-driven (not GSAP): stays perfectly in sync
-                  with the group-hover text colors below. */}
+            <Link
+              href={`/services/${service.slug}`}
+              className="group relative flex w-full items-center justify-between gap-4 overflow-hidden p-6"
+            >
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 z-0 origin-bottom scale-y-0 bg-foreground transition-transform duration-500 ease-out group-hover:scale-y-100"
               />
 
-              <div className="relative z-10 flex w-full flex-wrap items-center justify-between gap-4">
-                <span className="text-xl text-foreground transition-colors duration-300 group-hover:text-white">
-                  ({service.index})
-                </span>
+              <span className="relative z-10 text-xl text-foreground transition-colors duration-300 group-hover:text-white">
+                ({service.index})
+              </span>
 
-                <span className="px-2 text-center text-xl font-normal text-foreground transition-colors duration-300 group-hover:text-white md:px-4 md:text-[27px]">
-                  {service.title}
-                </span>
+              <span className="relative z-10 text-center text-xl font-normal text-foreground transition-colors duration-300 group-hover:text-white md:text-[27px]">
+                {service.title}
+              </span>
 
-                <Link
-                  href={`/services/${service.slug}`}
-                  className="inline-flex items-center gap-2 text-lg font-normal text-pink-500 transition-colors duration-300 group-hover:text-white"
-                >
-                  Learn More
-                  <ArrowIcon />
-                </Link>
-              </div>
-            </div>
+              <span className="relative z-10 text-pink-500 transition-colors duration-300 group-hover:text-white">
+                <ArrowIcon />
+              </span>
+            </Link>
 
             {index < services.length - 1 && (
               <div className="service-divider h-px w-full bg-border" />

@@ -11,6 +11,7 @@ export const services: Service[] = [
     index: "01",
     slug: "residential-design",
     title: "Residential Design",
+    shortdescription: "Beautiful, functional homes tailored to your lifestyle.",
     heading: "Designing Homes That Feel Like Home",
     description:
       "Create warm, functional, and timeless interiors tailored to your lifestyle.",
@@ -27,6 +28,7 @@ export const services: Service[] = [
     slug: "commercial-design",
     title: "Commercial Design",
     heading: "Spaces Built for Business",
+    shortdescription: "Purposeful interiors that elevate work and business.",
     description:
       "Functional, on-brand commercial interiors designed to perform as well as they look.",
     image: "/images/about-strip-03.webp",
@@ -42,6 +44,7 @@ export const services: Service[] = [
     slug: "3d-visualization",
     title: "3D Visualization",
     heading: "See It Before It's Built",
+    shortdescription: "Realistic visuals that bring your ideas to life.",
     description:
       "Photorealistic renders and walkthroughs that let you approve every detail up front.",
     image: "/images/video-bg-01.webp",
@@ -57,6 +60,7 @@ export const services: Service[] = [
     slug: "consultation-services",
     title: "Consultation Services",
     heading: "Expert Guidance, Start to Finish",
+    shortdescription: "Expert guidance for confident design decisions.",
     description:
       "One-on-one design consultation to help you plan, budget, and scope your project.",
     image: "/images/blog-01.webp",

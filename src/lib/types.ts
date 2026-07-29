@@ -26,6 +26,7 @@ export interface Service {
   title: string;
   heading?: string;
   description?: string;
+  shortdescription?: string;
   image?: string;
   subServices?: SubService[];
 }
