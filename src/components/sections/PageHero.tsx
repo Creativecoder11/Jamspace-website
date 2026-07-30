@@ -58,9 +58,11 @@ export function PageHero({
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(25,25,25,0)_-28.5%,#191919_100%)]" />
 
           <div className="relative flex items-center justify-between max-w-335 mx-auto h-full px-4 md:px-0 gap-4">
-            <h1 className="page-hero-intro text-4xl md:text-7xl text-white overflow-hidden">
-              <span className="line block">
-                {eyebrow}
+            <h1 className="page-hero-intro text-4xl md:text-7xl text-white">
+              <span className="block overflow-hidden">
+                <span className="line block pb-[0.15em]">
+                  {eyebrow}
+                </span>
               </span>
             </h1>
 

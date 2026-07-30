@@ -123,7 +123,7 @@ export function Services() {
           const initiallyOpen = index === 0;
           return (
             <div key={service.slug}>
-              <div className="relative pb-5 min-h-17 md:min-h-20">
+              <div className="relative pb-5 min-h-14 md:min-h-25">
                 <button
                   type="button"
                   onClick={() => toggle(index)}
@@ -177,7 +177,7 @@ export function Services() {
                   style={{
                     height: initiallyOpen ? undefined : 0,
                     opacity: initiallyOpen ? 1 : 0,
-                    marginTop: initiallyOpen ? "2rem" : 0,
+                    marginTop: initiallyOpen ? "1rem" : 0,
                   }}
                   className="overflow-hidden "
                 >
@@ -195,7 +195,7 @@ export function Services() {
 
                       <div className="relative flex min-h-80 md:min-h-130 items-end justify-center">
                         <div className="border-t border-white/40 w-full flex justify-center items-end gap-4 md:gap-8">
-                          <div className="border-l border-white/40 pl-4 md:pl-8 pt-16 md:pt-8 pb-8 mr-4 md:mr-0">
+                          <div className="border-l border-white/40 pl-4 md:pl-8 pt-16 md:pt-0 pb-8 mr-4 md:mr-0">
                             {service.heading && (
                               <h3 className="md:max-w-md text-3xl leading-9 font-normal md:leading-16 text-white md:text-subheading">
                                 {service.heading}
