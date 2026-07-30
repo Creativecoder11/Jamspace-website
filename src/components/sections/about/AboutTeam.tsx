@@ -86,25 +86,23 @@ export function AboutTeam() {
   );
 
   return (
-    <section ref={containerRef} className="py-20">
+    <section ref={containerRef} className="py-15 md:py-20">
       <div className="border-y border-border">
-        <div className="mx-auto flex max-w-335 items-start justify-between">
-          <div className="w-2/3 border-r border-border py-8">
+        <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
+          <div className="md:w-2/3 border-b md:border-b-0 border-r border-border pr-4 md:pr-0 py-5 md:py-8">
             <AnimatedHeading
               as="h2"
               lines={["Designing Spaces", "That Feel Meaningful."]}
-              className="text-6xl font-normal leading-18"
+              className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 mx-4 md:mx-0"
             />
           </div>
-
-          <div className="w-1/3 py-8 pl-8">
+          <div className="border-l border-border md:w-1/3 pl-4 md:pl-8 py-4 md:py-8 mx-4 md:mx-0">
             <p className="text-muted">
               Discover the passion, purpose, and philosophy that shape every
               space we create, transforming ideas into interiors that inspire
               everyday living.
             </p>
-
-            <div className="mt-6">
+            <div className="mt-3 md:mt-6">
               <MagneticButton>
                 <Button href="/about">Learn More About Us</Button>
               </MagneticButton>
@@ -113,15 +111,15 @@ export function AboutTeam() {
         </div>
       </div>
 
-      <Container className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2">
+      <Container className="mt-7 md:mt-14 grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2 px-4 md:px-0">
         {aboutTeam.map((member, i) => (
           <div
             key={`${member.name}-${i}`}
             className="team-card overflow-hidden transition-shadow duration-300"
           >
-            <div className="grid h-[383px] grid-cols-8 gap-4">
+            <div className="grid h-auto grid-cols-1 gap-3 md:h-[383px] md:grid-cols-8 md:gap-4">
               {/* Image */}
-              <div className="relative col-span-4 overflow-hidden border border-[#4444441A] p-4">
+              <div className="relative h-[300px] md:h-auto md:col-span-4 overflow-hidden border border-[#4444441A] p-4">
                 <div className="relative h-full w-full overflow-hidden">
                   <Image
                     src={member.image}
@@ -134,7 +132,7 @@ export function AboutTeam() {
               </div>
 
               {/* Info */}
-              <div className="col-span-4 flex flex-col justify-between border border-[#4444441A] p-4">
+              <div className="md:col-span-4 flex min-h-[220px] flex-col justify-between border border-[#4444441A] p-4">
                 <p className="text-[27px] leading-9 text-[muted]">
                   {member.caption}
                 </p>

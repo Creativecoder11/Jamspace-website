@@ -66,7 +66,7 @@ export function AboutJourney() {
 
   return (
     <section ref={containerRef}>
-      <div className="journey-frame relative w-full overflow-hidden py-20">
+      <div className="journey-frame relative w-full overflow-hidden py-15 md:py-20">
         <div className="journey-photo absolute inset-0">
           <Image
             src="/images/projects-bg-01.webp"
@@ -91,16 +91,26 @@ export function AboutJourney() {
               {aboutJourneySteps.slice(0, 2).map((step) => (
                 <div
                   key={step.index}
-                  className="journey-step flex h-[420px] w-full flex-col justify-between bg-[#F7F6F1] p-6"
+                  className="journey-step flex h-[240px] md:h-[420px] w-full flex-col justify-between bg-[#F7F6F1] p-3 md:p-6"
                 >
                   <span className="text-base text-muted leading-[120%]">({step.index})</span>
 
                   <div>
-                    <h3 className={`text-2xl font-medium ${titleClass[step.accent]}`}>
-                      {step.title}
-                    </h3>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src={step.icon}
+                        width={24}
+                        height={24}
+                        alt=""
+                        className="h-5 w-5 md:h-6 md:w-6"
+                      />
 
-                    <p className="mt-6 text-base text-muted">
+                      <h3 className={`text-xl md:text-2xl font-medium ${titleClass[step.accent]}`}>
+                        {step.title}
+                      </h3>
+                    </div>
+
+                    <p className="mt-3 md:mt-6 text-base text-muted">
                       {step.description}
                     </p>
                   </div>
@@ -109,7 +119,7 @@ export function AboutJourney() {
             </div>
 
             {/* Copy */}
-            <div className="journey-copy flex justify-end items-center md:col-span-2">
+            <div className="journey-copy flex justify-end items-center md:col-span-2 py-4 md:py-0">
               <div className="flex max-w-lg flex-col">
                 <p className="text-white/85">
                   A seamless journey from the first conversation to the final
@@ -145,16 +155,26 @@ export function AboutJourney() {
               {aboutJourneySteps.slice(2, 4).map((step) => (
                 <div
                   key={step.index}
-                  className="journey-step flex h-[420px] w-full flex-col justify-between bg-[#F7F6F1] p-6"
+                  className="journey-step flex h-[240px] md:h-[420px] w-full flex-col justify-between bg-[#F7F6F1] p-3 md:p-6"
                 >
                   <span className="text-sm text-muted">({step.index})</span>
 
                   <div>
-                    <h3 className={`text-2xl font-medium ${titleClass[step.accent]}`}>
-                      {step.title}
-                    </h3>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src={step.icon}
+                        width={24}
+                        height={24}
+                        alt=""
+                        className="h-5 w-5 md:h-6 md:w-6"
+                      />
 
-                    <p className="mt-6 text-sm text-muted">
+                      <h3 className={`text-xl md:text-2xl font-medium ${titleClass[step.accent]}`}>
+                        {step.title}
+                      </h3>
+                    </div>
+
+                    <p className="mt-3 md:mt-6 text-sm text-muted">
                       {step.description}
                     </p>
                   </div>

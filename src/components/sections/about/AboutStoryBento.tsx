@@ -6,7 +6,6 @@ import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger, SplitText } from "@/lib/animations/gsap";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
-import { StatIcon } from "@/components/ui/StatIcon";
 import { stats } from "@/lib/data/stats";
 import BangladeshMap from "@/components/ui/BangladeshMap";
 
@@ -91,25 +90,33 @@ export function AboutStoryBento() {
         },
       });
 
-      gsap.from(".stat-icon", {
-        rotate: -20,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.15,
-        ease: "back.out(2)",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-      });
+      const icons = gsap.utils.toArray(".stat-icon");
+
+      if (icons.length) {
+        gsap.from(icons, {
+          rotate: -20,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.15,
+          ease: "back.out(2)",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      }
 
       const split = SplitText.create(".story-fill", {
-        type: "chars",
+        type: "words,chars",
       });
 
       gsap.set(split.chars, {
         color: "#1919194D",
+      });
+
+      gsap.set(split.words, {
+        whiteSpace: "nowrap",
       });
 
       gsap.to(split.chars, {
@@ -137,9 +144,9 @@ export function AboutStoryBento() {
   );
 
   return (
-    <section ref={containerRef} className="py-20">
+    <section ref={containerRef} className="py-15 md:py-20 px-4 md:px-0">
       <Container className="flex flex-col pt-14">
-        <p className="story-fill text-[27px] leading-[124%]">
+        <p className="story-fill text-[21px] md:text-[27px] leading-[124%]">
           Founded in 2022, JamSpace is an interior design studio creating
           thoughtful residential and commercial spaces through creativity,
           functionality, and timeless craftsmanship. We transform ideas into
@@ -147,11 +154,11 @@ export function AboutStoryBento() {
         </p>
       </Container>
 
-      <div className="mx-auto flex max-w-[1340px] mt-10 flex-col gap-4">
+      <div className="mx-auto flex max-w-335 mt-4 md:mt-10 flex-col gap-4 px-0 md:px-0">
         {/* First Row */}
-        <div className="flex flex-1 gap-4 flex-row">
-          <div className="w-[50%]">
-            <div className="relative h-120 overflow-hidden">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="w-full md:w-[50%]">
+            <div className="relative h-[420px] md:h-120 overflow-hidden">
               <Image
                 src="/images/hero-01.webp"
                 alt="JamSpace Interior"
@@ -174,17 +181,18 @@ export function AboutStoryBento() {
             </div>
           </div>
 
-          <div className="flex w-[25%] flex-col gap-4">
+          <div className="flex w-full md:w-[25%] flex-col gap-4">
             {/* Logo */}
-            <div className="flex h-full items-center justify-center bg-white">
+            <div className="flex h-[180px] md:h-full items-center justify-center bg-white">
               <Logo className="h-22" />
             </div>
 
             {/* Stats */}
-            <div className="flex h-50 items-center justify-center bg-accent">
+            <div className="flex h-[180px] md:h-50 items-center justify-center bg-accent">
               <div className="stat-card flex flex-col gap-4 px-4 py-16">
                 <div className="flex items-center justify-center gap-3">
                   <svg
+                    className="stat-icon"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
@@ -200,14 +208,14 @@ export function AboutStoryBento() {
                   </svg>
 
                   <span
-                    className={`stat-number flex text-start text-6xl font-medium leading-none ${accentTextClass[stat.accent]
+                    className={`stat-number flex text-start text-4xl md:text-6xl font-medium leading-none ${accentTextClass[stat.accent]
                       }`}
                   >
                     <p>03</p>
                   </span>
 
                   <span
-                    className={`text-6xl font-medium ${accentTextClass[stat.accent]
+                    className={`text-4xl md:text-6xl font-medium ${accentTextClass[stat.accent]
                       }`}
                   >
                     {stat.suffix}
@@ -224,10 +232,10 @@ export function AboutStoryBento() {
             </div>
           </div>
 
-          <div className="w-[25%]">
+          <div className="w-full md:w-[25%]">
             <div className="relative">
               {/* Video Thumbnail */}
-              <div className="relative h-120 overflow-hidden">
+              <div className="relative h-[420px] md:h-120 overflow-hidden">
                 <Image
                   src="/images/video-bg-01.webp"
                   alt="Bedroom interior — behind the scenes of a JamSpace project"
@@ -246,7 +254,7 @@ export function AboutStoryBento() {
                   onMouseEnter={() => badgeRotationTween.current?.timeScale(4)}
                   onMouseLeave={() => badgeRotationTween.current?.timeScale(1)}
                   aria-label="Play the video"
-                  className="absolute left-1/2 top-1/2 flex h-32 w-32 -translate-x-1/2 -translate-y-1/2 items-center justify-center md:h-40 md:w-40"
+                  className="absolute left-1/2 top-1/2 flex h-24 w-24 md:h-40 md:w-40 -translate-x-1/2 -translate-y-1/2 items-center justify-center md:h-40 md:w-40"
                 >
                   {/* Circular Text */}
                   <svg
@@ -323,13 +331,14 @@ export function AboutStoryBento() {
         </div>
 
         {/* Second Row */}
-        <div className="flex flex-row gap-4">
-          <div className="w-[25%]">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="w-full md:w-[25%]">
             <div className="bg-accent-yellow h-full p-5">
               <div className="flex h-full flex-col justify-between">
                 {/* Top */}
                 <div className="flex items-center gap-3 border-b border-white/40 pb-4">
                   <svg
+                    className="stat-icon"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
@@ -345,14 +354,14 @@ export function AboutStoryBento() {
                   </svg>
 
                   <span
-                    className={`stat-number flex text-start text-6xl font-medium leading-none ${accentTextClass[stat.accent]
+                    className={`stat-number flex text-start text-4xl md:text-6xl font-medium leading-none ${accentTextClass[stat.accent]
                       }`}
                   >
                     <p>44</p>
                   </span>
 
                   <span
-                    className={`text-6xl font-medium ${accentTextClass[stat.accent]
+                    className={`text-4xl md:text-6xl font-medium ${accentTextClass[stat.accent]
                       }`}
                   >
                     +
@@ -370,9 +379,9 @@ export function AboutStoryBento() {
             </div>
           </div>
 
-          <div className="w-[50%] text-white p-5 bg-[#231F20]">
-            <div className="flex flex-row">
-              <div className="flex flex-col w-1/2">
+          <div className="w-full md:w-[50%] text-white p-5 bg-[#231F20]">
+            <div className="flex flex-col md:flex-row gap-8">
+              <div className="flex flex-col w-full md:w-1/2">
                 {/* text */}
                 <div>
                   <p className="text-[16px]">
@@ -460,18 +469,19 @@ export function AboutStoryBento() {
                   </div>
                 </div>
               </div>
-              <div className="w-1/2">
+              <div className="w-full md:w-1/2">
                 <BangladeshMap />
               </div>
             </div>
           </div>
 
-          <div className="w-[25%]">
+          <div className="w-full md:w-[25%]">
             <div className="bg-accent-teal h-full p-5">
               <div className="flex h-full flex-col justify-between">
                 {/* Top */}
                 <div className="flex items-center gap-3 border-b border-white/40 pb-4">
                   <svg
+                    className="stat-icon"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
@@ -487,13 +497,13 @@ export function AboutStoryBento() {
                   </svg>
 
                   <span
-                    className="flex text-white text-6xl font-medium leading-none"
+                    className="flex text-white text-4xl md:text-6xl font-medium leading-none"
                   >
                     <p>95</p>
                   </span>
 
                   <span
-                    className='text-6xl text-white font-medium'
+                    className='text-4xl md:text-6xl text-white font-medium'
                   >
                     %
                   </span>

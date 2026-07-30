@@ -6,8 +6,8 @@ import { AboutValues } from "@/components/sections/about/AboutValues";
 import { AboutJourney } from "@/components/sections/about/AboutJourney";
 import { AboutTeam } from "@/components/sections/about/AboutTeam";
 import { AboutSustainability } from "@/components/sections/about/AboutSustainability";
-import { AboutPillars } from "@/components/sections/about/AboutPillars";
 import { AboutStoryBento } from "@/components/sections/about/AboutStoryBento";
+import DesignPhilosophySection from "@/components/sections/about/DesignPhilosophySection";
 
 export const metadata: Metadata = {
   title: "About",
@@ -22,8 +22,8 @@ export default function AboutPage() {
         eyebrow="About"
         image="/images/about-strip-05.webp"
       />
-      <AboutPillars />
-      <AboutStoryBento/>
+      <DesignPhilosophySection />
+      <AboutStoryBento />
       <AboutMissionVision />
       <AboutValues />
       <AboutJourney />

@@ -119,6 +119,7 @@ export const aboutJourneySteps: {
   title: string;
   description: string;
   accent: Accent;
+  icon: string;
 }[] = [
     {
       index: "01",
@@ -126,12 +127,15 @@ export const aboutJourneySteps: {
       description:
         "We understand your vision, lifestyle, and space before every design decision.",
       accent: "yellow",
+      icon: "/discover.svg",
     },
     {
       index: "02",
       title: "Design",
-      description: "Ideas evolve into detailed layouts and realistic 3D visualizations.",
+      description:
+        "Ideas evolve into detailed layouts and realistic 3D visualizations.",
       accent: "pink",
+      icon: "/design.svg",
     },
     {
       index: "03",
@@ -139,12 +143,15 @@ export const aboutJourneySteps: {
       description:
         "Every detail is managed with precision, quality, and seamless coordination.",
       accent: "pink",
+      icon: "/deliver.svg",
     },
     {
       index: "04",
       title: "Reveal",
-      description: "A final walkthrough ensures every space is complete and ready to enjoy.",
+      description:
+        "A final walkthrough ensures every space is complete and ready to enjoy.",
       accent: "teal",
+      icon: "/reveal.svg",
     },
   ];
 

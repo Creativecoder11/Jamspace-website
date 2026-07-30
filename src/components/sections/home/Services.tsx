@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef } from "react";
-import Link from "next/link";
+import { useRef, useState } from "react";
+import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
+import { BrandGlyph } from "@/components/ui/BrandGlyph";
 import { services } from "@/lib/data/services";
 
 function ArrowIcon({ className = "" }: { className?: string }) {
@@ -29,6 +30,8 @@ function ArrowIcon({ className = "" }: { className?: string }) {
 
 export function Services() {
   const containerRef = useRef<HTMLElement>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const panelRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   useGSAP(
     () => {
@@ -48,15 +51,62 @@ export function Services() {
     { scope: containerRef },
   );
 
+  const { contextSafe } = useGSAP({ scope: containerRef });
+
+  const toggle = (index: number) => {
+    const nextIndex = index === openIndex ? null : index;
+
+    contextSafe(() => {
+      const prevEl = openIndex !== null ? panelRefs.current[openIndex] : null;
+      const nextEl = nextIndex !== null ? panelRefs.current[nextIndex] : null;
+
+      const tl = gsap.timeline();
+
+      if (prevEl) {
+        gsap.set(prevEl, { height: prevEl.scrollHeight });
+        tl.to(
+          prevEl,
+          {
+            height: 0,
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.inOut",
+            overwrite: "auto",
+          },
+          0,
+        );
+      }
+
+      if (nextEl) {
+        const targetHeight = nextEl.scrollHeight;
+        gsap.set(nextEl, { height: 0, opacity: 0 });
+        tl.to(
+          nextEl,
+          {
+            height: targetHeight,
+            opacity: 1,
+            duration: 0.5,
+            ease: "power2.inOut",
+            overwrite: "auto",
+            onComplete: () => gsap.set(nextEl, { height: "auto" }),
+          },
+          0,
+        );
+      }
+    })();
+
+    setOpenIndex(nextIndex);
+  };
+
   return (
-    <section ref={containerRef} className="pt-15 md:pt-20 mx-4 md:mx-0">
-      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-start md:justify-between">
+    <section ref={containerRef} className="pt-15 md:pt-20">
+      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-start md:justify-between px-4 md:px-0">
         <AnimatedHeading
           as="h2"
           lines={["Designed", "for Every Space."]}
           className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
         />
-        <div className="max-w-md ms-12 md:ms-0">
+        <div className="max-w-md md:ms-0">
           <p className="text-muted">
             From concept to completion, we deliver thoughtful design solutions
             tailored to every space and every vision.
@@ -68,40 +118,140 @@ export function Services() {
       </Container>
 
       <Container>
-        {services.map((service, index) => (
-          <div key={service.slug}>
-            <div className="group relative overflow-hidden p-8">
-              {/* Native :hover-driven (not GSAP): stays perfectly in sync
-                  with the group-hover text colors below. */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 z-0 origin-bottom scale-y-0 bg-foreground transition-transform duration-500 ease-out group-hover:scale-y-100"
-              />
-
-              <div className="relative z-10 flex w-full flex-wrap items-center justify-between gap-4">
-                <span className="text-xl text-foreground transition-colors duration-300 group-hover:text-white">
-                  ({service.index})
-                </span>
-
-                <span className="px-2 text-center text-xl font-normal text-foreground transition-colors duration-300 group-hover:text-white md:px-4 md:text-[27px]">
-                  {service.title}
-                </span>
-
-                <Link
-                  href={`/services/${service.slug}`}
-                  className="inline-flex items-center gap-2 text-lg font-normal text-pink-500 transition-colors duration-300 group-hover:text-white"
+        {services.map((service, index) => {
+          const isOpen = index === openIndex;
+          const initiallyOpen = index === 0;
+          return (
+            <div key={service.slug}>
+              <div className="relative pb-5 min-h-17 md:min-h-20">
+                <button
+                  type="button"
+                  onClick={() => toggle(index)}
+                  aria-expanded={isOpen}
+                  aria-controls={`service-panel-${service.slug}`}
+                  className="group absolute inset-x-0 z-10 w-full overflow-hidden p-4 md:p-8 text-left"
                 >
-                  Learn More
-                  <ArrowIcon />
-                </Link>
-              </div>
-            </div>
+                  <div
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-0 z-0 origin-bottom scale-y-0 bg-foreground transition-transform duration-500 ease-out ${isOpen ? "" : "group-hover:scale-y-100"
+                      }`}
+                  />
 
-            {index < services.length - 1 && (
-              <div className="service-divider h-px w-full bg-border" />
-            )}
-          </div>
-        ))}
+                  <div className="relative z-10 flex w-full items-center justify-between">
+                    <span
+                      className={`text-sm md:text-xl transition-colors duration-300 ${isOpen
+                        ? "text-white"
+                        : "text-foreground group-hover:text-white"
+                        }`}
+                    >
+                      ({service.index})
+                    </span>
+
+                    <span
+                      className={`text-center px-2 text-xl font-normal transition-colors duration-300 md:px-4 md:text-[27px] ${isOpen
+                        ? "text-white"
+                        : "text-foreground group-hover:text-white"
+                        }`}
+                    >
+                      {service.title}
+                    </span>
+
+                    <span
+                      onClick={(e) => e.stopPropagation()}
+                      className={`items-center gap-2 text-sm md:text-lg font-normal transition-colors duration-300 inline-flex ${isOpen ? "text-white" : "text-pink-500"
+                        }`}
+                    >
+                      <a href="/services" className="inline-flex items-center gap-2">
+                        <span className="hidden md:block">Learn More</span><span className="block md:hidden">Details</span>
+                        <ArrowIcon />
+                      </a>
+                    </span>
+                  </div>
+                </button>
+
+                <div
+                  id={`service-panel-${service.slug}`}
+                  ref={(el) => {
+                    panelRefs.current[index] = el;
+                  }}
+                  style={{
+                    height: initiallyOpen ? undefined : 0,
+                    opacity: initiallyOpen ? 1 : 0,
+                    marginTop: initiallyOpen ? "2rem" : 0,
+                  }}
+                  className="overflow-hidden "
+                >
+                  {service.image && (
+                    <div className="relative min-h-105 w-full overflow-hidden md:min-h-130">
+                      <Image
+                        src={service.image}
+                        alt={service.heading ?? service.title}
+                        fill
+                        sizes="100vw"
+                        className="object-cover"
+                      />
+
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+                      <div className="relative flex min-h-80 md:min-h-130 items-end justify-center">
+                        <div className="border-t border-white/40 w-full flex justify-center items-end gap-4 md:gap-8">
+                          <div className="border-l border-white/40 pl-4 md:pl-8 pt-16 md:pt-8 pb-8 mr-4 md:mr-0">
+                            {service.heading && (
+                              <h3 className="md:max-w-md text-3xl leading-9 font-normal md:leading-16 text-white md:text-subheading">
+                                {service.heading}
+                              </h3>
+                            )}
+
+                            <div className="mt-6 max-w-lg rounded-xl p-3 md:p-6 text-white border border-white/25 bg-white/10 backdrop-blur-md">
+                              <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+                                {service.description && (
+                                  <p className="text-white/90 text-sm md:text-[16px]">
+                                    {service.description}
+                                  </p>
+                                )}
+                              </div>
+                              {service.subServices && (
+                                <div className="mt-4 grid grid-cols-2 md:gap-x-8 md:gap-y-3 sm:grid-cols-2">
+                                  {service.subServices.map((sub) => (
+                                    <div
+                                      key={sub.label}
+                                      className="flex items-center gap-2"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 14 14"
+                                        fill="none"
+                                        className="w-3.5 h-3.5 md:w-4.5 md:h-4.5"
+                                      >
+                                        <path
+                                          d="M14 0V14H0V6.99959H7.00083V0H14Z"
+                                          fill="white"
+                                        />
+                                      </svg>
+                                      <span className="text-sm md:text-[16px]">
+                                        {sub.label}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {index < services.length - 1 && (
+                <div className="service-divider h-px w-full bg-border" />
+              )}
+            </div>
+          );
+        })}
       </Container>
     </section>
   );

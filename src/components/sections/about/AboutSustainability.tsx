@@ -56,19 +56,19 @@ export function AboutSustainability() {
   );
 
   return (
-    <section ref={containerRef} className="pt-20">
-      <Container className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+    <section ref={containerRef} className="pt-15 md:pt-20">
+      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-start md:justify-between px-4 md:px-0">
         <AnimatedHeading
           as="h2"
           lines={["Designing for", "a Better Tomorrow."]}
-          className="text-6xl font-normal leading-18"
+          className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
         />
         <div className="max-w-md">
           <p className="text-muted">
             Every design decision is guided by responsibility, creating
             spaces that are sustainable, functional, and built to last.
           </p>
-          <div className="mt-6">
+          <div className="mt-3 md:mt-6">
             <MagneticButton>
               <Button href="/contact">Contact Us Now</Button>
             </MagneticButton>
@@ -76,24 +76,24 @@ export function AboutSustainability() {
         </div>
       </Container>
 
-      <Container className="mt-14 flex flex-col gap-10 md:flex-row md:gap-[100px]">
-        <div className="sustain-photo relative h-[360px] w-[360px] shrink-0 overflow-hidden">
+      <Container className="mt-7 md:mt-14 flex flex-col gap-5 md:gap-10 md:flex-row md:gap-[100px] px-4 md:px-0">
+        <div className="sustain-photo relative aspect-square w-full max-w-[360px] shrink-0 overflow-hidden md:w-[360px]">
           <Image
             src="/images/about-strip-06.png"
             alt="A durable, thoughtfully planned JamSpace interior"
             fill
-            sizes="360px"
+            sizes="(max-width: 768px) 100vw, 360px"
             className="object-cover"
           />
         </div>
 
-        <div className="flex flex-1 flex-col gap-5">
+        <div className="flex flex-1 flex-col gap-2 md:gap-5">
           {aboutSustainability.map((item) => (
             <div
               key={item.index}
-              className="sustain-row grid grid-cols-1 gap-6 border-t border-border py-6 md:grid-cols-[400px_1fr]"
+              className="sustain-row grid grid-cols-1 gap-3 md:gap-6 border-t border-border py-6 md:grid-cols-[400px_1fr]"
             >
-              <div className="flex items-center gap-12.5">
+              <div className="flex items-center gap-7 md:gap-12.5">
                 <span className="text-xl text-accent">({item.index})</span>
                 <h3 className="text-[27px]">{item.title}</h3>
               </div>

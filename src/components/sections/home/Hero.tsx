@@ -163,7 +163,7 @@ export function Hero() {
       ref={containerRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative h-[100vh] min-h-[700px] mx-auto overflow-x-hidden overflow-y-hidden rounded-3xl"
+      className="relative h-[100vh] min-h-[700px] mx-auto overflow-x-hidden overflow-y-hidden"
     >
       {/* Image Container */}
       <div ref={imageRef} className="absolute inset-0 overflow-x-hidden overflow-y-hidden">

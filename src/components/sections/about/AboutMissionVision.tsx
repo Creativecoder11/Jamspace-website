@@ -7,9 +7,6 @@ import { aboutMissionVision } from "@/lib/data/about";
 
 type TabKey = (typeof aboutMissionVision)[number]["key"];
 
-
-
-
 export function AboutMissionVision() {
   const containerRef = useRef<HTMLElement>(null);
   const copyRef = useRef<HTMLParagraphElement>(null);
@@ -53,18 +50,6 @@ export function AboutMissionVision() {
   // Initial section animations
   useGSAP(
     () => {
-      gsap.from(".line", {
-        yPercent: 110,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-      });
-
       gsap.from(".mv-tabs", {
         y: 16,
         opacity: 0,
@@ -117,7 +102,7 @@ export function AboutMissionVision() {
         });
       }
 
-      setLabelColors(activeTab); // initial sync, gsap.set for no transition
+      setLabelColors(activeTab);
     },
     { scope: containerRef },
   );
@@ -204,10 +189,10 @@ export function AboutMissionVision() {
 
   return (
     <section ref={containerRef}>
-      <div className="max-w-[1340px] h-[200px] mx-auto">
+      <div className="w-full max-w-[1340px] md:h-[200px] mx-auto px-4 md:px-0">
         <div
           ref={tabsRef}
-          className="mv-tabs relative inline-flex items-start gap-2 rounded-xl border border-accent p-[1px]"
+          className="mv-tabs relative mx-auto md:mx-0 inline-flex items-start gap-2 rounded-xl border border-accent p-[1px]"
         >
           {/* Sliding active background */}
           <div
@@ -236,7 +221,7 @@ export function AboutMissionVision() {
         <p
           key={activeTab}
           ref={copyRef}
-          className="mt-6 text-3xl leading-relaxed text-muted"
+          className="mt-3 md:mt-6 text-xl md:text-3xl leading-relaxed text-muted"
         >
           <span className="font-medium text-foreground">
             {active.lead}

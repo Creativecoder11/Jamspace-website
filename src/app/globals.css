@@ -51,6 +51,10 @@ body {
   will-change: color;
 }
 
+.story-fill .word {
+  white-space: nowrap;
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);
