@@ -1,0 +1,52 @@
+import type { PricingPackage } from "@/lib/types";
+
+export const pricingPackages: PricingPackage[] = [
+  {
+    name: "Jam Session",
+    accent: "pink",
+    description: "Perfect for first time design guidance.",
+    tag: "Your First Step",
+    price: "৳3,000",
+    priceCaption: "One time consultation fee",
+    included: ["1 hour expert consultation.", "2D layout plan included."],
+  },
+  {
+    name: "Jam Home",
+    accent: "yellow",
+    description: "Complete home interior design service.",
+    tag: "Tailored to Your Vision",
+    price: "৳80",
+    unit: "sq ft",
+    priceCaption: "Starting price per sq ft",
+    included: ["Custom home design.", "Tailored to your needs."],
+  },
+  {
+    name: "Jam Classic",
+    accent: "teal",
+    description: "Ideal for transforming one room for everyone.",
+    tag: "Elevate a Single Room",
+    price: "15,000 – ৳25,000",
+    priceCaption: "Package pricing",
+    included: ["Single room design.", "Layout & 3D design."],
+  },
+  {
+    name: "Jam Office",
+    accent: "pink",
+    description: "Interiors for productive workplaces.",
+    tag: "Work in Style",
+    price: "৳120",
+    unit: "sq ft",
+    priceCaption: "Starting price per sq ft",
+    included: ["Functional office spaces.", "Productive by design."],
+  },
+  {
+    name: "Jam Bistro",
+    accent: "yellow",
+    description: "Designed for cafés and restaurants.",
+    tag: "Design Your Bistro",
+    price: "৳150",
+    unit: "sq ft",
+    priceCaption: "Starting price per sq ft",
+    included: ["Café & restaurant interiors.", "Business focused ambiance."],
+  },
+];

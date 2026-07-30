@@ -40,4 +40,20 @@ export const projects: Project[] = [
     category: "3D Visualization",
     image: "/images/testimonial-01.webp",
   },
+  {
+    index: "05",
+    slug: "project-05",
+    name: "Project Name",
+    location: "Location",
+    category: "Residential Design",
+    image: "/images/cta-strip-01.webp",
+  },
+  {
+    index: "06",
+    slug: "project-06",
+    name: "Project Name",
+    location: "Location",
+    category: "Commercial Design",
+    image: "/images/cta-strip-02.webp",
+  },
 ];

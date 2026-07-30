@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "light" | "inverse";
+type ButtonVariant = "primary" | "secondary" | "light" | "inverse" | "dark";
 
 interface BaseProps {
   variant?: ButtonVariant;
@@ -21,6 +21,8 @@ const variants: Record<ButtonVariant, string> = {
     "border border-white/70 text-white hover:bg-white hover:text-foreground",
   // Solid white pill with accent text — the CTA section's button on a pink panel.
   inverse: "bg-white text-accent hover:bg-foreground hover:text-white",
+  // Solid near-black pill — pricing cards' "Choose Package" CTA.
+  dark: "bg-foreground text-white hover:bg-accent",
 };
 
 function Arrow() {

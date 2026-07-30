@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
-import { PagePlaceholder } from "@/components/sections/PagePlaceholder";
+import { ProjectsGrid } from "@/components/sections/projects/ProjectsGrid";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -15,7 +15,7 @@ export default function ProjectsPage() {
         eyebrow="Projects"
         image="/images/projects-thumb-01.webp"
       />
-      <PagePlaceholder message="The full project archive is coming soon. In the meantime, see a preview on the home page." />
+      <ProjectsGrid />
     </>
   );
 }

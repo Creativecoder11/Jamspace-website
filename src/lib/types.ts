@@ -69,3 +69,20 @@ export interface HeroSlide {
   /** Portrait crop used in the "next up" preview card; falls back to `image`. */
   thumb?: string;
 }
+
+export interface PricingPackage {
+  name: string;
+  accent: "pink" | "yellow" | "teal";
+  description: string;
+  tag: string;
+  price: string;
+  /** Appended after the price as "/unit", e.g. "sq ft". Omit for flat/range prices. */
+  unit?: string;
+  priceCaption: string;
+  included: string[];
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}

@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 
-import { gsap, ScrollTrigger } from "@/lib/animations/gsap";
+import { gsap } from "@/lib/animations/gsap";
 
 interface SlideItem {
   index: string;
@@ -35,15 +35,55 @@ const slides: SlideItem[] = [
   },
 ];
 
-/** The site's recurring "step" brand mark, used here as a corner accent. */
+/**
+ * Animation configuration
+ */
+const PIN_TOP_OFFSET = 80;
+
+/**
+ * How long each slide transition takes
+ * inside the GSAP timeline.
+ */
+const SLIDE_TRANSITION_DURATION = 3;
+
+/**
+ * How long each slide stays locked after settling.
+ *
+ * Increase to 0.7 or 0.8 for a stronger hold.
+ * Decrease to 0.3 for a shorter hold.
+ */
+const SLIDE_HOLD_DURATION = 0.55;
+
+/**
+ * Scroll distance for each timeline unit.
+ *
+ * Increase this value if transitions feel too fast.
+ */
+const SCROLL_DISTANCE_PER_TIMELINE_UNIT = 90;
+
+/**
+ * Image parallax movement amount.
+ */
+const IMAGE_PARALLAX_AMOUNT = 12;
+
+/**
+ * Snap scrolling to settled slide positions.
+ */
+const ENABLE_SLIDE_SNAP = true;
+
+/**
+ * Recurring step-shaped brand mark.
+ */
 function CornerMark({ className = "" }: { className?: string }) {
   return (
     <svg
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       width="30"
       height="30"
       viewBox="0 0 30 30"
       fill="none"
+      aria-hidden="true"
     >
       <path
         d="M30 -5.24537e-06L30 30L5.24537e-06 30L2.62253e-06 14.9991L15.0018 14.9991L15.0018 -2.62299e-06L30 -5.24537e-06Z"
@@ -56,10 +96,12 @@ function CornerMark({ className = "" }: { className?: string }) {
 function SlideContent({ slide }: { slide: SlideItem }) {
   return (
     <div className="absolute inset-0 z-10 flex flex-col justify-between p-6 md:p-10 lg:p-12">
-      <div className="flex items-start justify-between">
+      <div className="slide-top flex items-start justify-between">
         <CornerMark />
-        <span className="font-sans text-2xl font-normal text-white md:text-3xl">
+
+        <span className="slide-index font-sans text-2xl font-normal text-white md:text-3xl">
           {slide.index}
+
           <span className="text-white/60">
             /{String(slides.length).padStart(2, "0")}
           </span>
@@ -67,215 +109,578 @@ function SlideContent({ slide }: { slide: SlideItem }) {
       </div>
 
       <div className="flex items-end justify-between gap-6">
-        <div>
-          <span className="slide-badge inline-block rounded-full bg-accent-yellow px-3 py-1 text-xs font-normal text-foreground">
-            Our Services Ideal For-
+        <div className="slide-copy">
+          <span className="block overflow-hidden">
+            <span className="slide-badge inline-block rounded-full bg-accent-yellow px-3 py-1 text-xs font-normal text-foreground">
+              Our Services Ideal For-
+            </span>
           </span>
+
           <h3 className="mt-3 text-5xl font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
             <span className="block overflow-hidden">
-              <span className="slide-line inline-block">{slide.audience}</span>
+              <span className="slide-line inline-block">
+                {slide.audience}
+              </span>
             </span>
           </h3>
         </div>
+
         <CornerMark className="hidden rotate-180 md:block" />
       </div>
     </div>
   );
 }
 
-export default function ResidentailServicesSlider() {
+export default function ResidentialServicesSlider() {
   const containerRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
+  const hintRef = useRef<HTMLDivElement>(null);
+
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const lastAnimatedIndex = useRef(0);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [showHint, setShowHint] = useState(true);
 
-  // Pins the section full-screen and scrubs through the slides as the user
-  // scrolls — the section only releases once the last slide finishes. The
-  // active slide's image gets a continuous horizontal parallax drift
-  // (leftward start, drifting right) tied to scroll progress within its own
-  // segment. Desktop/tablet only: a pinned,
-  // scroll-jacked section is a poor fit for mobile viewports (dynamic
-  // browser chrome, no room to "dwell"), so phones get a normal swipeable
-  // strip instead (see the md:hidden block in the JSX below).
   useGSAP(
     () => {
-      // GSAP must own this xPercent from the very first paint — setting the
-      // initial off-canvas position via a plain inline `transform` style
-      // instead and then later handing the element to GSAP causes it to
-      // parse the resolved pixel matrix and keep it as an extra fixed
-      // offset stacked underneath the new xPercent tween.
-      gsap.set(slideRefs.current, { xPercent: (i: number) => (i === 0 ? 0 : 100) });
+      const pinElement = pinRef.current;
 
-      // Every slide but the first starts with its heading/badge pre-hidden
-      // (masked line below its frame, badge nudged down) so the crossfade
-      // transition below can reveal them in with a stagger each time that
-      // slide becomes active — slide 0 is visible immediately, no entrance.
-      slideRefs.current.forEach((slide, i) => {
-        if (!slide || i === 0) return;
-        const line = slide.querySelector<HTMLElement>(".slide-line");
-        const badge = slide.querySelector<HTMLElement>(".slide-badge");
-        if (line) gsap.set(line, { yPercent: 120 });
-        if (badge) gsap.set(badge, { y: 18 });
-      });
+      const slideElements = slideRefs.current.filter(
+        (element): element is HTMLDivElement => element !== null
+      );
 
-      const mm = gsap.matchMedia();
+      const imageElements = imageRefs.current.filter(
+        (element): element is HTMLDivElement => element !== null
+      );
 
-      mm.add("(min-width: 768px)", () => {
-        const trigger = ScrollTrigger.create({
-          trigger: pinRef.current,
-          // Header is `fixed` (h-20 = 80px, out of normal flow) and stays on
-          // top the entire time this section is pinned, so pin 80px below
-          // the viewport top rather than at true top — otherwise the top
-          // corner mark/counter dwell hidden underneath the navbar for the
-          // whole scroll-jack, not just a momentary scroll-past.
-          start: "top top+=80",
-          end: `+=${slides.length * 100}%`,
-          pin: true,
-          scrub: true,
-          onUpdate: (self) => {
-            const scaled = self.progress * slides.length;
-            const idx = Math.min(slides.length - 1, Math.floor(scaled));
-            const localProgress = Math.min(1, Math.max(0, scaled - idx));
-
-            setActiveIndex(idx);
-            setShowHint(self.progress < 0.02);
-
-            const image = imageRefs.current[idx];
-            if (image) {
-              gsap.set(image, { xPercent: -8 + localProgress * 16 });
-            }
-          },
-        });
-
-        return () => trigger.kill();
-      });
-    },
-    { scope: containerRef },
-  );
-
-  // Slides the outgoing/incoming slide whenever the pinned scroll above
-  // crosses a segment boundary (no opacity — the outgoing slide is pushed
-  // fully off-screen while the incoming one slides in from the opposite
-  // edge). Layered for depth: the masked frame slides at full speed while
-  // the image inside it lags behind and settles in afterward (the image
-  // "catches up" to its frame — a multi-speed parallax, not a flat crossfade),
-  // and the heading/badge reveal in with their own delayed stagger. Direction
-  // follows scroll direction: scrolling back up slides/lags the other way.
-  useGSAP(
-    () => {
-      if (activeIndex === lastAnimatedIndex.current) return;
-      const prevIndex = lastAnimatedIndex.current;
-      lastAnimatedIndex.current = activeIndex;
-
-      const outgoing = slideRefs.current[prevIndex];
-      const incoming = slideRefs.current[activeIndex];
-      const direction = activeIndex > prevIndex ? 1 : -1;
-
-      const incomingLine =
-        incoming?.querySelector<HTMLElement>(".slide-line") ?? null;
-      const incomingBadge =
-        incoming?.querySelector<HTMLElement>(".slide-badge") ?? null;
-
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        gsap.set(outgoing, { clearProps: "all", xPercent: -direction * 100 });
-        gsap.set(incoming, { clearProps: "all", xPercent: 0 });
-        gsap.set([incomingLine, incomingBadge], { clearProps: "all" });
+      if (!pinElement || slideElements.length === 0) {
         return;
       }
 
-      const incomingImage = imageRefs.current[activeIndex];
-      const outgoingImage = imageRefs.current[prevIndex];
+      const mm = gsap.matchMedia();
 
-      gsap.set(incoming, { xPercent: direction * 100 });
-      gsap.set(incomingImage, { xPercent: direction * 12 - 8 });
-      if (incomingLine) gsap.set(incomingLine, { yPercent: 120 });
-      if (incomingBadge) gsap.set(incomingBadge, { y: 18 });
+      mm.add(
+        "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          /**
+           * First slide is visible.
+           * Other slides begin outside the right edge.
+           */
+          gsap.set(slideElements, {
+            xPercent: 100,
+            autoAlpha: 1,
+            force3D: true,
+          });
 
-      // One timeline drives every layer: the masked frame (pure slide, no
-      // opacity) on a smooth in-out curve, the images on their own
-      // deceleration-only settle (started together but resolving at
-      // slightly different rates for depth), and the text revealing in
-      // partway through the frame's motion rather than all at once.
-      gsap
-        .timeline({ defaults: { ease: "expo.inOut", duration: 1.1 } })
-        .to(outgoing, { xPercent: -direction * 100 }, 0)
-        .to(incoming, { xPercent: 0 }, 0)
-        .to(outgoingImage, { xPercent: -direction * 10, duration: 1.2, ease: "power3.out" }, 0)
-        .to(incomingImage, { xPercent: -8, duration: 1.3, ease: "power3.out" }, 0)
-        .to(incomingLine, { yPercent: 0, duration: 0.95, ease: "power3.out" }, 0.22)
-        .to(incomingBadge, { y: 0, duration: 0.75, ease: "power3.out" }, 0.3);
+          gsap.set(slideElements[0], {
+            xPercent: 0,
+          });
+
+          /**
+           * Initial image positioning for parallax.
+           */
+          imageRefs.current.forEach((image, index) => {
+            if (!image) return;
+
+            gsap.set(image, {
+              xPercent: index === 0 ? 0 : -IMAGE_PARALLAX_AMOUNT,
+              scale: index === 0 ? 1.02 : 1.08,
+              transformOrigin: "center center",
+              force3D: true,
+            });
+          });
+
+          /**
+           * Initial content states.
+           */
+          slideElements.forEach((slide, index) => {
+            const line =
+              slide.querySelector<HTMLElement>(".slide-line");
+
+            const badge =
+              slide.querySelector<HTMLElement>(".slide-badge");
+
+            const top =
+              slide.querySelector<HTMLElement>(".slide-top");
+
+            if (index === 0) {
+              gsap.set([line, badge, top], {
+                y: 0,
+                yPercent: 0,
+                autoAlpha: 1,
+              });
+
+              return;
+            }
+
+            if (line) {
+              gsap.set(line, {
+                yPercent: 120,
+                autoAlpha: 0,
+              });
+            }
+
+            if (badge) {
+              gsap.set(badge, {
+                y: 20,
+                autoAlpha: 0,
+              });
+            }
+
+            if (top) {
+              gsap.set(top, {
+                y: -15,
+                autoAlpha: 0,
+              });
+            }
+          });
+
+          /**
+           * Total GSAP timeline duration:
+           *
+           * - One hold period for every slide
+           * - One transition between every two slides
+           */
+          const totalTimelineUnits =
+            slides.length * SLIDE_HOLD_DURATION +
+            (slides.length - 1) * SLIDE_TRANSITION_DURATION;
+
+          /**
+           * Invisible proxy used to create real hold sections
+           * inside the GSAP timeline.
+           */
+          const holdState = {
+            value: 0,
+          };
+
+          /**
+           * Main scroll-controlled timeline.
+           */
+          const timeline = gsap.timeline({
+            defaults: {
+              ease: "none",
+            },
+
+            scrollTrigger: {
+              trigger: pinElement,
+
+              start: `top top+=${PIN_TOP_OFFSET}`,
+
+              end: () =>
+                `+=${
+                  totalTimelineUnits *
+                  window.innerHeight *
+                  (SCROLL_DISTANCE_PER_TIMELINE_UNIT / 100)
+                }`,
+
+              pin: true,
+              pinSpacing: true,
+
+              /**
+               * Smoothly catches up to the scroll position.
+               */
+              scrub: 1.15,
+
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+
+              /**
+               * Snap only to slide-settled positions.
+               */
+              snap: ENABLE_SLIDE_SNAP
+                ? {
+                    snapTo: "labels",
+
+                    duration: {
+                      min: 0.25,
+                      max: 0.6,
+                    },
+
+                    delay: 0.1,
+                    ease: "power2.out",
+                  }
+                : undefined,
+            },
+          });
+
+          /**
+           * First slide settled position.
+           */
+          timeline.addLabel("slide-0", 0);
+
+          /**
+           * Hide scroll hint after scrolling begins.
+           */
+          if (hintRef.current) {
+            timeline.to(
+              hintRef.current,
+              {
+                autoAlpha: 0,
+                duration: 0.12,
+                ease: "none",
+              },
+              0
+            );
+          }
+
+          /**
+           * Initial hold.
+           *
+           * The first slide remains completely still
+           * before it starts releasing.
+           */
+          timeline.to(
+            holdState,
+            {
+              value: 1,
+              duration: SLIDE_HOLD_DURATION,
+              ease: "none",
+            },
+            0
+          );
+
+          let timelineCursor = SLIDE_HOLD_DURATION;
+
+          /**
+           * Build slide transitions.
+           */
+          for (let index = 1; index < slideElements.length; index++) {
+            const previousSlide = slideElements[index - 1];
+            const incomingSlide = slideElements[index];
+
+            const previousImage = imageRefs.current[index - 1];
+            const incomingImage = imageRefs.current[index];
+
+            const previousLine =
+              previousSlide.querySelector<HTMLElement>(".slide-line");
+
+            const previousBadge =
+              previousSlide.querySelector<HTMLElement>(".slide-badge");
+
+            const previousTop =
+              previousSlide.querySelector<HTMLElement>(".slide-top");
+
+            const incomingLine =
+              incomingSlide.querySelector<HTMLElement>(".slide-line");
+
+            const incomingBadge =
+              incomingSlide.querySelector<HTMLElement>(".slide-badge");
+
+            const incomingTop =
+              incomingSlide.querySelector<HTMLElement>(".slide-top");
+
+            const transitionStart = timelineCursor;
+
+            /**
+             * Slide release and entry.
+             *
+             * power2.inOut creates:
+             * - A slow release
+             * - Smooth acceleration
+             * - A soft landing
+             */
+            timeline
+              .to(
+                previousSlide,
+                {
+                  xPercent: -100,
+                  duration: SLIDE_TRANSITION_DURATION,
+                  ease: "power2.inOut",
+                },
+                transitionStart
+              )
+              .to(
+                incomingSlide,
+                {
+                  xPercent: 0,
+                  duration: SLIDE_TRANSITION_DURATION,
+                  ease: "power2.inOut",
+                },
+                transitionStart
+              );
+
+            /**
+             * Outgoing image parallax.
+             */
+            if (previousImage) {
+              timeline.to(
+                previousImage,
+                {
+                  xPercent: IMAGE_PARALLAX_AMOUNT,
+                  scale: 1.08,
+                  duration: SLIDE_TRANSITION_DURATION,
+                  ease: "power1.inOut",
+                },
+                transitionStart
+              );
+            }
+
+            /**
+             * Incoming image parallax.
+             */
+            if (incomingImage) {
+              timeline.to(
+                incomingImage,
+                {
+                  xPercent: 0,
+                  scale: 1.02,
+                  duration: SLIDE_TRANSITION_DURATION,
+                  ease: "power1.inOut",
+                },
+                transitionStart
+              );
+            }
+
+            /**
+             * Outgoing text animation.
+             */
+            if (previousLine) {
+              timeline.to(
+                previousLine,
+                {
+                  yPercent: -35,
+                  autoAlpha: 0,
+                  duration: 0.35,
+                  ease: "power2.in",
+                },
+                transitionStart
+              );
+            }
+
+            if (previousBadge) {
+              timeline.to(
+                previousBadge,
+                {
+                  y: -14,
+                  autoAlpha: 0,
+                  duration: 0.3,
+                  ease: "power2.in",
+                },
+                transitionStart
+              );
+            }
+
+            if (previousTop) {
+              timeline.to(
+                previousTop,
+                {
+                  y: -15,
+                  autoAlpha: 0,
+                  duration: 0.3,
+                  ease: "power2.in",
+                },
+                transitionStart
+              );
+            }
+
+            /**
+             * Incoming text animation.
+             */
+            if (incomingLine) {
+              timeline.to(
+                incomingLine,
+                {
+                  yPercent: 0,
+                  autoAlpha: 1,
+                  duration: 0.52,
+                  ease: "power3.out",
+                },
+                transitionStart + 0.3
+              );
+            }
+
+            if (incomingBadge) {
+              timeline.to(
+                incomingBadge,
+                {
+                  y: 0,
+                  autoAlpha: 1,
+                  duration: 0.42,
+                  ease: "power3.out",
+                },
+                transitionStart + 0.36
+              );
+            }
+
+            if (incomingTop) {
+              timeline.to(
+                incomingTop,
+                {
+                  y: 0,
+                  autoAlpha: 1,
+                  duration: 0.4,
+                  ease: "power3.out",
+                },
+                transitionStart + 0.35
+              );
+            }
+
+            /**
+             * Move cursor to the end of the transition.
+             */
+            timelineCursor += SLIDE_TRANSITION_DURATION;
+
+            /**
+             * This label marks the exact point where
+             * the incoming slide is fully settled.
+             */
+            timeline.addLabel(`slide-${index}`, timelineCursor);
+
+            /**
+             * Hold the newly settled slide before releasing
+             * the next one.
+             */
+            timeline.to(
+              holdState,
+              {
+                value: index + 1,
+                duration: SLIDE_HOLD_DURATION,
+                ease: "none",
+              },
+              timelineCursor
+            );
+
+            timelineCursor += SLIDE_HOLD_DURATION;
+          }
+
+          /**
+           * Final release point.
+           *
+           * After the last slide's hold period, the pinned
+           * section releases smoothly.
+           */
+          timeline.addLabel("release", timelineCursor);
+
+          return () => {
+            timeline.scrollTrigger?.kill();
+            timeline.kill();
+
+            gsap.set(slideElements, {
+              clearProps: "transform,opacity,visibility",
+            });
+
+            gsap.set(imageElements, {
+              clearProps: "transform",
+            });
+
+            if (hintRef.current) {
+              gsap.set(hintRef.current, {
+                clearProps: "opacity,visibility",
+              });
+            }
+          };
+        }
+      );
+
+      /**
+       * Reduced-motion fallback.
+       *
+       * Only the first slide remains visible and no pinned
+       * scrolling animation is created.
+       */
+      mm.add(
+        "(min-width: 768px) and (prefers-reduced-motion: reduce)",
+        () => {
+          gsap.set(slideElements, {
+            xPercent: 100,
+            autoAlpha: 0,
+          });
+
+          gsap.set(slideElements[0], {
+            xPercent: 0,
+            autoAlpha: 1,
+          });
+
+          return () => {
+            gsap.set(slideElements, {
+              clearProps: "transform,opacity,visibility",
+            });
+          };
+        }
+      );
+
+      return () => {
+        mm.revert();
+      };
     },
-    { scope: pinRef, dependencies: [activeIndex] },
+    {
+      scope: containerRef,
+    }
   );
 
   return (
     <section ref={containerRef} className="relative">
-      {/* Desktop/tablet: pinned, scroll-scrubbed, parallax slider */}
+      {/* Desktop and tablet slider */}
       <div
         ref={pinRef}
-        className="relative hidden h-[calc(100vh-80px)] mt-25 w-full overflow-hidden md:block"
+        className="relative mt-25 hidden h-[calc(100svh-80px)] w-full overflow-hidden bg-black md:block"
       >
-        {slides.map((slide, i) => (
+        {slides.map((slide, index) => (
           <div
             key={slide.index}
-            ref={(el) => {
-              slideRefs.current[i] = el;
+            ref={(element) => {
+              slideRefs.current[index] = element;
             }}
-            className="absolute inset-0 overflow-hidden will-change-transform"
+            style={{
+              zIndex: index + 1,
+            }}
+            className="absolute inset-0 overflow-hidden will-change-transform transform-gpu"
           >
+            {/* Oversized image wrapper allows parallax movement */}
             <div
-              ref={(el) => {
-                imageRefs.current[i] = el;
+              ref={(element) => {
+                imageRefs.current[index] = element;
               }}
-              className="absolute inset-y-0 inset-x-[-32%] will-change-transform"
+              className="absolute inset-y-0 inset-x-[-14%] will-change-transform transform-gpu"
             >
-              {/* Not-yet-active slides sit off-canvas via translateX, so the
-                  browser's viewport-intersection check for native lazy
-                  loading never fires for them until the slide-in tween is
-                  already underway — eager loading avoids a blank flash. */}
               <Image
                 src={slide.image}
-                alt={`Residential design ideal for ${slide.audience.replace(/\.$/, "")}`}
+                alt={`Residential design ideal for ${slide.audience.replace(
+                  /\.$/,
+                  ""
+                )}`}
                 fill
                 sizes="100vw"
-                loading="eager"
+                priority={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
                 className="object-cover"
               />
             </div>
 
-            <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-black/25" />
+            <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-black/25" />
 
             <SlideContent slide={slide} />
           </div>
         ))}
 
         <div
-          className={`absolute bottom-10 left-1/2 z-10 -translate-x-1/2 text-sm text-white/80 transition-opacity duration-500 ${
-            showHint ? "opacity-100" : "opacity-0"
-          }`}
+          ref={hintRef}
+          className="pointer-events-none absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-sm text-white/80"
         >
           Scroll to Explore ↓
         </div>
       </div>
 
-      {/* Mobile: normal swipeable strip, no pin/scroll-jack */}
+      {/* Mobile swipeable slider */}
       <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-4 md:hidden">
-        {slides.map((slide) => (
+        {slides.map((slide, index) => (
           <div
             key={slide.index}
-            className="relative h-[75vh] w-[88vw] shrink-0 snap-center overflow-hidden rounded-2xl"
+            className="relative h-[75svh] w-[88vw] shrink-0 snap-center overflow-hidden rounded-2xl"
           >
             <Image
               src={slide.image}
-              alt={`Residential design ideal for ${slide.audience.replace(/\.$/, "")}`}
+              alt={`Residential design ideal for ${slide.audience.replace(
+                /\.$/,
+                ""
+              )}`}
               fill
               sizes="88vw"
+              priority={index === 0}
+              loading={index === 0 ? "eager" : "lazy"}
               className="object-cover"
             />
+
             <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-black/25" />
+
             <SlideContent slide={slide} />
           </div>
         ))}

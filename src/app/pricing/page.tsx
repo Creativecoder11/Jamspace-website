@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
-import { PagePlaceholder } from "@/components/sections/PagePlaceholder";
+import { PricingCards } from "@/components/sections/pricing/PricingCards";
+import { Faq } from "@/components/sections/Faq";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -14,7 +15,8 @@ export default function PricingPage() {
         eyebrow="Pricing"
         image="/images/hero-01.webp"
       />
-      <PagePlaceholder message="Pricing packages are coming soon. Book a consultation for a tailored quote in the meantime." />
+      <PricingCards />
+      <Faq />
     </>
   );
 }
