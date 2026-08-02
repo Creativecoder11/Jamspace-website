@@ -8,7 +8,7 @@ export const blogs: BlogPost[] = [
     excerpt:
       "Every design begins with understanding your vision, lifestyle, and goals, creating spaces that are both visually stunning and effortlessly functional.",
     date: "July 12, 2026",
-    image: "/images/blog-01.webp",
+    image: "/images/blog-image-1.webp",
   },
   {
     slug: "how-to-plan-a-space-that-looks-beautiful-and-works-better",
@@ -17,7 +17,7 @@ export const blogs: BlogPost[] = [
     excerpt:
       "Every design begins with understanding your vision, lifestyle, and goals, creating spaces that are both visually stunning and effortlessly functional.",
     date: "July 12, 2026",
-    image: "/images/about-strip-04.webp",
+    image: "/images/blog-image-2.webp",
   },
   {
     slug: "why-3d-visualization-is-essential-before-every-project",
@@ -26,6 +26,6 @@ export const blogs: BlogPost[] = [
     excerpt:
       "Every design begins with understanding your vision, lifestyle, and goals, creating spaces that are both visually stunning and effortlessly functional.",
     date: "July 12, 2026",
-    image: "/images/about-strip-05.webp",
+    image: "/images/blog-image-3.webp",
   },
 ];

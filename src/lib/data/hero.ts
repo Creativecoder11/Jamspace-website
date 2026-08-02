@@ -12,46 +12,51 @@ export const heroSlides: HeroSlide[] = [
   {
     name: "Project Name",
     location: "Location",
-    image: "/images/hero-01.webp",
-    thumb: "/images/hero-01.webp",
+    image: "/images/hero 1.webp",
+    thumb: "/images/hero 1.webp",
   },
   {
     name: "Project Name",
     location: "Location",
-    image: "/images/projects-bg-01.webp",
-    thumb: "/images/projects-bg-01.webp",
+    image: "/images/hero 2.webp",
+    thumb: "/images/hero 2.webp",
   },
   {
     name: "Project Name",
     location: "Location",
-    image: "/images/hero-01.webp",
-    thumb: "/images/hero-01.webp",
+    image: "/images/hero 3.webp",
+    thumb: "/images/hero 3.webp",
   },
   {
     name: "Project Name",
     location: "Location",
-    image: "/images/testimonial-01.webp",
+    image: "/images/hero 4.webp",
+    thumb: "/images/hero 4.webp",
   },
   {
     name: "Project Name",
     location: "Location",
-    image: "/images/video-bg-01.webp",
+    image: "/images/hero 5.webp",
+    thumb: "/images/hero 5.webp",
   },
-  {
-    name: "Project Name",
-    location: "Location",
-    image: "/images/about-strip-01.webp",
-  },
-  {
-    name: "Project Name",
-    location: "Location",
-    image: "/images/about-strip-04.webp",
-  },
-  {
-    name: "Project Name",
-    location: "Location",
-    image: "/images/about-strip-05.webp",
-  },
+  // {
+  //   name: "Project Name",
+  //   location: "Location",
+  //   image: "/images/about-strip-01.webp",
+  //   thumb: "/images/about-strip-01.webp",
+  // },
+  // {
+  //   name: "Project Name",
+  //   location: "Location",
+  //   image: "/images/about-strip-04.webp",
+  //   thumb: "/images/about-strip-04.webp",
+  // },
+  // {
+  //   name: "Project Name",
+  //   location: "Location",
+  //   image: "/images/about-strip-05.webp",
+  //   thumb: "/images/about-strip-05.webp",
+  // },
 ];
 
 export const heroSlideCount = heroSlides.length;

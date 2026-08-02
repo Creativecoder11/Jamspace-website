@@ -15,7 +15,7 @@ export const services: Service[] = [
     heading: "Designing Homes That Feel Like Home",
     description:
       "Create warm, functional, and timeless interiors tailored to your lifestyle.",
-    image: "/images/services-residential-01.webp",
+    image: "/images/services-residential-1.webp",
     subServices: [
       { label: "Full Home Design" },
       { label: "Renovation & Remodeling" },
@@ -31,7 +31,7 @@ export const services: Service[] = [
     shortdescription: "Purposeful interiors that elevate work and business.",
     description:
       "Functional, on-brand commercial interiors designed to perform as well as they look.",
-    image: "/images/about-strip-03.webp",
+    image: "/images/services-commercial-1.webp",
     subServices: [
       { label: "Office Design" },
       { label: "Retail & Hospitality" },
@@ -47,7 +47,7 @@ export const services: Service[] = [
     shortdescription: "Realistic visuals that bring your ideas to life.",
     description:
       "Photorealistic renders and walkthroughs that let you approve every detail up front.",
-    image: "/images/video-bg-01.webp",
+    image: "/images/services-3d-1.webp",
     subServices: [
       { label: "Photorealistic Renders" },
       { label: "Virtual Walkthroughs" },
@@ -63,7 +63,7 @@ export const services: Service[] = [
     shortdescription: "Expert guidance for confident design decisions.",
     description:
       "One-on-one design consultation to help you plan, budget, and scope your project.",
-    image: "/images/blog-01.webp",
+    image: "/images/services-consultation-1.webp",
     subServices: [
       { label: "Design Audits" },
       { label: "Budget Planning" },
