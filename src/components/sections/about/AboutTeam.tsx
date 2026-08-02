@@ -57,10 +57,24 @@ export function AboutTeam() {
 
   useGSAP(
     () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set([".line", ".team-card"], {
+          clearProps: "all",
+          opacity: 1,
+          y: 0,
+        });
+        return;
+      }
+
+      gsap.set(".team-card", {
+        opacity: 0,
+        y: 30,
+      });
+
       gsap.from(".line", {
         yPercent: 110,
-        duration: 0.9,
-        stagger: 0.12,
+        duration: 0.8,
+        stagger: 0.1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: containerRef.current,
@@ -70,19 +84,21 @@ export function AboutTeam() {
       });
 
       ScrollTrigger.batch(".team-card", {
-        start: "top 90%",
+        start: "top 85%",
         once: true,
-        onEnter: (batch) =>
-          gsap.from(batch, {
-            y: 30,
-            opacity: 0,
-            duration: 0.7,
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            y: 0,
+            opacity: 1,
+            duration: 0.65,
             stagger: 0.12,
             ease: "power3.out",
-          }),
+            overwrite: "auto",
+          });
+        },
       });
     },
-    { scope: containerRef },
+    { scope: containerRef }
   );
 
   return (
@@ -115,7 +131,7 @@ export function AboutTeam() {
         {aboutTeam.map((member, i) => (
           <div
             key={`${member.name}-${i}`}
-            className="team-card overflow-hidden transition-shadow duration-300"
+            className="team-card group overflow-hidden transition-shadow duration-300"
           >
             <div className="grid h-auto grid-cols-1 gap-3 md:h-[383px] md:grid-cols-8 md:gap-4">
               {/* Image */}

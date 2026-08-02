@@ -31,7 +31,9 @@ export default function ResidentialHeroSection() {
     }
 
     const split = SplitText.create(".story-fill", {
-      type: "chars",
+      type: "lines,words,chars",
+      linesClass: "story-fill-line",
+      autoSplit: true,
     });
 
     gsap.set(split.chars, {
@@ -56,26 +58,27 @@ export default function ResidentialHeroSection() {
       split.revert();
     };
   });
+
   return (
     <>
       <section>
-        <div className="mt-38 border-y border-border">
-          <div className="mx-auto flex max-w-[1340px] items-start justify-between">
-            <div className="w-2/3 border-r border-border py-8">
+        <div className="mt-20 md:mt-38 border-y border-border px-4 md:px-0">
+          <div className="mx-auto flex flex-col md:flex-row max-w-[1340px] md:items-start md:justify-between gap-2 md:gap-0">
+            <div className="md:w-2/3 border-r border-border pt-4 md:py-8">
               <AnimatedHeading
                 as="h2"
                 lines={["Residential", "Design."]}
-                className="text-6xl font-normal leading-18"
+                className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
               />
             </div>
 
-            <div className="w-1/3 py-8 pl-8">
+            <div className="md:w-1/3 py-4 md:py-8 md:pl-8">
               <p className="text-muted">
                 Thoughtfully designed homes that balance comfort, functionality,
                 and timeless aesthetics to reflect the way you live.
               </p>
 
-              <div className="mt-6">
+              <div className="mt-3 md:mt-6">
                 <MagneticButton>
                   <Button href="/about">Start a Project</Button>
                 </MagneticButton>
@@ -89,7 +92,7 @@ export default function ResidentialHeroSection() {
             {[...ctaStripImages, ...ctaStripImages].map((src, i) => (
               <div
                 key={i}
-                className="relative f gap-10 h-75 w-75 shrink-0 md:h-[420px] md:w-[420px]"
+                className="relative gap-10 h-65 w-65 shrink-0 md:h-[420px] md:w-[420px]"
               >
                 <Image
                   src={src}
@@ -103,9 +106,9 @@ export default function ResidentialHeroSection() {
             ))}
           </div>
         </div>
-        <Container className="py-20">
+        <Container className="py-12 md:py-20 px-4 md:px-0">
           <p>About the Service:</p>
-          <p className="story-fill mt-2.5 text-[27px] leading-10 pr-16">
+          <p className="story-fill mt-2.5 text-xl md:text-[27px] leading-7 md:leading-10 md:pr-16">
             Your home should be more than just a place to live. Our residential
             design service creates interiors that reflect your lifestyle,
             maximize functionality, and bring lasting comfort through thoughtful

@@ -162,24 +162,24 @@ export function ContactForm() {
   );
 
   return (
-    <section ref={containerRef} className="pt-22">
-      <Container className="grid grid-cols-1 gap-16 border-t border-b border-border lg:grid-cols-2">
-        <div className="contact-reveal border-r pt-8 pb-8 border-border flex flex-col justify-between">
+    <section ref={containerRef} className="py-16 md:pt-22">
+      <Container className="grid grid-cols-1 gap-8 md:gap-16 border-t border-b-0 md:border-b border-border lg:grid-cols-2">
+        <div className="contact-reveal border-r-0 md:border-r pt-8 pb-8 border-border flex flex-col justify-between mx-4 md:mx-0">
           <div>
             <AnimatedHeading
               as="h1"
               lines={["Let's Start", "the Conversation"]}
-              className="text-5xl font-normal leading-tight"
+              className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
             />
-            <p className="mt-4 max-w-md text-muted">
+            <p className="mt-2 md:mt-4 max-w-md text-muted">
               We&apos;re here to answer your questions, discuss your ideas, and
               guide you through every step of your interior design journey.
             </p>
           </div>
 
-          <ul className="mt-10 flex flex-col gap-6">
+          <ul className="mt-6 md:mt-10 flex flex-col gap-4 md:gap-6">
             {contactItems.map((item) => (
-              <li key={item.label} className="flex items-center gap-4">
+              <li key={item.label} className="flex items-center gap-2 md:gap-4">
                 <IconBadge>{item.icon}</IconBadge>
                 <div>
                   <p className="text-sm font-medium">{item.label}</p>
@@ -199,10 +199,10 @@ export function ContactForm() {
           </ul>
         </div>
 
-        <form onSubmit={(e) => e.preventDefault()} className="contact-reveal pt-8 pb-8">
+        <form onSubmit={(e) => e.preventDefault()} className="contact-reveal py-0 md:py-8 px-4 md:px-0">
           <h2 className="text-xl font-medium">Start Your Project</h2>
 
-          <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+          <div className="mt-4 md:mt-8 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <div>
               <FieldLabel>Full Name</FieldLabel>
               <input
@@ -283,7 +283,7 @@ export function ContactForm() {
             </div>
           </div>
 
-          <label className="mt-8 flex items-start gap-2.5 pt-6 text-sm text-muted">
+          <label className="mt-4 md:mt-8 flex items-start gap-2.5 pt-4 md:pt-6 text-sm text-muted">
             <input
               type="checkbox"
               required
@@ -297,7 +297,7 @@ export function ContactForm() {
               >
                 Terms &amp; Conditions
               </a>{" "}
-              and{" "}
+              and{" "} <br className="block md:hidden"/>
               <a href="/privacy-policy" className="text-accent hover:underline">
                 Privacy Policy
               </a>{" "}
@@ -305,7 +305,7 @@ export function ContactForm() {
             </span>
           </label>
 
-          <Button type="submit" className="mt-6 w-full justify-center">
+          <Button type="submit" className="mt-3 md:mt-6 w-full justify-center">
             Book a Consultant
           </Button>
         </form>

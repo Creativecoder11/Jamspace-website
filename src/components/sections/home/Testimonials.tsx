@@ -194,7 +194,7 @@ export function Testimonials() {
   return (
     <section
       ref={containerRef}
-      className="border-t border-border py-15 md:py-25 mx-4 md:mx-0"
+      className="border-t border-border py-15 md:py-25 mx-4 md:mx-0 overflow-hidden"
     >
       <Container className="flex flex-col gap-3 md:gap-8 pb-4 md:pb-16 md:flex-row md:items-end md:justify-between">
         <AnimatedHeading

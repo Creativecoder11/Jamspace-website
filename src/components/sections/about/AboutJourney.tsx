@@ -7,7 +7,6 @@ import { gsap, ScrollTrigger } from "@/lib/animations/gsap";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
-import { StatIcon } from "@/components/ui/StatIcon";
 import { aboutJourneySteps } from "@/lib/data/about";
 
 const titleClass = {
@@ -18,13 +17,28 @@ const titleClass = {
 
 export function AboutJourney() {
   const containerRef = useRef<HTMLElement>(null);
-
+  
   useGSAP(
     () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set([".line", ".journey-step", ".journey-photo"], {
+          clearProps: "all",
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
+        return;
+      }
+
+      gsap.set(".journey-step", {
+        opacity: 0,
+        y: 24,
+      });
+
       gsap.from(".line", {
         yPercent: 110,
-        duration: 0.9,
-        stagger: 0.12,
+        duration: 0.8,
+        stagger: 0.1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: containerRef.current,
@@ -35,7 +49,9 @@ export function AboutJourney() {
 
       gsap.fromTo(
         ".journey-photo",
-        { scale: 1.1 },
+        {
+          scale: 1.08,
+        },
         {
           scale: 1,
           ease: "none",
@@ -45,23 +61,25 @@ export function AboutJourney() {
             end: "bottom top",
             scrub: true,
           },
-        },
+        }
       );
 
       ScrollTrigger.batch(".journey-step", {
-        start: "top 90%",
+        start: "top 85%",
         once: true,
-        onEnter: (batch) =>
-          gsap.from(batch, {
-            y: 24,
-            opacity: 0,
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
             duration: 0.6,
-            stagger: 0.12,
+            stagger: 0.1,
             ease: "power3.out",
-          }),
+            overwrite: "auto",
+          });
+        },
       });
     },
-    { scope: containerRef },
+    { scope: containerRef }
   );
 
   return (
@@ -91,7 +109,7 @@ export function AboutJourney() {
               {aboutJourneySteps.slice(0, 2).map((step) => (
                 <div
                   key={step.index}
-                  className="journey-step flex h-[240px] md:h-[420px] w-full flex-col justify-between bg-[#F7F6F1] p-3 md:p-6"
+                  className="journey-step flex h-[240px] md:h-[335px] w-full flex-col justify-between bg-[#F7F6F1] p-3 md:p-6"
                 >
                   <span className="text-base text-muted leading-[120%]">({step.index})</span>
 
@@ -155,7 +173,7 @@ export function AboutJourney() {
               {aboutJourneySteps.slice(2, 4).map((step) => (
                 <div
                   key={step.index}
-                  className="journey-step flex h-[240px] md:h-[420px] w-full flex-col justify-between bg-[#F7F6F1] p-3 md:p-6"
+                  className="journey-step flex h-[240px] md:h-[335px] w-full flex-col justify-between bg-[#F7F6F1] p-3 md:p-6"
                 >
                   <span className="text-sm text-muted">({step.index})</span>
 

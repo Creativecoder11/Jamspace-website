@@ -20,27 +20,6 @@ const ctaStripImages = [
   "/images/cta-strip-04.webp",
 ];
 
-const socialLinks = [
-  {
-    label: "Facebook",
-    href: "https://facebook.com",
-    path: "M13.5 9H16V6h-2.5C11.6 6 10 7.6 10 9.9V12H8v3h2v6h3v-6h2.2l.8-3H13v-1.6c0-.6.4-1.4 1.5-1.4Z",
-  },
-  {
-    label: "LinkedIn",
-    path: "M6.94 8.5a1.94 1.94 0 1 1 0-3.88 1.94 1.94 0 0 1 0 3.88ZM5.5 10h3v9h-3v-9Zm5.5 0h2.9v1.23h.04c.4-.76 1.4-1.56 2.9-1.56 3.1 0 3.66 2.04 3.66 4.7V19h-3v-4.1c0-1-.02-2.3-1.4-2.3-1.4 0-1.6 1.1-1.6 2.23V19h-3v-9Z",
-    href: "https://linkedin.com",
-  },
-  {
-    label: "Instagram",
-    href: "https://instagram.com",
-    path: "M12 8.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4Zm0 5.3a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Zm4.06-5.42a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 5.9c-1.9 0-2.13 0-2.88.04-.74.04-1.24.15-1.68.33-.45.18-.84.42-1.22.8-.38.38-.62.77-.8 1.22-.18.44-.29.94-.33 1.68C5.05 10.72 5.05 10.95 5.05 12s0 1.28.04 2.03c.04.74.15 1.24.33 1.68.18.45.42.84.8 1.22.38.38.77.62 1.22.8.44.18.94.29 1.68.33.75.04.98.04 2.88.04s2.13 0 2.88-.04c.74-.04 1.24-.15 1.68-.33.45-.18.84-.42 1.22-.8.38-.38.62-.77.8-1.22.18-.44.29-.94.33-1.68.04-.75.04-.98.04-2.03s0-1.28-.04-2.03c-.04-.74-.15-1.24-.33-1.68a3.3 3.3 0 0 0-.8-1.22 3.3 3.3 0 0 0-1.22-.8c-.44-.18-.94-.29-1.68-.33-.75-.04-.98-.04-2.88-.04Z",
-  },
-];
-
-// Same three brand accent shapes used everywhere else (logo mark, stat
-// icons, marquee), rendered here as large outlines instead of solid fills —
-// a decorative column between the intro and the link columns.
 const glyphShapes = {
   chevron: {
     viewBox: "53.4797 0 22.8595 22.8595",
@@ -71,16 +50,32 @@ function FooterGlyph({
   );
 }
 
-/** CTA panel loops/reveals on scroll; columns/contact/newsletter fade-up on scroll. */
 export function Footer() {
   const containerRef = useRef<HTMLElement>(null);
   const ctaTrackRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      // Background image strip loops continuously and independently of the
-      // scroll-in reveal below (track duplicated, xPercent -50 for a
-      // seamless loop).
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(
+          [".footer-cta-panel", ".footer-cta-button", ".line", ".footer-col"],
+          {
+            clearProps: "all",
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }
+        );
+        return;
+      }
+
+      // Prevent flash before ScrollTrigger
+      gsap.set(".footer-col", {
+        opacity: 0,
+        y: 24,
+      });
+
+      // Infinite CTA image strip
       gsap.to(ctaTrackRef.current, {
         xPercent: -50,
         duration: 30,
@@ -88,6 +83,7 @@ export function Footer() {
         ease: "none",
       });
 
+      // CTA panel
       gsap
         .timeline({
           scrollTrigger: {
@@ -98,34 +94,55 @@ export function Footer() {
         })
         .fromTo(
           ".footer-cta-panel",
-          { scale: 0.85, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.8, ease: "power3.out" },
+          {
+            scale: 0.9,
+            opacity: 0,
+          },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+          }
         )
         .from(
           ".footer-cta-panel .line",
-          { yPercent: 110, stagger: 0.1, duration: 0.7, ease: "power3.out" },
-          "-=0.4",
+          {
+            yPercent: 110,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power3.out",
+          },
+          "<+=0.15"
         )
         .from(
           ".footer-cta-button",
-          { opacity: 0, y: 10, duration: 0.5 },
-          "-=0.3",
+          {
+            opacity: 0,
+            y: 10,
+            duration: 0.45,
+            ease: "power3.out",
+          },
+          "<+=0.05"
         );
 
+      // Footer columns
       ScrollTrigger.batch(".footer-col", {
         start: "top 90%",
         once: true,
-        onEnter: (batch) =>
-          gsap.from(batch, {
-            y: 24,
-            opacity: 0,
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
             duration: 0.6,
             stagger: 0.1,
             ease: "power3.out",
-          }),
+            overwrite: "auto",
+          });
+        },
       });
     },
-    { scope: containerRef },
+    { scope: containerRef }
   );
 
   return (
@@ -136,11 +153,6 @@ export function Footer() {
         </p>
 
         <div className="relative h-[260px] md:h-[400px] overflow-hidden">
-          {/* Looping image strip, behind everything. Heights alternate
-              full/300px (even index = full, odd index = 300px, vertically
-              centered) — the source array has an even count so the rhythm
-              stays consistent across the seam where the duplicated half
-              loops. */}
           <div
             ref={ctaTrackRef}
             className="flex h-full w-max items-center gap-6"
@@ -162,7 +174,6 @@ export function Footer() {
             ))}
           </div>
 
-          {/* CTA panel, z-index stacked on top of the strip, centered */}
           <div className="footer-cta-panel absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center border-l-[24px] border-r-[24px] border-[#F7F6F1] gap-6 bg-accent p-4 text-center md:aspect-4/5 w-3/4 md:w-100">
             <AnimatedHeading
               as="h2"

@@ -52,23 +52,23 @@ export function ServicesSection() {
 
   return (
     <section ref={containerRef} className="">
-      <div className="mt-25 border-y border-border">
-        <div className="mx-auto flex max-w-[1340px] items-start justify-between">
-          <div className="w-2/3 border-r border-border py-8">
+      <div className="mt-16 md:mt-25 border-y border-border">
+        <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
+          <div className="md:w-2/3 border-b md:border-b-0 border-r border-border pr-4 md:pr-0 py-5 md:py-8">
             <AnimatedHeading
               as="h2"
               lines={["Explore", "Our Services."]}
-              className="text-6xl font-normal leading-18"
+              className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 mx-4 md:mx-0"
             />
           </div>
 
-          <div className="w-1/3 py-8 pl-8">
+          <div className="border-l border-border md:w-1/3 pl-4 md:pl-8 py-4 md:py-8 mx-4 md:mx-0">
             <p className="text-muted">
               Explore our range of interior design services, crafted to create
               spaces that are functional, timeless, and uniquely yours.
             </p>
 
-            <div className="mt-6">
+            <div className="mt-3 md:mt-6">
               <MagneticButton>
                 <Button href="/about">Start a Project</Button>
               </MagneticButton>
@@ -77,44 +77,46 @@ export function ServicesSection() {
         </div>
       </div>
 
-      <Container className="mt-10">
+      <Container className="mt-5 md:mt-10">
         {services.map((service, index) => (
           <div key={service.slug}>
-            <div className="group relative min-h-20 overflow-hidden p-8">
+            <div className="group relative min-h-20 overflow-hidden p-4 md:p-8">
               {/* Existing hover background effect */}
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 z-0 origin-bottom scale-y-0 bg-foreground transition-transform duration-500 ease-out group-hover:scale-y-100"
               />
 
-              <div className="relative z-10 flex w-full grid-cols-[auto_1fr_auto] items-center gap-3 md:gap-6">
-                <div className="w-[20%]">
+              <div className="relative z-10 flex items-center gap-3 md:gap-6">
+                <div className="shrink-0 w-12 md:w-[20%]">
                   <span className="text-xl text-foreground transition-colors duration-300 group-hover:text-white">
                     ({service.index})
                   </span>
                 </div>
 
-                <div className="w-[30%]">
-                  <span className="px-2 text-left text-xl font-normal text-foreground transition-colors duration-300 group-hover:text-white md:px-4 md:text-[27px]">
-                    {service.title}
-                  </span>
+                <div className="flex-1 md:flex md:w-[70%] md:items-center">
+                  <div className="md:w-[40%]">
+                    <h3 className="text-xl md:text-[27px] font-normal text-foreground transition-colors duration-300 group-hover:text-white">
+                      {service.title}
+                    </h3>
+                  </div>
+
+                  <div className="mt-1 md:mt-0 md:w-[60%]">
+                    <p className="text-sm md:text-base text-foreground transition-colors duration-300 group-hover:text-white">
+                      {service.shortdescription}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="w-[40%]">
-                    <span className="text-left text-base font-normal text-foreground transition-colors duration-300 group-hover:text-white">
-                  {service.shortdescription}
-                </span>
-                </div>
-
-                <div className="w-[10%]">
-                    <Link
-                  href={`/services/${service.slug}`}
-                  aria-label={`Learn more about ${service.title}`}
-                  className="inline-flex items-center gap-1 whitespace-nowrap text-sm font-normal text-pink-500 transition-colors duration-300 group-hover:text-white md:gap-2 md:text-lg"
-                >
-                  <span className="hidden sm:inline">Learn More</span>
-                  <ArrowIcon className="size-5 md:size-6" />
-                </Link>
+                <div className="shrink-0">
+                  <Link
+                    href={`/services/${service.slug}`}
+                    aria-label={`Learn more about ${service.title}`}
+                    className="inline-flex items-center gap-1 whitespace-nowrap text-sm font-normal text-pink-500 transition-colors duration-300 group-hover:text-white md:gap-2 md:text-lg"
+                  >
+                    <span className="hidden sm:inline">Learn More</span> <span className="inline sm:hidden">Details</span>
+                    <ArrowIcon className="size-5 md:size-6" />
+                  </Link>
                 </div>
               </div>
             </div>

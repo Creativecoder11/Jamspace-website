@@ -1,69 +1,123 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import Image from "next/image";
-import React from "react";
 
-export default function ResidentialInculdedServices() {
-  return (
-    <section className="border-b border-border">
-      <div className="border-y border-border">
-        <div className="mx-auto flex max-w-[1340px] items-start justify-between">
-          <div className="w-2/3 border-r border-border py-8">
-            <AnimatedHeading
-              as="h2"
-              lines={["What's Included", "in This Service."]}
-              className="text-6xl font-normal leading-18"
-            />
-          </div>
+const services = [
+    {
+        title: "(01) Space Planning",
+        image: "/images/cta-strip-01.webp",
+    },
+    {
+        title: "(02) Interior Styling",
+        image: "/images/cta-strip-02.webp",
+    },
+    {
+        title: "(03) Furniture Selection",
+        image: "/images/cta-strip-03.webp",
+    },
+    {
+        title: "(04) Lighting Design",
+        image: "/images/cta-strip-01.webp",
+    },
+    {
+        title: "(05) Material Selection",
+        image: "/images/cta-strip-02.webp",
+    },
+    {
+        title: "(06) 3D Visualization",
+        image: "/images/cta-strip-03.webp",
+    },
+];
 
-          <div className="w-1/3 py-8 pl-8">
-            <p className="text-muted">
-              Everything you need to transform your home into a thoughtfully designed, functional, and timeless living space.
-            </p>
+export default function ResidentialIncludedServices() {
+    const [activeImage, setActiveImage] = useState(services[0].image);
 
-            <div className="mt-6">
-              <MagneticButton>
-                <Button href="/about">Start a Project</Button>
-              </MagneticButton>
+    return (
+        <section className="border-b border-border">
+            {/* Heading */}
+            <div className="border-y border-border">
+                <div className="mx-auto flex max-w-[1340px] flex-col md:flex-row md:items-start md:justify-between">
+                    <div className="border-b border-border py-5 md:w-2/3 md:border-b-0 md:border-r md:py-8">
+                        <AnimatedHeading
+                            as="h2"
+                            lines={["What's Included", "in This Service."]}
+                            className="mx-4 text-[44px] font-normal leading-[120%] md:mx-0 md:text-6xl md:leading-18"
+                        />
+                    </div>
+
+                    <div className="mx-4 border-l border-border py-4 pl-4 md:mx-0 md:w-1/3 md:py-8 md:pl-8">
+                        <p className="text-muted">
+                            Everything you need to transform your home into a thoughtfully
+                            designed, functional, and timeless living space.
+                        </p>
+
+                        <div className="mt-3 md:mt-6">
+                            <MagneticButton>
+                                <Button href="/about">Start a Project</Button>
+                            </MagneticButton>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="flex max-w-[1340px] mx-auto flex-row">
-        <div className="w-[50%] py-12.5 pr-12.5 border-r border-border">
-            <Image className="obeject-contain w-full" src='/images/cta-strip-03.webp' height={200} width={200} alt="website"/>
-        </div>
-        <div className="w-[16.7%] py-12.5 border-r border-border flex items-center  justify-end pr-5">
-            <Image src='/JAM-Black.svg' height={110} width={110} alt="website icon" />
-        </div>
-        <div className="w-[30%] py-12.5  pl-10">
-            <p className="text-base">
-                Including:
-            </p>
-            <ul className="text-3xl mt-5 flex flex-col gap-6">
-                <li>
-                    (01) Space Planning
-                </li>
-                <li>
-                    (02) Interior Styling
-                </li>
-                <li>
-                    (03) Furniture Selection
-                </li>
-                <li>
-                    (04) Lighting Design
-                </li>
-                <li>
-                    (05) Material Selection
-                </li>
-                <li>
-                    (06) 3D Visualization
-                </li>
 
-            </ul>
-        </div>
-      </div>
-    </section>
-  );
+            {/* Content */}
+            <div className="mx-auto flex md:max-w-335 flex-col md:flex-row">
+                {/* Image */}
+                <div className="w-full border-b border-border py-4 px-4 md:w-1/2 md:border-b-0 md:border-r md:py-12 md:pr-12">
+                    <div className="relative h-80 md:h-103.25 w-full overflow-hidden">
+                        <Image
+                            src={activeImage}
+                            alt="Service"
+                            fill
+                            className="object-cover transition-opacity duration-500"
+                        />
+                    </div>
+                </div>
+
+                {/* Icon */}
+                <div className="hidden md:flex w-full items-center justify-center border-b border-border p-4 md:w-[16.666%] md:border-b-0 md:border-r md:px-0">
+                    <Image
+                        src="/JAM-Black.svg"
+                        width={100}
+                        height={334}
+                        alt="Service Icon"
+                        className="h-12 w-12 md:h-83.5 md:w-25"
+                    />
+                </div>
+
+                <div className="flex md:hidden w-full items-center justify-center border-b border-border p-4 md:w-[16.666%] md:border-b-0 md:border-r md:px-0">
+                    <Image
+                        src="/jam-footer-icon.svg"
+                        width={334}
+                        height={100}
+                        alt="Service Icon"
+                        className="h-25 w-83.5"
+                    />
+                </div>
+
+                {/* List */}
+                <div className="w-full p-6 md:w-[33.333%] md:py-12 md:pl-10">
+                    <p className="text-base">Including:</p>
+
+                    <ul className="mt-5 flex flex-col gap-4 md:gap-6">
+                        {services.map((service) => (
+                            <li
+                                key={service.title}
+                                onMouseEnter={() => setActiveImage(service.image)}
+                                onFocus={() => setActiveImage(service.image)}
+                                className="cursor-pointer text-2xl transition-all duration-300 hover:translate-x-2 hover:text-accent md:text-3xl"
+                            >
+                                {service.title}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </section>
+    );
 }

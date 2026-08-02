@@ -31,13 +31,33 @@ export function PageHero({
           { scale: 1.08, opacity: 0 },
           { scale: 1, opacity: 1, duration: 1 },
         )
-        .from(".page-hero-glyphs", { opacity: 0, x: 20, duration: 0.7 }, "-=0.5")
         .from(
           ".line",
-          { yPercent: 110, stagger: 0.12, duration: 0.9 },
-          "-=0.5",
+          {
+            yPercent: 110,
+            duration: 0.75,
+            stagger: 0.08,
+          },
+          "<+=0.15"
         )
-        .from(".page-hero-intro", { y: 16, opacity: 0, duration: 0.7, })
+        .from(
+          ".page-hero-glyphs",
+          {
+            opacity: 0,
+            x: 20,
+            duration: 0.5,
+          },
+          "<+=0.05"
+        )
+        .from(
+          ".page-hero-intro",
+          {
+            opacity: 0,
+            y: 8,
+            duration: 0.35,
+          },
+          "<"
+        );
     },
     { scope: containerRef },
   );

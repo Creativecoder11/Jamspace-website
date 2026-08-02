@@ -42,7 +42,21 @@ export function AboutStoryBento() {
             reduced: boolean;
           };
 
-          if (!reduced) {
+          if (reduced) {
+            gsap.set([".story-fill", ".stat-card", ".stat-icon"], {
+              clearProps: "all",
+              opacity: 1,
+              y: 0,
+            });
+            return;
+          }
+
+          gsap.set(".stat-card", {
+            opacity: 0,
+            y: 30,
+          });
+
+          if (badgeRef.current) {
             badgeRotationTween.current = gsap.to(badgeRef.current, {
               rotation: 360,
               duration: 30,
@@ -51,96 +65,98 @@ export function AboutStoryBento() {
               transformOrigin: "50% 50%",
             });
           }
-        },
+
+          ScrollTrigger.batch(".stat-card", {
+            start: "top 85%",
+            once: true,
+            onEnter: (batch) => {
+              gsap.to(batch, {
+                y: 0,
+                opacity: 1,
+                duration: 0.7,
+                stagger: 0.15,
+                ease: "power3.out",
+                overwrite: "auto",
+              });
+
+              batch.forEach((card) => {
+                const reels = gsap.utils.toArray<HTMLElement>(".reel", card);
+
+                reels.forEach((reel, di) => {
+                  const digitHeight =
+                    (reel.firstElementChild as HTMLElement | null)
+                      ?.clientHeight ?? 0;
+
+                  const distance = (reel.children.length - 1) * digitHeight;
+
+                  if (distance <= 0) return;
+
+                  gsap.to(reel, {
+                    y: -distance,
+                    duration: 1.6,
+                    delay: di * 0.15,
+                    ease: "power2.inOut",
+                  });
+                });
+              });
+            },
+          });
+
+          const icons = gsap.utils.toArray(".stat-icon");
+
+          if (icons.length) {
+            gsap.from(icons, {
+              rotate: -20,
+              opacity: 0,
+              duration: 0.6,
+              stagger: 0.15,
+              ease: "back.out(2)",
+              scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 85%",
+                toggleActions: "play none none reverse",
+              },
+            });
+          }
+
+          const split = SplitText.create(".story-fill", {
+            type: "words,chars",
+          });
+
+          gsap.set(split.chars, {
+            color: "#1919194D",
+          });
+
+          gsap.set(split.words, {
+            whiteSpace: "nowrap",
+          });
+
+          gsap.to(split.chars, {
+            color: "#191919",
+            stagger: 0.02,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".story-fill",
+              start: "top 80%",
+              end: "bottom 35%",
+              scrub: true,
+            },
+          });
+
+          ScrollTrigger.refresh();
+
+          return () => {
+            badgeRotationTween.current?.kill();
+            split.revert();
+          };
+        }
       );
 
-      ScrollTrigger.batch(".stat-card", {
-        start: "top 85%",
-        once: true,
-
-        onEnter: (batch) => {
-          gsap.from(batch, {
-            y: 30,
-            opacity: 0,
-            duration: 0.7,
-            stagger: 0.15,
-            ease: "power3.out",
-          });
-
-          batch.forEach((card) => {
-            const reels = gsap.utils.toArray<HTMLElement>(".reel", card);
-
-            reels.forEach((reel, di) => {
-              const digitHeight =
-                (reel.firstElementChild as HTMLElement | null)?.clientHeight ??
-                0;
-
-              const distance = (reel.children.length - 1) * digitHeight;
-
-              if (distance <= 0) return;
-
-              gsap.to(reel, {
-                y: -distance,
-                duration: 1.6,
-                delay: di * 0.15,
-                ease: "power2.inOut",
-              });
-            });
-          });
-        },
-      });
-
-      const icons = gsap.utils.toArray(".stat-icon");
-
-      if (icons.length) {
-        gsap.from(icons, {
-          rotate: -20,
-          opacity: 0,
-          duration: 0.6,
-          stagger: 0.15,
-          ease: "back.out(2)",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-        });
-      }
-
-      const split = SplitText.create(".story-fill", {
-        type: "words,chars",
-      });
-
-      gsap.set(split.chars, {
-        color: "#1919194D",
-      });
-
-      gsap.set(split.words, {
-        whiteSpace: "nowrap",
-      });
-
-      gsap.to(split.chars, {
-        color: "#191919",
-        stagger: 0.02,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".story-fill",
-          start: "top 80%",
-          end: "bottom 35%",
-          scrub: true,
-        },
-      });
-
-      ScrollTrigger.refresh();
-
-      return () => {
-        badgeRotationTween.current?.kill();
-        split.revert();
-      };
+      return () => mm.revert();
     },
     {
       scope: containerRef,
-    },
+    }
   );
 
   return (

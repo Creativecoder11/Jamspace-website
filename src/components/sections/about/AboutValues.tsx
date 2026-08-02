@@ -14,10 +14,24 @@ export function AboutValues() {
 
   useGSAP(
     () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set([".line", ".value-card"], {
+          clearProps: "all",
+          opacity: 1,
+          y: 0,
+        });
+        return;
+      }
+
+      gsap.set(".value-card", {
+        opacity: 0,
+        y: 24,
+      });
+
       gsap.from(".line", {
         yPercent: 110,
-        duration: 0.9,
-        stagger: 0.12,
+        duration: 0.8,
+        stagger: 0.1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: containerRef.current,
@@ -27,16 +41,18 @@ export function AboutValues() {
       });
 
       ScrollTrigger.batch(".value-card", {
-        start: "top 90%",
+        start: "top 85%",
         once: true,
-        onEnter: (batch) =>
-          gsap.from(batch, {
-            y: 24,
-            opacity: 0,
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            y: 0,
+            opacity: 1,
             duration: 0.6,
             stagger: 0.08,
             ease: "power3.out",
-          }),
+            overwrite: "auto",
+          });
+        },
       });
     },
     { scope: containerRef },
@@ -60,7 +76,9 @@ export function AboutValues() {
               everyday living.
             </p>
             <div className="mt-3 md:mt-6">
-              <Button href="/about">Learn More About Us</Button>
+              <MagneticButton>
+                <Button href="/about">Learn More About Us</Button>
+              </MagneticButton>
             </div>
           </div>
         </div>
