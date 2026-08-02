@@ -19,6 +19,7 @@ function ArrowIcon({ className = "" }: { className?: string }) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      
     >
       <path
         d="M16.1605 9H7.8494C7.62675 9 7.41322 9.08845 7.25578 9.24589C7.09834 9.40332 7.0099 9.61685 7.0099 9.8395C7.0099 10.0622 7.09834 10.2757 7.25578 10.4331C7.41322 10.5906 7.62675 10.679 7.8494 10.679H14.1331L7.25629 17.5567C7.17611 17.6341 7.11215 17.7267 7.06816 17.8291C7.02416 17.9316 7.001 18.0417 7.00003 18.1532C6.99906 18.2647 7.0203 18.3752 7.06252 18.4784C7.10473 18.5816 7.16706 18.6753 7.24589 18.7541C7.32471 18.8329 7.41844 18.8953 7.52161 18.9375C7.62478 18.9797 7.73533 19.0009 7.8468 19C7.95827 18.999 8.06843 18.9758 8.17085 18.9318C8.27327 18.8878 8.36591 18.8239 8.44335 18.7437L15.321 11.8665V18.1506C15.321 18.3733 15.4094 18.5868 15.5669 18.7442C15.7243 18.9017 15.9378 18.9901 16.1605 18.9901C16.3831 18.9901 16.5967 18.9017 16.7541 18.7442C16.9116 18.5868 17 18.3733 17 18.1506V9.8395C17 9.61685 16.9116 9.40332 16.7541 9.24589C16.5967 9.08845 16.3831 9 16.1605 9Z"
@@ -106,7 +107,7 @@ export function Services() {
           lines={["Designed", "for Every Space."]}
           className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
         />
-        <div className="max-w-md md:ms-0">
+        <div className="max-w-md pl-4 md:ms-0">
           <p className="text-muted">
             From concept to completion, we deliver thoughtful design solutions
             tailored to every space and every vision.
@@ -157,14 +158,15 @@ export function Services() {
                     </span>
 
                     <span
-                      onClick={(e) => e.stopPropagation()}
-                      className={`items-center gap-2 text-sm md:text-lg font-normal transition-colors duration-300 inline-flex ${isOpen ? "text-white" : "text-pink-500"
+                      className={`items-center gap-2 md:w-24 text-sm md:text-lg font-normal transition-colors duration-300 inline-flex ${isOpen ? "text-white" : "text-pink-500"
                         }`}
                     >
-                      <a href="/services" className="inline-flex items-center gap-2">
-                        <span className="hidden md:block">Learn More</span><span className="block md:hidden">Details</span>
-                        <ArrowIcon />
-                      </a>
+                      <span className="hidden md:block">{isOpen ? "Close" : "Expand"}</span>
+                      <span className="block md:hidden">{isOpen ? "Close" : "Expand"}</span>
+                      <ArrowIcon
+                        className={`transition-transform duration-300 ${isOpen ? "-rotate-45" : ""
+                          }`}
+                      />
                     </span>
                   </div>
                 </button>
@@ -182,7 +184,7 @@ export function Services() {
                   className="overflow-hidden "
                 >
                   {service.image && (
-                    <div className="relative min-h-105 w-full overflow-hidden md:min-h-130">
+                    <div className="relative min-h-auto md:min-h-105 w-full overflow-hidden md:min-h-130">
                       <Image
                         src={service.image}
                         alt={service.heading ?? service.title}
@@ -195,7 +197,7 @@ export function Services() {
 
                       <div className="relative flex min-h-80 md:min-h-130 items-end justify-center">
                         <div className="border-t border-white/40 w-full flex justify-center items-end gap-4 md:gap-8">
-                          <div className="border-l border-white/40 pl-4 md:pl-8 pt-16 md:pt-0 pb-8 mr-4 md:mr-0">
+                          <div className="border-l border-white/40 pl-4 md:pl-8 pt-16 md:pt-0 pb-6 md:pb-8 mr-4 md:mr-0">
                             {service.heading && (
                               <h3 className="md:max-w-md text-3xl leading-9 font-normal md:leading-16 text-white md:text-subheading">
                                 {service.heading}
@@ -211,7 +213,7 @@ export function Services() {
                                 )}
                               </div>
                               {service.subServices && (
-                                <div className="mt-4 grid grid-cols-2 md:gap-x-8 md:gap-y-3 sm:grid-cols-2">
+                                <div className="mt-4 grid grid-cols-2 gap-y-2 md:gap-x-8 md:gap-y-3 sm:grid-cols-2">
                                   {service.subServices.map((sub) => (
                                     <div
                                       key={sub.label}
@@ -223,14 +225,14 @@ export function Services() {
                                         height="14"
                                         viewBox="0 0 14 14"
                                         fill="none"
-                                        className="w-3.5 h-3.5 md:w-4.5 md:h-4.5"
+                                        className="w-2 h-2 md:w-4.5 md:h-4.5"
                                       >
                                         <path
                                           d="M14 0V14H0V6.99959H7.00083V0H14Z"
                                           fill="white"
                                         />
                                       </svg>
-                                      <span className="text-sm md:text-[16px]">
+                                      <span className="text-xs md:text-[16px]">
                                         {sub.label}
                                       </span>
                                     </div>

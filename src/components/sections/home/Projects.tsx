@@ -13,7 +13,13 @@ import { projects } from "@/lib/data/projects";
 
 function PinIcon() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M12 22s7-7.4 7-13a7 7 0 1 0-14 0c0 5.6 7 13 7 13Z"
         stroke="currentColor"
@@ -34,36 +40,33 @@ export function Projects() {
 
   useGSAP(
     () => {
-      gsap.from(".line", {
-        yPercent: 110,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-      });
+      // gsap.from(".line", {
+      //   yPercent: 100,
+      //   duration: 0.9,
+      //   stagger: 0.12,
+      //   ease: "power3.out",
+      //   scrollTrigger: {
+      //     trigger: containerRef.current,
+      //     start: "top 80%",
+      //     toggleActions: "play none none reverse",
+      //   },
+      // });
 
-      const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px)", () => {
-        const trigger = ScrollTrigger.create({
-          trigger: pinRef.current,
-          start: "top top",
-          end: `+=${projects.length * 100}%`,
-          pin: true,
-          scrub: true,
-          onUpdate: (self) => {
-            const idx = Math.min(
-              projects.length - 1,
-              Math.floor(self.progress * projects.length),
-            );
-            setActiveIndex(idx);
-            setShowKeepScrolling(self.progress < 0.03);
-          },
-        });
-        return () => trigger.kill();
+      ScrollTrigger.create({
+        trigger: pinRef.current,
+        start: "top top",
+        end: `+=${projects.length * 100}%`,
+        pin: true,
+        scrub: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const idx = Math.min(
+            projects.length - 1,
+            Math.floor(self.progress * projects.length),
+          );
+          setActiveIndex(idx);
+          setShowKeepScrolling(self.progress < 0.03);
+        },
       });
     },
     { scope: containerRef },
@@ -95,7 +98,13 @@ export function Projects() {
       gsap.fromTo(
         incoming,
         { opacity: 0, yPercent: direction * 8, scale: 1.12 },
-        { opacity: 1, yPercent: 0, scale: 1, duration: 1.1, ease: "power3.out" },
+        {
+          opacity: 1,
+          yPercent: 0,
+          scale: 1,
+          duration: 1.1,
+          ease: "power3.out",
+        },
       );
     },
     { scope: pinRef, dependencies: [activeIndex] },
@@ -105,21 +114,23 @@ export function Projects() {
 
   return (
     <section ref={containerRef} className="">
-      <Container className="flex flex-col gap-8 pb-12 pt-24 md:flex-row md:items-end md:justify-between">
+      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-end md:justify-between px-4 pt-22.5 pb-10 md:px-0">
         <AnimatedHeading
           as="h2"
           lines={["Spaces", "We've Transformed."]}
-          className="text-6xl font-normal leading-18"
+          className="text-[42px] md:text-6xl font-normal leading-[120%] md:leading-18"
         />
-        <p className="max-w-md text-muted">
-          A curated collection of spaces thoughtfully designed to reflect
-          each client&apos;s vision, lifestyle, and purpose.
-        </p>
+        <div className="max-w-md pl-5 md:ms-0">
+          <p className="text-muted">
+            A curated collection of spaces thoughtfully designed to reflect each
+            client's vision, lifestyle, and purpose.
+          </p>
+        </div>
       </Container>
 
       <div
         ref={pinRef}
-        className="relative h-screen min-h-[540px] w-full overflow-hidden"
+        className="relative h-dvh min-h-135 w-full overflow-hidden"
       >
         {projects.map((p, i) => (
           <div
@@ -157,7 +168,7 @@ export function Projects() {
         </Link>
 
         <div className="absolute inset-0 flex items-center justify-center px-6">
-          <div className="w-full max-w-sm h-[460px] rounded-xl bg-background p-6 shadow-xl">
+          <div className="w-full max-w-sm h-[380px] md:h-[460px] rounded-xl bg-background p-4 md:p-6 shadow-xl">
             <h3 className="text-2xl font-medium">{project.name}</h3>
             <p className="mt-1 flex items-center gap-1.5 text-sm text-muted">
               <span className="text-accent-teal">
@@ -165,12 +176,12 @@ export function Projects() {
               </span>
               {project.location}
             </p>
-            <div className="relative mt-4 h-[280px] w-full overflow-hidden rounded-lg">
+            <div className="relative mt-4 h-[220px] md:h-[280px] w-full overflow-hidden rounded-lg">
               <Image
                 src={project.image}
                 alt={project.name}
                 fill
-                sizes="400px"
+                // sizes="400px"
                 className="object-cover"
               />
             </div>
