@@ -174,11 +174,11 @@ export function Footer() {
             ))}
           </div>
 
-          <div className="footer-cta-panel absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center border-l-[24px] border-r-[24px] border-[#F7F6F1] gap-6 bg-accent p-4 text-center md:aspect-4/5 w-3/4 md:w-100">
+          <div className="h-full md:h-full absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center border-l-[24px] border-r-[24px] border-[#F7F6F1] gap-6 bg-accent p-4 text-center md:aspect-4/5 w-3/4 md:w-100">
             <AnimatedHeading
               as="h2"
               lines={["Let's Design", "Your", "Dream Space."]}
-              className="text-xl font-medium leading-tight text-white md:text-subheading"
+              className="text-3xl font-medium leading-tight text-white md:text-subheading"
             />
             <div className="footer-cta-button">
               <MagneticButton>
