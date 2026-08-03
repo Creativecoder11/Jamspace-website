@@ -8,12 +8,16 @@ export function Logo({
   svgClassName?: string;
 }) {
   return (
-    <Link href="/" aria-label="JamSpace — home" className={`inline-flex ${className}`}>
+    <Link
+      href="/"
+      aria-label="JamSpace — home"
+      className={`inline-flex ${className}`}
+    >
       <svg
         viewBox="0 0 77 40"
         fill="none"
         aria-hidden="true"
-        className={`h-12 w-auto ${svgClassName}`}
+        className={`w-auto ${svgClassName}`}
       >
         <path d="M22.8857 0V22.8595H0.0275879V11.429H11.458V0H22.8857Z" fill="var(--color-accent)" />
         <path

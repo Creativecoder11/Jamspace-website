@@ -160,9 +160,9 @@ export function AboutStoryBento() {
   );
 
   return (
-    <section ref={containerRef} className="py-15 md:py-20 px-4 md:px-0">
-      <Container className="flex flex-col pt-14">
-        <p className="story-fill text-[21px] md:text-[27px] leading-[124%]">
+    <section ref={containerRef} className="pt-7 pb-15 md:py-20 px-4 md:px-0">
+      <Container className="flex flex-col md:pt-14">
+        <p className="story-fill text-[24px] md:text-[27px] leading-[124%]">
           Founded in 2022, JamSpace is an interior design studio creating
           thoughtful residential and commercial spaces through creativity,
           functionality, and timeless craftsmanship. We transform ideas into
@@ -174,7 +174,7 @@ export function AboutStoryBento() {
         {/* First Row */}
         <div className="flex flex-col md:flex-row gap-4">
           <div className="w-full md:w-[50%]">
-            <div className="relative h-[420px] md:h-120 overflow-hidden">
+            <div className="relative h-90 md:h-120 overflow-hidden">
               <Image
                 src="/images/hero-01.webp"
                 alt="JamSpace Interior"
@@ -199,14 +199,14 @@ export function AboutStoryBento() {
 
           <div className="flex w-full md:w-[25%] flex-col gap-4">
             {/* Logo */}
-            <div className="flex h-[180px] md:h-full items-center justify-center bg-white">
-              <Logo className="h-22" />
+            <div className="flex h-45 md:h-full items-center justify-center bg-white">
+              <Logo svgClassName="h-20 md:h-[105px] md:w-[200px]" />
             </div>
 
             {/* Stats */}
-            <div className="flex h-[180px] md:h-50 items-center justify-center bg-accent">
+            <div className="flex h-45 md:h-50 items-center justify-center bg-accent">
               <div className="stat-card flex flex-col gap-4 px-4 py-16">
-                <div className="flex items-center justify-center gap-3">
+                <div className="flex items-center justify-center gap-1.5 md:gap-3">
                   <svg
                     className="stat-icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -224,14 +224,14 @@ export function AboutStoryBento() {
                   </svg>
 
                   <span
-                    className={`stat-number flex text-start text-4xl md:text-6xl font-medium leading-none ${accentTextClass[stat.accent]
+                    className={`stat-number flex text-start text-6xl md:text-7xl font-medium leading-none ${accentTextClass[stat.accent]
                       }`}
                   >
                     <p>03</p>
                   </span>
 
                   <span
-                    className={`text-4xl md:text-6xl font-medium ${accentTextClass[stat.accent]
+                    className={`text-6xl md:text-7xl font-medium ${accentTextClass[stat.accent]
                       }`}
                   >
                     {stat.suffix}
@@ -251,7 +251,7 @@ export function AboutStoryBento() {
           <div className="w-full md:w-[25%]">
             <div className="relative">
               {/* Video Thumbnail */}
-              <div className="relative h-[420px] md:h-120 overflow-hidden">
+              <div className="relative h-90 md:h-120 overflow-hidden">
                 <Image
                   src="/images/video-bg-01.webp"
                   alt="Bedroom interior — behind the scenes of a JamSpace project"
@@ -270,12 +270,12 @@ export function AboutStoryBento() {
                   onMouseEnter={() => badgeRotationTween.current?.timeScale(4)}
                   onMouseLeave={() => badgeRotationTween.current?.timeScale(1)}
                   aria-label="Play the video"
-                  className="absolute left-1/2 top-1/2 flex h-24 w-24 md:h-40 md:w-40 -translate-x-1/2 -translate-y-1/2 items-center justify-center md:h-40 md:w-40"
+                  className="absolute left-1/2 top-1/2 flex h-24 w-24 md:h-40 md:w-40 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
                 >
                   {/* Circular Text */}
                   <svg
                     ref={badgeRef}
-                    className="video-badge-circle absolute inset-[-25px] h-[calc(100%+50px)] w-[calc(100%+50px)]"
+                    className="video-badge-circle absolute -inset-6.25 h-[calc(100%+50px)] w-[calc(100%+50px)]"
                     viewBox="0 0 200 200"
                   >
                     <defs>
@@ -314,7 +314,7 @@ export function AboutStoryBento() {
                   role="dialog"
                   aria-modal="true"
                   aria-label="JamSpace video"
-                  className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 p-4 md:p-6"
+                  className="fixed inset-0 z-9999 flex items-center justify-center bg-black/95 p-4 md:p-6"
                   onClick={() => setIsOpen(false)}
                 >
                   {/* Close Button */}
@@ -350,9 +350,9 @@ export function AboutStoryBento() {
         <div className="flex flex-col md:flex-row gap-4">
           <div className="w-full md:w-[25%]">
             <div className="bg-accent-yellow h-full p-5">
-              <div className="flex h-full flex-col justify-between">
+              <div className="flex h-50 md:h-full flex-col justify-between">
                 {/* Top */}
-                <div className="flex items-center gap-3 border-b border-white/40 pb-4">
+                <div className="flex items-center gap-1.5 md:gap-3 border-b border-white/40 pb-4">
                   <svg
                     className="stat-icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -370,14 +370,14 @@ export function AboutStoryBento() {
                   </svg>
 
                   <span
-                    className={`stat-number flex text-start text-4xl md:text-6xl font-medium leading-none ${accentTextClass[stat.accent]
+                    className={`stat-number flex text-start text-6xl md:text-7xl font-medium leading-none ${accentTextClass[stat.accent]
                       }`}
                   >
                     <p>44</p>
                   </span>
 
                   <span
-                    className={`text-4xl md:text-6xl font-medium ${accentTextClass[stat.accent]
+                    className={`text-6xl md:text-7xl font-medium ${accentTextClass[stat.accent]
                       }`}
                   >
                     +
@@ -396,7 +396,7 @@ export function AboutStoryBento() {
           </div>
 
           <div className="w-full md:w-[50%] text-white p-5 bg-[#231F20]">
-            <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex flex-col md:flex-row gap-3 md:gap-8">
               <div className="flex flex-col w-full md:w-1/2">
                 {/* text */}
                 <div>
@@ -485,7 +485,7 @@ export function AboutStoryBento() {
                   </div>
                 </div>
               </div>
-              <div className="w-full md:w-1/2">
+              <div className="w-full md:w-1/2 pr-9 md:pr-0">
                 <BangladeshMap />
               </div>
             </div>
@@ -493,7 +493,7 @@ export function AboutStoryBento() {
 
           <div className="w-full md:w-[25%]">
             <div className="bg-accent-teal h-full p-5">
-              <div className="flex h-full flex-col justify-between">
+              <div className="flex h-50 md:h-full flex-col justify-between">
                 {/* Top */}
                 <div className="flex items-center gap-3 border-b border-white/40 pb-4">
                   <svg
@@ -513,13 +513,13 @@ export function AboutStoryBento() {
                   </svg>
 
                   <span
-                    className="flex text-white text-4xl md:text-6xl font-medium leading-none"
+                    className="flex text-white text-6xl md:text-7xl font-medium leading-none"
                   >
                     <p>95</p>
                   </span>
 
                   <span
-                    className='text-4xl md:text-6xl text-white font-medium'
+                    className='text-6xl md:text-7xl text-white font-medium'
                   >
                     %
                   </span>

@@ -54,7 +54,7 @@ export default function BangladeshMap() {
         alt="Bangladesh map"
         width={600}
         height={600}
-        className="h-[400px] w-full object-contain"
+        className="h-60 md:h-100 w-full object-contain"
       />
 
       {/* Locations */}

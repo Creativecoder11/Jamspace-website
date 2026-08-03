@@ -58,7 +58,12 @@ export function Footer() {
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         gsap.set(
-          [".footer-cta-panel", ".footer-cta-button", ".line", ".footer-col"],
+          [
+            ".footer-cta-panel",
+            ".footer-cta-button",
+            ".footer-cta-panel .line",
+            ".footer-col",
+          ],
           {
             clearProps: "all",
             opacity: 1,
@@ -69,12 +74,6 @@ export function Footer() {
         return;
       }
 
-      // Prevent flash before ScrollTrigger
-      gsap.set(".footer-col", {
-        opacity: 0,
-        y: 24,
-      });
-
       // Infinite CTA image strip
       gsap.to(ctaTrackRef.current, {
         xPercent: -50,
@@ -83,7 +82,7 @@ export function Footer() {
         ease: "none",
       });
 
-      // CTA panel
+      // CTA panel animation
       gsap
         .timeline({
           scrollTrigger: {
@@ -126,21 +125,30 @@ export function Footer() {
           "<+=0.05"
         );
 
-      // Footer columns
-      ScrollTrigger.batch(".footer-col", {
-        start: "top 90%",
-        once: true,
-        onEnter: (batch) => {
-          gsap.to(batch, {
+      // Footer columns animation
+      gsap.utils.toArray<HTMLElement>(".footer-col").forEach((el) => {
+        gsap.fromTo(
+          el,
+          {
+            opacity: 0,
+            y: 24,
+          },
+          {
             opacity: 1,
             y: 0,
             duration: 0.6,
-            stagger: 0.1,
             ease: "power3.out",
-            overwrite: "auto",
-          });
-        },
+            scrollTrigger: {
+              trigger: el,
+              start: "top 95%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+          }
+        );
       });
+
+      ScrollTrigger.refresh();
     },
     { scope: containerRef }
   );
@@ -152,7 +160,7 @@ export function Footer() {
           Bring Your Vision to Life
         </p>
 
-        <div className="relative h-[260px] md:h-[400px] overflow-hidden">
+        <div className="relative h-65 md:h-100 overflow-hidden">
           <div
             ref={ctaTrackRef}
             className="flex h-full w-max items-center gap-6"
@@ -174,7 +182,7 @@ export function Footer() {
             ))}
           </div>
 
-          <div className="h-full md:h-full absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center border-l-[24px] border-r-[24px] border-[#F7F6F1] gap-6 bg-accent p-4 text-center md:aspect-4/5 w-3/4 md:w-100">
+          <div className="h-full md:h-full absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center border-l-24 border-r-24 border-[#F7F6F1] gap-6 bg-accent p-4 text-center md:aspect-4/5 w-3/4 md:w-100">
             <AnimatedHeading
               as="h2"
               lines={["Let's Design", "Your", "Dream Space."]}
@@ -191,135 +199,140 @@ export function Footer() {
         </div>
       </div>
 
-      <Container className="flex flex-col md:flex-row border-t border-border md:gap-x-0 md:divide-x md:divide-border">
-        <div className="flex flex-col w-full md:w-[30%] space-between py-8 md:py-13 md:pr-8 mx-4 md:mx-0">
-          <div className="md:flex-1">
-            <div className="relative w-[126px] h-[66px] md:w-[160px] md:h-auto">
-              <Logo />
+      <div className="border-t border-border">
+        <Container className="mx-auto w-full max-w-335 flex flex-col md:flex-row not-last:md:gap-x-0 md:divide-x md:divide-border">
+          <div className="flex flex-col w-full md:w-[30%] space-between py-8 md:py-13 md:pr-8 mx-4 md:mx-0">
+            <div className="md:flex-1">
+              <div className="relative w-31.5 h-16.5 md:w-40 md:h-auto">
+                <Logo svgClassName="w-[126px] h-[66px]" />
+              </div>
+            </div>
+            <div>
+              <p className="mt-10 md:mt-4 text-base text-muted mr-4">
+                JamSpace creates timeless interiors that blend creativity,
+                functionality, and exceptional craftsmanship.
+              </p>
+              <div className="mt-4 md:mt-6 flex gap-3">
+                <Image
+                  src="/icons/facebook.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="w-auto object-contain"
+                />
+                <Image
+                  src="/icons/linkedin.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="w-auto object-contain"
+                />
+                <Image
+                  src="/icons/insta.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="w-auto object-contain"
+                />
+              </div>
             </div>
           </div>
-          <div>
-            <p className="mt-10 md:mt-4 text-base text-muted mr-4">
-              JamSpace creates timeless interiors that blend creativity,
-              functionality, and exceptional craftsmanship.
-            </p>
-            <div className="mt-4 md:mt-6 flex gap-3">
-              <Image
-                src="/icons/facebook.svg"
-                alt=""
-                width={24}
-                height={24}
-                className="w-auto object-contain"
-              />
-              <Image
-                src="/icons/linkedin.svg"
-                alt=""
-                width={24}
-                height={24}
-                className="w-auto object-contain"
-              />
-              <Image
-                src="/icons/insta.svg"
-                alt=""
-                width={24}
-                height={24}
-                className="w-auto object-contain"
-              />
-            </div>
+
+          <div className="hidden md:flex items-start w-[15%] pt-14 pr-6 justify-end text-border">
+            <Image
+              src="/footer-jam.svg"
+              alt=""
+              width={24}
+              height={24}
+              className="w-auto object-contain"
+            />
           </div>
-        </div>
 
-        <div className="hidden md:flex items-start w-[15%] pt-14 pr-6 justify-end text-border">
-          <Image
-            src="/footer-jam.svg"
-            alt=""
-            width={24}
-            height={24}
-            className="w-auto object-contain"
-          />
-        </div>
+          <div className="md:hidden flex items-start w-full py-8 px-4 justify-end text-border border-t border-b">
+            <Image
+              src="/jam-footer-icon.svg"
+              alt=""
+              width={24}
+              height={24}
+              className="w-auto object-contain"
+            />
+          </div>
 
-        <div className="md:hidden flex items-start w-full py-8 px-4 justify-end text-border border-t border-b">
-          <Image
-            src="/jam-footer-icon.svg"
-            alt=""
-            width={24}
-            height={24}
-            className="w-auto object-contain"
-          />
-        </div>
+          <div className="py-13 md:w-[55%] md:pl-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 space-y-8 mx-4 md:mx-0">
+              {footerColumns.map((column) => (
+                <div key={column.title}>
+                  <h3 className="text-base font-medium">{column.title}</h3>
+                  <ul className="mt-3 md:mt-4 space-y-1.5 md:space-y-3 text-sm text-muted">
+                    {column.links.map((link) => (
+                      <li key={link.href}>
+                        <Link href={link.href} className="hover:text-accent">
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
 
-        <div className="py-13 md:w-[55%] md:pl-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 space-y-8 mx-4 md:mx-0">
-            {footerColumns.map((column) => (
-              <div key={column.title}>
-                <h3 className="text-base font-medium">{column.title}</h3>
+              <div>
+                <h3 className="text-base font-medium">Contact Us</h3>
                 <ul className="mt-3 md:mt-4 space-y-1.5 md:space-y-3 text-sm text-muted">
-                  {column.links.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href} className="hover:text-accent">
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
+                  <li>Address: {contactInfo.address}</li>
+                  <li>
+                    Phone:{" "}
+                    <a
+                      href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
+                      className="hover:text-accent"
+                    >
+                      {contactInfo.phone}
+                    </a>
+                  </li>
+                  <li>
+                    Email:{" "}
+                    <a
+                      href={`mailto:${contactInfo.email}`}
+                      className="hover:text-accent"
+                    >
+                      {contactInfo.email}
+                    </a>
+                  </li>
                 </ul>
               </div>
-            ))}
+            </div>
 
-            <div>
-              <h3 className="text-base font-medium">Contact Us</h3>
-              <ul className="mt-3 md:mt-4 space-y-1.5 md:space-y-3 text-sm text-muted">
-                <li>Address: {contactInfo.address}</li>
-                <li>
-                  Phone:{" "}
-                  <a
-                    href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
-                    className="hover:text-accent"
-                  >
-                    {contactInfo.phone}
-                  </a>
-                </li>
-                <li>
-                  Email:{" "}
-                  <a
-                    href={`mailto:${contactInfo.email}`}
-                    className="hover:text-accent"
-                  >
-                    {contactInfo.email}
-                  </a>
-                </li>
-              </ul>
+            <div className="mt-6 md:mt-13 w-full mx-4 md:mx-0 pr-8 md:pr-0">
+              <h3 className="text-lg font-medium">Stay informed</h3>
+              <p className="mt-2 w-full text-sm text-muted ">
+                Stay inspired with the latest design trends, expert insights, and
+                exclusive updates from JamSpace. Discover ideas that help you
+                create beautiful, functional spaces.
+              </p>
+              <div className="mt-4 w-full">
+                <NewsletterForm />
+              </div>
             </div>
           </div>
+        </Container>
+      </div>
 
-          <div className="mt-6 md:mt-13 w-full mx-4 md:mx-0 pr-8 md:pr-0">
-            <h3 className="text-lg font-medium">Stay informed</h3>
-            <p className="mt-2 w-full text-sm text-muted ">
-              Stay inspired with the latest design trends, expert insights, and
-              exclusive updates from JamSpace. Discover ideas that help you
-              create beautiful, functional spaces.
-            </p>
-            <div className="mt-4 w-full">
-              <NewsletterForm />
-            </div>
-          </div>
-        </div>
-      </Container>
 
-      <Container className="footer-col flex flex-col gap-2 border-t border-border py-3 md:py-6 text-xs text-muted md:flex-row md:items-center md:justify-between px-4 md:px-0">
-        <p>&copy; {new Date().getFullYear()} Jamspace, All Rights Reserved</p>
-        <p>
-          Design &amp; Developed by{" "}
-          <a
-            href="https://jamroll.space"
-            target="_blank"
-            rel="noreferrer"
-            className="underline hover:text-accent"
-          >
-            Jamroll Studio
-          </a>
-        </p>
-      </Container>
+      <div className="border-t border-border">
+        <Container className="mx-auto w-full max-w-335 footer-col flex flex-col gap-2 py-3 md:py-6 text-xs md:text-sm text-muted md:flex-row md:items-center md:justify-between px-4 md:px-0">
+          <p>&copy; {new Date().getFullYear()} Jamspace, All Rights Reserved</p>
+          <p>
+            Design &amp; Developed by{" "}
+            <a
+              href="https://jamroll.space"
+              target="_blank"
+              rel="noreferrer"
+              className="underline hover:text-accent"
+            >
+              Jamroll Studio
+            </a>
+          </p>
+        </Container>
+      </div>
     </footer>
   );
 }

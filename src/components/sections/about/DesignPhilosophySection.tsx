@@ -84,7 +84,7 @@ function BenefitCard({
                 {line2}
             </h3>
 
-            <p className="max-w-[240px] text-sm leading-relaxed text-[#444444] md:text-base">
+            <p className="max-w-60 text-sm leading-relaxed text-[#444444] md:text-base">
                 {item.description}
             </p>
         </div>
@@ -133,7 +133,7 @@ export default function DesignPhilosophySection() {
     return (
         <section
             ref={sectionRef}
-            className="w-full bg-[#F7F6F1] text-[color:var(--dp-ink)]"
+            className="w-full bg-[#F7F6F1] text-(--dp-ink)"
             style={
                 {
                     "--dp-bg": "#f4f1ea",
@@ -145,18 +145,18 @@ export default function DesignPhilosophySection() {
                 } as React.CSSProperties
             }
         >
-            <div className="w-full max-w-335 mx-auto px-4 md:px-0">
-                <div className="mt-16 md:mt-25 border-y border-border mb-8 md:mb-16">
+            <div className="w-full mx-auto px-4 md:px-0">
+                <div className="mt-16 md:mt-25 md:border-y border-border mb-8 md:mb-16">
                     <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
-                        <div className="md:w-2/3 border-b md:border-b-0 border-r border-border pr-4 md:pr-0 py-5 md:py-8">
+                        <div className="md:w-2/3 md:border-r border-border md:pr-0 pb-4 md:py-8">
                             <AnimatedHeading
                                 as="h2"
                                 lines={["Designing Spaces", "That Feel Meaningful."]}
-                                className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 mx-4 md:mx-0"
+                                className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 md:mx-0"
                             />
                         </div>
 
-                        <div className="border-l border-border md:w-1/3 pl-4 md:pl-8 py-4 md:py-8 mx-4 md:mx-0">
+                        <div className="md:w-1/3 md:border-l border-border md:pl-8 md:py-8 md:mx-0">
                             <p className="text-muted">
                                 Discover the passion, purpose, and philosophy that shape every
                                 space we create, transforming ideas into interiors that inspire
@@ -175,7 +175,7 @@ export default function DesignPhilosophySection() {
                 {/* Desktop staircase */}
                 <div
                     ref={staircaseRef}
-                    className="relative hidden md:grid"
+                    className="relative hidden md:grid max-w-335 mx-auto"
                     style={{
                         gridTemplateColumns: `repeat(${N}, 1fr)`,
                         gridTemplateRows: `repeat(${N}, 335px)`,
@@ -204,7 +204,7 @@ export default function DesignPhilosophySection() {
                                 gridRowEnd: N + 1,
                             }}
                         >
-                            <div className="sticky top-30 h-[335px]">
+                            <div className="sticky top-30 h-83.75">
                                 <BenefitCard item={item} index={i} />
                             </div>
                         </div>
@@ -216,7 +216,7 @@ export default function DesignPhilosophySection() {
                     {BENEFITS.map((item, i) => (
                         <div
                             key={item.title}
-                            className="w-full min-h-[220px]"
+                            className="w-full min-h-55"
                         >
                             <BenefitCard item={item} index={i} />
                         </div>

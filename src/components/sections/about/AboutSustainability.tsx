@@ -56,7 +56,7 @@ export function AboutSustainability() {
   );
 
   return (
-    <section ref={containerRef} className="pt-15 md:pt-20">
+    <section ref={containerRef} className=" md:pt-20">
       <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-start md:justify-between px-4 md:px-0">
         <AnimatedHeading
           as="h2"
@@ -76,8 +76,8 @@ export function AboutSustainability() {
         </div>
       </Container>
 
-      <Container className="mt-7 md:mt-14 flex flex-col gap-5 md:gap-10 md:flex-row md:gap-[100px] px-4 md:px-0">
-        <div className="sustain-photo relative aspect-square w-full max-w-[360px] shrink-0 overflow-hidden md:w-[360px]">
+      <Container className="mt-7 md:mt-14 flex flex-col-reverse gap-4 md:flex-row md:gap-25 px-4 md:px-0">
+        <div className="sustain-photo relative aspect-square w-full max-w-90 shrink-0 overflow-hidden">
           <Image
             src="/images/about-strip-06.png"
             alt="A durable, thoughtfully planned JamSpace interior"
