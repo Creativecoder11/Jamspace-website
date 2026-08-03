@@ -64,7 +64,7 @@ export function VideoShowcase() {
   return (
     <section
       ref={containerRef}
-      className="relative md:h-screen min-h-65 w-full"
+      className="relative md:h-screen mt-8 min-h-65 w-full"
     >
       <div
         ref={frameRef}

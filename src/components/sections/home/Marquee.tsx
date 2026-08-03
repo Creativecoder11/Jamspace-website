@@ -82,7 +82,7 @@ export function Marquee() {
   return (
     <section
       ref={containerRef}
-      className="overflow-hidden mt-15 border-y border-border py-8"
+      className="overflow-hidden mt-8 md:mt-15 border-y border-border py-4 md:py-8"
     >
       <div ref={trackRef} className="flex w-max">
         {Array.from({ length: words.length * 2 }, (_, i) => item(i))}

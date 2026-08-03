@@ -66,12 +66,12 @@ export function Stats() {
   );
 
   return (
-    <section ref={containerRef} className="border-t border-b border-r md:border-r-0 border-l md:border-l-0 border-border mx-4 md:mx-0">
+    <section ref={containerRef} className="border-t border-b border-r md:border-r-0 border-l md:border-l-0 border-border mx-5 md:mx-0">
       <Container className="grid grid-cols-1 md:grid-cols-3">
         {stats.map((stat, i) => (
           <div
             key={stat.label}
-            className={`stat-card flex flex-col gap-2 md:gap-4 px-4 py-6 md:py-16 ${i !== stats.length - 1 ? "border-b border-border md:border-b-0" : ""} ${i > 0 ? "md:border-l md:border-border" : ""} `}
+            className={`stat-card flex flex-col gap-2 md:gap-4 px-4 py-10 md:py-16 ${i !== stats.length - 1 ? "border-b border-border md:border-b-0" : ""} ${i > 0 ? "md:border-l md:border-border" : ""} `}
           >
             <div className="flex justify-center items-center gap-1.5 md:gap-3">
               <StatIcon

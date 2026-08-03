@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "light" | "inverse" | "dark";
+type ButtonVariant = "primary" | "secondary" | "light" | "inverse" | "dark" | "projectbtn";
 
 interface BaseProps {
   variant?: ButtonVariant;
@@ -23,6 +23,7 @@ const variants: Record<ButtonVariant, string> = {
   inverse: "bg-white text-accent hover:bg-foreground hover:text-white",
   // Solid near-black pill — pricing cards' "Choose Package" CTA.
   dark: "bg-foreground text-white hover:bg-accent",
+  projectbtn: "bg-accent text-accent-foreground font-medium hover:bg-foreground px-2 py-2"
 };
 
 function Arrow() {

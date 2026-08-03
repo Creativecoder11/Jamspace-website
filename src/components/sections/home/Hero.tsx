@@ -166,7 +166,10 @@ export function Hero() {
       className="relative h-[100vh] min-h-[700px] mx-auto overflow-x-hidden overflow-y-hidden"
     >
       {/* Image Container */}
-      <div ref={imageRef} className="absolute inset-0 overflow-x-hidden overflow-y-hidden">
+      <div
+        ref={imageRef}
+        className="absolute inset-0 overflow-x-hidden overflow-y-hidden"
+      >
         <div ref={imageCrossfadeRef} className="absolute inset-0">
           <Image
             src={activeSlide.image}
@@ -177,14 +180,14 @@ export function Hero() {
             className="object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent" />
       </div>
 
-      <div className="relative z-10 flex items-end h-full overflow-x-hidden mx-4 md:mx-0">
+      <div className="relative z-10 flex items-end h-full overflow-x-hidden mx-0 md:mx-0">
         <div className="w-full md:border-t border-white/40">
           <div className="flex flex-col md:flex-row w-full max-w-335 mx-auto gap-10 items-start md:items-end justify-between">
             {/* Fix Text Card */}
-            <div className=" md:pb-10">
+            <div className="md:pb-10 px-4 md:px-0">
               <AnimatedHeading
                 as="h1"
                 lines={["Designed", "Beyond Walls."]}
@@ -204,19 +207,33 @@ export function Hero() {
             </div>
 
             {/* Jam Outline Logo */}
-            <div className="hidden md:flex md:flex-col md:justify-end md:items-end border-r border-l pr-5 pl-20 pb-5 border-white/40 h-[400px]">
+            {/* Desktop Layout */}
+            <div className="hidden md:flex flex-col justify-end items-end border-r border-l pr-5 pl-20 pb-5 border-white/40 h-[400px]">
               <Image
                 src="/JAM.svg"
-                alt=""
-                width={1}
-                height={1}
+                alt="JAM"
+                width={100}
+                height={700}
                 className="w-[100px] h-[700px]"
               />
             </div>
 
+            {/* Mobile Layout */}
+            {/* <div className="flex md:hidden justify-center items-center border-t border-b border-white/40 p-5 h-[100px]">
+              <Image
+                src="/JAM-v.svg"
+                alt="JAM"
+                width={300}
+                height={200}
+                className="w-full h-auto"
+              />
+            </div> */}
+
             {/* Project Container */}
-            <div className="flex w-full md:w-auto flex-col pb-10 gap-4">
-              <p className="text-lg text-white/80 md:ml-30">Our Recent Projects</p>
+            <div className="flex w-full md:w-auto px-4 md:px-0 flex-col pb-10 gap-4">
+              <p className="text-lg text-white/80 md:ml-30">
+                Our Recent Projects
+              </p>
               <div className="flex w-full flex-col md:flex-row items-stretch md:items-end">
                 {/* Desktop */}
                 <div className="mr-6 w-[100px] hidden md:flex flex-col items-center gap-3 text-white">

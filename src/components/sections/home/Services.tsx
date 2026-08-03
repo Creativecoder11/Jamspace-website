@@ -100,14 +100,14 @@ export function Services() {
   };
 
   return (
-    <section ref={containerRef} className="pt-15 md:pt-20">
-      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-start md:justify-between px-4 md:px-0">
+    <section ref={containerRef} className="pt-8 md:pt-20">
+      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-start md:justify-between">
         <AnimatedHeading
           as="h2"
           lines={["Designed", "for Every Space."]}
-          className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
+          className="text-[44px] md:text-6xl font-normal px-5 md:px-0 leading-[120%] md:leading-18"
         />
-        <div className="max-w-md pl-4 md:ms-0">
+        <div className="md:max-w-md pl-5 md:pl-5 py-5 md:py-0 md:ms-0">
           <p className="text-muted">
             From concept to completion, we deliver thoughtful design solutions
             tailored to every space and every vision.
@@ -193,11 +193,11 @@ export function Services() {
                         className="object-cover"
                       />
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent" />
 
                       <div className="relative flex min-h-80 md:min-h-130 items-end justify-center">
-                        <div className="border-t border-white/40 w-full flex justify-center items-end gap-4 md:gap-8">
-                          <div className="border-l border-white/40 pl-4 md:pl-8 pt-16 md:pt-0 pb-6 md:pb-8 mr-4 md:mr-0">
+                        <div className="md:border-t border-white/40 w-full flex justify-center items-end gap-4 md:gap-8">
+                          <div className="md:border-l border-white/40 pl-4 md:pl-8 pt-16 md:pt-0 pb-6 md:pb-8 mr-4 md:mr-0">
                             {service.heading && (
                               <h3 className="md:max-w-md text-3xl leading-9 font-normal md:leading-16 text-white md:text-subheading">
                                 {service.heading}

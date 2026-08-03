@@ -338,13 +338,13 @@ export function Testimonials() {
       ref={containerRef}
       className="border-t border-border md:py-25 mx-4 md:mx-0"
     >
-      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-end md:justify-between pt-15 md:pt-0 pb-10 md:px-0">
+      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-end md:justify-between pt-10 md:pt-0 pb-10 md:px-0">
         <AnimatedHeading
           as="h2"
           lines={["Words", "from Our Clients."]}
           className="text-[42px] md:text-6xl font-normal leading-[120%] md:leading-18"
         />
-        <div className="max-w-md pl-5 md:ms-0">
+        <div className="max-w-md md:pl-5 md:ms-0">
           <p className="text-muted">
             Every project is built on collaboration, trust, and exceptional results. Here&apos;s what our clients have to say.
           </p>

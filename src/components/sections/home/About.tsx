@@ -78,17 +78,17 @@ export function About() {
 
 
   return (
-    <section ref={containerRef} className="mx-auto py-15 md:py-0">
+    <section ref={containerRef} className="mx-auto py-0 md:py-0">
       <div className="border-t md:border-t-0 border-b border-border">
         <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
-          <div className="md:w-2/3 border-b md:border-b-0 border-r border-border pr-4 md:pr-0 py-5 md:py-8">
+          <div className="md:w-2/3  border-r border-border pr-4 md:pr-0 py-5 md:py-8">
             <AnimatedHeading
               as="h2"
               lines={["Crafting Spaces", "That Inspire."]}
               className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 mx-4 md:mx-0"
             />
           </div>
-          <div className="border-l border-border md:w-1/3 pl-4 md:pl-8 py-4 md:py-8 mx-4 md:mx-0">
+          <div className="md:border-l border-t border-border md:w-1/3 pl-5 md:pl-8 py-5 md:py-8 mx-0 md:mx-0">
             <p className="text-muted">
               Explore a curated collection of spaces, details, and design
               moments that reflect our passion for timeless interiors and
