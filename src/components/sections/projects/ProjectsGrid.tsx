@@ -145,9 +145,9 @@ export function ProjectsGrid() {
 
   return (
     <section ref={containerRef} className="">
-      <div className="mt-16 md:mt-25 border-y border-border">
+      <div className="mt-16 md:mt-25 md:border-y border-border">
         <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
-          <div className="md:w-2/3 border-b md:border-b-0 border-r border-border pr-4 md:pr-0 py-5 md:py-8">
+          <div className="md:w-2/3 md:border-r border-border pb-4 md:py-8">
             <AnimatedHeading
               as="h2"
               lines={["Spaces", "That Inspire"]}
@@ -155,7 +155,7 @@ export function ProjectsGrid() {
             />
           </div>
 
-          <div className="border-l border-border md:w-1/3 pl-4 md:pl-8 py-4 md:py-8 mx-4 md:mx-0">
+          <div className="md:w-1/3 md:border-l border-border md:pl-8 pb-4 md:py-8 mx-4 md:mx-0">
             <p className="text-muted">
               Explore a curated collection of residential and commercial
               interiors, thoughtfully designed to balance beauty, functionality,
@@ -170,8 +170,9 @@ export function ProjectsGrid() {
           </div>
         </div>
       </div>
+
       <Container className="flex flex-col gap-5 md:gap-10 border-t border-border md:flex-row px-4 md:px-0">
-        <aside className="w-full shrink-0 md:w-80 pt-12.5 md:pr-8">
+        <aside className="w-full shrink-0 md:w-80 pt-7 md:pr-8">
           <div className="sticky top-32">
             <p className="text-sm md:text-base text-muted underline underline-offset-4">
               Filter Projects

@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { gsap } from "@/lib/animations/gsap";
 
@@ -24,13 +23,9 @@ const slides: SlideItem[] = [
 const PIN_TOP_OFFSET = 80;
 const SLIDE_TRANSITION_DURATION = 3;
 const SLIDE_HOLD_DURATION = 0.55;
-const SCROLL_DISTANCE_PER_TIMELINE_UNIT = 45;
+const SCROLL_DISTANCE_PER_TIMELINE_UNIT = 90;
 const IMAGE_PARALLAX_AMOUNT = 12;
-const ENABLE_SLIDE_SNAP = false;
-
-/** Mobile reveal trigger window (relative to the horizontal scroller) */
-const MOBILE_REVEAL_START = "left 65%";
-const MOBILE_REVEAL_END = "left 35%";
+const ENABLE_SLIDE_SNAP = true;
 
 function CornerMark({ className = "" }: { className?: string }) {
   return (
@@ -70,7 +65,7 @@ function SlideContent({ slide }: { slide: SlideItem }) {
             </span>
           </span>
 
-          <h3 className="mt-3 text-2xl font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
+          <h3 className="mt-3 text-5xl font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
             <span className="block overflow-hidden">
               <span className="slide-line inline-block">{slide.audience}</span>
             </span>
@@ -167,10 +162,10 @@ export default function ResidentialServicesSlider() {
             trigger: pinEl,
             start: `top top+=${PIN_TOP_OFFSET}`,
             end: () =>
-              `+=${totalUnits * window.innerHeight * 0.45}`,
+              `+=${totalUnits * window.innerHeight * (SCROLL_DISTANCE_PER_TIMELINE_UNIT / 100)}`,
             pin: true,
             pinSpacing: true,
-            scrub: 0.6,
+            scrub: 1.15,
             anticipatePin: 1,
             invalidateOnRefresh: true,
             snap: ENABLE_SLIDE_SNAP
@@ -241,13 +236,15 @@ export default function ResidentialServicesSlider() {
         };
       });
 
-      // Mobile: same text reveal, driven by real native horizontal scroll
-      // on the existing snap container — no separate slider logic needed.
+      // Mobile: same text reveal, driven by visibility inside the existing
+      // snap container. IntersectionObserver instead of a scroll-position
+      // trigger — far more reliable against a gapped flex layout, and it's
+      // what "is this card the one in view" actually means.
       mm.add("(max-width: 767px)", () => {
         const container = mobileContainerRef.current;
         if (!container || mobileSlideEls.length === 0) return;
 
-        const triggers = mobileSlideEls.map((slide, i) => {
+        const reveals = mobileSlideEls.map((slide, i) => {
           const line = slide.querySelector<HTMLElement>(".slide-line");
           const badge = slide.querySelector<HTMLElement>(".slide-badge");
           const top = slide.querySelector<HTMLElement>(".slide-top");
@@ -264,20 +261,28 @@ export default function ResidentialServicesSlider() {
           if (top) reveal.to(top, { y: 0, autoAlpha: 1, duration: 0.4 }, 0.05);
           if (i === 0) reveal.progress(1);
 
-          return ScrollTrigger.create({
-            trigger: slide,
-            scroller: container,
-            horizontal: true,
-            start: "left 65%",
-            end: "left 35%",
-            toggleActions: "play reverse play reverse",
-            animation: reveal,
-          });
+          return reveal;
         });
 
-        ScrollTrigger.refresh();
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const idx = mobileSlideEls.indexOf(entry.target as HTMLDivElement);
+              if (idx === -1) return;
 
-        return () => triggers.forEach((t) => t.kill());
+              if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+                reveals[idx].play();
+              } else {
+                reveals[idx].reverse();
+              }
+            });
+          },
+          { root: container, threshold: [0, 0.6, 1] }
+        );
+
+        mobileSlideEls.forEach((slide) => observer.observe(slide));
+
+        return () => observer.disconnect();
       });
 
       return () => mm.revert();
@@ -290,7 +295,7 @@ export default function ResidentialServicesSlider() {
       {/* Desktop and tablet slider */}
       <div
         ref={pinRef}
-        className="relative mt-25 hidden md:h-[calc(100svh-80px)] w-full overflow-hidden bg-black md:block"
+        className="relative mt-25 hidden h-[calc(100svh-80px)] w-full overflow-hidden bg-black md:block"
       >
         {slides.map((slide, index) => (
           <div
@@ -335,14 +340,15 @@ export default function ResidentialServicesSlider() {
       {/* Mobile swipeable slider */}
       <div
         ref={mobileContainerRef}
-        className="mobile-slider flex w-full snap-x snap-mandatory gap-4 overflow-x-scroll overscroll-x-contain scroll-smooth px-4 py-4 md:hidden">
+        className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 py-4 md:hidden"
+      >
         {slides.map((slide, index) => (
           <div
             key={slide.index}
             ref={(el) => {
               mobileSlideRefs.current[index] = el;
             }}
-            className="relative h-[50svh] w-[88vw] shrink-0 snap-center overflow-hidden rounded-xl"
+            className="relative h-[50svh] w-[88vw] shrink-0 snap-center overflow-hidden rounded-2xl"
           >
             <Image
               src={slide.image}

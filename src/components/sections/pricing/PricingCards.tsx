@@ -66,9 +66,9 @@ export function PricingCards() {
 
   return (
     <section ref={containerRef} className="mt-16 md:mt-22.5">
-      <div className="border-y border-border">
+      <div className="md:border-y border-border">
         <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
-          <div className="md:w-2/3 border-b md:border-b-0 border-r border-border pr-4 md:pr-0 py-5 md:py-8">
+          <div className="md:w-2/3 md:border-r border-border pb-4 md:py-8">
             <AnimatedHeading
               as="h2"
               lines={["Explore", "Our Services."]}
@@ -76,7 +76,7 @@ export function PricingCards() {
             />
           </div>
 
-          <div className="border-l border-border md:w-1/3 pl-4 md:pl-8 py-4 md:py-8 mx-4 md:mx-0">
+          <div className="md:w-1/3 md:border-l border-border md:pl-8 pb-4 md:py-8 mx-4 md:mx-0">
             <p className="text-muted">
               Explore our range of interior design services, crafted to create
               spaces that are functional, timeless, and uniquely yours.
@@ -90,7 +90,7 @@ export function PricingCards() {
           </div>
         </div>
       </div>
-      <Container className="flex flex-col gap-4 md:gap-0 mt-6 md:mt-12.5 overflow-hidden border border-border lg:flex-row px-4 md:px-0">
+      <Container className="flex flex-col gap-4 md:gap-0 mt-6 md:mt-12.5 overflow-hidden md:border border-border lg:flex-row px-4 md:px-0">
         {pricingPackages.map((pkg, i) => (
           <div
             key={pkg.name}

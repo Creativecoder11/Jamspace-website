@@ -1,11 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { CustomEase } from "gsap/CustomEase";
 
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+
+gsap.registerPlugin(CustomEase);
+if (!CustomEase.get("brandEase")) {
+    CustomEase.create("brandEase", "0.24, 0.43, 0.15, 0.97");
+}
 
 const services = [
     {
@@ -36,13 +43,44 @@ const services = [
 
 export default function ResidentialIncludedServices() {
     const [activeImage, setActiveImage] = useState(services[0].image);
+    const itemRefs = useRef<Map<string, HTMLLIElement>>(new Map());
+
+    const getAccentColor = () => {
+        if (typeof window === "undefined") return "#000";
+        return getComputedStyle(document.documentElement)
+            .getPropertyValue("--color-accent")
+            .trim();
+    };
+
+    const handleEnter = (title: string, image: string) => {
+        setActiveImage(image);
+        const el = itemRefs.current.get(title);
+        if (!el) return;
+        gsap.to(el, {
+            x: 8, // matches Tailwind's translate-x-2 (0.5rem)
+            color: getAccentColor(),
+            duration: 0.3,
+            ease: "brandEase",
+        });
+    };
+
+    const handleLeave = (title: string) => {
+        const el = itemRefs.current.get(title);
+        if (!el) return;
+        gsap.to(el, {
+            x: 0,
+            color: "inherit",
+            duration: 0.3,
+            ease: "brandEase",
+        });
+    };
 
     return (
-        <section className="border-b border-border">
+        <section className="border-b border-border border-t md:border-t-0 pt-15">
             {/* Heading */}
-            <div className="border-y border-border">
-                <div className="mx-auto flex max-w-[1340px] flex-col md:flex-row md:items-start md:justify-between">
-                    <div className="border-b border-border py-5 md:w-2/3 md:border-b-0 md:border-r md:py-8">
+            <div className="md:border-y border-border">
+                <div className="mx-auto flex max-w-335 flex-col md:flex-row md:items-start md:justify-between">
+                    <div className="md:w-2/3 md:border-r border-border pb-4 md:py-8">
                         <AnimatedHeading
                             as="h2"
                             lines={["What's Included", "in This Service."]}
@@ -50,7 +88,7 @@ export default function ResidentialIncludedServices() {
                         />
                     </div>
 
-                    <div className="mx-4 border-l border-border py-4 pl-4 md:mx-0 md:w-1/3 md:py-8 md:pl-8">
+                    <div className="mx-4 pb-4 md:mx-0 md:w-1/3 md:border-l border-border md:py-8 md:pl-8">
                         <p className="text-muted">
                             Everything you need to transform your home into a thoughtfully
                             designed, functional, and timeless living space.
@@ -108,9 +146,15 @@ export default function ResidentialIncludedServices() {
                         {services.map((service) => (
                             <li
                                 key={service.title}
-                                onMouseEnter={() => setActiveImage(service.image)}
-                                onFocus={() => setActiveImage(service.image)}
-                                className="cursor-pointer text-2xl transition-all duration-300 hover:translate-x-2 hover:text-accent md:text-3xl"
+                                ref={(el) => {
+                                    if (el) itemRefs.current.set(service.title, el);
+                                    else itemRefs.current.delete(service.title);
+                                }}
+                                onMouseEnter={() => handleEnter(service.title, service.image)}
+                                onMouseLeave={() => handleLeave(service.title)}
+                                onFocus={() => handleEnter(service.title, service.image)}
+                                onBlur={() => handleLeave(service.title)}
+                                className="cursor-pointer text-2xl md:text-3xl"
                             >
                                 {service.title}
                             </li>

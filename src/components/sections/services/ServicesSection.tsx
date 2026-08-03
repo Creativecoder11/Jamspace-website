@@ -52,9 +52,9 @@ export function ServicesSection() {
 
   return (
     <section ref={containerRef} className="">
-      <div className="mt-16 md:mt-25 border-y border-border">
+      <div className="mt-16 md:mt-25 md:border-y border-border">
         <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
-          <div className="md:w-2/3 border-b md:border-b-0 border-r border-border pr-4 md:pr-0 py-5 md:py-8">
+          <div className="md:w-2/3 md:border-r border-border pb-4 md:py-8">
             <AnimatedHeading
               as="h2"
               lines={["Explore", "Our Services."]}
@@ -62,7 +62,7 @@ export function ServicesSection() {
             />
           </div>
 
-          <div className="border-l border-border md:w-1/3 pl-4 md:pl-8 py-4 md:py-8 mx-4 md:mx-0">
+          <div className="md:w-1/3 md:border-l border-border md:pl-8 pb-4 md:py-8 mx-4 md:mx-0">
             <p className="text-muted">
               Explore our range of interior design services, crafted to create
               spaces that are functional, timeless, and uniquely yours.
