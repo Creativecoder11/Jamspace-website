@@ -4,7 +4,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { AboutMissionVision } from "@/components/sections/about/AboutMissionVision";
 import { AboutValues } from "@/components/sections/about/AboutValues";
 import { AboutJourney } from "@/components/sections/about/AboutJourney";
-import { AboutTeam } from "@/components/sections/about/AboutTeam";
+// import { AboutTeam } from "@/components/sections/about/AboutTeam";
 import { AboutSustainability } from "@/components/sections/about/AboutSustainability";
 import { AboutStoryBento } from "@/components/sections/about/AboutStoryBento";
 import DesignPhilosophySection from "@/components/sections/about/DesignPhilosophySection";
@@ -27,7 +27,7 @@ export default function AboutPage() {
       <AboutMissionVision />
       <AboutValues />
       <AboutJourney />
-      <AboutTeam />
+      {/* <AboutTeam /> */}
       <AboutSustainability />
     </>
   );

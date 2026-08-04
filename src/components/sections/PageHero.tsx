@@ -63,9 +63,9 @@ export function PageHero({
   );
 
   return (
-    <section ref={containerRef} className="pt-22 mx-2.5">
+    <section ref={containerRef} className="pt-22">
       <div>
-        <div className="page-hero-banner relative w-full overflow-hidden h-40 md:h-90 rounded-3xl">
+        <div className="page-hero-banner relative w-full overflow-hidden h-40 md:h-90">
           <Image
             src={image}
             alt=""
