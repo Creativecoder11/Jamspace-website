@@ -91,7 +91,7 @@ export function Header() {
           aria-expanded={isMenuOpen}
           aria-controls="mobile-menu"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
+          className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden cursor-pointer"
         >
           <span
             className={`h-px w-6 bg-foreground transition-transform duration-300 ${isMenuOpen ? "translate-y-[3.5px] rotate-45" : ""
