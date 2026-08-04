@@ -162,7 +162,7 @@ export function ContactForm() {
   );
 
   return (
-    <section ref={containerRef} className="py-16 md:pt-22">
+    <section ref={containerRef} className="pt-15 md:pt-22">
       <Container className="grid grid-cols-1 gap-8 md:gap-16 border-t border-b-0 md:border-b border-border lg:grid-cols-2">
         <div className="contact-reveal border-r-0 md:border-r pt-8 pb-8 border-border flex flex-col justify-between mx-4 md:mx-0">
           <div>

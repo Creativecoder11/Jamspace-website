@@ -71,20 +71,19 @@ export function PricingCards() {
           <div className="md:w-2/3 md:border-r border-border pb-4 md:py-8">
             <AnimatedHeading
               as="h2"
-              lines={["Explore", "Our Services."]}
+              lines={["Your", "Investment."]}
               className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 mx-4 md:mx-0"
             />
           </div>
 
           <div className="md:w-1/3 md:border-l border-border md:pl-8 pb-4 md:py-8 mx-4 md:mx-0">
             <p className="text-muted">
-              Explore our range of interior design services, crafted to create
-              spaces that are functional, timeless, and uniquely yours.
+              Explore our pricing options and choose the design service that best fits your vision, scope, and budget.
             </p>
 
             <div className="mt-3 md:mt-6">
               <MagneticButton>
-                <Button href="/about">Start a Project</Button>
+                <Button href="/about">Contact Us</Button>
               </MagneticButton>
             </div>
           </div>

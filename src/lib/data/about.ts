@@ -104,13 +104,13 @@ export const aboutStorySnapshots: {
 
 export const aboutValues: { label: string; accent: Accent }[] = [
   { label: "Creativity", accent: "pink" },
-  { label: "Innovation", accent: "yellow" },
-  { label: "Collaboration", accent: "teal" },
-  { label: "Sustainability", accent: "teal" },
-  { label: "Client Centric", accent: "pink" },
-  { label: "Attention to Detail", accent: "yellow" },
-  { label: "Quality", accent: "yellow" },
-  { label: "Integrity", accent: "teal" },
+  { label: "Sustainability", accent: "yellow" },
+  { label: "Quality", accent: "teal" },
+  { label: "Innovation", accent: "teal" },
+  { label: "Client - Centric", accent: "pink" },
+  { label: "Integrity", accent: "yellow" },
+  { label: "Collaboration", accent: "yellow" },
+  { label: "Attention to Detail", accent: "teal" },
   { label: "Flexibility", accent: "pink" },
 ];
 

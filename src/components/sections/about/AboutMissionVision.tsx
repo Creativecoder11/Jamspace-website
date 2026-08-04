@@ -221,7 +221,7 @@ export function AboutMissionVision() {
         <p
           key={activeTab}
           ref={copyRef}
-          className="mt-3 md:mt-6 text-xl md:text-3xl leading-relaxed text-muted"
+          className="mt-3 md:mt-6 text-xl md:text-3xl leading-relaxed font-medium text-muted"
         >
           <span className="font-medium text-foreground">
             {active.lead}

@@ -160,9 +160,9 @@ export function AboutStoryBento() {
   );
 
   return (
-    <section ref={containerRef} className="pt-7 pb-15 md:py-20 px-4 md:px-0">
+    <section ref={containerRef} className="pt-15 md:pt-0 pb-15 md:py-20 px-4 md:px-0">
       <Container className="flex flex-col md:pt-14">
-        <p className="story-fill text-[24px] md:text-[27px] leading-[124%]">
+        <p className="story-fill text-xl md:text-3xl leading- md:leading-11 font-medium">
           Founded in 2022, JamSpace is an interior design studio creating
           thoughtful residential and commercial spaces through creativity,
           functionality, and timeless craftsmanship. We transform ideas into

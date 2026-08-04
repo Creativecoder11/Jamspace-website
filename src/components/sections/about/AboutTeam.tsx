@@ -102,7 +102,7 @@ export function AboutTeam() {
   );
 
   return (
-    <section ref={containerRef} className="py-15 md:py-20">
+    <section ref={containerRef} className="pt-15 md:pt-20">
       <div className="md:border-y border-border">
         <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
           <div className="md:w-2/3 md:border-r border-border md:pr-0 pb-4 md:py-8">

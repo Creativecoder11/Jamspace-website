@@ -199,7 +199,17 @@ export function ProjectsGrid() {
                 >
                   {category}
                   {activeCategory === category && (
-                    <span className="ml-1.5">×</span>
+                    <span
+                      role="button"
+                      aria-label="Clear filter"
+                      className="ml-1.5"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveCategory(null);
+                      }}
+                    >
+                      ×
+                    </span>
                   )}
                 </button>
               ))}

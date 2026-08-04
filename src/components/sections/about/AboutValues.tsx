@@ -79,7 +79,7 @@ export function AboutValues() {
 
             <div className="mt-3 md:mt-6">
               <MagneticButton>
-                <Button href="/about">Learn More About Us</Button>
+                <Button href="/contact">Contact Us Now</Button>
               </MagneticButton>
             </div>
           </div>
@@ -100,7 +100,7 @@ export function AboutValues() {
                 height={44}
                 className="h-8 md:h-11 w-8 md:w-11 shrink-0"
               />
-              <span className="font-medium">{value.label}</span>
+              <span className="md:text-xl font-medium">{value.label}</span>
             </div>
           ))}
         </div>
