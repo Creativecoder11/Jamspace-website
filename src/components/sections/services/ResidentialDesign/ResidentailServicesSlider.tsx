@@ -19,12 +19,12 @@ const slides: SlideItem[] = [
   { index: "04", audience: "Design Enthusiasts.", image: "/images/about-strip-02.webp" },
 ];
 
-/** Desktop pin/scrub timing */
+/** Desktop pin/scrub timing — improved UX */
 const PIN_TOP_OFFSET = 80;
-const SLIDE_TRANSITION_DURATION = 3;
-const SLIDE_HOLD_DURATION = 0.55;
-const SCROLL_DISTANCE_PER_TIMELINE_UNIT = 90;
-const IMAGE_PARALLAX_AMOUNT = 12;
+const SLIDE_TRANSITION_DURATION = 2.5;
+const SLIDE_HOLD_DURATION = 0.6;
+const SCROLL_DISTANCE_PER_TIMELINE_UNIT = 100;
+const IMAGE_ZOOM_AMOUNT = 1.08;
 const ENABLE_SLIDE_SNAP = true;
 
 function CornerMark({ className = "" }: { className?: string }) {
@@ -51,9 +51,9 @@ function SlideContent({ slide }: { slide: SlideItem }) {
     <div className="absolute inset-0 z-10 flex flex-col justify-between p-6 md:p-10 lg:p-12">
       <div className="slide-top flex items-start justify-between">
         <CornerMark className="hidden rotate-180 md:block" />
-        <span className="slide-index font-sans text-2xl font-normal text-white md:text-3xl">
-          {slide.index}
-          <span className="text-white/60">/{String(slides.length).padStart(2, "0")}</span>
+        <span className="slide-index font-normal text-white">
+          <span className="text-base md:text-5xl">{slide.index}</span>
+          <span className="text-base md:text-xl">/{String(slides.length).padStart(2, "0")}</span>
         </span>
       </div>
 
@@ -78,7 +78,7 @@ function SlideContent({ slide }: { slide: SlideItem }) {
   );
 }
 
-/** Fades/slides a slide's text elements in (or out, when `reverse`) at timeline position `at`. */
+/** Staggered text reveal — badge first, then title */
 function revealText(
   tl: gsap.core.Timeline,
   slide: HTMLElement,
@@ -90,15 +90,15 @@ function revealText(
   const top = slide.querySelector<HTMLElement>(".slide-top");
 
   if (reverse) {
-    if (line) tl.to(line, { yPercent: -35, autoAlpha: 0, duration: 0.35, ease: "power2.in" }, at);
-    if (badge) tl.to(badge, { y: -14, autoAlpha: 0, duration: 0.3, ease: "power2.in" }, at);
-    if (top) tl.to(top, { y: -15, autoAlpha: 0, duration: 0.3, ease: "power2.in" }, at);
+    if (line) tl.to(line, { yPercent: -20, autoAlpha: 0, duration: 0.25, ease: "power2.in" }, at);
+    if (badge) tl.to(badge, { y: -10, autoAlpha: 0, duration: 0.2, ease: "power2.in" }, at);
+    if (top) tl.to(top, { y: -10, autoAlpha: 0, duration: 0.2, ease: "power2.in" }, at);
     return;
   }
 
-  if (line) tl.to(line, { yPercent: 0, autoAlpha: 1, duration: 0.52, ease: "power3.out" }, at + 0.3);
-  if (badge) tl.to(badge, { y: 0, autoAlpha: 1, duration: 0.42, ease: "power3.out" }, at + 0.36);
-  if (top) tl.to(top, { y: 0, autoAlpha: 1, duration: 0.4, ease: "power3.out" }, at + 0.35);
+  if (badge) tl.fromTo(badge, { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.4, ease: "power3.out" }, at + 0.2);
+  if (line) tl.fromTo(line, { yPercent: 100, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease: "power3.out" }, at + 0.3);
+  if (top) tl.fromTo(top, { y: -15, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.4, ease: "power3.out" }, at + 0.4);
 }
 
 export default function ResidentialServicesSlider() {
@@ -132,8 +132,7 @@ export default function ResidentialServicesSlider() {
 
         imageEls.forEach((img, i) =>
           gsap.set(img, {
-            xPercent: i === 0 ? 0 : -IMAGE_PARALLAX_AMOUNT,
-            scale: i === 0 ? 1.02 : 1.08,
+            scale: i === 0 ? 1 : IMAGE_ZOOM_AMOUNT,
             transformOrigin: "center center",
             force3D: true,
           })
@@ -165,11 +164,11 @@ export default function ResidentialServicesSlider() {
               `+=${totalUnits * window.innerHeight * (SCROLL_DISTANCE_PER_TIMELINE_UNIT / 100)}`,
             pin: true,
             pinSpacing: true,
-            scrub: 1.15,
+            scrub: 0.8,
             anticipatePin: 1,
             invalidateOnRefresh: true,
             snap: ENABLE_SLIDE_SNAP
-              ? { snapTo: "labels", duration: { min: 0.25, max: 0.6 }, delay: 0.1, ease: "power2.out" }
+              ? { snapTo: "labels", duration: { min: 0.3, max: 0.5 }, delay: 0.1, ease: "power2.out" }
               : undefined,
           },
         });
@@ -180,7 +179,6 @@ export default function ResidentialServicesSlider() {
           tl.to(hintRef.current, { autoAlpha: 0, duration: 0.12 }, 0);
         }
 
-        // Reserve the initial hold with a plain no-op tween.
         tl.to({}, { duration: SLIDE_HOLD_DURATION }, 0);
 
         let cursor = SLIDE_HOLD_DURATION;
@@ -190,26 +188,26 @@ export default function ResidentialServicesSlider() {
           const prevSlide = slideEls[i - 1];
           const nextSlide = slideEls[i];
 
-          tl.to(prevSlide, { xPercent: -100, duration: SLIDE_TRANSITION_DURATION, ease: "power2.inOut" }, start)
-            .to(nextSlide, { xPercent: 0, duration: SLIDE_TRANSITION_DURATION, ease: "power2.inOut" }, start);
+          tl.to(prevSlide, { xPercent: -100, duration: SLIDE_TRANSITION_DURATION, ease: "power3.inOut" }, start)
+            .to(nextSlide, { xPercent: 0, duration: SLIDE_TRANSITION_DURATION, ease: "power3.inOut" }, start);
 
           if (imageEls[i - 1]) {
             tl.to(
               imageEls[i - 1],
-              { xPercent: IMAGE_PARALLAX_AMOUNT, scale: 1.08, duration: SLIDE_TRANSITION_DURATION, ease: "power1.inOut" },
+              { scale: IMAGE_ZOOM_AMOUNT, duration: SLIDE_TRANSITION_DURATION, ease: "power2.inOut" },
               start
             );
           }
           if (imageEls[i]) {
             tl.to(
               imageEls[i],
-              { xPercent: 0, scale: 1.02, duration: SLIDE_TRANSITION_DURATION, ease: "power1.inOut" },
+              { scale: 1, duration: SLIDE_TRANSITION_DURATION, ease: "power2.inOut" },
               start
             );
           }
 
           revealText(tl, prevSlide, start, true);
-          revealText(tl, nextSlide, start);
+          revealText(tl, nextSlide, start + 0.5);
 
           cursor += SLIDE_TRANSITION_DURATION;
           tl.addLabel(`slide-${i}`, cursor);
@@ -226,7 +224,7 @@ export default function ResidentialServicesSlider() {
         };
       });
 
-      // Desktop: reduced-motion fallback — first slide only, no animation.
+      // Desktop: reduced-motion fallback
       mm.add("(min-width: 768px) and (prefers-reduced-motion: reduce)", () => {
         gsap.set(slideEls, { xPercent: 100, autoAlpha: 0 });
         gsap.set(slideEls[0], { xPercent: 0, autoAlpha: 1 });
@@ -236,10 +234,7 @@ export default function ResidentialServicesSlider() {
         };
       });
 
-      // Mobile: same text reveal, driven by visibility inside the existing
-      // snap container. IntersectionObserver instead of a scroll-position
-      // trigger — far more reliable against a gapped flex layout, and it's
-      // what "is this card the one in view" actually means.
+      // Mobile: same text reveal, driven by visibility
       mm.add("(max-width: 767px)", () => {
         const container = mobileContainerRef.current;
         if (!container || mobileSlideEls.length === 0) return;

@@ -2,29 +2,28 @@ import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import Image from "next/image";
-import React from "react";
 
 export default function JalshiriHeroBanner() {
   return (
     <section>
-      <div className="mt-30 border-y border-border">
-        <div className="mx-auto flex max-w-[1340px] items-start justify-between">
-          <div className="w-2/3 border-r border-border py-8">
+      <div className="mt-25 md:mt-30 md:border-y border-border">
+        <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
+          <div className="md:w-2/3 md:border-r border-border md:pr-0 pb-4 md:py-8">
             <AnimatedHeading
               as="h2"
               lines={["Jalshiri", "Parkside Duplex"]}
-              className="text-6xl font-normal leading-18"
+              className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 px-4 md:px-0"
             />
           </div>
 
-          <div className="w-1/3 py-8 pl-8">
+          <div className="md:w-1/3 border-border md:pl-8 md:py-8 px-4 md:px-0">
             <p className="text-muted">
               Jalshiri Parkside Duplex began with a clear client vision: keep
               the heritage alive, but translate it into a home that feels
               minimal, calm, and genuinely liveable.
             </p>
 
-            <div className="mt-6">
+            <div className="mt-3 md:mt-6">
               <MagneticButton>
                 <Button href="/about">Start a Project</Button>
               </MagneticButton>
@@ -32,7 +31,8 @@ export default function JalshiriHeroBanner() {
           </div>
         </div>
       </div>
-      <div className="max-w-[1340px] mx-auto mt-5 flex flex-row justify-between">
+
+      <div className="max-w-335 mx-auto mt-5 grid grid-cols-2 md:grid-cols-4 gap-4 justify-between px-4 md:px-0">
         <div>
           <p className="text-base">Year:</p>
           <p className="text-base font-medium">2026</p>
@@ -50,36 +50,43 @@ export default function JalshiriHeroBanner() {
           <p className="text-base font-medium">Neo-Modern</p>
         </div>
       </div>
+
       <div className="relative mt-5">
-        <Image
-          src="/images/hero-01.webp"
-          width={1600}
-          height={900}
-          alt="Project Image"
-          className="w-full h-[700px] object-cover"
-        />
+        <div className="px-4 md:px-0">
+          <Image
+            src="/images/hero-01.webp"
+            width={1600}
+            height={900}
+            alt="Project Image"
+            className="w-full h-90 md:h-175 object-cover"
+          />
+        </div>
 
         {/* Testimonial Card */}
-        <div className="absolute right-8 bottom-8 max-w-[380px] bg-white/10 backdrop-blur-md border border-white/20 p-8 text-white">
-          <Image
-            src="/icons/quote.svg"
-            width={24}
-            height={24}
-            alt="Quote"
-            className="mb-5"
-          />
+        <div className="absolute inset-x-0 bottom-8">
+          <div className="max-w-335 mx-auto px-4 md:px-0 flex justify-end">
+            <div className="max-w-70 mx-auto md:mx-0 md:max-w-95 bg-white/10 backdrop-blur-md border border-white/20 p-4 md:p-8 text-white">
+              <Image
+                src="/icons/quote.svg"
+                width={24}
+                height={24}
+                alt="Quote"
+                className="mb-5"
+              />
 
-          <p className="text-base leading-7 text-white/90">
-            “Working with JamSpace was an exceptional experience from start to
-            finish. They understood our vision, communicated clearly throughout
-            the project, and delivered a space that feels both elegant and
-            highly functional. The attention to detail exceeded our
-            expectations.”
-          </p>
+              <p className="text-sm md:text-base leading-5 md:leading-7 text-white/90">
+                “Working with JamSpace was an exceptional experience from start to
+                finish. They understood our vision, communicated clearly throughout
+                the project, and delivered a space that feels both elegant and
+                highly functional. The attention to detail exceeded our
+                expectations.”
+              </p>
 
-          <div className="mt-6">
-            <h4 className="font-medium text-lg">Sarah Ahmed</h4>
-            <p className="text-sm text-white/70">Homeowner, Dhaka</p>
+              <div className="mt-3 md:mt-6">
+                <h4 className="font-medium text-base md:text-lg">Sarah Ahmed</h4>
+                <p className="text-xs md:text-sm text-white/70">Homeowner, Dhaka</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
