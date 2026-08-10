@@ -162,154 +162,156 @@ export function ContactForm() {
   );
 
   return (
-    <section ref={containerRef} className="pt-15 md:pt-22">
-      <Container className="grid grid-cols-1 gap-8 md:gap-16 border-t border-b-0 md:border-b border-border lg:grid-cols-2">
-        <div className="contact-reveal border-r-0 md:border-r pt-8 pb-8 border-border flex flex-col justify-between mx-4 md:mx-0">
-          <div>
-            <AnimatedHeading
-              as="h1"
-              lines={["Let's Start", "the Conversation"]}
-              className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
-            />
-            <p className="mt-2 md:mt-4 max-w-md text-muted">
-              We&apos;re here to answer your questions, discuss your ideas, and
-              guide you through every step of your interior design journey.
-            </p>
+    <section ref={containerRef} className="mx-auto w-full md:pt-22">
+      <div className="w-full md:border-t border-border md:border-b">
+        <div className="mx-auto grid w-full max-w-[1340px] grid-cols-1 gap-8 md:gap-16 lg:grid-cols-2">
+          <div className="contact-reveal mx-4 flex flex-col justify-between border-border pt-8 pb-8 md:mx-0 md:border-r">
+            <div>
+              <AnimatedHeading
+                as="h1"
+                lines={["Let's Start", "the Conversation"]}
+                className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
+              />
+              <p className="mt-2 md:mt-4 max-w-md text-muted">
+                We&apos;re here to answer your questions, discuss your ideas, and
+                guide you through every step of your interior design journey.
+              </p>
+            </div>
+
+            <ul className="mt-6 md:mt-10 flex flex-col gap-4 md:gap-6">
+              {contactItems.map((item) => (
+                <li key={item.label} className="flex items-center gap-2 md:gap-4">
+                  <IconBadge>{item.icon}</IconBadge>
+                  <div>
+                    <p className="text-sm font-medium">{item.label}</p>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        className="text-sm text-muted hover:text-accent"
+                      >
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="text-sm text-muted">{item.value}</p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <ul className="mt-6 md:mt-10 flex flex-col gap-4 md:gap-6">
-            {contactItems.map((item) => (
-              <li key={item.label} className="flex items-center gap-2 md:gap-4">
-                <IconBadge>{item.icon}</IconBadge>
-                <div>
-                  <p className="text-sm font-medium">{item.label}</p>
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      className="text-sm text-muted hover:text-accent"
-                    >
-                      {item.value}
-                    </a>
-                  ) : (
-                    <p className="text-sm text-muted">{item.value}</p>
-                  )}
+          <form onSubmit={(e) => e.preventDefault()} className="contact-reveal px-4 py-0 md:px-0 md:py-8">
+            <h2 className="text-xl font-medium">Start Your Project</h2>
+
+            <div className="mt-4 md:mt-8 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+              <div>
+                <FieldLabel>Full Name</FieldLabel>
+                <input
+                  type="text"
+                  required
+                  placeholder="Type Your Full Name"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <FieldLabel>Email</FieldLabel>
+                <input
+                  type="email"
+                  required
+                  placeholder="Type Your Email Address"
+                  className={inputClass}
+                />
+              </div>
+
+              <div>
+                <FieldLabel>Phone Number</FieldLabel>
+                <input
+                  type="tel"
+                  required
+                  placeholder="Type Your Phone Number"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <FieldLabel>Project Type</FieldLabel>
+                <div className="relative mt-2">
+                  <select required defaultValue="" className={selectClass}>
+                    <option value="" disabled>
+                      Select Your Project Type
+                    </option>
+                    <option>Residential Design</option>
+                    <option>Commercial Design</option>
+                    <option>3D Visualization</option>
+                    <option>Design Consultation</option>
+                  </select>
+                  <ChevronDown />
                 </div>
-              </li>
-            ))}
-          </ul>
+              </div>
+
+              <div>
+                <FieldLabel>Project Location</FieldLabel>
+                <input
+                  type="text"
+                  required
+                  placeholder="Type Your Location"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <FieldLabel>Estimated Budget</FieldLabel>
+                <div className="relative mt-2">
+                  <select required defaultValue="" className={selectClass}>
+                    <option value="" disabled>
+                      Select Your Estimated Budget
+                    </option>
+                    <option>Under ৳1,00,000</option>
+                    <option>৳1,00,000 – ৳5,00,000</option>
+                    <option>৳5,00,000 – ৳10,00,000</option>
+                    <option>Above ৳10,00,000</option>
+                  </select>
+                  <ChevronDown />
+                </div>
+              </div>
+
+              <div className="sm:col-span-2">
+                <FieldLabel>Tell Us About Your Project</FieldLabel>
+                <textarea
+                  required
+                  rows={3}
+                  placeholder="Type Your Message"
+                  className={`${inputClass} resize-none`}
+                />
+              </div>
+            </div>
+
+            <label className="mt-4 md:mt-8 flex items-start gap-2.5 pt-4 md:pt-6 text-sm text-muted">
+              <input
+                type="checkbox"
+                required
+                className="mt-0.5 h-4 w-4 accent-accent"
+              />
+              <span>
+                I agree to the{" "}
+                <a
+                  href="/terms-and-conditions"
+                  className="text-accent hover:underline"
+                >
+                  Terms &amp; Conditions
+                </a>{" "}
+                and{" "} <br className="block md:hidden" />
+                <a href="/privacy-policy" className="text-accent hover:underline">
+                  Privacy Policy
+                </a>{" "}
+                *
+              </span>
+            </label>
+
+            <Button type="submit" className="mt-3 md:mt-6 w-full justify-center">
+              Book a Consultant
+            </Button>
+          </form>
         </div>
-
-        <form onSubmit={(e) => e.preventDefault()} className="contact-reveal py-0 md:py-8 px-4 md:px-0">
-          <h2 className="text-xl font-medium">Start Your Project</h2>
-
-          <div className="mt-4 md:mt-8 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-            <div>
-              <FieldLabel>Full Name</FieldLabel>
-              <input
-                type="text"
-                required
-                placeholder="Type Your Full Name"
-                className={inputClass}
-              />
-            </div>
-            <div>
-              <FieldLabel>Email</FieldLabel>
-              <input
-                type="email"
-                required
-                placeholder="Type Your Email Address"
-                className={inputClass}
-              />
-            </div>
-
-            <div>
-              <FieldLabel>Phone Number</FieldLabel>
-              <input
-                type="tel"
-                required
-                placeholder="Type Your Phone Number"
-                className={inputClass}
-              />
-            </div>
-            <div>
-              <FieldLabel>Project Type</FieldLabel>
-              <div className="relative mt-2">
-                <select required defaultValue="" className={selectClass}>
-                  <option value="" disabled>
-                    Select Your Project Type
-                  </option>
-                  <option>Residential Design</option>
-                  <option>Commercial Design</option>
-                  <option>3D Visualization</option>
-                  <option>Design Consultation</option>
-                </select>
-                <ChevronDown />
-              </div>
-            </div>
-
-            <div>
-              <FieldLabel>Project Location</FieldLabel>
-              <input
-                type="text"
-                required
-                placeholder="Type Your Location"
-                className={inputClass}
-              />
-            </div>
-            <div>
-              <FieldLabel>Estimated Budget</FieldLabel>
-              <div className="relative mt-2">
-                <select required defaultValue="" className={selectClass}>
-                  <option value="" disabled>
-                    Select Your Estimated Budget
-                  </option>
-                  <option>Under ৳1,00,000</option>
-                  <option>৳1,00,000 – ৳5,00,000</option>
-                  <option>৳5,00,000 – ৳10,00,000</option>
-                  <option>Above ৳10,00,000</option>
-                </select>
-                <ChevronDown />
-              </div>
-            </div>
-
-            <div className="sm:col-span-2">
-              <FieldLabel>Tell Us About Your Project</FieldLabel>
-              <textarea
-                required
-                rows={3}
-                placeholder="Type Your Message"
-                className={`${inputClass} resize-none`}
-              />
-            </div>
-          </div>
-
-          <label className="mt-4 md:mt-8 flex items-start gap-2.5 pt-4 md:pt-6 text-sm text-muted">
-            <input
-              type="checkbox"
-              required
-              className="mt-0.5 h-4 w-4 accent-accent"
-            />
-            <span>
-              I agree to the{" "}
-              <a
-                href="/terms-and-conditions"
-                className="text-accent hover:underline"
-              >
-                Terms &amp; Conditions
-              </a>{" "}
-              and{" "} <br className="block md:hidden"/>
-              <a href="/privacy-policy" className="text-accent hover:underline">
-                Privacy Policy
-              </a>{" "}
-              *
-            </span>
-          </label>
-
-          <Button type="submit" className="mt-3 md:mt-6 w-full justify-center">
-            Book a Consultant
-          </Button>
-        </form>
-      </Container>
+      </div>
     </section>
   );
 }

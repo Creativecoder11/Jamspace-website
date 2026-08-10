@@ -19,7 +19,7 @@ function ArrowIcon({ className = "" }: { className?: string }) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      
+
     >
       <path
         d="M16.1605 9H7.8494C7.62675 9 7.41322 9.08845 7.25578 9.24589C7.09834 9.40332 7.0099 9.61685 7.0099 9.8395C7.0099 10.0622 7.09834 10.2757 7.25578 10.4331C7.41322 10.5906 7.62675 10.679 7.8494 10.679H14.1331L7.25629 17.5567C7.17611 17.6341 7.11215 17.7267 7.06816 17.8291C7.02416 17.9316 7.001 18.0417 7.00003 18.1532C6.99906 18.2647 7.0203 18.3752 7.06252 18.4784C7.10473 18.5816 7.16706 18.6753 7.24589 18.7541C7.32471 18.8329 7.41844 18.8953 7.52161 18.9375C7.62478 18.9797 7.73533 19.0009 7.8468 19C7.95827 18.999 8.06843 18.9758 8.17085 18.9318C8.27327 18.8878 8.36591 18.8239 8.44335 18.7437L15.321 11.8665V18.1506C15.321 18.3733 15.4094 18.5868 15.5669 18.7442C15.7243 18.9017 15.9378 18.9901 16.1605 18.9901C16.3831 18.9901 16.5967 18.9017 16.7541 18.7442C16.9116 18.5868 17 18.3733 17 18.1506V9.8395C17 9.61685 16.9116 9.40332 16.7541 9.24589C16.5967 9.08845 16.3831 9 16.1605 9Z"
@@ -138,7 +138,7 @@ export function Services() {
                       }`}
                   />
 
-                  <div className="relative z-10 flex w-full items-center justify-between">
+                  <div className="relative z-10 flex w-full items-center">
                     <span
                       className={`text-sm md:text-xl transition-colors duration-300 ${isOpen
                         ? "text-white"
@@ -149,7 +149,7 @@ export function Services() {
                     </span>
 
                     <span
-                      className={`text-center px-2 text-xl font-normal transition-colors duration-300 md:px-4 md:text-[27px] ${isOpen
+                      className={`text-center px-2 text-xl font-normal transition-colors duration-300 md:px-4 md:text-[27px] md:ml-[355px] ${isOpen
                         ? "text-white"
                         : "text-foreground group-hover:text-white"
                         }`}
@@ -158,7 +158,7 @@ export function Services() {
                     </span>
 
                     <span
-                      className={`items-center gap-2 md:w-24 text-sm md:text-lg font-normal transition-colors duration-300 inline-flex ${isOpen ? "text-white" : "text-pink-500"
+                      className={`items-center gap-2 md:w-24 text-sm md:text-lg font-normal transition-colors duration-300 inline-flex ml-auto ${isOpen ? "text-white" : "text-pink-500"
                         }`}
                     >
                       <span className="hidden md:block">{isOpen ? "Close" : "Expand"}</span>
@@ -173,15 +173,13 @@ export function Services() {
 
                 <div
                   id={`service-panel-${service.slug}`}
-                  ref={(el) => {
-                    panelRefs.current[index] = el;
-                  }}
+                  ref={(el) => { panelRefs.current[index] = el; }}
                   style={{
                     height: initiallyOpen ? undefined : 0,
                     opacity: initiallyOpen ? 1 : 0,
                     marginTop: initiallyOpen ? "1rem" : 0,
                   }}
-                  className="overflow-hidden "
+                  className="overflow-hidden pb-3 md:pb-0"
                 >
                   {service.image && (
                     <div className="relative min-h-auto md:min-h-105 w-full overflow-hidden md:min-h-130">
@@ -195,8 +193,9 @@ export function Services() {
 
                       <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent" />
 
-                      <div className="relative flex min-h-80 md:min-h-130 items-end justify-center">
-                        <div className="md:border-t border-white/40 w-full flex justify-center items-end gap-4 md:gap-8">
+                      <div className="relative grid min-h-80 md:min-h-130">
+                        {/* Content (was the flex items-end justify-center wrapper) */}
+                        <div className="col-start-1 row-start-1 self-end justify-self-center md:border-t border-white/40 w-full flex justify-center items-end gap-4 md:gap-8">
                           <div className="md:border-l border-white/40 pl-4 md:pl-8 pt-16 md:pt-0 pb-6 md:pb-8 mr-4 md:mr-0">
                             {service.heading && (
                               <h3 className="md:max-w-md text-3xl leading-9 font-normal md:leading-16 text-white md:text-subheading">
@@ -204,7 +203,7 @@ export function Services() {
                               </h3>
                             )}
 
-                            <div className="mt-6 max-w-lg rounded-xl p-3 md:p-6 text-white border border-white/25 bg-white/10 backdrop-blur-md">
+                            <div className="mb-10 md:mb-0 mt-4 md:mt-6 max-w-lg rounded-xl p-3 md:p-6 text-white border border-white/25 bg-white/10 backdrop-blur-md">
                               <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
                                 {service.description && (
                                   <p className="text-white/90 text-sm md:text-[16px]">
@@ -212,13 +211,11 @@ export function Services() {
                                   </p>
                                 )}
                               </div>
+
                               {service.subServices && (
                                 <div className="mt-4 grid grid-cols-2 gap-y-2 md:gap-x-8 md:gap-y-3 sm:grid-cols-2">
                                   {service.subServices.map((sub) => (
-                                    <div
-                                      key={sub.label}
-                                      className="flex items-center gap-2"
-                                    >
+                                    <div key={sub.label} className="flex items-center gap-2">
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="14"
@@ -227,14 +224,9 @@ export function Services() {
                                         fill="none"
                                         className="w-2 h-2 md:w-4.5 md:h-4.5"
                                       >
-                                        <path
-                                          d="M14 0V14H0V6.99959H7.00083V0H14Z"
-                                          fill="white"
-                                        />
+                                        <path d="M14 0V14H0V6.99959H7.00083V0H14Z" fill="white" />
                                       </svg>
-                                      <span className="text-xs md:text-[16px]">
-                                        {sub.label}
-                                      </span>
+                                      <span className="text-xs md:text-[16px]">{sub.label}</span>
                                     </div>
                                   ))}
                                 </div>
@@ -242,19 +234,42 @@ export function Services() {
                             </div>
                           </div>
                         </div>
+
+                        {/* Desktop Learn More */}
+                        <button
+                          type="button"
+                          className="hidden md:inline-flex col-start-1 row-start-1 self-end justify-self-end mr-8 mb-8 items-center gap-2 text-white text-sm md:text-base group"
+                        >
+                          <span className="border-b border-white/60">Learn More</span>
+                          <ArrowIcon className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                        </button>
+
+                        {/* Mobile Learn More */}
+                        <button
+                          type="button"
+                          className="md:hidden col-start-1 row-start-1 self-end justify-self-start ml-4 mb-6 flex items-center gap-2 text-white text-sm group"
+                        >
+                          <span className="border-b border-white/60">Learn More</span>
+                          <ArrowIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                        </button>
                       </div>
+
+
+
                     </div>
                   )}
                 </div>
               </div>
 
-              {index < services.length - 1 && (
-                <div className="service-divider h-px w-full bg-border" />
-              )}
+              {
+                index < services.length - 1 && (
+                  <div className="service-divider h-px w-full bg-border" />
+                )
+              }
             </div>
           );
         })}
       </Container>
-    </section>
+    </section >
   );
 }
