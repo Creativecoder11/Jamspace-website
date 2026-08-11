@@ -30,9 +30,11 @@ function PinIcon() {
     );
 }
 
-function ProjectCard({ project }) {
+type Project = (typeof projects)[number];
+
+function ProjectCard({ project }: { project: Project }) {
     return (
-        <div className="project-card group border border-border relative h-[320px] md:h-[450px] overflow-hidden">
+        <div className="project-card group border border-border relative h-80 md:h-112.5 overflow-hidden">
             <Image
                 src={project.image}
                 alt={`${project.name} — ${project.location}`}
@@ -44,6 +46,7 @@ function ProjectCard({ project }) {
 
             <div className="absolute inset-0 flex flex-col justify-end p-5">
                 <h3 className="text-xl font-medium text-white">{project.name}</h3>
+
                 <p className="mt-1 flex items-center gap-1.5 text-sm text-white/80">
                     <span className="text-accent-teal">
                         <PinIcon />
@@ -53,7 +56,11 @@ function ProjectCard({ project }) {
 
                 <div className="mt-4 flex items-center justify-between gap-4 border-t border-white/20 pt-4">
                     <span className="flex items-center gap-2 text-sm text-white">
-                        <BrandGlyph shape="step" color="pink" className="h-3 w-3" />
+                        <BrandGlyph
+                            shape="step"
+                            color="pink"
+                            className="h-3 w-3"
+                        />
                         {project.category}
                     </span>
                 </div>
@@ -92,7 +99,7 @@ const MoreProjects = () => {
 
     return (
         <div>
-            <div className="md:border-y border-border pt-10 d:pt-0">
+            <div className="md:border-y border-border pt-10 md:pt-0">
                 <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
                     <div className="md:w-2/3 md:border-r border-border md:pr-0 pb-4 md:py-8">
                         <AnimatedHeading
@@ -124,7 +131,7 @@ const MoreProjects = () => {
                     {featuredProjects.map((project, idx) => (
                         <div
                             key={project.slug}
-                            className={`border-b md:border-b-0 border-l border-border p-4 md:p-[50px]
+                            className={`border-b md:border-b-0 border-l border-border p-4 md:p-12.5
                                 ${idx === featuredProjects.length - 1 ? "md:border-r border-r" : ""}`}
                         >
                             <ProjectCard project={project} />
