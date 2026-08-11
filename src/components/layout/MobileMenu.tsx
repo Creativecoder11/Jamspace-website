@@ -123,27 +123,47 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
           <p className="text-sm leading-[120%]">demo@jamroll.space</p>
         </div>
         <div className="flex gap-3">
-          <Image
-            src="/icons/facebook.svg"
-            alt=""
-            width={24}
-            height={24}
-            className="w-auto object-contain"
-          />
-          <Image
-            src="/icons/linkedin.svg"
-            alt=""
-            width={24}
-            height={24}
-            className="w-auto object-contain"
-          />
-          <Image
-            src="/icons/insta.svg"
-            alt=""
-            width={24}
-            height={24}
-            className="w-auto object-contain"
-          />
+          <a
+            href="#"
+            aria-label="Facebook"
+            className="group"
+          >
+            <Image
+              src="/icons/facebook.svg"
+              alt=""
+              width={24}
+              height={24}
+              className="h-6 w-6 transition-all duration-300 ease-out group-hover:[filter:brightness(0)_saturate(100%)_invert(22%)_sepia(96%)_saturate(3447%)_hue-rotate(327deg)_brightness(98%)_contrast(87%)]"
+            />
+          </a>
+
+          <a
+            href="#"
+            aria-label="LinkedIn"
+            className="group"
+          >
+            <Image
+              src="/icons/linkedin.svg"
+              alt=""
+              width={24}
+              height={24}
+              className="h-6 w-6 transition-all duration-300 ease-out group-hover:[filter:brightness(0)_saturate(100%)_invert(22%)_sepia(96%)_saturate(3447%)_hue-rotate(327deg)_brightness(98%)_contrast(87%)]"
+            />
+          </a>
+
+          <a
+            href="#"
+            aria-label="Instagram"
+            className="group"
+          >
+            <Image
+              src="/icons/insta.svg"
+              alt=""
+              width={24}
+              height={24}
+              className="h-6 w-6 transition-all duration-300 ease-out group-hover:[filter:brightness(0)_saturate(100%)_invert(22%)_sepia(96%)_saturate(3447%)_hue-rotate(327deg)_brightness(98%)_contrast(87%)]"
+            />
+          </a>
         </div>
       </div>
     </div>

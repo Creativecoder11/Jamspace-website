@@ -213,27 +213,35 @@ export function Footer() {
                 functionality, and exceptional craftsmanship.
               </p>
               <div className="mt-4 md:mt-6 flex gap-3">
-                <Image
-                  src="/icons/facebook.svg"
-                  alt=""
-                  width={24}
-                  height={24}
-                  className="w-auto object-contain"
-                />
-                <Image
-                  src="/icons/linkedin.svg"
-                  alt=""
-                  width={24}
-                  height={24}
-                  className="w-auto object-contain"
-                />
-                <Image
-                  src="/icons/insta.svg"
-                  alt=""
-                  width={24}
-                  height={24}
-                  className="w-auto object-contain"
-                />
+                <a href="#" aria-label="Facebook" className="group">
+                  <Image
+                    src="/icons/facebook.svg"
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="h-6 w-6 transition-all duration-300 ease-out group-hover:[filter:brightness(0)_saturate(100%)_invert(48%)_sepia(54%)_saturate(1044%)_hue-rotate(298deg)_brightness(96%)_contrast(91%)]"
+                  />
+                </a>
+
+                <a href="#" aria-label="LinkedIn" className="group">
+                  <Image
+                    src="/icons/linkedin.svg"
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="h-6 w-6 transition-all duration-300 ease-out group-hover:[filter:brightness(0)_saturate(100%)_invert(48%)_sepia(54%)_saturate(1044%)_hue-rotate(298deg)_brightness(96%)_contrast(91%)]"
+                  />
+                </a>
+
+                <a href="#" aria-label="Instagram" className="group">
+                  <Image
+                    src="/icons/insta.svg"
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="h-6 w-6 transition-all duration-300 ease-out group-hover:[filter:brightness(0)_saturate(100%)_invert(48%)_sepia(54%)_saturate(1044%)_hue-rotate(298deg)_brightness(96%)_contrast(91%)]"
+                  />
+                </a>
               </div>
             </div>
           </div>
