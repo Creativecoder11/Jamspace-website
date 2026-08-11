@@ -40,7 +40,7 @@ const DesignScope = () => {
 
     return (
         <div ref={scopeRef} className="w-full mx-auto px-4 md:px-0">
-            <div className="mt-0 md:mt-20 border border-border md:border-y">
+            <div className="mt-0 md:mt-6 border border-border md:border-y">
                 <div className="flex flex-col md:flex-row max-w-335 mx-auto">
 
                     {/* Left Column */}

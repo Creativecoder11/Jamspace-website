@@ -5,13 +5,13 @@ import MoreProjects from '@/components/sections/projects/jalshiri-parkside/MoreP
 import ProjectsBeforeAfter from '@/components/sections/projects/jalshiri-parkside/ProjectsBeforeAfter'
 import ProjectsChallenges from '@/components/sections/projects/jalshiri-parkside/ProjectsChallenges'
 import ProjectsPlanning from '@/components/sections/projects/jalshiri-parkside/ProjectsPlanning'
-import ProjectsOverview from '@/components/sections/projects/jalshiri-parkside/ProjectsStoryBento'
+import ProjectsStoryBento from '@/components/sections/projects/jalshiri-parkside/ProjectsStoryBento'
 
 export default function JalshiriParkside() {
   return (
     <section>
       <JalshiriHeroBanner />
-      <ProjectsOverview />
+      <ProjectsStoryBento />
       <DesignScope />
       <ProjectsPlanning />
       <ProjectsBeforeAfter />

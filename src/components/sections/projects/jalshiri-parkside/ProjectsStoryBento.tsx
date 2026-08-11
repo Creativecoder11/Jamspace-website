@@ -14,28 +14,33 @@ const ProjectsStoryBento = () => {
     const badgeRef = useRef(null);
     const badgeRotationTween = useRef<gsap.core.Tween | null>(null);
     const pathId = useId();
+    const storyTextRef = useRef<HTMLParagraphElement>(null);
 
     useGSAP(
         () => {
-            const split = SplitText.create(".story-fill", {
+            if (!storyTextRef.current) return;
+
+            const split = SplitText.create(storyTextRef.current, {
                 type: "lines,words,chars",
                 linesClass: "story-fill-line",
                 autoSplit: true,
-            });
 
-            gsap.set(split.chars, {
-                color: "#1919194D",
-            });
+                onSplit: (self) => {
+                    gsap.set(self.chars, {
+                        color: "rgba(25, 25, 25, 0.3)",
+                    });
 
-            gsap.to(split.chars, {
-                color: "#191919",
-                stagger: 0.02,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: ".story-fill",
-                    start: "top 80%",
-                    end: "bottom 35%",
-                    scrub: true,
+                    return gsap.to(self.chars, {
+                        color: "#191919",
+                        stagger: 0.02,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: storyTextRef.current,
+                            start: "top 80%",
+                            end: "bottom 35%",
+                            scrub: true,
+                        },
+                    });
                 },
             });
 
@@ -56,11 +61,15 @@ const ProjectsStoryBento = () => {
         }
     );
 
+
     return (
         <div ref={sectionRef}>
             <Container className="py-12 md:py-20 px-4 md:px-0">
                 <p>Overview:</p>
-                <p className="story-fill mt-2.5 text-2xl md:text-[27px] leading-8 md:leading-10 md:pr-16">
+                <p
+                    ref={storyTextRef}
+                    className="story-fill mt-2.5 text-2xl md:text-[27px] leading-8 md:leading-10 md:pr-16"
+                >
                     Jalshiri Parkside Duplex blends Bengali heritage with a calm, neo-modern approach. Through thoughtful design, warm materials, clean layouts, and nature-integrated spaces, we created a home that feels timeless, functional, and deeply personal to its owners.
                 </p>
 

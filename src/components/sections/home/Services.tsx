@@ -124,7 +124,7 @@ export function Services() {
           const initiallyOpen = index === 0;
           return (
             <div key={service.slug}>
-              <div className="relative pb-5 min-h-14 md:min-h-25">
+              <div className="relative min-h-13 md:min-h-25">
                 <button
                   type="button"
                   onClick={() => toggle(index)}
@@ -179,7 +179,7 @@ export function Services() {
                     opacity: initiallyOpen ? 1 : 0,
                     marginTop: initiallyOpen ? "1rem" : 0,
                   }}
-                  className="overflow-hidden pb-3 md:pb-0"
+                  className="overflow-hidden"
                 >
                   {service.image && (
                     <div className="relative min-h-auto md:min-h-105 w-full overflow-hidden md:min-h-130">
