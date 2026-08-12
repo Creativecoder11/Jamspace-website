@@ -1,45 +1,29 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
 import { Container } from "@/components/ui/Container";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { testimonials } from "@/lib/data/testimonials";
 
+const CARD_Y_OFFSET = 5;
+const CARD_SCALE_STEP = 0.075;
+
 export function Testimonials() {
   const containerRef = useRef<HTMLElement>(null);
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const isAnimating = useRef(false);
-  const [cardH, setCardH] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const [order, setOrder] = useState<number[]>(() =>
-    testimonials.map((_, i) => i),
-  );
+  const totalCards = testimonials.length;
 
-  const count = order.length;
-  const canCycle = count > 1;
+  const goTo = (index: number) => {
+    const wrappedIndex = (index + totalCards) % totalCards;
+    setActiveIndex(wrappedIndex);
+  };
 
-  const STEP_Y = 20;
-  const STEP_SCALE = 0.04;
-  const STEP_OPACITY = 0.1;
-
-  /* Uniform card height = tallest card */
-  useLayoutEffect(() => {
-    const measure = () => {
-      const els = cardRefs.current.filter(Boolean) as HTMLDivElement[];
-      if (!els.length) return;
-      els.forEach((el) => (el.style.height = "auto"));
-      const h = Math.max(...els.map((el) => el.offsetHeight));
-      els.forEach((el) => (el.style.height = ""));
-      setCardH(h);
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-
+  // Heading scroll animation
   useGSAP(
     () => {
       gsap.from(".line", {
@@ -53,161 +37,165 @@ export function Testimonials() {
           toggleActions: "play none none reverse",
         },
       });
-
-      gsap.from(".testimonial-container", {
-        opacity: 0,
-        y: 30,
-        duration: 0.9,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".testimonial-container",
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-      });
     },
     { scope: containerRef },
   );
 
-  const cycle = (direction: 1 | -1) => {
-    if (!canCycle || isAnimating.current) return;
-    isAnimating.current = true;
+  // Card transition animations based on activeIndex
+  useEffect(() => {
+    const cards = cardRefs.current.filter(
+      (card): card is HTMLDivElement => card !== null,
+    );
 
-    const currentOrder = order;
-    const nextOrder =
-      direction === 1
-        ? [...currentOrder.slice(1), currentOrder[0]]
-        : [currentOrder[currentOrder.length - 1], ...currentOrder.slice(0, -1)];
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setOrder(nextOrder);
-        isAnimating.current = false;
-      },
-    });
-
-    nextOrder.forEach((testimonialIndex, newPos) => {
-      const el = cardRefs.current[testimonialIndex];
-
-      tl.to(
-        el,
-        {
-          y: newPos * STEP_Y,
-          scale: 1 - newPos * STEP_SCALE,
-          opacity: Math.max(1 - newPos * STEP_OPACITY, 0.2),
-          zIndex: count - newPos,
+    cards.forEach((card, i) => {
+      if (i < activeIndex) {
+        gsap.to(card, {
+          yPercent: -250,
+          rotationX: 35,
           duration: 0.9,
-          ease: "power3.inOut",
-        },
-        0,
-      );
+          ease: "power2.inOut",
+        });
+      } else if (i === activeIndex) {
+        gsap.to(card, {
+          yPercent: -50,
+          rotationX: 0,
+          scale: 1,
+          duration: 0.6,
+          ease: "power2.out",
+        });
+      } else {
+        const behindIndex = i - activeIndex;
+
+        gsap.to(card, {
+          yPercent: -50 + behindIndex * CARD_Y_OFFSET,
+          rotationX: 0,
+          scale: 1 - behindIndex * CARD_SCALE_STEP,
+          duration: 0.6,
+          ease: "power2.out",
+        });
+      }
     });
-  };
+  }, [activeIndex]);
+
+  // Initial positions on mount
+  useEffect(() => {
+    const cards = cardRefs.current.filter(
+      (card): card is HTMLDivElement => card !== null,
+    );
+
+    cards.forEach((card, i) => {
+      gsap.set(card, {
+        xPercent: -50,
+        yPercent: -50 + i * CARD_Y_OFFSET,
+        scale: 1 - i * CARD_SCALE_STEP,
+      });
+    });
+  }, []);
 
   return (
     <section
       ref={containerRef}
-      className="border-t border-border md:py-25 mx-4 md:mx-0"
+      className="border-t border-border md:pt-25 md:pb-10 mx-4 md:mx-0"
     >
-      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-end md:justify-between pt-10 md:pt-0 pb-10 md:px-0">
+      <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-end md:justify-between pt-10 md:pt-0 pb-4 md:pb-16 md:px-0">
         <AnimatedHeading
           as="h2"
           lines={["Words", "from Our Clients."]}
           className="text-[42px] md:text-6xl font-normal leading-[120%] md:leading-18"
         />
+
         <div className="max-w-md md:pl-5 md:ms-0">
           <p className="text-muted">
-            Every project is built on collaboration, trust, and exceptional results. Here&apos;s what our clients have to say.
+            Every project is built on collaboration, trust, and exceptional
+            results. Here&apos;s what our clients have to say.
           </p>
         </div>
       </Container>
 
-      <Container>
+      <div className="h-[700px] overflow-hidden md:h-[450px]">
         <div
-          className="testimonial-container relative mx-auto max-w-285"
-          style={{
-            height: cardH ? cardH + (count - 1) * STEP_Y : undefined,
-            marginBottom: (count - 1) * STEP_Y,
-            perspective: "1200px",
-          }}
+          className="relative mx-auto h-[700px] w-full max-w-300 md:h-[450px]"
+          style={{ perspective: "1000px" }}
         >
-          {order.map((testimonialIndex, slot) => {
-            const testimonial = testimonials[testimonialIndex];
-            return (
-              <div
-                key={testimonial.name}
-                ref={(el) => {
-                  cardRefs.current[testimonialIndex] = el;
-                }}
-                className="absolute left-0 right-0 mx-auto flex flex-col overflow-hidden rounded-2xl border border-border bg-white p-3 md:p-6 md:flex-row"
-                style={{
-                  transform: `translateY(${slot * STEP_Y}px) scale(${1 - slot * STEP_SCALE})`,
-                  opacity: Math.max(1 - slot * STEP_OPACITY, 0.2),
-                  zIndex: count - slot,
-                  height: cardH || undefined,
-                }}
-              >
-                <div className="relative h-60 w-full shrink-0 md:h-auto md:w-2/5">
-                  <Image
-                    src={testimonial.image}
-                    alt={`${testimonial.name} project`}
-                    fill
-                    sizes="(min-width: 768px) 40vw, 100vw"
-                    className="object-cover rounded-lg"
-                  />
-                </div>
-                <div className="flex flex-col justify-center gap-3 md:gap-6 py-8 md:p-12">
-                  <Image
-                    src="/icons/quote.svg"
-                    width={24}
-                    height={24}
-                    alt="Quote"
-                    className="mb-5"
-                  />
-                  <p className="text-base text-muted md:text-2xl">
-                    {testimonial.quote}
+          {testimonials.map((card, i) => (
+            <div
+              key={card.name}
+              ref={(el) => {
+                cardRefs.current[i] = el;
+              }}
+              className="absolute left-1/2 top-1/2 flex h-[650px] w-[calc(100vw-2rem)] max-w-300 flex-col items-center gap-4 rounded-[20px] border border-[#E5E5E5] bg-white p-4 text-black will-change-transform md:h-[450px] md:flex-row md:p-6"
+              style={{
+                transformOrigin: "center bottom",
+                zIndex: 5 - i,
+              }}
+            >
+              <div className="h-62.5 w-full shrink-0 overflow-hidden rounded-lg md:h-100 md:w-126.25">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={card.image}
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              </div>
+
+              <div className="max-w-137 h-full flex flex-col p-2">
+                <Image
+                  src="/icons/quote.svg"
+                  width={28}
+                  height={28}
+                  alt="Quote"
+                />
+
+                <p className="mt-3 md:mt-6 text-lg text-muted md:text-2xl">
+                  {card.quote}
+                </p>
+
+                <div className="flex flex-col gap-1 mt-4 md:mt-18">
+                  <h1 className="text-base font-bold md:text-xl">
+                    {card.name}
+                  </h1>
+                  <p className="text-sm text-muted md:text-base">
+                    {card.role}
                   </p>
-                  <div>
-                    <p className="text-base md:text-2xl font-bold">{testimonial.name}</p>
-                    <p className="text-sm md:text-base text-muted">{testimonial.role}</p>
-                  </div>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
 
-          <button
-            type="button"
-            aria-label="Previous testimonial"
-            disabled={!canCycle}
-            onClick={() => cycle(-1)}
-            className="absolute left-2 top-1/2 z-50 flex -translate-y-1/2 items-center justify-center pb-12 md:pb-0 md:-left-5"
-          >
-            <Image
-              src="/left.svg"
-              alt=""
-              width={40}
-              height={40}
-              className="h-10 w-10"
-            />
-          </button>
-          <button
-            type="button"
-            aria-label="Next testimonial"
-            disabled={!canCycle}
-            onClick={() => cycle(1)}
-            className="absolute right-2 top-1/2 z-50 flex -translate-y-1/2 items-center justify-center pb-12 md:pb-0 md:-right-5"
-          >
-            <Image
-              src="/right.svg"
-              alt=""
-              width={40}
-              height={40}
-              className="h-10 w-10"
-            />
-          </button>
+          {/* Arrow navigation */}
+          <div className="pointer-events-none absolute inset-0 z-10">
+            <button
+              type="button"
+              onClick={() => goTo(activeIndex - 1)}
+              aria-label="Previous card"
+              className="pointer-events-auto absolute left-2 top-[42%] flex h-10 w-10 -translate-y-1/2 items-center justify-center text-3xl text-black transition-transform hover:scale-110 md:-left-4 md:top-1/2"
+            >
+              <Image
+                src="/left.svg"
+                alt=""
+                width={40}
+                height={40}
+                className="h-10 w-10"
+              />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => goTo(activeIndex + 1)}
+              aria-label="Next card"
+              className="pointer-events-auto absolute right-2 top-[42%] flex h-10 w-10 -translate-y-1/2 items-center justify-center text-3xl text-black transition-transform hover:scale-110 md:-right-4 md:top-1/2"
+            >
+              <Image
+                src="/right.svg"
+                alt=""
+                width={40}
+                height={40}
+                className="h-10 w-10"
+              />
+            </button>
+          </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }
