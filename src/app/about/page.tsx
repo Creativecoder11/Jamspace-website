@@ -10,9 +10,8 @@ import { AboutStoryBento } from "@/components/sections/about/AboutStoryBento";
 import DesignPhilosophySection from "@/components/sections/about/DesignPhilosophySection";
 
 export const metadata: Metadata = {
-  title: "About",
-  description:
-    "Discover the passion, purpose, and philosophy that shape every space JamSpace creates — from our founding story to our values, process, and team.",
+  title: "About JamSpace | Interior Design Studio in Dhaka",
+  description: "Learn about JamSpace, a leading interior design studio in Dhaka creating thoughtful residential and commercial interiors through creative design, functionality, and timeless craftsmanship.",
 };
 
 export default function AboutPage() {
