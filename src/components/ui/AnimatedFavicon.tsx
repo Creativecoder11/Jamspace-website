@@ -2,11 +2,11 @@
 
 import { useEffect } from "react";
 
-import faviconA from "@/app/favicona.png";
 import faviconJ from "@/app/faviconj.png";
+import faviconA from "@/app/favicona.png";
 import faviconM from "@/app/faviconm.png";
 
-const frames = [faviconA.src, faviconJ.src, faviconM.src];
+const frames = [faviconJ.src, faviconA.src, faviconM.src];
 
 export function AnimatedFavicon() {
     useEffect(() => {
