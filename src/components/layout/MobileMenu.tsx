@@ -124,7 +124,7 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
         </div>
         <div className="flex gap-3">
           <a
-            href="#"
+            href="https://www.facebook.com/jamroll.space"
             aria-label="Facebook"
             className="group"
           >
@@ -138,7 +138,7 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
           </a>
 
           <a
-            href="#"
+            href="https://linkedin.com/company/jamrollltd"
             aria-label="LinkedIn"
             className="group"
           >
@@ -152,7 +152,7 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
           </a>
 
           <a
-            href="#"
+            href="https://www.instagram.com/jamroll.space"
             aria-label="Instagram"
             className="group"
           >

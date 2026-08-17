@@ -96,7 +96,6 @@ export function VideoShowcase() {
           aria-label="Play the video"
           className="absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center md:h-40 md:w-40"
         >
-          {/* Animated Circular Text */}
           <svg
             className="video-badge-circle absolute inset-[-25px] h-[calc(100%+50px)] w-[calc(100%+50px)]"
             viewBox="0 0 200 200"
@@ -116,7 +115,6 @@ export function VideoShowcase() {
             </text>
           </svg>
 
-          {/* Play Icon */}
           <Image
             src="/icons/play.png"
             width={140}
@@ -135,7 +133,6 @@ export function VideoShowcase() {
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 p-6"
           onClick={() => setIsOpen(false)}
         >
-          {/* Close Button */}
           <button
             type="button"
             onClick={() => setIsOpen(false)}
@@ -145,17 +142,16 @@ export function VideoShowcase() {
             ×
           </button>
 
-          {/* Video Container */}
           <div
             className="relative aspect-video w-full max-w-5xl overflow-hidden rounded-xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <video
-              src="/videos/jam-journey.mp4"
-              controls
-              autoPlay
-              playsInline
-              className="h-full w-full object-cover"
+            <iframe
+              src="https://www.youtube.com/embed/V25vAhFKkUo?autoplay=1&rel=0"
+              title="Jam Journey"
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+              className="h-full w-full"
             />
           </div>
         </div>

@@ -213,7 +213,7 @@ export function Footer() {
                 functionality, and exceptional craftsmanship.
               </p>
               <div className="mt-4 md:mt-6 flex gap-3">
-                <a href="#" aria-label="Facebook" className="group">
+                <a href="https://www.facebook.com/jamroll.space" aria-label="Facebook" className="group">
                   <Image
                     src="/icons/facebook.svg"
                     alt=""
@@ -223,7 +223,7 @@ export function Footer() {
                   />
                 </a>
 
-                <a href="#" aria-label="LinkedIn" className="group">
+                <a href="https://linkedin.com/company/jamrollltd" aria-label="LinkedIn" className="group">
                   <Image
                     src="/icons/linkedin.svg"
                     alt=""
@@ -233,7 +233,7 @@ export function Footer() {
                   />
                 </a>
 
-                <a href="#" aria-label="Instagram" className="group">
+                <a href="https://www.instagram.com/jamroll.space" aria-label="Instagram" className="group">
                   <Image
                     src="/icons/insta.svg"
                     alt=""
