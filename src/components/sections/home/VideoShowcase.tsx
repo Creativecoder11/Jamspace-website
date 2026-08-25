@@ -72,7 +72,7 @@ export function VideoShowcase() {
       >
         <Image
           src="/images/video-bg-01.webp"
-          alt="Bedroom interior — behind the scenes of a JamSpace project"
+          alt="Bedroom interior — behind the scenes of a Jam Space project"
           fill
           sizes="100vw"
           className="object-cover"
@@ -129,7 +129,7 @@ export function VideoShowcase() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="JamSpace video"
+          aria-label="Jam Space video"
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 p-6"
           onClick={() => setIsOpen(false)}
         >

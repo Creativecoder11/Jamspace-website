@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-const FLAG = "jamspace-preloaded";
-const EVENT = "jamspace:preloader-done";
+const FLAG = "Jam Space-preloaded";
+const EVENT = "Jam Space:preloader-done";
 
 /** True once the preloader has finished (or was already shown this session). */
 export function usePreloaderDone() {

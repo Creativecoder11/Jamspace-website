@@ -4,8 +4,8 @@ import { ContactForm } from "@/components/sections/contact/ContactForm";
 import { Faq } from "@/components/sections/Faq";
 
 export const metadata: Metadata = {
-  title: "Contact an Interior Designer in Dhaka | JamSpace",
-  description: "Get in touch with JamSpace, an interior design studio in Dhaka, to discuss your residential or commercial project and bring your vision to life.",
+  title: "Contact an Interior Designer in Dhaka | Jam Space",
+  description: "Get in touch with Jam Space, an interior design studio in Dhaka, to discuss your residential or commercial project and bring your vision to life.",
 };
 
 export default function ContactPage() {

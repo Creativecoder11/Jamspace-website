@@ -9,7 +9,7 @@ import ResidentialInculdedServices from "@/components/sections/services/Resident
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Residential design, commercial interiors, 3D visualization, and design consultation from JamSpace.",
+    "Residential design, commercial interiors, 3D visualization, and design consultation from Jam Space.",
 };
 export default function residentialDesign() {
   return (

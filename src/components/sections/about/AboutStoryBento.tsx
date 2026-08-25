@@ -163,7 +163,7 @@ export function AboutStoryBento() {
     <section ref={containerRef} className="pt-15 md:pt-0 pb-15 md:py-20 px-4 md:px-0">
       <Container className="flex flex-col md:pt-14">
         <p className="story-fill text-xl md:text-3xl leading- md:leading-11 font-medium">
-          Founded in 2022, JamSpace is an interior design studio creating
+          Founded in 2022, Jam Space is an interior design studio creating
           thoughtful residential and commercial spaces through creativity,
           functionality, and timeless craftsmanship. We transform ideas into
           inspiring environments that reflect every client&apos;s unique vision.
@@ -177,7 +177,7 @@ export function AboutStoryBento() {
             <div className="relative h-90 md:h-120 overflow-hidden">
               <Image
                 src="/images/hero-01.webp"
-                alt="JamSpace Interior"
+                alt="Jam Space Interior"
                 width={240}
                 height={240}
                 className="w-full h-full object-cover"
@@ -186,7 +186,7 @@ export function AboutStoryBento() {
               <div className="absolute bottom-4 left-4 right-4">
                 <div className="rounded-md border border-white/20 bg-white/10 p-4 backdrop-blur-md">
                   <p className="text-sm leading-relaxed text-white">
-                    Founded in 2022, JamSpace is an interior design studio
+                    Founded in 2022, Jam Space is an interior design studio
                     creating thoughtful residential and commercial spaces
                     through creativity, functionality, and timeless
                     craftsmanship. We transform ideas into inspiring
@@ -254,7 +254,7 @@ export function AboutStoryBento() {
               <div className="relative h-90 md:h-120 overflow-hidden">
                 <Image
                   src="/images/video-bg-01.webp"
-                  alt="Bedroom interior — behind the scenes of a JamSpace project"
+                  alt="Bedroom interior — behind the scenes of a Jam Space project"
                   fill
                   sizes="25vw"
                   className="object-cover"
@@ -313,7 +313,7 @@ export function AboutStoryBento() {
                 <div
                   role="dialog"
                   aria-modal="true"
-                  aria-label="JamSpace video"
+                  aria-label="Jam Space video"
                   className="fixed inset-0 z-9999 flex items-center justify-center bg-black/95 p-4 md:p-6"
                   onClick={() => setIsOpen(false)}
                 >

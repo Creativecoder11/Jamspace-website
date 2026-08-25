@@ -3,7 +3,7 @@
 /*
  * Design tokens extracted directly from the Figma PDF export (vector text
  * colors + get_drawings() fills + pixel-sampled dividers). See PROJECT
- * memory "jamspace-design-system" for the extraction method.
+ * memory "Jam Space-design-system" for the extraction method.
  */
 :root {
   --background: #f7f6f1;

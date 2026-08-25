@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import Image from "next/image";
 
-export default function JalshiriHeroBanner() {
+export default function TaqwaaHeroBanner() {
   return (
     <section>
       <div className="mt-25 md:mt-30 md:border-y border-border">
@@ -11,16 +11,14 @@ export default function JalshiriHeroBanner() {
           <div className="md:w-2/3 md:border-r border-border md:pr-0 pb-4 md:py-8">
             <AnimatedHeading
               as="h2"
-              lines={["Jalshiri", "Parkside Duplex"]}
+              lines={["Taqwaa", "Residence"]}
               className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 px-4 md:px-0"
             />
           </div>
 
           <div className="md:w-1/3 border-border md:pl-8 md:py-8 px-4 md:px-0">
             <p className="text-muted">
-              Jalshiri Parkside Duplex began with a clear client vision: keep
-              the heritage alive, but translate it into a home that feels
-              minimal, calm, and genuinely liveable.
+              Taqwaa Residence is a contemporary triplex blending modern luxury with everyday comfort. Warm neutrals, refined materials, clean lines, and thoughtful lighting create a cohesive, elegant, and inviting interior.
             </p>
 
             <div className="mt-3 md:mt-6">
@@ -35,7 +33,7 @@ export default function JalshiriHeroBanner() {
       <div className="max-w-335 mx-auto mt-5 grid grid-cols-2 md:grid-cols-4 gap-4 justify-between px-4 md:px-0">
         <div>
           <p className="text-base">Year:</p>
-          <p className="text-base font-medium">2026</p>
+          <p className="text-base font-medium">2025</p>
         </div>
         <div>
           <p className="text-base">Service:</p>
@@ -47,19 +45,21 @@ export default function JalshiriHeroBanner() {
         </div>
         <div>
           <p className="text-base">Style:</p>
-          <p className="text-base font-medium">Neo-Modern</p>
+          <p className="text-base font-medium">Luxury Modern</p>
         </div>
       </div>
 
       <div className="relative mt-5">
-        <div className="px-4 md:px-0">
+        <div className="relative px-4 md:px-0">
           <Image
-            src="/images/hero-01.webp"
+            src="/images/projects/taqwaa/hero.webp"
             width={1600}
             height={900}
             alt="Project Image"
             className="w-full h-90 md:h-175 object-cover"
           />
+
+          <div className="absolute inset-0 bg-black/25" />
         </div>
 
         {/* Testimonial Card */}
@@ -75,15 +75,11 @@ export default function JalshiriHeroBanner() {
               />
 
               <p className="text-sm md:text-base leading-5 md:leading-7 text-white/90">
-                “Working with Jam Space was an exceptional experience from start to
-                finish. They understood our vision, communicated clearly throughout
-                the project, and delivered a space that feels both elegant and
-                highly functional. The attention to detail exceeded our
-                expectations.”
+                From the initial concept to the final details, the team was patient, responsive, and committed to getting everything right. They listened carefully to our feedback and worked through every revision with us, ultimately creating a home that reflects our vision and expectations.”
               </p>
 
               <div className="mt-3 md:mt-6">
-                <h4 className="font-medium text-base md:text-lg">Sarah Ahmed</h4>
+                <h4 className="font-medium text-base md:text-lg">Major Serajus Salekin</h4>
                 <p className="text-xs md:text-sm text-white/70">Homeowner, Dhaka</p>
               </div>
             </div>

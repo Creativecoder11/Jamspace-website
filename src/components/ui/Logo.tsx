@@ -10,7 +10,7 @@ export function Logo({
   return (
     <Link
       href="/"
-      aria-label="JamSpace — home"
+      aria-label="Jam Space — home"
       className={`inline-flex ${className}`}
     >
       <svg

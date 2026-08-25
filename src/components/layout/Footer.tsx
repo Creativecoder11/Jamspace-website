@@ -209,7 +209,7 @@ export function Footer() {
             </div>
             <div>
               <p className="mt-10 md:mt-4 text-base text-muted mr-4">
-                JamSpace creates timeless interiors that blend creativity,
+                Jam Space creates timeless interiors that blend creativity,
                 functionality, and exceptional craftsmanship.
               </p>
               <div className="mt-4 md:mt-6 flex gap-3">
@@ -223,7 +223,7 @@ export function Footer() {
                   />
                 </a>
 
-                <a href="https://linkedin.com/company/jamrollltd" aria-label="LinkedIn" className="group">
+                <a href="https://linkedin.com/company/jam-space-interior" aria-label="LinkedIn" className="group">
                   <Image
                     src="/icons/linkedin.svg"
                     alt=""
@@ -313,7 +313,7 @@ export function Footer() {
               <h3 className="text-lg font-medium">Stay informed</h3>
               <p className="mt-2 w-full text-sm text-muted ">
                 Stay inspired with the latest design trends, expert insights, and
-                exclusive updates from JamSpace. Discover ideas that help you
+                exclusive updates from Jam Space. Discover ideas that help you
                 create beautiful, functional spaces.
               </p>
               <div className="mt-4 w-full">
@@ -327,11 +327,11 @@ export function Footer() {
 
       <div className="border-t border-border">
         <Container className="mx-auto w-full max-w-335 footer-col flex flex-col gap-2 py-3 md:py-6 text-xs md:text-sm text-muted md:flex-row md:items-center md:justify-between px-4 md:px-0">
-          <p>&copy; {new Date().getFullYear()} Jamspace, All Rights Reserved</p>
+          <p>&copy; {new Date().getFullYear()} Jam Space, All Rights Reserved</p>
           <p>
             Design &amp; Developed by{" "}
             <a
-              href="https://jamroll.space"
+              href="https://jamroll.studio"
               target="_blank"
               rel="noreferrer"
               className="underline hover:text-accent"

@@ -88,7 +88,7 @@ export function AboutJourney() {
         <div className="journey-photo absolute inset-0">
           <Image
             src="/images/projects-bg-01.webp"
-            alt="A JamSpace project in progress"
+            alt="A Jam Space project in progress"
             fill
             sizes="100vw"
             className="object-cover"

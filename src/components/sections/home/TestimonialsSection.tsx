@@ -26,7 +26,7 @@ export interface Testimonial {
 const defaultTestimonials: Testimonial[] = [
   {
     quote:
-      'Working with JamSpace was an exceptional experience from start to finish. They understood our vision, communicated clearly throughout the project, and delivered a space that feels both elegant and highly functional. The attention to detail exceeded our expectations.',
+      'Working with Jam Space was an exceptional experience from start to finish. They understood our vision, communicated clearly throughout the project, and delivered a space that feels both elegant and highly functional. The attention to detail exceeded our expectations.',
     name: 'Sarah Ahmed',
     role: 'Homeowner, Dhaka',
     image:

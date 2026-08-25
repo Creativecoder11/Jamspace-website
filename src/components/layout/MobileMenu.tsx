@@ -138,7 +138,7 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
           </a>
 
           <a
-            href="https://linkedin.com/company/jamrollltd"
+            href="https://linkedin.com/company/jam-space-interior"
             aria-label="LinkedIn"
             className="group"
           >

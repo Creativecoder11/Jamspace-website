@@ -26,13 +26,13 @@ const helveticaNow = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "JamSpace — Interior Design Studio in Dhaka", template: "%s | JamSpace",
+    default: "Jam Space — Interior Design Studio in Dhaka", template: "%s | Jam Space",
   },
 
-  description: "JamSpace is a Dhaka-based interior design studio crafting timeless, functional interiors — from residential design to commercial spaces, 3D visualization, and consultation.",
+  description: "Jam Space is a Dhaka-based interior design studio crafting timeless, functional interiors — from residential design to commercial spaces, 3D visualization, and consultation.",
 
   openGraph: {
-    title: "JamSpace — Interior Design Studio in Dhaka",
+    title: "Jam Space — Interior Design Studio in Dhaka",
     description: "Designed Beyond Walls. Timeless interiors that blend creativity, functionality, and exceptional craftsmanship.",
     type: "website",
   },

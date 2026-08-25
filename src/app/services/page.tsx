@@ -5,8 +5,8 @@ import { ServicesSection } from "@/components/sections/services/ServicesSection"
 
 export const metadata: Metadata =
 {
-  title: "Interior Design Services in Dhaka | JamSpace",
-  description: "Explore JamSpace interior design services in Dhaka, including residential interiors, commercial spaces, 3D visualization, and professional design consultation.",
+  title: "Interior Design Services in Dhaka | Jam Space",
+  description: "Explore Jam Space interior design services in Dhaka, including residential interiors, commercial spaces, 3D visualization, and professional design consultation.",
 };
 
 export default function ServicesPage() {

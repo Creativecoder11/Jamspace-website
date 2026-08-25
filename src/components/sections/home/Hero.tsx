@@ -173,7 +173,7 @@ export function Hero() {
         <div ref={imageCrossfadeRef} className="absolute inset-0">
           <Image
             src={activeSlide.image}
-            alt={`Interior design project ${slide} of ${heroSlideCount} by JamSpace`}
+            alt={`Interior design project ${slide} of ${heroSlideCount} by Jam Space`}
             fill
             priority
             sizes="100vw"

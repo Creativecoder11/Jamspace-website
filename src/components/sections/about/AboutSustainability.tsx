@@ -80,7 +80,7 @@ export function AboutSustainability() {
         <div className="sustain-photo relative aspect-square w-full md:max-w-90 shrink-0 overflow-hidden">
           <Image
             src="/images/about-strip-06.png"
-            alt="A durable, thoughtfully planned JamSpace interior"
+            alt="A durable, thoughtfully planned Jam Space interior"
             fill
             sizes="(max-width: 768px) 100vw, 360px"
             className="object-cover"

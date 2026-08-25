@@ -92,7 +92,7 @@ export function AboutStory() {
     <section ref={containerRef} className="py-20">
       <Container className="flex flex-col border-t border-border pt-14 ">
         <p className="story-copy story-fill text-2xl leading-relaxed">
-          Founded in 2022, JamSpace is an interior design studio creating
+          Founded in 2022, Jam Space is an interior design studio creating
           thoughtful residential and commercial spaces through creativity,
           functionality, and timeless craftsmanship. We transform ideas into
           inspiring environments that reflect every client&apos;s unique vision.
@@ -104,7 +104,7 @@ export function AboutStory() {
           <div className="relative h-80 w-full overflow-hidden rounded-xl md:h-96">
             <Image
               src="/images/about-strip-01.webp"
-              alt="JamSpace interior project"
+              alt="Jam Space interior project"
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover"
@@ -113,7 +113,7 @@ export function AboutStory() {
           di
         </div>
         <p className="story-copy max-w-2xl text-muted">
-          JamSpace is a Bangladesh based interior design studio specializing in
+          Jam Space is a Bangladesh based interior design studio specializing in
           residential design, commercial interiors, 3D visualization, and
           design consultation. We create spaces that balance beauty, purpose,
           and everyday functionality.
