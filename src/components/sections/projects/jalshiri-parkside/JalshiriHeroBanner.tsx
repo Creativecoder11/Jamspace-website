@@ -8,7 +8,7 @@ export default function JalshiriHeroBanner() {
     <section>
       <div className="mt-25 md:mt-30 md:border-y border-border">
         <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
-          <div className="md:w-2/3 md:border-r border-border md:pr-0 pb-4 md:py-8">
+          <div className="md:w-2/3 md:border-r border-border md:pr-0 pb-4 md:py-12">
             <AnimatedHeading
               as="h2"
               lines={["Jalshiri", "Parkside Duplex"]}
