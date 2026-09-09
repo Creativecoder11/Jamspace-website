@@ -37,7 +37,41 @@ export interface Project {
   name: string;
   location: string;
   category: string;
-  image: string;
+  image: string; // Grid thumbnail
+
+  // Hero Banner
+  year: string;
+  service: string;
+  style: string;
+  heroImage: string;
+  heroDescription: string;
+  testimonial: { quote: string; author: string; role: string };
+
+  // Story Bento
+  overview: string;
+  bentoImages: string[]; // Exactly 8 images
+  videoSrc: string;
+  videoPoster: string;
+
+  // Design Scope
+  scopeUnderstanding: string;
+  scopeMaterials: string;
+  scopeDescription: string;
+
+  // Planning (Optional - leave empty/undefined if client hasn't provided it)
+  planningItems?: { label: string; image: string }[];
+
+  // Before / After
+  beforeImage: string;
+  afterImage: string;
+
+  // Challenges
+  challengesMainImage: string;
+  challengesBottomImage: string;
+  challengesRows: { challenge: string; solution: string }[];
+
+  // Highlight Slides
+  highlightSlides: { index: string; audience: string; image: string }[];
 }
 
 export interface Testimonial {
