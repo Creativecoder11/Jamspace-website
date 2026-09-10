@@ -37,7 +37,9 @@ function SlideContent({ slide, totalSlides }: { slide: SlideItem, totalSlides: n
                         <span className="slide-badge inline-block rounded-full bg-accent-yellow px-3 py-1 text-xs font-normal text-foreground">Our Services Ideal For-</span>
                     </span>
                     <h3 className="mt-3 text-5xl font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
-                        <span className="block overflow-hidden"><span className="slide-line inline-block">{slide.audience}</span></span>
+                        <span className="-mb-2 block overflow-hidden pb-2 md:-mb-3 md:pb-3">
+                            <span className="slide-line inline-block">{slide.audience}</span>
+                        </span>
                     </h3>
                 </div>
                 <CornerMark />
@@ -87,7 +89,7 @@ export default function DesignHighlightSilde({ slides }: { slides: SlideItem[] }
                 const badge = slide.querySelector<HTMLElement>(".slide-badge");
                 const top = slide.querySelector<HTMLElement>(".slide-top");
                 if (i === 0) { gsap.set([line, badge, top], { y: 0, yPercent: 0, autoAlpha: 1 }); return; }
-                if (line) gsap.set(line, { yPercent: 120, autoAlpha: 0 });
+                if (line) gsap.set(line, { yPercent: 105, autoAlpha: 0 });
                 if (badge) gsap.set(badge, { y: 20, autoAlpha: 0 });
                 if (top) gsap.set(top, { y: -15, autoAlpha: 0 });
             });
@@ -137,7 +139,7 @@ export default function DesignHighlightSilde({ slides }: { slides: SlideItem[] }
                 const badge = slide.querySelector<HTMLElement>(".slide-badge");
                 const top = slide.querySelector<HTMLElement>(".slide-top");
                 if (i > 0) {
-                    if (line) gsap.set(line, { yPercent: 120, autoAlpha: 0 });
+                    if (line) gsap.set(line, { yPercent: 105, autoAlpha: 0 });
                     if (badge) gsap.set(badge, { y: 20, autoAlpha: 0 });
                     if (top) gsap.set(top, { y: -15, autoAlpha: 0 });
                 }

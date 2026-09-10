@@ -179,24 +179,24 @@ export const projects: Project[] = [
 
   {
     index: "04",
-    slug: "green-hub-co-working-space",
-    name: "Green Hub Co-Working Space",
-    location: "Dhanmondi",
+    slug: "greenhub-workspace",
+    name: "Greenhub Workspace",
+    location: "Green Road, Dhanmondi",
     category: "Commercial Design",
     image: "/images/projects/green-hub.webp",
 
-    year: "2025",
-    service: "Commercial Design",
-    style: "Modern Industrial",
+    year: "2023",
+    service: "Commercial Project",
+    style: "Modern",
     heroImage: "/images/projects/green-hub/hero.webp",
-    heroDescription: "Green Hub is a vibrant co-working space designed to foster collaboration and productivity. Biophilic elements, open layouts, and flexible work zones create an inspiring environment for modern professionals.",
+    heroDescription: "Green Hub is a startup-focused co-working space designed for creativity, collaboration, and productivity—blending greenery, warm materials, and thoughtful work zones into a professional yet welcoming environment.",
     testimonial: {
-      quote: "“The design perfectly captures the energy we wanted for our workspace. It’s functional, beautiful, and our team loves it.”",
-      author: "Green Hub Management",
-      role: "Co-Founders"
+      quote: "“The design captured exactly what we envisioned for Greenhub - a workspace that feels fresh, welcoming, and productive. Every detail was thoughtfully designed to create an environment where people enjoy coming to work.”",
+      author: "Zarif F. Rahman",
+      role: "Owner, Greenhub Workspace"
     },
 
-    overview: "Green Hub reimagines the modern workspace by integrating biophilic design with flexible, collaborative zones. Natural light, sustainable materials, and ergonomic layouts ensure a productive and inspiring environment for diverse professionals.",
+    overview: "Greenhub Workspace is a contemporary co-working environment designed to foster productivity, collaboration, and community. The interior combines functional workspaces with warm, inviting elements to create a professional yet comfortable atmosphere.",
     bentoImages: [
       "/images/projects/green-hub/bento1.webp", "/images/projects/green-hub/bento2.webp",
       "/images/projects/green-hub/bento3.webp", "/images/projects/green-hub/bento4.webp",
@@ -206,9 +206,9 @@ export const projects: Project[] = [
     videoSrc: "/videos/green-hub.mp4",
     videoPoster: "/images/projects/green-hub/bento5.webp",
 
-    scopeUnderstanding: "Collaboration, focus, and community in a shared environment.",
-    scopeMaterials: "Raw concrete, warm woods, and abundant greenery.",
-    scopeDescription: "Complete commercial interior design including space planning, acoustic solutions, custom workstations, and biophilic integration.",
+    scopeUnderstanding: "The space balances focus, collaboration, and interaction in a flexible, welcoming environment.",
+    scopeMaterials: "Natural textures, warm tones",
+    scopeDescription: "Complete interior design covering space planning, furniture design, material selection, lighting, branding elements, and interior detailing.",
 
     beforeImage: "/images/projects/green-hub/before.webp",
     afterImage: "/images/projects/green-hub/after.webp",
@@ -216,147 +216,147 @@ export const projects: Project[] = [
     challengesMainImage: "/images/projects/green-hub/challenges1.webp",
     challengesBottomImage: "/images/projects/green-hub/challenges2.webp",
     challengesRows: [
-      { challenge: "Acoustic Control", solution: "Integrated sound-absorbing panels and strategic zoning." },
-      { challenge: "Maximizing Natural Light", solution: "Open floor plans and glass partitions." },
-      { challenge: "Flexible Workstations", solution: "Modular furniture and adaptable power solutions." },
-      { challenge: "Brand Identity Integration", solution: "Custom signage and cohesive color palettes." },
+      { challenge: "Different work needs, limited space", solution: "Efficient planning created functional zones with circulation." },
+      { challenge: "Focused work versus collaborative activities", solution: "Open workstations and semi-private zones added flexibility." },
+      { challenge: "Establishing a distinct visual identity", solution: "Consistent colours and custom details created cohesion." },
+      { challenge: "Professional space that still feels warm", solution: "Natural textures and greenery enhanced the experience." },
     ],
 
     highlightSlides: [
-      { index: "01", audience: "Collaborative Zones.", image: "/images/projects/green-hub/slider1.webp" },
-      { index: "02", audience: "Biophilic Elements.", image: "/images/projects/green-hub/slider2.webp" },
-      { index: "03", audience: "Focus Pods.", image: "/images/projects/green-hub/slider3.webp" },
-      { index: "04", audience: "Community Lounge.", image: "/images/projects/green-hub/slider4.webp" },
+      { index: "01", audience: "Ambient Lighting.", image: "/images/projects/green-hub/slider1.webp" },
+      { index: "02", audience: "Biophilic Design.", image: "/images/projects/green-hub/slider2.webp" },
+      { index: "03", audience: "Brand Integration.", image: "/images/projects/green-hub/slider3.webp" },
+      { index: "04", audience: "Flexible Workspaces.", image: "/images/projects/green-hub/slider4.webp" },
     ]
   },
 
 
-  {
-    index: "05",
-    slug: "rakeen-residence",
-    name: "Rakeen's Residence",
-    location: "Jolshiri Residential Area",
-    category: "Residential Design",
-    image: "/images/projects/rakeen.webp",
+  // {
+  //   index: "05",
+  //   slug: "rakeen-residence",
+  //   name: "Rakeen's Residence",
+  //   location: "Jolshiri Residential Area",
+  //   category: "Residential Design",
+  //   image: "/images/projects/rakeen.webp",
 
-    year: "2025",
-    service: "Residential Design",
-    style: "Contemporary Minimal",
-    heroImage: "/images/projects/rakeen/hero.webp",
-    heroDescription: "Rakeen's Residence is a serene sanctuary that embraces minimalism without sacrificing warmth. Clean lines, soft textures, and a neutral palette create a calming retreat from the city.",
-    testimonial: {
-      quote: "“They transformed our house into a true home. The attention to detail and understanding of our lifestyle was impeccable.”",
-      author: "Rakeen's Family",
-      role: "Homeowners"
-    },
+  //   year: "2025",
+  //   service: "Residential Design",
+  //   style: "Contemporary Minimal",
+  //   heroImage: "/images/projects/rakeen/hero.webp",
+  //   heroDescription: "Rakeen's Residence is a serene sanctuary that embraces minimalism without sacrificing warmth. Clean lines, soft textures, and a neutral palette create a calming retreat from the city.",
+  //   testimonial: {
+  //     quote: "“They transformed our house into a true home. The attention to detail and understanding of our lifestyle was impeccable.”",
+  //     author: "Rakeen's Family",
+  //     role: "Homeowners"
+  //   },
 
-    overview: "Rakeen's Residence focuses on serene minimalism, utilizing a restrained palette and natural textures to create a calming atmosphere. Every element is purposefully placed to enhance spatial flow and daily comfort.",
-    bentoImages: [
-      "/images/projects/rakeen/bento1.webp", "/images/projects/rakeen/bento2.webp",
-      "/images/projects/rakeen/bento3.webp", "/images/projects/rakeen/bento4.webp",
-      "/images/projects/rakeen/bento-mid.webp", "/images/projects/rakeen/bento6.webp",
-      "/images/projects/rakeen/bento7.webp", "/images/projects/rakeen/bento8.webp"
-    ],
-    videoSrc: "/videos/rakeen.mp4",
-    videoPoster: "/images/projects/rakeen/bento5.webp",
+  //   overview: "Rakeen's Residence focuses on serene minimalism, utilizing a restrained palette and natural textures to create a calming atmosphere. Every element is purposefully placed to enhance spatial flow and daily comfort.",
+  //   bentoImages: [
+  //     "/images/projects/rakeen/bento1.webp", "/images/projects/rakeen/bento2.webp",
+  //     "/images/projects/rakeen/bento3.webp", "/images/projects/rakeen/bento4.webp",
+  //     "/images/projects/rakeen/bento-mid.webp", "/images/projects/rakeen/bento6.webp",
+  //     "/images/projects/rakeen/bento7.webp", "/images/projects/rakeen/bento8.webp"
+  //   ],
+  //   videoSrc: "/videos/rakeen.mp4",
+  //   videoPoster: "/images/projects/rakeen/bento5.webp",
 
-    scopeUnderstanding: "Tranquility, simplicity, and functional elegance.",
-    scopeMaterials: "Soft linens, light woods, and matte finishes.",
-    scopeDescription: "Full residential interior design focusing on minimalist aesthetics, custom joinery, and ambient lighting.",
+  //   scopeUnderstanding: "Tranquility, simplicity, and functional elegance.",
+  //   scopeMaterials: "Soft linens, light woods, and matte finishes.",
+  //   scopeDescription: "Full residential interior design focusing on minimalist aesthetics, custom joinery, and ambient lighting.",
 
-    beforeImage: "/images/projects/rakeen/before.webp",
-    afterImage: "/images/projects/rakeen/after.webp",
+  //   beforeImage: "/images/projects/rakeen/before.webp",
+  //   afterImage: "/images/projects/rakeen/after.webp",
 
-    challengesMainImage: "/images/projects/rakeen/challenges1.webp",
-    challengesBottomImage: "/images/projects/rakeen/challenges2.webp",
-    challengesRows: [
-      { challenge: "Maintaining Warmth in Minimalism", solution: "Layered textures and warm wood accents." },
-      { challenge: "Concealed Storage", solution: "Seamless built-in cabinetry throughout." },
-      { challenge: "Flow Between Spaces", solution: "Consistent flooring and sightlines." },
-      { challenge: "Child-Friendly Durability", solution: "Stain-resistant fabrics and rounded edges." },
-    ],
+  //   challengesMainImage: "/images/projects/rakeen/challenges1.webp",
+  //   challengesBottomImage: "/images/projects/rakeen/challenges2.webp",
+  //   challengesRows: [
+  //     { challenge: "Maintaining Warmth in Minimalism", solution: "Layered textures and warm wood accents." },
+  //     { challenge: "Concealed Storage", solution: "Seamless built-in cabinetry throughout." },
+  //     { challenge: "Flow Between Spaces", solution: "Consistent flooring and sightlines." },
+  //     { challenge: "Child-Friendly Durability", solution: "Stain-resistant fabrics and rounded edges." },
+  //   ],
 
-    highlightSlides: [
-      { index: "01", audience: "Minimalist Living.", image: "/images/projects/rakeen/slider1.webp" },
-      { index: "02", audience: "Hidden Storage.", image: "/images/projects/rakeen/slider2.webp" },
-      { index: "03", audience: "Soft Textures.", image: "/images/projects/rakeen/slider3.webp" },
-      { index: "04", audience: "Ambient Lighting.", image: "/images/projects/rakeen/slider4.webp" },
-    ]
-  },
+  //   highlightSlides: [
+  //     { index: "01", audience: "Minimalist Living.", image: "/images/projects/rakeen/slider1.webp" },
+  //     { index: "02", audience: "Hidden Storage.", image: "/images/projects/rakeen/slider2.webp" },
+  //     { index: "03", audience: "Soft Textures.", image: "/images/projects/rakeen/slider3.webp" },
+  //     { index: "04", audience: "Ambient Lighting.", image: "/images/projects/rakeen/slider4.webp" },
+  //   ]
+  // },
 
-  {
-    index: "06",
-    slug: "rooftop-pool-area",
-    name: "Rooftop & Pool Area",
-    location: "Jolshiri Residential Area",
-    category: "Residential Design",
-    image: "/images/projects/pool.webp",
+  // {
+  //   index: "06",
+  //   slug: "rooftop-pool-area",
+  //   name: "Rooftop & Pool Area",
+  //   location: "Jolshiri Residential Area",
+  //   category: "Residential Design",
+  //   image: "/images/projects/pool.webp",
 
-    year: "2024",
-    service: "Landscape & Outdoor Design",
-    style: "Resort Luxury",
-    heroImage: "/images/projects/pool/hero.webp",
-    heroDescription: "An exclusive rooftop oasis designed for relaxation and entertainment. The seamless integration of water features, lush landscaping, and comfortable lounging areas creates a private resort experience.",
-    testimonial: {
-      quote: "“Our rooftop is now the favorite spot in the house. It feels like a five-star resort right above the city.”",
-      author: "The Rahman Family",
-      role: "Homeowners"
-    },
+  //   year: "2024",
+  //   service: "Landscape & Outdoor Design",
+  //   style: "Resort Luxury",
+  //   heroImage: "/images/projects/pool/hero.webp",
+  //   heroDescription: "An exclusive rooftop oasis designed for relaxation and entertainment. The seamless integration of water features, lush landscaping, and comfortable lounging areas creates a private resort experience.",
+  //   testimonial: {
+  //     quote: "“Our rooftop is now the favorite spot in the house. It feels like a five-star resort right above the city.”",
+  //     author: "The Rahman Family",
+  //     role: "Homeowners"
+  //   },
 
-    overview: "This rooftop transformation turns an unused space into a luxurious outdoor retreat. Featuring a custom pool, ambient lighting, and weather-resistant furnishings, it offers a perfect blend of leisure and aesthetic appeal.",
-    bentoImages: [
-      "/images/projects/pool/bento1.webp", "/images/projects/pool/bento2.webp",
-      "/images/projects/pool/bento3.webp", "/images/projects/pool/bento4.webp",
-      "/images/projects/pool/bento-mid.webp", "/images/projects/pool/bento6.webp",
-      "/images/projects/pool/bento7.webp", "/images/projects/pool/bento8.webp"
-    ],
-    videoSrc: "/videos/pool.mp4",
-    videoPoster: "/images/projects/pool/bento5.webp",
+  //   overview: "This rooftop transformation turns an unused space into a luxurious outdoor retreat. Featuring a custom pool, ambient lighting, and weather-resistant furnishings, it offers a perfect blend of leisure and aesthetic appeal.",
+  //   bentoImages: [
+  //     "/images/projects/pool/bento1.webp", "/images/projects/pool/bento2.webp",
+  //     "/images/projects/pool/bento3.webp", "/images/projects/pool/bento4.webp",
+  //     "/images/projects/pool/bento-mid.webp", "/images/projects/pool/bento6.webp",
+  //     "/images/projects/pool/bento7.webp", "/images/projects/pool/bento8.webp"
+  //   ],
+  //   videoSrc: "/videos/pool.mp4",
+  //   videoPoster: "/images/projects/pool/bento5.webp",
 
-    scopeUnderstanding: "Leisure, entertainment, and weather resilience.",
-    scopeMaterials: "Natural stone, teak wood, and water-resistant textiles.",
-    scopeDescription: "Outdoor landscape design, pool detailing, custom pergolas, and outdoor lighting planning.",
+  //   scopeUnderstanding: "Leisure, entertainment, and weather resilience.",
+  //   scopeMaterials: "Natural stone, teak wood, and water-resistant textiles.",
+  //   scopeDescription: "Outdoor landscape design, pool detailing, custom pergolas, and outdoor lighting planning.",
 
-    beforeImage: "/images/projects/pool/before.webp",
-    afterImage: "/images/projects/pool/after.webp",
+  //   beforeImage: "/images/projects/pool/before.webp",
+  //   afterImage: "/images/projects/pool/after.webp",
 
-    challengesMainImage: "/images/projects/pool/challenges1.webp",
-    challengesBottomImage: "/images/projects/pool/challenges2.webp",
-    challengesRows: [
-      { challenge: "Weight Load Constraints", solution: "Lightweight materials and structural reinforcement." },
-      { challenge: "Weather Exposure", solution: "UV-resistant finishes and durable outdoor fabrics." },
-      { challenge: "Privacy from Neighbors", solution: "Strategic planting and louvered screens." },
-      { challenge: "Waterproofing", solution: "Multi-layer waterproofing systems for the pool deck." },
-    ],
+  //   challengesMainImage: "/images/projects/pool/challenges1.webp",
+  //   challengesBottomImage: "/images/projects/pool/challenges2.webp",
+  //   challengesRows: [
+  //     { challenge: "Weight Load Constraints", solution: "Lightweight materials and structural reinforcement." },
+  //     { challenge: "Weather Exposure", solution: "UV-resistant finishes and durable outdoor fabrics." },
+  //     { challenge: "Privacy from Neighbors", solution: "Strategic planting and louvered screens." },
+  //     { challenge: "Waterproofing", solution: "Multi-layer waterproofing systems for the pool deck." },
+  //   ],
 
-    highlightSlides: [
-      { index: "01", audience: "Infinity Edge Pool.", image: "/images/projects/pool/slider1.webp" },
-      { index: "02", audience: "Lounge Decking.", image: "/images/projects/pool/slider2.webp" },
-      { index: "03", audience: "Ambient Night Lighting.", image: "/images/projects/pool/slider3.webp" },
-      { index: "04", audience: "Lush Greenery.", image: "/images/projects/pool/slider4.webp" },
-    ]
-  },
+  //   highlightSlides: [
+  //     { index: "01", audience: "Infinity Edge Pool.", image: "/images/projects/pool/slider1.webp" },
+  //     { index: "02", audience: "Lounge Decking.", image: "/images/projects/pool/slider2.webp" },
+  //     { index: "03", audience: "Ambient Night Lighting.", image: "/images/projects/pool/slider3.webp" },
+  //     { index: "04", audience: "Lush Greenery.", image: "/images/projects/pool/slider4.webp" },
+  //   ]
+  // },
 
   {
     index: "07",
     slug: "pti",
-    name: "PTI",
-    location: "Matikata, Kalshi",
-    category: "Institutional Design",
+    name: "PTI Skyline",
+    location: "Kalshi, Mirpur",
+    category: "Residential Design",
     image: "/images/projects/pti.webp",
 
-    year: "2023",
-    service: "Institutional Design",
-    style: "Functional Modern",
+    year: "2025",
+    service: "Residential Design",
+    style: "Modern",
     heroImage: "/images/projects/pti/hero.webp",
-    heroDescription: "PTI is a modern educational facility designed to inspire learning. Bright, adaptable spaces with durable materials ensure a conducive environment for both students and educators.",
+    heroDescription: "PTI is a contemporary residential tower that treats landscape as part of its architectural identity. Layered balconies, planted terraces, and warm lighting bring depth and greenery, connecting modern urban living with nature.",
     testimonial: {
-      quote: "“The new facility has completely transformed our training programs. The spaces are engaging and highly functional.”",
-      author: "PTI Administration",
-      role: "Director"
+      quote: "“PTI Skyline was envisioned as a contemporary mixed-use development that brings together a strong commercial presence with comfortable residential living. The design creates a distinctive architectural identity while responding thoughtfully to the needs of both functions.”",
+      author: "PTI",
+      role: "Residential Building"
     },
 
-    overview: "The PTI project focuses on creating an engaging educational environment. Through strategic use of color, flexible classroom layouts, and durable finishes, the design supports dynamic teaching methods and student collaboration.",
+    overview: "PTI Skyline is a contemporary mixed-use development combining commercial spaces with modern residential living. The design uses clean architectural forms, layered balconies, greenery, and warm lighting to create a distinctive yet welcoming urban presence.",
     bentoImages: [
       "/images/projects/pti/bento1.webp", "/images/projects/pti/bento2.webp",
       "/images/projects/pti/bento3.webp", "/images/projects/pti/bento4.webp",
@@ -366,9 +366,9 @@ export const projects: Project[] = [
     videoSrc: "/videos/pti.mp4",
     videoPoster: "/images/projects/pti/bento5.webp",
 
-    scopeUnderstanding: "Academic focus, collaboration, and institutional durability.",
-    scopeMaterials: "High-traffic flooring, acoustic panels, and vibrant accents.",
-    scopeDescription: "Educational facility design including classroom layouts, common areas, administrative offices, and wayfinding.",
+    scopeUnderstanding: "Balances commercial activity with private, comfortable residential zones.",
+    scopeMaterials: "Durable contemporary finishes, textured façades, warm wood accents, glass, and greenery",
+    scopeDescription: "Architectural design covering space planning, façade development, material selection, landscape integration, and lighting design.",
 
     beforeImage: "/images/projects/pti/before.webp",
     afterImage: "/images/projects/pti/after.webp",
@@ -376,17 +376,17 @@ export const projects: Project[] = [
     challengesMainImage: "/images/projects/pti/challenges1.webp",
     challengesBottomImage: "/images/projects/pti/challenges2.webp",
     challengesRows: [
-      { challenge: "High Foot Traffic", solution: "Commercial-grade flooring and wall protections." },
-      { challenge: "Acoustic Management", solution: "Sound-absorbing ceilings and partition walls." },
-      { challenge: "Flexible Learning Spaces", solution: "Movable furniture and modular classroom setups." },
-      { challenge: "Budget Constraints", solution: "Value-engineered materials without compromising design." },
+      { challenge: "Integrating commercial & residential areas", solution: "Clear zoning and circulation create a seamless separation." },
+      { challenge: "Bringing sufficient daylight indoors", solution: "Strategic openings and glazed areas enhance illumination." },
+      { challenge: "Making the building visually distinctive", solution: "Layered façades create a memorable character." },
+      { challenge: "Greenery within a dense urban setting", solution: "Landscaped balconies soften the architecture." },
     ],
 
     highlightSlides: [
-      { index: "01", audience: "Interactive Classrooms.", image: "/images/projects/pti/slider1.webp" },
-      { index: "02", audience: "Collaborative Commons.", image: "/images/projects/pti/slider2.webp" },
-      { index: "03", audience: "Modern Library.", image: "/images/projects/pti/slider3.webp" },
-      { index: "04", audience: "Admin Offices.", image: "/images/projects/pti/slider4.webp" },
+      { index: "01", audience: "Contemporary Forms.", image: "/images/projects/pti/slider1.webp" },
+      { index: "02", audience: "Green Balconies.", image: "/images/projects/pti/slider2.webp" },
+      { index: "03", audience: "Layered Façade.", image: "/images/projects/pti/slider3.webp" },
+      { index: "04", audience: "Mixed-Use Planning.", image: "/images/projects/pti/slider4.webp" },
     ]
   }
 ];

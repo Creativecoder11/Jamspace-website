@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/animations/gsap";
 
@@ -34,7 +35,10 @@ function PinIcon() {
 
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <div className="project-card group border border-border relative h-[320px] md:h-[450px] overflow-hidden">
+    <Link
+      href={`/projects/${project.slug}`}
+      className="project-card group border border-border relative h-[320px] md:h-[450px] overflow-hidden block"
+    >
       <Image
         src={project.image}
         alt={`${project.name} — ${project.location}`}
@@ -58,10 +62,15 @@ function ProjectCard({ project }: { project: Project }) {
             <BrandGlyph shape="step" color="pink" className="h-3 w-3" />
             {project.category}
           </span>
-          {/* <Button href={`/projects/${project.slug}`}>See Details</Button> */}
+
+          <span className="text-white transition-transform duration-300 group-hover:translate-x-1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

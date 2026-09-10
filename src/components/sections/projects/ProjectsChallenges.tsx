@@ -32,7 +32,7 @@ export default function ProjectsChallenges({ project }: { project: Project }) {
                                         <p className="text-muted text-base">{row.solution}</p>
                                     </div>
                                     <div className="hidden md:flex md:items-center md:justify-between">
-                                        <p className="w-[250px] text-muted text-sm md:text-base">{row.challenge}</p><ArrowRight />
+                                        <p className="w-[300px] text-muted text-sm md:text-base">{row.challenge}</p><ArrowRight />
                                         <p className="w-[450px] text-muted text-sm md:text-base">{row.solution}</p>
                                     </div>
                                 </li>
