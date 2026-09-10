@@ -56,7 +56,7 @@ export const projects: Project[] = [
       { index: "01", audience: "Bold Colour Palette.", image: "/images/projects/taqwaa/slider1.webp" },
       { index: "02", audience: "Material Contrast.", image: "/images/projects/taqwaa/slider2.webp" },
       { index: "03", audience: "Statement Elements.", image: "/images/projects/taqwaa/slider3.webp" },
-      { index: "04", audience: "Statement Elements.", image: "/images/projects/taqwaa/slider4.webp" },
+      { index: "04", audience: "Bespoke Detailing.", image: "/images/projects/taqwaa/slider4.webp" },
     ]
   },
 
