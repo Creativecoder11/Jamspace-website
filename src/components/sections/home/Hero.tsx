@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { heroSlides, heroSlideCount } from "@/lib/data/hero";
+import Link from "next/link";
 
 function PinIcon() {
   return (
@@ -304,8 +305,8 @@ export function Hero() {
                           className="object-cover"
                         />
 
-                        <button
-                          type="button"
+                        <Link
+                          href={`/projects/${card.slug}`}
                           aria-label={`View ${card.name} — ${card.location}`}
                           onClick={() => {
                             slideDirection.current = 1;
@@ -325,7 +326,7 @@ export function Hero() {
                               View
                             </span>
                           </span>
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   ))}

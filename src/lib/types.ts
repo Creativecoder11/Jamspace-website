@@ -97,6 +97,7 @@ export interface StripImage {
 
 export interface HeroSlide {
   name: string;
+  slug: string;
   location: string;
   /** Full-bleed background photo shown when this slide is active. */
   image: string;
