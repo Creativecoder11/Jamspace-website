@@ -8,6 +8,7 @@ export const projects: Project[] = [
     location: "Jolshiri Abashan, Narayanganj",
     category: "Residential Design",
     image: "/images/projects/taqwaa.webp",
+    hero: true,
 
     year: "2025",
     service: "Residential Design",
@@ -67,6 +68,7 @@ export const projects: Project[] = [
     location: "Jolshiri Abashan, Narayanganj",
     category: "Residential Design",
     image: "/images/projects/casa-zaheen.webp",
+    hero: true,
 
     year: "2024",
     service: "Residential Design",
@@ -125,6 +127,7 @@ export const projects: Project[] = [
     location: "Banani 11",
     category: "Commercial Design",
     image: "/images/projects/eleni.webp",
+    hero: true,
 
     year: "2026",
     service: "Commercial Project",
@@ -184,6 +187,7 @@ export const projects: Project[] = [
     location: "Green Road, Dhanmondi",
     category: "Commercial Design",
     image: "/images/projects/green-hub.webp",
+    hero: true,
 
     year: "2023",
     service: "Commercial Project",
@@ -344,6 +348,7 @@ export const projects: Project[] = [
     location: "Kalshi, Mirpur",
     category: "Residential Design",
     image: "/images/projects/pti.webp",
+    hero: true,
 
     year: "2025",
     service: "Residential Design",
