@@ -152,7 +152,7 @@ export function Projects() {
         <div className="max-w-md md:pl-5 md:ms-0">
           <p className="text-muted">
             A curated collection of spaces thoughtfully designed to reflect each
-            client's vision, lifestyle, and purpose.
+            client&apos;s vision, lifestyle, and purpose.
           </p>
         </div>
       </Container>
@@ -192,6 +192,7 @@ export function Projects() {
         <Link
           href="/projects"
           className="absolute hidden md:block right-6 top-6 text-sm text-white hover:text-accent md:top-1/2 md:right-16 md:-translate-y-1/2"
+          target="_blank"
         >
           All Projects ↗
         </Link>
@@ -241,6 +242,7 @@ export function Projects() {
               </span>
               <a
                 href={`/projects/${project.slug}`}
+                target="_blank"
                 className="group inline-flex items-center gap-2 rounded-xl md:px-6 px-2 md:py-3 py-2 text-sm font-normal tracking-wide transition-colors duration-300 bg-accent text-accent-foreground font-medium hover:bg-foreground"
               >
                 See Details

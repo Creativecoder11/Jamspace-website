@@ -26,6 +26,9 @@ function ProjectCard({ project }: { project: Project }) {
     return (
         <Link
             href={`/projects/${project.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${project.name} — ${project.location}`}
             className="project-card group border border-border relative h-80 md:h-112.5 overflow-hidden block"
         >
             <Image
@@ -35,15 +38,21 @@ function ProjectCard({ project }: { project: Project }) {
                 sizes="(min-width: 768px) 33vw, 90vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
+
             <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/25 to-transparent" />
+
             <div className="absolute inset-0 flex flex-col justify-end p-5">
-                <h3 className="text-xl font-medium text-white">{project.name}</h3>
+                <h3 className="text-xl font-medium text-white">
+                    {project.name}
+                </h3>
+
                 <p className="mt-1 flex items-center gap-1.5 text-sm text-white/80">
                     <span className="text-accent-teal">
                         <PinIcon />
                     </span>
                     {project.location}
                 </p>
+
                 <div className="mt-4 flex items-center justify-between gap-4 border-t border-white/20 pt-4">
                     <span className="flex items-center gap-2 text-sm text-white">
                         <BrandGlyph shape="step" color="pink" className="h-3 w-3" />
@@ -54,12 +63,19 @@ function ProjectCard({ project }: { project: Project }) {
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
+                        <BrandGlyph
+                            shape="step"
+                            color="pink"
+                            className="h-3 w-3"
+                        />
+                        {project.category}
                     </span>
                 </div>
             </div>
         </Link>
     );
 }
+
 
 export default function MoreProjects({ currentSlug }: { currentSlug: string }) {
     const containerRef = useRef(null);

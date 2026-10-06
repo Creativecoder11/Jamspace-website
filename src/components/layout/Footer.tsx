@@ -4,13 +4,16 @@ import { useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/animations/gsap";
+
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
+
 import { footerColumns, contactInfo } from "@/lib/data/footer";
+
 import Image from "next/image";
 
 const ctaStripImages = [
@@ -43,9 +46,19 @@ function FooterGlyph({
   className?: string;
 }) {
   const { viewBox, d } = glyphShapes[shape];
+
   return (
-    <svg viewBox={viewBox} className={className} aria-hidden="true">
-      <path d={d} fill="none" stroke="currentColor" strokeWidth="1" />
+    <svg
+      viewBox={viewBox}
+      className={className}
+      aria-hidden="true"
+    >
+      <path
+        d={d}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+      />
     </svg>
   );
 }
@@ -53,17 +66,44 @@ function FooterGlyph({
 export function Footer() {
   const containerRef = useRef<HTMLElement>(null);
   const ctaTrackRef = useRef<HTMLDivElement>(null);
+  const ctaPanelRef = useRef<HTMLDivElement>(null);
+  const ctaButtonRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      if (!containerRef.current) return;
+
+      const footer = containerRef.current;
+
+      const ctaPanel = ctaPanelRef.current;
+      const ctaButton = ctaButtonRef.current;
+      const ctaTrack = ctaTrackRef.current;
+
+      /*
+       * Respect reduced motion preferences.
+       */
+      if (
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        if (ctaPanel) {
+          gsap.set(ctaPanel, {
+            clearProps: "all",
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          });
+        }
+
+        if (ctaButton) {
+          gsap.set(ctaButton, {
+            clearProps: "all",
+            opacity: 1,
+            y: 0,
+          });
+        }
+
         gsap.set(
-          [
-            ".footer-cta-panel",
-            ".footer-cta-button",
-            ".footer-cta-panel .line",
-            ".footer-col",
-          ],
+          footer.querySelectorAll(".footer-col"),
           {
             clearProps: "all",
             opacity: 1,
@@ -71,28 +111,36 @@ export function Footer() {
             scale: 1,
           }
         );
+
         return;
       }
 
-      // Infinite CTA image strip
-      gsap.to(ctaTrackRef.current, {
-        xPercent: -50,
-        duration: 30,
-        repeat: -1,
-        ease: "none",
-      });
+      /*
+       * Infinite CTA image strip
+       */
+      if (ctaTrack) {
+        gsap.to(ctaTrack, {
+          xPercent: -50,
+          duration: 30,
+          repeat: -1,
+          ease: "none",
+        });
+      }
 
-      // CTA panel animation
-      gsap
-        .timeline({
+      /*
+       * CTA panel animation
+       */
+      if (ctaPanel) {
+        const ctaTimeline = gsap.timeline({
           scrollTrigger: {
-            trigger: containerRef.current,
+            trigger: footer,
             start: "top 85%",
             toggleActions: "play none none reverse",
           },
-        })
-        .fromTo(
-          ".footer-cta-panel",
+        });
+
+        ctaTimeline.fromTo(
+          ctaPanel,
           {
             scale: 0.9,
             opacity: 0,
@@ -103,30 +151,29 @@ export function Footer() {
             duration: 0.8,
             ease: "power3.out",
           }
-        )
-        .from(
-          ".footer-cta-panel .line",
-          {
-            yPercent: 110,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power3.out",
-          },
-          "<+=0.15"
-        )
-        .from(
-          ".footer-cta-button",
-          {
-            opacity: 0,
-            y: 10,
-            duration: 0.45,
-            ease: "power3.out",
-          },
-          "<+=0.05"
         );
 
-      // Footer columns animation
-      gsap.utils.toArray<HTMLElement>(".footer-col").forEach((el) => {
+        if (ctaButton) {
+          ctaTimeline.from(
+            ctaButton,
+            {
+              opacity: 0,
+              y: 10,
+              duration: 0.45,
+              ease: "power3.out",
+            },
+            "<+=0.05"
+          );
+        }
+      }
+
+      /*
+       * Footer columns animation
+       */
+      const footerColumns =
+        footer.querySelectorAll<HTMLElement>(".footer-col");
+
+      footerColumns.forEach((el) => {
         gsap.fromTo(
           el,
           {
@@ -149,48 +196,74 @@ export function Footer() {
       });
 
       ScrollTrigger.refresh();
+
+      return () => {
+        gsap.killTweensOf(ctaTrack);
+      };
     },
-    { scope: containerRef }
+    {
+      scope: containerRef,
+    }
   );
 
   return (
-    <footer ref={containerRef} className="bg-background">
-      <div className="pt-13 md:pt-25 pb-13">
+    <footer
+      ref={containerRef}
+      className="bg-background"
+    >
+      {/* CTA */}
+      <div className="pb-13 pt-13 md:pb-25 md:pt-25">
         <p className="mb-8 text-center text-sm text-muted">
           Bring Your Vision to Life
         </p>
 
-        <div className="relative h-65 md:h-100 overflow-hidden">
+        <div className="relative h-65 overflow-hidden md:h-100">
+          {/* Moving image track */}
           <div
             ref={ctaTrackRef}
             className="flex h-full w-max items-center gap-6"
           >
-            {[...ctaStripImages, ...ctaStripImages].map((src, i) => (
-              <div
-                key={i}
-                className={`relative w-75 shrink-0 md:w-105 ${i % 2 === 0 ? "h-full" : "h-75"}`}
-              >
-                <Image
-                  src={src}
-                  alt=""
-                  fill
-                  sizes="420px"
-                  className="object-cover"
-                  priority={i === 0}
-                />
-              </div>
-            ))}
+            {[...ctaStripImages, ...ctaStripImages].map(
+              (src, i) => (
+                <div
+                  key={`${src}-${i}`}
+                  className={`relative w-75 shrink-0 md:w-105 ${i % 2 === 0 ? "h-full" : "h-75"
+                    }`}
+                >
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    sizes="420px"
+                    className="object-cover"
+                  />
+                </div>
+              )
+            )}
           </div>
 
-          <div className="h-full md:h-full absolute left-1/2 top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center border-l-24 border-r-24 border-[#F7F6F1] gap-6 bg-accent p-4 text-center md:aspect-4/5 w-3/4 md:w-100">
+          {/* CTA Panel */}
+          <div
+            ref={ctaPanelRef}
+            className="absolute left-1/2 top-1/2 z-10 flex h-full w-3/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 border-l-24 border-r-24 border-[#F7F6F1] bg-accent p-4 text-center md:aspect-4/5 md:h-full md:w-100"
+          >
             <AnimatedHeading
               as="h2"
-              lines={["Let's Design", "Your", "Dream Space."]}
+              lines={[
+                "Let's Design",
+                "Your",
+                "Dream Space.",
+              ]}
               className="text-3xl font-medium leading-tight text-white md:text-subheading"
             />
-            <div className="footer-cta-button">
+
+            <div ref={ctaButtonRef}>
               <MagneticButton>
-                <Button href="/contact" variant="inverse" className="font-medium">
+                <Button
+                  href="/contact"
+                  variant="inverse"
+                  className="font-medium"
+                >
                   Contact Us Now
                 </Button>
               </MagneticButton>
@@ -199,21 +272,33 @@ export function Footer() {
         </div>
       </div>
 
+      {/* Footer content */}
       <div className="border-t border-border">
-        <Container className="mx-auto w-full max-w-335 flex flex-col md:flex-row not-last:md:gap-x-0 md:divide-x md:divide-border">
-          <div className="flex flex-col w-full md:w-[30%] space-between py-8 md:py-13 md:pr-8 mx-4 md:mx-0">
+        <Container className="mx-auto flex w-full max-w-335 flex-col md:flex-row md:divide-x md:divide-border">
+          {/* Logo / Description */}
+          <div className="mx-4 flex w-full flex-col py-8 md:mx-0 md:w-[30%] md:py-13 md:pr-8">
             <div className="md:flex-1">
-              <div className="relative w-31.5 h-16.5 md:w-40 md:h-auto">
+              <div className="relative h-16.5 w-31.5 md:h-auto md:w-40">
                 <Logo svgClassName="w-[126px] h-[66px]" />
               </div>
             </div>
+
             <div>
-              <p className="mt-10 md:mt-4 text-base text-muted mr-4">
-                Jam Space creates timeless interiors that blend creativity,
-                functionality, and exceptional craftsmanship.
+              <p className="mr-4 mt-10 text-base text-muted md:mt-4">
+                Jam Space creates timeless interiors that blend
+                creativity, functionality, and exceptional
+                craftsmanship.
               </p>
-              <div className="mt-4 md:mt-6 flex gap-3">
-                <a href="https://www.facebook.com/jamroll.space" aria-label="Facebook" className="group">
+
+              <div className="mt-4 flex gap-3 md:mt-6">
+                {/* Facebook */}
+                <a
+                  href="https://www.facebook.com/jamroll.space"
+                  aria-label="Facebook"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                >
                   <Image
                     src="/icons/facebook.svg"
                     alt=""
@@ -223,7 +308,14 @@ export function Footer() {
                   />
                 </a>
 
-                <a href="https://linkedin.com/company/jam-space-interior" aria-label="LinkedIn" className="group">
+                {/* LinkedIn */}
+                <a
+                  href="https://linkedin.com/company/jam-space-interior"
+                  aria-label="LinkedIn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                >
                   <Image
                     src="/icons/linkedin.svg"
                     alt=""
@@ -233,7 +325,14 @@ export function Footer() {
                   />
                 </a>
 
-                <a href="https://www.instagram.com/jamroll.space" aria-label="Instagram" className="group">
+                {/* Instagram */}
+                <a
+                  href="https://www.instagram.com/jamroll.space"
+                  aria-label="Instagram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                >
                   <Image
                     src="/icons/insta.svg"
                     alt=""
@@ -246,7 +345,8 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="hidden md:flex items-start w-[15%] pt-14 pr-6 justify-end text-border">
+          {/* Footer icon - desktop */}
+          <div className="hidden w-[15%] items-start justify-end pt-14 pr-6 text-border md:flex">
             <Image
               src="/footer-jam.svg"
               alt=""
@@ -256,7 +356,8 @@ export function Footer() {
             />
           </div>
 
-          <div className="md:hidden flex items-start w-full py-8 px-4 justify-end text-border border-t border-b">
+          {/* Footer icon - mobile */}
+          <div className="flex w-full items-start justify-end border-b border-t px-4 py-8 text-border md:hidden">
             <Image
               src="/jam-footer-icon.svg"
               alt=""
@@ -266,15 +367,25 @@ export function Footer() {
             />
           </div>
 
+          {/* Footer links */}
           <div className="py-13 md:w-[55%] md:pl-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 space-y-8 mx-4 md:mx-0">
+            <div className="mx-4 grid grid-cols-2 space-y-8 md:mx-0 md:grid-cols-4">
               {footerColumns.map((column) => (
-                <div key={column.title}>
-                  <h3 className="text-base font-medium">{column.title}</h3>
-                  <ul className="mt-3 md:mt-4 space-y-1.5 md:space-y-3 text-sm text-muted">
+                <div
+                  key={column.title}
+                  className="footer-col"
+                >
+                  <h3 className="text-base font-medium">
+                    {column.title}
+                  </h3>
+
+                  <ul className="mt-3 space-y-1.5 text-sm text-muted md:mt-4 md:space-y-3">
                     {column.links.map((link) => (
                       <li key={link.href}>
-                        <Link href={link.href} className="hover:text-accent">
+                        <Link
+                          href={link.href}
+                          className="hover:text-accent"
+                        >
                           {link.label}
                         </Link>
                       </li>
@@ -283,19 +394,30 @@ export function Footer() {
                 </div>
               ))}
 
-              <div>
-                <h3 className="text-base font-medium">Contact Us</h3>
-                <ul className="mt-3 md:mt-4 space-y-1.5 md:space-y-3 text-sm text-muted">
-                  <li>Address: {contactInfo.address}</li>
+              {/* Contact */}
+              <div className="footer-col">
+                <h3 className="text-base font-medium">
+                  Contact Us
+                </h3>
+
+                <ul className="mt-3 space-y-1.5 text-sm text-muted md:mt-4 md:space-y-3">
+                  <li>
+                    Address: {contactInfo.address}
+                  </li>
+
                   <li>
                     Phone:{" "}
                     <a
-                      href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
+                      href={`tel:${contactInfo.phone.replace(
+                        /\s+/g,
+                        ""
+                      )}`}
                       className="hover:text-accent"
                     >
                       {contactInfo.phone}
                     </a>
                   </li>
+
                   <li>
                     Email:{" "}
                     <a
@@ -309,13 +431,19 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="mt-6 md:mt-13 w-full mx-4 md:mx-0 pr-8 md:pr-0">
-              <h3 className="text-lg font-medium">Stay informed</h3>
-              <p className="mt-2 w-full text-sm text-muted ">
-                Stay inspired with the latest design trends, expert insights, and
-                exclusive updates from Jam Space. Discover ideas that help you
-                create beautiful, functional spaces.
+            {/* Newsletter */}
+            <div className="mx-4 mt-6 w-full pr-8 md:mx-0 md:mt-13 md:pr-0">
+              <h3 className="text-lg font-medium">
+                Stay informed
+              </h3>
+
+              <p className="mt-2 w-full text-sm text-muted">
+                Stay inspired with the latest design trends,
+                expert insights, and exclusive updates from Jam
+                Space. Discover ideas that help you create
+                beautiful, functional spaces.
               </p>
+
               <div className="mt-4 w-full">
                 <NewsletterForm />
               </div>
@@ -324,16 +452,20 @@ export function Footer() {
         </Container>
       </div>
 
-
+      {/* Copyright */}
       <div className="border-t border-border">
-        <Container className="mx-auto w-full max-w-335 footer-col flex flex-col gap-2 py-3 md:py-6 text-xs md:text-sm text-muted md:flex-row md:items-center md:justify-between px-4 md:px-0">
-          <p>&copy; {new Date().getFullYear()} Jam Space, All Rights Reserved</p>
+        <Container className="footer-col mx-auto flex w-full max-w-335 flex-col gap-2 px-4 py-3 text-xs text-muted md:flex-row md:items-center md:justify-between md:px-0 md:py-6 md:text-sm">
+          <p>
+            &copy; {new Date().getFullYear()} Jam Space, All
+            Rights Reserved
+          </p>
+
           <p>
             Design &amp; Developed by{" "}
             <a
               href="https://jamroll.studio"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="underline hover:text-accent"
             >
               Jamroll Studio

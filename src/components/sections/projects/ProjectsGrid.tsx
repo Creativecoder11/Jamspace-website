@@ -37,6 +37,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
+      target="_blank"
       className="project-card group border border-border relative h-[320px] md:h-[450px] overflow-hidden block"
     >
       <Image

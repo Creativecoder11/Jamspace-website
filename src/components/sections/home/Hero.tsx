@@ -10,7 +10,6 @@ import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { projects } from "@/lib/data/projects";
 import Link from "next/link";
 
-// ✅ Filter projects that have hero: true in your data
 const heroProjects = projects.filter((p) => p.hero);
 const heroSlideCount = heroProjects.length;
 
@@ -34,7 +33,6 @@ export function Hero() {
 
   const activeSlide = heroProjects[slide - 1];
 
-  // ✅ Renamed 'index' to 'slideIndex' to prevent overwriting the project's string 'index'
   const upcomingSlides = [1, 2].map((offset) => {
     const slideIndex = (slide - 1 + offset) % heroSlideCount;
     return { slideIndex, ...heroProjects[slideIndex] };
@@ -148,10 +146,10 @@ export function Hero() {
                         <Image src={card.image} alt={`${card.name} — ${card.location}`} fill sizes="220px" className="object-cover" />
                         <Link
                           href={`/projects/${card.slug}`}
+                          target="_blank"
                           aria-label={`View ${card.name} — ${card.location}`}
                           onClick={() => {
                             slideDirection.current = 1;
-                            // ✅ Fixed: Use the numeric slideIndex instead of the string index
                             setSlide(card.slideIndex + 1);
                           }}
                           className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/0 pointer-events-none opacity-0 transition-all duration-300 group-hover:bg-black/20 group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto"
