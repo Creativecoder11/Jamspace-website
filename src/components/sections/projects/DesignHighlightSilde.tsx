@@ -9,7 +9,7 @@ interface SlideItem { index: string; audience: string; image: string; }
 const PIN_TOP_OFFSET = 80;
 const SLIDE_TRANSITION_DURATION = 2.5;
 const SLIDE_HOLD_DURATION = 0.6;
-const SCROLL_DISTANCE_PER_TIMELINE_UNIT = 100;
+const SCROLL_DISTANCE_PER_TIMELINE_UNIT = 30;
 const IMAGE_ZOOM_AMOUNT = 1.08;
 const ENABLE_SLIDE_SNAP = true;
 
@@ -99,8 +99,8 @@ export default function DesignHighlightSilde({ slides }: { slides: SlideItem[] }
                 scrollTrigger: {
                     trigger: pinEl, start: `top top+=${PIN_TOP_OFFSET}`,
                     end: () => `+=${totalUnits * window.innerHeight * (SCROLL_DISTANCE_PER_TIMELINE_UNIT / 100)}`,
-                    pin: true, pinSpacing: true, scrub: 0.8, anticipatePin: 1, invalidateOnRefresh: true,
-                    snap: ENABLE_SLIDE_SNAP ? { snapTo: "labels", duration: { min: 0.3, max: 0.5 }, delay: 0.1, ease: "power2.out" } : undefined,
+                    pin: true, pinSpacing: true, scrub: 0.5, anticipatePin: 1, invalidateOnRefresh: true,
+                    snap: ENABLE_SLIDE_SNAP ? { snapTo: "labels", duration: { min: 0.2, max: 0.4 }, delay: 0.05, ease: "power2.out" } : undefined,
                 },
             });
             tl.addLabel("slide-0", 0);

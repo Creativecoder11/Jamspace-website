@@ -27,25 +27,19 @@ function ProjectCard({ project }: { project: Project }) {
         <Link
             href={`/projects/${project.slug}`}
             target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`View ${project.name} — ${project.location}`}
-            className="project-card group border border-border relative h-80 md:h-112.5 overflow-hidden block"
+            className="project-card group border border-border relative h-[320px] md:h-[450px] overflow-hidden block"
         >
             <Image
                 src={project.image}
                 alt={`${project.name} — ${project.location}`}
                 fill
-                sizes="(min-width: 768px) 33vw, 90vw"
+                sizes="(min-width: 768px) 40vw, 90vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
-
             <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/25 to-transparent" />
 
             <div className="absolute inset-0 flex flex-col justify-end p-5">
-                <h3 className="text-xl font-medium text-white">
-                    {project.name}
-                </h3>
-
+                <h3 className="text-xl font-medium text-white">{project.name}</h3>
                 <p className="mt-1 flex items-center gap-1.5 text-sm text-white/80">
                     <span className="text-accent-teal">
                         <PinIcon />
@@ -58,24 +52,17 @@ function ProjectCard({ project }: { project: Project }) {
                         <BrandGlyph shape="step" color="pink" className="h-3 w-3" />
                         {project.category}
                     </span>
-                    {/* Visual cue: Arrow that slides right on hover */}
+
                     <span className="text-white transition-transform duration-300 group-hover:translate-x-1">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        <BrandGlyph
-                            shape="step"
-                            color="pink"
-                            className="h-3 w-3"
-                        />
-                        {project.category}
                     </span>
                 </div>
             </div>
         </Link>
     );
 }
-
 
 export default function MoreProjects({ currentSlug }: { currentSlug: string }) {
     const containerRef = useRef(null);
@@ -143,7 +130,7 @@ export default function MoreProjects({ currentSlug }: { currentSlug: string }) {
                         <div
                             key={project.slug}
                             className={`border-b md:border-b-0 border-l border-border p-4 md:p-12.5
-              ${idx === featuredProjects.length - 1 ? "md:border-r border-r" : ""}`}
+                            ${idx === featuredProjects.length - 1 ? "md:border-r border-r" : ""}`}
                         >
                             <ProjectCard project={project} />
                         </div>
