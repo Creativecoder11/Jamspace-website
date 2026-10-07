@@ -253,7 +253,7 @@ export function AboutStoryBento() {
               {/* Video Thumbnail */}
               <div className="relative h-90 md:h-120 overflow-hidden">
                 <Image
-                  src="/images/video-bg-01.webp"
+                  src="/images/about-bento-thum.webp"
                   alt="Bedroom interior — behind the scenes of a Jam Space project"
                   fill
                   sizes="25vw"
@@ -327,21 +327,22 @@ export function AboutStoryBento() {
                     ×
                   </button>
 
-                  {/* Video */}
+                  {/* YouTube Video */}
                   <div
                     className="relative w-full max-w-5xl overflow-hidden rounded-xl"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <video
-                      src="/videos/jam-journey.mp4"
-                      controls
-                      autoPlay
-                      playsInline
-                      className="block max-h-[85vh] h-auto w-full object-contain"
+                    <iframe
+                      src="https://www.youtube.com/embed/x6nOpBIlUL4?autoplay=1&rel=0"
+                      title="Jam Space video"
+                      className="aspect-video w-full"
+                      allow="autoplay; encrypted-media; picture-in-picture"
+                      allowFullScreen
                     />
                   </div>
                 </div>
               )}
+
             </div>
           </div>
         </div>
