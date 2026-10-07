@@ -89,6 +89,26 @@ export interface BlogPost {
   excerpt: string;
   date: string;
   image: string;
+  heroImage?: string;
+
+  author: string;
+  readTime: string;
+  overview: string;
+  overviewImage: string;
+
+  mainContent: string;
+
+  bulletPoints: {
+    heading: string;
+    items: string[];
+  }[];
+
+  sideBySideSections: {
+    heading: string;
+    content: string;
+    image: string;
+    reverse?: boolean;
+  }[];
 }
 
 export interface StripImage {

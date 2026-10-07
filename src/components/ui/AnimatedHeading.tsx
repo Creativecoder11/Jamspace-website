@@ -1,11 +1,5 @@
 import type { ElementType } from "react";
 
-/**
- * Renders each string as its own overflow-hidden line with an inner `.line`
- * span, ready for a GSAP y-reveal timeline. Line breaks here are the
- * design's art-directed breaks (not runtime text-wrap detection) — every
- * multi-line heading in this design breaks at fixed, intentional points.
- */
 export function AnimatedHeading({
   lines,
   as = "h2",
