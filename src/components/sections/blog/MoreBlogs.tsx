@@ -43,7 +43,7 @@ export default function MoreBlogs({ currentSlug }: { currentSlug: string }) {
     return (
         <section ref={containerRef} className="w-full">
             {/* Header */}
-            <div className="w-full border-y border-border">
+            <div className="w-full border-y border-border py-4 md:py-0">
                 <div className="flex flex-col md:flex-row max-w-335 mx-auto items-stretch justify-between">
                     {/* Left */}
                     <div className="md:w-2/3 md:border-r border-border pb-4 md:py-8 px-4 md:px-0">

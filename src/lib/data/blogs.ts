@@ -10,7 +10,7 @@ export const blogs: BlogPost[] = [
     date: "July 12, 2026",
     image: "/images/blog-image-1.webp",
     heroImage: "/images/blog-image-1.webp",
-    author: "Jam Space Studio",
+    author: "Jam Space",
     readTime: "6 min read",
 
     overview:
@@ -61,7 +61,7 @@ export const blogs: BlogPost[] = [
     date: "July 12, 2026",
     image: "/images/blog-image-2.webp",
     heroImage: "/images/blog-image-2.webp",
-    author: "Jam Space Studio",
+    author: "Jam Space",
     readTime: "5 min read",
 
     overview:
@@ -110,7 +110,7 @@ export const blogs: BlogPost[] = [
     date: "July 12, 2026",
     image: "/images/blog-image-3.webp",
     heroImage: "/images/blog-image-3.webp",
-    author: "Jam Space Studio",
+    author: "Jam Space",
     readTime: "6 min read",
 
     overview:

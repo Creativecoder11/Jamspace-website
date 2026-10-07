@@ -6,7 +6,7 @@ export default function BlogHeroBanner({ post }: { post: BlogPost }) {
     return (
         <section className="w-full">
             <div className="">
-                <div className="w-full border-y border-border">
+                <div className="w-full border-y border-border py-4 md:py-0">
                     <div className="flex flex-col md:flex-row max-w-335 mx-auto items-stretch justify-between">
                         {/* Left Side: Title */}
                         <div className="md:w-2/3 md:border-r border-border pb-4 md:py-12 px-4 md:px-0">
