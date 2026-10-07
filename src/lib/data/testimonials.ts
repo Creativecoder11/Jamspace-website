@@ -8,30 +8,30 @@ import type { Testimonial } from "@/lib/types";
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "Working with Jam Space was an exceptional experience from start to finish. They understood our vision, communicated clearly throughout the project, and delivered a space that feels both elegant and highly functional. The attention to detail exceeded our expectations.",
-    name: "Sarah Ahmed",
-    role: "Homeowner, Dhaka",
+      "From the initial concept to the final details, the team was patient, responsive, and committed to getting everything right. They listened carefully to our feedback and worked through every revision with us, ultimately creating a home that reflects our vision and expectations.",
+    name: "Major Serajus Salekin",
+    role: "Homeowner, Jolshiri Abashan, Dhaka",
     image: "/images/testimonial-01.webp",
   },
   {
     quote:
-      "From the very first consultation, Jam Space made the entire renovation process feel effortless. Their team balanced our budget and timeline while never compromising on quality, and the final result completely transformed how our office feels to work in every day.",
-    name: "Tanvir Rahman",
-    role: "Business Owner, Dhaka",
-    image: "/images/about-strip-02.webp",
+      "The team understood our vision and brought it to life with thoughtful design and attention to detail. The result is a home that feels vibrant, comfortable, and truly personal to us.",
+    name: "Md. Abdus Sabur Khan",
+    role: "Homeowner, Jolshiri Abashan, Dhaka",
+    image: "/images/testimonial-02.webp",
   },
   {
     quote:
-      "Jam Space turned a rough concept into a home we genuinely love waking up in. The 3D visualizations made it so easy to approve every material and layout decision ahead of time, and there were absolutely no surprises once construction began.",
-    name: "Nusrat Jahan",
-    role: "Homeowner, Chittagong",
-    image: "/images/projects-thumb-01.webp",
+      "We wanted ELENI to feel elegant, warm, and rooted in the richness of our heritage while still feeling contemporary. The design team understood that vision beautifully and created a space where our collections feel elevated and every client feels welcomed.",
+    name: "Najmus Shakib Sunny",
+    role: "Owner, ELENI, Banani, Dhaka",
+    image: "/images/testimonial-03.webp",
   },
   {
     quote:
-      "What stood out most was how closely the team listened. Every recommendation felt tailored to how we actually live, not just what looked good in a photo. Two years later, the space still feels as fresh and functional as the day it was finished.",
-    name: "Imran Hossain",
-    role: "Homeowner, Dhaka",
-    image: "/images/about-strip-04.webp",
+      "The design captured exactly what we envisioned for Greenhub - a workspace that feels fresh, welcoming, and productive. Every detail was thoughtfully designed to create an environment where people enjoy coming to work.",
+    name: "Zarif F. Rahman",
+    role: "Owner, Greenhub Workspace, Dhanmondi, Dhaka",
+    image: "/images/testimonial-04.webp",
   },
 ];

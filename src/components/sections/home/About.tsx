@@ -4,10 +4,9 @@ import { useRef } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
-import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
-import { aboutMobileTexts, aboutStripImages, aboutTickerText } from "@/lib/data/about";
+import { aboutStripImages } from "@/lib/data/about";
 
 export function About() {
   const containerRef = useRef<HTMLElement>(null);
@@ -62,19 +61,6 @@ export function About() {
     });
     tickerTweens.current[i]?.pause();
   };
-
-  const mobileTrackRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    if (mobileTrackRef.current) {
-      gsap.to(mobileTrackRef.current, {
-        xPercent: -50,
-        duration: 20,
-        ease: "none",
-        repeat: -1,
-      });
-    }
-  });
 
 
   return (
@@ -153,12 +139,19 @@ export function About() {
                 }}
                 className="flex w-max h-20 justify-end items-end whitespace-nowrap"
               >
-                {[aboutTickerText, aboutTickerText].map((text, j) => (
+                {[item.tickerText, item.tickerText].map((texts, j) => (
                   <span
                     key={j}
-                    className="px-6 text-3xl font-normal uppercase tracking-wide text-white "
+                    className="px-6 text-3xl font-normal uppercase tracking-wide text-white"
                   >
-                    {text}
+                    {texts.map((text, index) => (
+                      <span key={index}>
+                        {index > 0 && (
+                          <span className="mx-4 text-4xl">•</span>
+                        )}
+                        {text}
+                      </span>
+                    ))}
                   </span>
                 ))}
               </div>
@@ -183,7 +176,6 @@ export function About() {
                 className="object-cover"
               />
 
-              {/* Overlay */}
               <div
                 className="absolute inset-0"
                 style={{
@@ -192,16 +184,15 @@ export function About() {
                 }}
               />
 
-              {/* Text */}
               <div className="absolute bottom-0 left-0 w-full p-4 text-white">
                 <div className="flex flex-col gap-1">
-                  {aboutMobileTexts.map((text, index) => (
+                  {item.tickerText.map((text, textIndex) => (
                     <div
-                      key={index}
+                      key={textIndex}
                       className="flex items-center gap-2"
                     >
-                      <span className="text-2xl leading-none mb-1">•</span>
-                      <p className="text-base font-normal uppercase leading-0 tracking-wide">
+                      <span className="mb-1 text-2xl leading-none">•</span>
+                      <p className="text-base font-normal uppercase leading-tight tracking-wide">
                         {text}
                       </p>
                     </div>

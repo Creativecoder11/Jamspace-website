@@ -71,7 +71,7 @@ export function VideoShowcase() {
         className="absolute inset-0 mx-auto w-full origin-center overflow-hidden"
       >
         <Image
-          src="/images/video-bg-01.webp"
+          src="/images/video-bg.webp"
           alt="Bedroom interior — behind the scenes of a Jam Space project"
           fill
           sizes="100vw"
@@ -79,14 +79,14 @@ export function VideoShowcase() {
         />
         <div className="absolute inset-0 bg-black/35" />
 
-        <div className="relative flex h-full flex-col justify-between p-4 text-white md:p-16">
+        {/* <div className="relative flex h-full flex-col justify-between p-4 text-white md:p-16">
           <h2 className="text-3xl font-normal md:text-heading">
             The Jam Journey
           </h2>
           <h2 className="self-end text-3xl font-normal md:text-heading">
             Behind Every Space.
           </h2>
-        </div>
+        </div> */}
 
         <button
           type="button"

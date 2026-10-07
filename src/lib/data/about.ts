@@ -1,15 +1,57 @@
 import type { StripImage } from "@/lib/types";
 
 export const aboutStripImages: StripImage[] = [
-  { image: "/images/bedroom.webp", alt: "Bedroom interior" },
-  { image: "/images/drawing-room.webp", alt: "Reading nook with artwork" },
-  { image: "/images/kitchen.webp", alt: "Dining room" },
-  { image: "/images/office.webp", alt: "Kitchen sink and window" },
-  { image: "/images/commercial.webp", alt: "Kitchen stove detail" },
+  {
+    image: "/images/bedroom.webp",
+    alt: "Bedroom interior",
+    tickerText: [
+      "RESIDENTIAL DESIGN",
+      "BEDROOM",
+      "CONTEMPORARY",
+      "LUXURY LIVING",
+    ],
+  },
+  {
+    image: "/images/drawing-room.webp",
+    alt: "Reading nook with artwork",
+    tickerText: [
+      "INTERIOR DESIGN",
+      "MODERN LIVING",
+      "SOFT NEUTRALS",
+      "TIMELESS ELEGANCE",
+    ],
+  },
+  {
+    image: "/images/kitchen.webp",
+    alt: "Dining room",
+    tickerText: [
+      "KITCHEN INTERIOR",
+      "CONTEMPORARY LUXURY",
+      "FUNCTIONAL DESIGN",
+      "MATERIALITY",
+    ],
+  },
+  {
+    image: "/images/office.webp",
+    alt: "Kitchen sink and window",
+    tickerText: [
+      "OFFICE INTERIOR",
+      "BOLD MATERIALS",
+      "CREATIVE SPACES",
+      "MODERN WORKPLACE",
+    ],
+  },
+  {
+    image: "/images/commercial.webp",
+    alt: "Kitchen stove detail",
+    tickerText: [
+      "RETAIL SPACE",
+      "DISPLAY ARCHITECTURE",
+      "ORGANIC FORMS",
+      "AMBIENT MOOD",
+    ],
+  },
 ];
-
-export const aboutTickerText =
-  "Residential Design . Bedroom . Residential Design . Bedroom . Residential Design";
 
 export const aboutMobileTexts = [
   "Residential Design",

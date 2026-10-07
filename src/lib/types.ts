@@ -111,10 +111,11 @@ export interface BlogPost {
   }[];
 }
 
-export interface StripImage {
+export type StripImage = {
   image: string;
   alt: string;
-}
+  tickerText: string[];
+};
 
 export interface PricingPackage {
   name: string;
