@@ -80,7 +80,7 @@ export function Projects() {
         ScrollTrigger.create({
           trigger: pinRef.current,
           start: "top top",
-          end: `+=${projects.length * 100}%`,
+          end: `+=${projects.length * 60}%`,
           pin: true,
           scrub: true,
           anticipatePin: 1,
@@ -89,10 +89,11 @@ export function Projects() {
               projects.length - 1,
               Math.floor(self.progress * projects.length),
             );
+
             setActiveIndex(idx);
             setShowKeepScrolling(self.progress < 0.03);
           },
-        });
+        })
       });
     },
     { scope: containerRef },
@@ -182,9 +183,8 @@ export function Projects() {
         ))}
 
         <div
-          className={`absolute left-6 top-1/2 hidden -translate-y-1/2 text-sm text-white transition-opacity duration-500 md:block md:left-16 ${
-            showKeepScrolling ? "opacity-100" : "opacity-0"
-          }`}
+          className={`absolute left-6 top-1/2 hidden -translate-y-1/2 text-sm text-white transition-opacity duration-500 md:block md:left-16 ${showKeepScrolling ? "opacity-100" : "opacity-0"
+            }`}
         >
           Keep Scrolling ↓
         </div>
@@ -243,7 +243,7 @@ export function Projects() {
               <a
                 href={`/projects/${project.slug}`}
                 target="_blank"
-                className="group inline-flex items-center gap-2 rounded-xl md:px-6 px-2 md:py-3 py-2 text-sm font-normal tracking-wide transition-colors duration-300 bg-accent text-accent-foreground font-medium hover:bg-foreground"
+                className="group inline-flex items-center gap-2 rounded-xl md:px-6 px-2 md:py-3 py-2 text-sm tracking-wide transition-colors duration-300 bg-accent text-accent-foreground font-medium hover:bg-foreground"
               >
                 See Details
                 <svg

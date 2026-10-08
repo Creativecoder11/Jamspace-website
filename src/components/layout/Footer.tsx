@@ -23,46 +23,6 @@ const ctaStripImages = [
   "/images/cta-strip-04.webp",
 ];
 
-const glyphShapes = {
-  chevron: {
-    viewBox: "53.4797 0 22.8595 22.8595",
-    d: "M76.3392 22.8595H53.4797V0L64.9088 11.429L76.3392 0V22.8595Z",
-  },
-  triangle: {
-    viewBox: "26.7537 0 22.8594 22.8595",
-    d: "M49.6131 22.8595H26.7537L38.1827 0L49.6131 22.8595Z",
-  },
-  step: {
-    viewBox: "0 0 60 60",
-    d: "M60 0L60 60L0 60L0 29.9982L30.0036 29.9982L30.0036 0L60 0Z",
-  },
-} as const;
-
-function FooterGlyph({
-  shape,
-  className = "",
-}: {
-  shape: keyof typeof glyphShapes;
-  className?: string;
-}) {
-  const { viewBox, d } = glyphShapes[shape];
-
-  return (
-    <svg
-      viewBox={viewBox}
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d={d}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-      />
-    </svg>
-  );
-}
-
 export function Footer() {
   const containerRef = useRef<HTMLElement>(null);
   const ctaTrackRef = useRef<HTMLDivElement>(null);
@@ -102,15 +62,12 @@ export function Footer() {
           });
         }
 
-        gsap.set(
-          footer.querySelectorAll(".footer-col"),
-          {
-            clearProps: "all",
-            opacity: 1,
-            y: 0,
-            scale: 1,
-          }
-        );
+        gsap.set(footer.querySelectorAll(".footer-col"), {
+          clearProps: "all",
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
 
         return;
       }
@@ -118,13 +75,32 @@ export function Footer() {
       /*
        * Infinite CTA image strip
        */
+      let infiniteTween: gsap.core.Tween | undefined;
+
       if (ctaTrack) {
-        gsap.to(ctaTrack, {
-          xPercent: -50,
-          duration: 30,
-          repeat: -1,
-          ease: "none",
-        });
+        const firstGroup = ctaTrack.children[0] as HTMLElement;
+
+        if (firstGroup) {
+          const distance = firstGroup.offsetWidth;
+
+          if (distance > 0) {
+            const SPEED = 45; // px/sec
+
+            infiniteTween = gsap.to(ctaTrack, {
+              x: -distance,
+              duration: distance / SPEED,
+              ease: "none",
+              repeat: -1,
+              modifiers: {
+                x: (value) => {
+                  const x = parseFloat(value);
+
+                  return `${gsap.utils.wrap(-distance, 0, x)}px`;
+                },
+              },
+            });
+          }
+        }
       }
 
       /*
@@ -198,6 +174,7 @@ export function Footer() {
       ScrollTrigger.refresh();
 
       return () => {
+        infiniteTween?.kill();
         gsap.killTweensOf(ctaTrack);
       };
     },
@@ -221,25 +198,31 @@ export function Footer() {
           {/* Moving image track */}
           <div
             ref={ctaTrackRef}
-            className="flex h-full w-max items-center gap-6"
+            className="flex h-full w-max items-center"
           >
-            {[...ctaStripImages, ...ctaStripImages].map(
-              (src, i) => (
-                <div
-                  key={`${src}-${i}`}
-                  className={`relative w-75 shrink-0 md:w-105 ${i % 2 === 0 ? "h-full" : "h-75"
-                    }`}
-                >
-                  <Image
-                    src={src}
-                    alt=""
-                    fill
-                    sizes="420px"
-                    className="object-cover"
-                  />
-                </div>
-              )
-            )}
+            {[0, 1].map((group) => (
+              <div
+                key={group}
+                className="flex h-full shrink-0 items-center gap-6 pr-6"
+                aria-hidden={group === 1}
+              >
+                {ctaStripImages.map((src, i) => (
+                  <div
+                    key={`${group}-${src}-${i}`}
+                    className={`relative w-75 shrink-0 md:w-105 ${i % 2 === 0 ? "h-full" : "h-75"
+                      }`}
+                  >
+                    <Image
+                      src={src}
+                      alt=""
+                      fill
+                      sizes="420px"
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
 
           {/* CTA Panel */}
