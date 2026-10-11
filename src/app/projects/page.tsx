@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProjectsGrid } from "@/components/sections/projects/ProjectsGrid";
 
@@ -15,7 +16,10 @@ export default function ProjectsPage() {
         eyebrow="Projects"
         image="/images/projects-thumb-01.webp"
       />
-      <ProjectsGrid />
+
+      <Suspense fallback={<div className="min-h-[400px]" />}>
+        <ProjectsGrid />
+      </Suspense>
     </>
   );
 }
