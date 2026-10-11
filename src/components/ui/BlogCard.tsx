@@ -11,6 +11,7 @@ export function BlogCard({
 }) {
   return (
     <Link
+      target="_blank"
       href={`/blog/${post.slug}`}
       className="blog-card group border border-border relative flex md:h-[420px] flex-col justify-end overflow-hidden md:py-12.5 py-10 p-4 md:p-6"
     >

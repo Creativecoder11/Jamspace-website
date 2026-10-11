@@ -13,6 +13,7 @@ import { projects } from "@/lib/data/projects";
 import type { Project } from "@/lib/types";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function PinIcon() {
   return (
@@ -77,11 +78,16 @@ function ProjectCard({ project }: { project: Project }) {
 
 export function ProjectsGrid() {
   const containerRef = useRef<HTMLElement>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
+  const selectedCategory = searchParams.get("category");
+
   const categories = Array.from(new Set(projects.map((p) => p.category)));
-  const filtered = activeCategory
-    ? projects.filter((p) => p.category === activeCategory)
+  const filtered = selectedCategory
+    ? projects.filter((p) => p.category === selectedCategory)
     : projects;
 
   useGSAP(
@@ -191,35 +197,27 @@ export function ProjectsGrid() {
             <nav className="mt-4 flex flex-col gap-1 md:gap-3">
               <button
                 type="button"
-                onClick={() => setActiveCategory(null)}
-                aria-pressed={activeCategory === null}
-                className={filterClass(activeCategory === null)}
+                onClick={() => router.push("/projects")}
+                aria-pressed={!selectedCategory}
+                className={filterClass(!selectedCategory)}
               >
                 All Projects
-                {activeCategory === null && <span className="ml-1.5">×</span>}
+                {!selectedCategory && <span className="ml-1.5">×</span>}
               </button>
 
               {categories.map((category) => (
                 <button
                   key={category}
                   type="button"
-                  onClick={() => setActiveCategory(category)}
-                  aria-pressed={activeCategory === category}
-                  className={filterClass(activeCategory === category)}
+                  onClick={() =>
+                    router.push(`/projects?category=${encodeURIComponent(category)}`)
+                  }
+                  aria-pressed={selectedCategory === category}
+                  className={filterClass(selectedCategory === category)}
                 >
                   {category}
-                  {activeCategory === category && (
-                    <span
-                      role="button"
-                      aria-label="Clear filter"
-                      className="ml-1.5"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveCategory(null);
-                      }}
-                    >
-                      ×
-                    </span>
+                  {selectedCategory === category && (
+                    <span className="ml-1.5">×</span>
                   )}
                 </button>
               ))}

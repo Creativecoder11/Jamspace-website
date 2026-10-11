@@ -79,7 +79,7 @@ export function ServicesSection() {
 
       <Container className="mt-5 md:mt-10">
         {services.map((service, index) => (
-          <div key={service.slug}>
+          <div key={service.index}>
             <div className="group relative min-h-20 overflow-hidden p-4 md:p-8">
               {/* Existing hover background effect */}
               <div
@@ -110,11 +110,19 @@ export function ServicesSection() {
 
                 <div className="shrink-0">
                   <Link
-                    href={`/services/${service.slug}`}
+                    target="_blank"
+                    href={
+                      service.slug === "residential-projects"
+                        ? "/projects?category=Residential%20Design"
+                        : service.slug === "commercial-projects"
+                          ? "/projects?category=Commercial%20Design"
+                          : "/contact"
+                    }
                     aria-label={`Learn more about ${service.title}`}
                     className="inline-flex items-center gap-1 whitespace-nowrap text-sm font-normal text-pink-500 transition-colors duration-300 group-hover:text-white md:gap-2 md:text-lg"
                   >
-                    <span className="hidden sm:inline">Learn More</span> <span className="inline sm:hidden">Details</span>
+                    <span className="hidden sm:inline">Learn More</span>
+                    <span className="inline sm:hidden">Details</span>
                     <ArrowIcon className="size-5 md:size-6" />
                   </Link>
                 </div>
