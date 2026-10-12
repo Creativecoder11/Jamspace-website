@@ -14,7 +14,7 @@ export default function ContactPage() {
       <PageHero eyebrow="Contact" image="/images/about-strip-03.webp" />
       <ContactForm />
 
-      <div id="faq" className="scroll-mt-0">
+      <div id="faq" className="scroll-mt-8 md:scroll-mt-0">
         <Faq />
       </div>
     </>

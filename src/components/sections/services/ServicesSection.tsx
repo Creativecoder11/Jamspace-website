@@ -118,11 +118,27 @@ export function ServicesSection() {
                           ? "/projects?category=Commercial%20Design"
                           : "/contact"
                     }
-                    aria-label={`Learn more about ${service.title}`}
+                    aria-label={`${service.slug === "residential-projects" ||
+                        service.slug === "commercial-projects"
+                        ? "Learn more about"
+                        : "Contact us about"
+                      } ${service.title}`}
                     className="inline-flex items-center gap-1 whitespace-nowrap text-sm font-normal text-pink-500 transition-colors duration-300 group-hover:text-white md:gap-2 md:text-lg"
                   >
-                    <span className="hidden sm:inline">Learn More</span>
-                    <span className="inline sm:hidden">Details</span>
+                    <span className="hidden sm:inline">
+                      {service.slug === "residential-projects" ||
+                        service.slug === "commercial-projects"
+                        ? "Learn More"
+                        : "Contact Us"}
+                    </span>
+
+                    <span className="inline sm:hidden">
+                      {service.slug === "residential-projects" ||
+                        service.slug === "commercial-projects"
+                        ? "Details"
+                        : "Contact"}
+                    </span>
+
                     <ArrowIcon className="size-5 md:size-6" />
                   </Link>
                 </div>

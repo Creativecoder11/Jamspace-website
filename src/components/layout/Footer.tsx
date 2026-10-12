@@ -375,13 +375,13 @@ export function Footer() {
           </div>
 
           {/* Footer icon - mobile */}
-          <div className="flex w-full items-start justify-end border-b border-t px-4 py-8 text-border md:hidden">
+          <div className="flex w-full items-center justify-center border-b border-t px-4 py-8 text-border md:hidden">
             <Image
               src="/jam-footer-icon.svg"
               alt=""
               width={24}
               height={24}
-              className="w-auto object-contain"
+              className="h-full w-full object-contain"
             />
           </div>
 

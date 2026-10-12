@@ -1,11 +1,5 @@
 import type { Service } from "@/lib/types";
 
-/**
- * Only "Residential Design" has full open-panel content in the source
- * design (heading/description/image/sub-services). The other three are
- * real service names from the mockup but their expanded content is a
- * placeholder until real copy/photos are supplied for those panels.
- */
 export const services: Service[] = [
   {
     index: "01",
