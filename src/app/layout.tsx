@@ -4,6 +4,7 @@ import { SmoothScrollProvider } from "@/lib/lenis";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnimatedFavicon } from "@/components/ui/AnimatedFavicon";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 // import { Preloader } from "@/components/ui/Preloader";
 
@@ -43,6 +44,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
   return (
     <html lang="en" className={helveticaNow.variable}>
       <body className="min-h-screen font-sans antialiased">
@@ -55,6 +58,8 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </SmoothScrollProvider>
+
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );
