@@ -48,7 +48,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={helveticaNow.variable}>
-      <body className="min-h-screen font-sans antialiased">
+      <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
         <AnimatedFavicon />
 
         {/* <Preloader /> */}
