@@ -176,11 +176,11 @@ export function AboutStoryBento() {
           <div className="w-full md:w-[50%]">
             <div className="relative h-90 md:h-120 overflow-hidden">
               <Image
-                src="/images/hero-01.webp"
+                src="/images/hero-image-01.webp"
                 alt="Jam Space Interior"
-                width={240}
-                height={240}
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
               />
 
               <div className="absolute bottom-4 left-4 right-4">

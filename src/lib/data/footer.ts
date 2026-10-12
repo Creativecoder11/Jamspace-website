@@ -23,7 +23,7 @@ export const footerColumns: FooterColumn[] = [
     title: "Resources",
     links: [
       { label: "Download Brochure", href: "/brochure.pdf" },
-      { label: "FAQs", href: "/faqs" },
+      { label: "FAQs", href: "/contact#faq" },
       { label: "Privacy Policy", href: "/privacy-policy" },
       { label: "Terms & Conditions", href: "/terms-and-conditions" },
     ],

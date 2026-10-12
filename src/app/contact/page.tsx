@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Contact"
-        image="/images/about-strip-03.webp"
-      />
+      <PageHero eyebrow="Contact" image="/images/about-strip-03.webp" />
       <ContactForm />
-      <Faq />
+
+      <div id="faq" className="scroll-mt-0">
+        <Faq />
+      </div>
     </>
   );
 }

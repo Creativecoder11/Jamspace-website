@@ -25,11 +25,22 @@ export function SmoothScrollProvider({
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (window.location.hash) {
+      const hash = window.location.hash.replace("#", "");
+      const element = document.getElementById(hash);
 
-    lenisRef.current?.lenis?.scrollTo(0, {
-      immediate: true,
-    });
+      if (element) {
+        const timeoutId = setTimeout(() => {
+          lenisRef.current?.lenis?.scrollTo(element, {
+            offset: 0,
+          });
+        }, 100);
+        return () => clearTimeout(timeoutId);
+      }
+    }
+
+    window.scrollTo(0, 0);
+    lenisRef.current?.lenis?.scrollTo(0, { immediate: true });
   }, [pathname]);
 
   return (

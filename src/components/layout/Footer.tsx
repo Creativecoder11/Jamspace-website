@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/animations/gsap";
 
@@ -24,10 +25,54 @@ const ctaStripImages = [
 ];
 
 export function Footer() {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const containerRef = useRef<HTMLElement>(null);
   const ctaTrackRef = useRef<HTMLDivElement>(null);
   const ctaPanelRef = useRef<HTMLDivElement>(null);
   const ctaButtonRef = useRef<HTMLDivElement>(null);
+
+  // Handle same-page hash links manually.
+  const handleHashClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    const hashIndex = href.indexOf("#");
+
+    // Normal links work as usual.
+    if (hashIndex === -1) return;
+
+    // Always prevent default to stop Next.js from duplicating the hash
+    e.preventDefault();
+
+    const targetPath = href.substring(0, hashIndex) || pathname;
+    const hash = href.substring(hashIndex + 1);
+
+    // If navigating to a different page, push route manually and let Lenis handle the scroll
+    if (pathname !== targetPath) {
+      router.push(href, { scroll: false });
+      return;
+    }
+
+    // Same page navigation
+    const element = document.getElementById(hash);
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches
+          ? "auto"
+          : "smooth",
+        block: "start",
+      });
+    }
+
+    // Keep a single clean hash in the URL.
+    const cleanUrl = `${window.location.pathname}${window.location.search}#${hash}`;
+    window.history.replaceState(null, "", cleanUrl);
+  };
 
   useGSAP(
     () => {
@@ -39,9 +84,7 @@ export function Footer() {
       const ctaButton = ctaButtonRef.current;
       const ctaTrack = ctaTrackRef.current;
 
-      /*
-       * Respect reduced motion preferences.
-       */
+      // Respect reduced motion preferences.
       if (
         window.matchMedia("(prefers-reduced-motion: reduce)").matches
       ) {
@@ -72,9 +115,7 @@ export function Footer() {
         return;
       }
 
-      /*
-       * Infinite CTA image strip
-       */
+      // Infinite CTA image strip.
       let infiniteTween: gsap.core.Tween | undefined;
 
       if (ctaTrack) {
@@ -84,7 +125,7 @@ export function Footer() {
           const distance = firstGroup.offsetWidth;
 
           if (distance > 0) {
-            const SPEED = 45; // px/sec
+            const SPEED = 45;
 
             infiniteTween = gsap.to(ctaTrack, {
               x: -distance,
@@ -94,7 +135,6 @@ export function Footer() {
               modifiers: {
                 x: (value) => {
                   const x = parseFloat(value);
-
                   return `${gsap.utils.wrap(-distance, 0, x)}px`;
                 },
               },
@@ -103,13 +143,16 @@ export function Footer() {
         }
       }
 
-      /*
-       * CTA panel animation
-       */
+      // CTA panel animation.
       if (ctaPanel) {
+        gsap.set(ctaPanel, {
+          opacity: 1,
+          scale: 1,
+        });
+
         const ctaTimeline = gsap.timeline({
           scrollTrigger: {
-            trigger: footer,
+            trigger: ctaPanel,
             start: "top 85%",
             toggleActions: "play none none reverse",
           },
@@ -126,7 +169,8 @@ export function Footer() {
             opacity: 1,
             duration: 0.8,
             ease: "power3.out",
-          }
+            immediateRender: false,
+          },
         );
 
         if (ctaButton) {
@@ -138,14 +182,12 @@ export function Footer() {
               duration: 0.45,
               ease: "power3.out",
             },
-            "<+=0.05"
+            "<+=0.05",
           );
         }
       }
 
-      /*
-       * Footer columns animation
-       */
+      // Footer columns animation.
       const footerColumns =
         footer.querySelectorAll<HTMLElement>(".footer-col");
 
@@ -167,7 +209,7 @@ export function Footer() {
               toggleActions: "play none none none",
               once: true,
             },
-          }
+          },
         );
       });
 
@@ -180,14 +222,11 @@ export function Footer() {
     },
     {
       scope: containerRef,
-    }
+    },
   );
 
   return (
-    <footer
-      ref={containerRef}
-      className="bg-background"
-    >
+    <footer ref={containerRef} className="bg-background">
       {/* CTA */}
       <div className="pb-13 pt-13 md:pb-25 md:pt-25">
         <p className="mb-8 text-center text-sm text-muted">
@@ -232,11 +271,7 @@ export function Footer() {
           >
             <AnimatedHeading
               as="h2"
-              lines={[
-                "Let's Design",
-                "Your",
-                "Dream Space.",
-              ]}
+              lines={["Let's Design", "Your", "Dream Space."]}
               className="text-3xl font-medium leading-tight text-white md:text-subheading"
             />
 
@@ -354,10 +389,7 @@ export function Footer() {
           <div className="py-13 md:w-[55%] md:pl-8">
             <div className="mx-4 grid grid-cols-2 space-y-8 md:mx-0 md:grid-cols-4">
               {footerColumns.map((column) => (
-                <div
-                  key={column.title}
-                  className="footer-col"
-                >
+                <div key={column.title} className="footer-col">
                   <h3 className="text-base font-medium">
                     {column.title}
                   </h3>
@@ -367,6 +399,9 @@ export function Footer() {
                       <li key={link.href}>
                         <Link
                           href={link.href}
+                          onClick={(e) =>
+                            handleHashClick(e, link.href)
+                          }
                           className="hover:text-accent"
                         >
                           {link.label}
@@ -384,17 +419,12 @@ export function Footer() {
                 </h3>
 
                 <ul className="mt-3 space-y-1.5 text-sm text-muted md:mt-4 md:space-y-3">
-                  <li>
-                    Address: {contactInfo.address}
-                  </li>
+                  <li>Address: {contactInfo.address}</li>
 
                   <li>
                     Phone:{" "}
                     <a
-                      href={`tel:${contactInfo.phone.replace(
-                        /\s+/g,
-                        ""
-                      )}`}
+                      href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
                       className="hover:text-accent"
                     >
                       {contactInfo.phone}
@@ -416,9 +446,7 @@ export function Footer() {
 
             {/* Newsletter */}
             <div className="mx-4 mt-6 w-full pr-8 md:mx-0 md:mt-13 md:pr-0">
-              <h3 className="text-lg font-medium">
-                Stay informed
-              </h3>
+              <h3 className="text-lg font-medium">Stay informed</h3>
 
               <p className="mt-2 w-full text-sm text-muted">
                 Stay inspired with the latest design trends,
@@ -439,8 +467,8 @@ export function Footer() {
       <div className="border-t border-border">
         <Container className="footer-col mx-auto flex w-full max-w-335 flex-col gap-2 px-4 py-3 text-xs text-muted md:flex-row md:items-center md:justify-between md:px-0 md:py-6 md:text-sm">
           <p>
-            &copy; {new Date().getFullYear()} Jam Space, All
-            Rights Reserved
+            &copy; {new Date().getFullYear()} Jam Space, All Rights
+            Reserved
           </p>
 
           <p>

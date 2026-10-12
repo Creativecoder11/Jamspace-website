@@ -123,7 +123,7 @@ export function Services() {
           const isOpen = index === openIndex;
           const initiallyOpen = index === 0;
           return (
-            <div key={service.slug}>
+            <div key={service.index}>
               <div className="relative min-h-13 md:min-h-25">
                 <button
                   type="button"
