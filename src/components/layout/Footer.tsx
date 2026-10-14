@@ -18,10 +18,14 @@ import { footerColumns, contactInfo } from "@/lib/data/footer";
 import Image from "next/image";
 
 const ctaStripImages = [
-  "/images/cta-strip-01.webp",
-  "/images/cta-strip-02.webp",
-  "/images/cta-strip-03.webp",
-  "/images/cta-strip-04.webp",
+  "/images/cta-strip-1.webp",
+  "/images/cta-strip-2.webp",
+  "/images/cta-strip-3.webp",
+  "/images/cta-strip-4.webp",
+  "/images/cta-strip-5.webp",
+  "/images/cta-strip-6.webp",
+  "/images/cta-strip-7.webp",
+  "/images/cta-strip-8.webp",
 ];
 
 export function Footer() {
@@ -32,6 +36,8 @@ export function Footer() {
   const ctaTrackRef = useRef<HTMLDivElement>(null);
   const ctaPanelRef = useRef<HTMLDivElement>(null);
   const ctaButtonRef = useRef<HTMLDivElement>(null);
+
+  const MARQUEE_GROUPS = 4;
 
   // Handle same-page hash links manually.
   const handleHashClick = (
@@ -120,26 +126,19 @@ export function Footer() {
 
       if (ctaTrack) {
         const firstGroup = ctaTrack.children[0] as HTMLElement;
+        const groupWidth = firstGroup?.offsetWidth ?? 0;
 
-        if (firstGroup) {
-          const distance = firstGroup.offsetWidth;
+        if (groupWidth > 0) {
+          const SPEED = 45; // px per second
 
-          if (distance > 0) {
-            const SPEED = 45;
+          gsap.set(ctaTrack, { xPercent: 0 });
 
-            infiniteTween = gsap.to(ctaTrack, {
-              x: -distance,
-              duration: distance / SPEED,
-              ease: "none",
-              repeat: -1,
-              modifiers: {
-                x: (value) => {
-                  const x = parseFloat(value);
-                  return `${gsap.utils.wrap(-distance, 0, x)}px`;
-                },
-              },
-            });
-          }
+          infiniteTween = gsap.to(ctaTrack, {
+            xPercent: -(100 / MARQUEE_GROUPS), // exactly one group -> seamless loop
+            duration: groupWidth / SPEED,
+            ease: "none",
+            repeat: -1,
+          });
         }
       }
 
@@ -237,13 +236,13 @@ export function Footer() {
           {/* Moving image track */}
           <div
             ref={ctaTrackRef}
-            className="flex h-full w-max items-center"
+            className="flex h-full w-max items-center will-change-transform"
           >
-            {[0, 1].map((group) => (
+            {Array.from({ length: MARQUEE_GROUPS }).map((_, group) => (
               <div
                 key={group}
                 className="flex h-full shrink-0 items-center gap-6 pr-6"
-                aria-hidden={group === 1}
+                aria-hidden={group > 0}
               >
                 {ctaStripImages.map((src, i) => (
                   <div
@@ -256,6 +255,7 @@ export function Footer() {
                       alt=""
                       fill
                       sizes="420px"
+                      loading="eager"
                       className="object-cover"
                     />
                   </div>
