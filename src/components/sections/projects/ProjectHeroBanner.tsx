@@ -19,7 +19,7 @@ export default function ProjectHeroBanner({ project }: { project: Project }) {
                     <div className="md:w-1/3 border-border md:pl-8 md:py-8 px-4 md:px-0">
                         <p className="text-muted">{project.heroDescription}</p>
                         <div className="mt-3 md:mt-6">
-                            <MagneticButton><Button href="/about">Start a Project</Button></MagneticButton>
+                            <MagneticButton><Button href="/contact">Start a Project</Button></MagneticButton>
                         </div>
                     </div>
                 </div>
