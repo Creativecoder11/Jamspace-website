@@ -14,6 +14,7 @@ import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 
 import { footerColumns, contactInfo } from "@/lib/data/footer";
+import { trackConsultationCTAClick, trackPhoneClick } from "@/lib/analytics";
 
 import Image from "next/image";
 
@@ -266,7 +267,7 @@ export function Footer() {
 
           {/* CTA Panel */}
           <div
-            ref={ctaPanelRef}
+            // ref={ctaPanelRef}
             className="absolute left-1/2 top-1/2 z-10 flex h-full w-3/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 border-l-24 border-r-24 border-[#F7F6F1] bg-accent p-4 text-center md:aspect-4/5 md:h-full md:w-100"
           >
             <AnimatedHeading
@@ -281,8 +282,9 @@ export function Footer() {
                   href="/contact"
                   variant="inverse"
                   className="font-medium"
+                  onClick={() => trackConsultationCTAClick("footer_banner")}
                 >
-                  Contact Us Now
+                  Let&apos;s Discuss Your Project
                 </Button>
               </MagneticButton>
             </div>
@@ -464,8 +466,8 @@ export function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="border-t border-border">
-        <Container className="footer-col mx-auto flex w-full max-w-335 flex-col gap-2 px-4 py-3 text-xs text-muted md:flex-row md:items-center md:justify-between md:px-0 md:py-6 md:text-sm">
+      <div className="border-t border-border text-black ">
+        <Container className="footer-col  mx-auto flex w-full max-w-335 flex-col gap-2 px-4 py-3 text-xs text-muted md:flex-row md:items-center md:justify-between md:px-0 md:py-6 md:text-sm">
           <p>
             &copy; {new Date().getFullYear()} Jam Space, All Rights
             Reserved

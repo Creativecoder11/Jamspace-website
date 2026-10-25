@@ -9,6 +9,7 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { projects } from "@/lib/data/projects";
 import Link from "next/link";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 const heroProjects = projects.filter((p) => p.hero);
 const heroSlideCount = heroProjects.length;
@@ -107,10 +108,18 @@ export function Hero() {
         <div className="w-full md:border-t border-white/40">
           <div className="flex flex-col md:flex-row w-full max-w-335 mx-auto gap-10 items-start md:items-end justify-between">
             <div className="md:pb-10 px-4 md:px-0">
-              <AnimatedHeading as="h1" lines={["Designed", "Beyond Walls."]} className="text-[3rem] leading-[120%] font-normal md:leading-24 text-white md:text-hero" />
+              <AnimatedHeading as="h1" lines={["A Space", "of Your Own."]} className="text-[3rem] leading-[120%] font-normal md:leading-24 text-white md:text-hero" />
               <p className="hero-subcopy text-base mt-6 max-w-md text-white/85">Every detail is carefully considered to create interiors that reflect your personality while delivering timeless quality.</p>
               <div className="hero-cta mt-4 md:mt-8">
-                <MagneticButton><Button href="/contact" variant="light">Book a Consultant</Button></MagneticButton>
+                <MagneticButton>
+                  <Button
+                    href="/contact"
+                    variant="light"
+                    onClick={() => trackConsultationCTAClick("hero_home")}
+                  >
+                    Let&apos;s Discuss Your Project
+                  </Button>
+                </MagneticButton>
               </div>
             </div>
 
