@@ -1,15 +1,20 @@
 "use client";
 
-import { useRef, useState, useEffect, type ReactNode } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
 
-import { Container } from "@/components/ui/Container";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Button } from "@/components/ui/Button";
 import { contactInfo } from "@/lib/data/footer";
-import { pricingPackages } from "@/lib/data/pricing";
+import { getAttribution } from "@/lib/attribution";
+import {
+  trackContactFormStart,
+  trackProjectEnquirySuccess,
+  trackProjectEnquiryError,
+  trackWhatsAppClick,
+  trackPhoneClick,
+} from "@/lib/analytics";
 
 /* CUSTOM TOAST COMPONENT */
 type ToastType = "success" | "error";
@@ -199,6 +204,26 @@ function PhoneGlyph() {
   );
 }
 
+function WhatsAppGlyph() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function ChevronDown() {
   return (
     <svg
@@ -220,68 +245,16 @@ function ChevronDown() {
   );
 }
 
-/* DATA & VALIDATION */
-const contactItems = [
-  {
-    label: "Visit Us",
-    value: contactInfo.address,
-    icon: <PinGlyph />,
-    href: undefined,
-  },
-  {
-    label: "Email",
-    value: contactInfo.email,
-    icon: <EnvelopeGlyph />,
-    href: `mailto:${contactInfo.email}`,
-  },
-  {
-    label: "Call Us",
-    value: contactInfo.phone,
-    icon: <PhoneGlyph />,
-    href: `tel:${contactInfo.phone.replace(/\s+/g, "")}`,
-  },
-];
-
-// Accepts ANY valid domain (gmail.com, jamroll.xyz, company.com.bd, etc.)
-const AUTHENTIC_EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-// Bangladesh phone: +880, 00880, 0, or nothing, followed by 1[3-9] and 8 digits
-const BD_PHONE_REGEX = /^(?:\+880|00880|0)?1[3-9]\d{8}$/;
-
-function validateEmail(value: string): true | string {
-  if (!value) return "Email is required";
-  if (!AUTHENTIC_EMAIL_REGEX.test(value)) {
-    return "Please enter a valid email (e.g., name@gmail.com or name@company.xyz)";
-  }
-  return true;
-}
-
-function validatePhone(value: string): true | string {
-  if (!value) return "Phone number is required";
-  const cleaned = value.replace(/[\s-]/g, "");
-  if (!BD_PHONE_REGEX.test(cleaned)) {
-    return "Enter a valid BD number (e.g., +8801XXXXXXXXX or 01XXXXXXXXX)";
-  }
-  return true;
-}
-
-/* TYPES */
-export type ContactFormData = {
-  fullName: string;
-  email: string;
-  phone: string;
-  projectType: string;
-  location: string;
-  package: string;
-  message: string;
-  agreeTerms: boolean;
-};
-
-/* UI HELPERS */
-function FieldLabel({ children, error }: { children: ReactNode; error?: boolean }) {
+function FieldLabel({
+  children,
+  required = true,
+}: {
+  children: ReactNode;
+  required?: boolean;
+}) {
   return (
-    <label className={`block text-sm font-medium ${error ? "text-red-500" : "text-foreground"}`}>
-      {children} <span className="text-accent">*</span>
+    <label className="block text-sm font-medium text-foreground">
+      {children} {required && <span className="text-accent">*</span>}
     </label>
   );
 }
@@ -293,58 +266,37 @@ function ErrorMessage({ message }: { message?: string }) {
 
 const inputClass =
   "mt-2 w-full border-b border-border bg-transparent pb-2 text-sm text-foreground placeholder:text-muted/70 focus:border-accent focus:outline-none transition-colors";
-const inputErrorClass =
-  "mt-2 w-full border-b border-red-500 bg-transparent pb-2 text-sm text-foreground placeholder:text-muted/70 focus:border-red-500 focus:outline-none transition-colors";
 
 const selectClass =
-  "w-full appearance-none border-b border-border bg-transparent pb-1 pl-0 pr-8 text-sm text-foreground focus:border-accent focus:outline-none transition-colors duration-200";
-const selectErrorClass =
-  "w-full appearance-none border-b border-red-500 bg-transparent pb-1 pl-0 pr-8 text-sm text-foreground focus:border-red-500 focus:outline-none transition-colors duration-200";
+  "w-full appearance-none border-b border-border bg-transparent pb-2 pr-6 text-sm text-foreground focus:border-accent focus:outline-none transition-colors";
 
 const optionClass = "bg-background text-foreground pl-1";
 
 /* MAIN COMPONENT */
 export function ContactForm() {
   const containerRef = useRef<HTMLElement>(null);
-  const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const formStartedRef = useRef(false);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<ContactFormData>({
-    mode: "onTouched",
-    defaultValues: {
-      fullName: "",
-      email: "",
-      phone: "",
-      projectType: "",
-      location: "",
-      package: "",
-      message: "",
-      agreeTerms: false,
-    },
+
+
+  // Form State according to Playbook Section 03
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    projectType: "Residential",
+    location: "",
+    budget: "",
+    expectedStart: "",
+    notes: "",
+    agreeToTerms: false,
+    website_fax_field: "", // honeypot
   });
 
-  const onSubmit: SubmitHandler<ContactFormData> = async (data) => {
-    try {
-      // TODO: Replace with your actual API call / server action
-      console.log("Form submitted successfully:", data);
-
-      // Simulate network request
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Trigger success toast
-      setToast({ type: "success", message: "Thank you! We will get back to you shortly." });
-      reset(); // Clear the form
-
-    } catch (error) {
-      console.error("Form submission error:", error);
-      // Trigger error toast
-      setToast({ type: "error", message: "Something went wrong. Please try again." });
-    }
-  };
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionId, setSubmissionId] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ type: ToastType; message: string } | null>(null);
 
   useGSAP(
     () => {
@@ -364,6 +316,101 @@ export function ContactForm() {
     { scope: containerRef }
   );
 
+  const handleFirstInteraction = () => {
+    if (!formStartedRef.current) {
+      formStartedRef.current = true;
+      trackContactFormStart(formData.projectType);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    setErrorMessage(null);
+
+    // Validate phone number format
+    const cleanPhone = formData.phone.replace(/[\s\-()]/g, "");
+    const phoneRegex = /^(\+?8801[3-9]\d{8}|01[3-9]\d{8}|\+?[1-9]\d{7,14})$/;
+    if (!phoneRegex.test(cleanPhone)) {
+      setErrorMessage("Please enter a valid phone number (e.g. 017XXXXXXXX or +880 1XXXXXXXXX).");
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
+
+    if (!formData.agreeToTerms) {
+      setErrorMessage("Please accept the terms and privacy policy to continue.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const attribution = getAttribution();
+
+      const payload = {
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        email: formData.email.trim(),
+        projectType: formData.projectType,
+        location: formData.location.trim(),
+        budget: formData.budget || "not sure",
+        expectedStart: formData.expectedStart || "not sure",
+        notes: formData.notes.trim(),
+        attribution,
+        website_fax_field: formData.website_fax_field,
+      };
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok || !result.accepted) {
+        throw new Error(result.error || "Submission failed");
+      }
+
+      const assignedId = result.submissionId || "JS-ENQUIRY";
+
+      // Trigger analytics conversions safely (NO PII) BEFORE switching view
+      try {
+        trackProjectEnquirySuccess({
+          projectType: formData.projectType,
+          submissionId: assignedId,
+        });
+      } catch (analyticsErr) {
+        console.warn("[Analytics] Conversion event dispatch failed:", analyticsErr);
+      }
+
+      setToast({
+        type: "success",
+        message: `Your enquiry has been received. Reference: ${assignedId}`,
+      });
+
+      setSubmissionId(assignedId);
+
+    } catch (err) {
+      console.error("Enquiry submission error:", err);
+      trackProjectEnquiryError(err instanceof Error ? err.message : "submission_error");
+
+      const msg =
+        "We couldn't send your enquiry right now. Please try again, or contact us using the verified phone/WhatsApp option.";
+      setErrorMessage(msg);
+      setToast({ type: "error", message: msg });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section ref={containerRef} className="mx-auto w-full md:pt-22">
       {/* Render Toast if active */}
@@ -377,224 +424,345 @@ export function ContactForm() {
 
       <div className="w-full md:border-t border-border md:border-b">
         <div className="mx-auto grid w-full max-w-[1340px] grid-cols-1 gap-8 md:gap-16 lg:grid-cols-2">
-
-          {/* LEFT COLUMN: Contact Info */}
+          {/* Left Column: Studio info & Direct contact channels */}
           <div className="contact-reveal mx-4 flex flex-col justify-between border-border pt-8 pb-8 md:mx-0 md:border-r">
             <div>
               <AnimatedHeading
                 as="h1"
-                lines={["Let's Start", "the Conversation"]}
+                lines={["Let's Discuss", "Your Project."]}
                 className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
               />
               <p className="mt-2 md:mt-4 max-w-md text-muted">
-                We&apos;re here to answer your questions, discuss your ideas, and
-                guide you through every step of your interior design journey.
+                A Space of Your Own. Tell us a little about your space. Our team will get in touch to understand what you’re planning.
               </p>
             </div>
 
             <ul className="mt-6 md:mt-10 flex flex-col gap-4 md:gap-6">
-              {contactItems.map((item) => (
-                <li key={item.label} className="flex items-center gap-2 md:gap-4">
-                  <IconBadge>{item.icon}</IconBadge>
-                  <div>
-                    <p className="text-sm font-medium">{item.label}</p>
-                    {item.href ? (
-                      <a
-                        href={item.href}
-                        className="text-sm text-muted hover:text-accent transition-colors"
-                      >
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className="text-sm text-muted">{item.value}</p>
-                    )}
-                  </div>
-                </li>
-              ))}
+              <li className="flex items-center gap-2 md:gap-4">
+                <IconBadge><PinGlyph /></IconBadge>
+                <div>
+                  <p className="text-sm font-medium">Visit Us</p>
+                  <p className="text-sm text-muted">{contactInfo.address}</p>
+                </div>
+              </li>
+
+              <li className="flex items-center gap-2 md:gap-4">
+                <IconBadge><PhoneGlyph /></IconBadge>
+                <div>
+                  <p className="text-sm font-medium">Call Us</p>
+                  <a
+                    href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
+                    onClick={() => trackPhoneClick("contact_page_sidebar")}
+                    className="text-sm text-muted hover:text-accent transition-colors"
+                  >
+                    {contactInfo.phone}
+                  </a>
+                </div>
+              </li>
+
+              <li className="flex items-center gap-2 md:gap-4">
+                <IconBadge><WhatsAppGlyph /></IconBadge>
+                <div>
+                  <p className="text-sm font-medium">WhatsApp</p>
+                  <a
+                    href="https://wa.me/8801629658114?text=Hello%20Jam%20Space%2C%20I%20would%20like%20to%20discuss%20a%20project."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackWhatsAppClick("contact_page_sidebar")}
+                    className="text-sm text-muted hover:text-accent transition-colors"
+                  >
+                    Chat on WhatsApp (+880 1629658114)
+                  </a>
+                </div>
+              </li>
+
+              <li className="flex items-center gap-2 md:gap-4">
+                <IconBadge><EnvelopeGlyph /></IconBadge>
+                <div>
+                  <p className="text-sm font-medium">Email</p>
+                  <a
+                    href={`mailto:${contactInfo.email}`}
+                    className="text-sm text-muted hover:text-accent transition-colors"
+                  >
+                    {contactInfo.email}
+                  </a>
+                </div>
+              </li>
             </ul>
           </div>
 
-          {/* RIGHT COLUMN: Form */}
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            noValidate
-            className="contact-reveal px-4 py-0 md:px-0 md:py-8"
-          >
-            <h2 className="text-xl font-medium">Start Your Project</h2>
-
-            <div className="mt-4 md:mt-8 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-
-              {/* Full Name */}
-              <div>
-                <FieldLabel error={!!errors.fullName}>Full Name</FieldLabel>
-                <input
-                  type="text"
-                  placeholder="Type Your Full Name"
-                  className={errors.fullName ? inputErrorClass : inputClass}
-                  {...register("fullName", {
-                    required: "Full name is required",
-                    minLength: { value: 2, message: "Name must be at least 2 characters" },
-                    maxLength: { value: 60, message: "Name must be under 60 characters" },
-                    pattern: {
-                      value: /^[A-Za-z][A-Za-z .'-]*$/,
-                      message: "Please enter a valid name",
-                    },
-                  })}
-                />
-                <ErrorMessage message={errors.fullName?.message} />
-              </div>
-
-              {/* Email */}
-              <div>
-                <FieldLabel error={!!errors.email}>Email</FieldLabel>
-                <input
-                  type="email"
-                  placeholder="Type Your Email Address"
-                  className={errors.email ? inputErrorClass : inputClass}
-                  {...register("email", { validate: validateEmail })}
-                />
-                <ErrorMessage message={errors.email?.message} />
-              </div>
-
-              {/* Phone Number */}
-              <div>
-                <FieldLabel error={!!errors.phone}>Phone Number</FieldLabel>
-                <input
-                  type="tel"
-                  placeholder="+8801XXXXXXXXX"
-                  className={errors.phone ? inputErrorClass : inputClass}
-                  {...register("phone", { validate: validatePhone })}
-                />
-                <ErrorMessage message={errors.phone?.message} />
-              </div>
-
-              {/* Project Type */}
-              <div>
-                <FieldLabel error={!!errors.projectType}>Project Type</FieldLabel>
-                <div className="relative mt-2">
-                  <select
-                    className={errors.projectType ? selectErrorClass : selectClass}
-                    {...register("projectType", {
-                      required: "Please select a project type",
-                    })}
-                  >
-                    <option value="" disabled className={optionClass}>
-                      {"\u3000"}Select Your Project Type
-                    </option>
-                    <option className={optionClass}>{"\u3000"}Residential Design</option>
-                    <option className={optionClass}>{"\u3000"}Commercial Design</option>
-                    <option className={optionClass}>{"\u3000"}3D Visualization</option>
-                    <option className={optionClass}>{"\u3000"}Design Consultation</option>
-                  </select>
-                  <ChevronDown />
-                </div>
-                <ErrorMessage message={errors.projectType?.message} />
-              </div>
-
-              {/* Project Location */}
-              <div>
-                <FieldLabel error={!!errors.location}>Project Location</FieldLabel>
-                <input
-                  type="text"
-                  placeholder="Type Your Location"
-                  className={errors.location ? inputErrorClass : inputClass}
-                  {...register("location", {
-                    required: "Location is required",
-                    minLength: { value: 2, message: "Please enter a valid location" },
-                  })}
-                />
-                <ErrorMessage message={errors.location?.message} />
-              </div>
-
-              {/* Packages */}
-              <div>
-                <FieldLabel error={!!errors.package}>Packages</FieldLabel>
-                <div className="relative mt-2">
-                  <select
-                    className={errors.package ? selectErrorClass : selectClass}
-                    {...register("package", {
-                      required: "Please select a package",
-                    })}
-                  >
-                    <option value="" disabled className={optionClass}>
-                      {"\u3000"}Select Your Package
-                    </option>
-                    {pricingPackages.map((pkg) => (
-                      <option key={pkg.name} value={pkg.name} className={optionClass}>
-                        {"\u3000"}
-                        {pkg.name} — {pkg.price}
-                        {pkg.unit ? ` / ${pkg.unit}` : ""}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown />
-                </div>
-                <ErrorMessage message={errors.package?.message} />
-              </div>
-
-              {/* Message */}
-              <div className="sm:col-span-2">
-                <FieldLabel error={!!errors.message}>Tell Us About Your Project</FieldLabel>
-                <textarea
-                  rows={4}
-                  placeholder="Type Your Message"
-                  className={`${errors.message ? inputErrorClass : inputClass} resize-none`}
-                  {...register("message", {
-                    required: "Please tell us about your project",
-                    minLength: { value: 10, message: "Message must be at least 10 characters" },
-                    maxLength: { value: 1000, message: "Message must be under 1000 characters" },
-                  })}
-                />
-                <ErrorMessage message={errors.message?.message} />
-              </div>
-            </div>
-
-            {/* Terms & Conditions */}
-            <label
-              className={`mt-4 md:mt-8 flex items-start gap-2.5 pt-4 md:pt-6 text-sm ${errors.agreeTerms ? "text-red-500" : "text-muted"
-                }`}
-            >
-              <input
-                type="checkbox"
-                className="mt-0.5 h-4 w-4 accent-accent cursor-pointer"
-                {...register("agreeTerms", {
-                  required: "You must agree to the Terms & Privacy Policy",
-                })}
-              />
-              <span>
-                I agree to the{" "}
-                <a href="/terms-and-conditions" className="text-accent hover:underline">
-                  Terms &amp; Conditions
-                </a>{" "}
-                and{" "}
-                <br className="block md:hidden" />
-                <a href="/privacy-policy" className="text-accent hover:underline">
-                  Privacy Policy
-                </a>{" "}
-                *
-              </span>
-            </label>
-            <ErrorMessage message={errors.agreeTerms?.message} />
-
-            {/* Submit Button */}
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="mt-3 md:mt-6 w-full justify-center disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              {isSubmitting ? (
-                <span className="flex items-center gap-2">
-                  <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+          {/* Right Column: Contact Us Form */}
+          <div className="contact-reveal px-4 py-0 md:px-0 md:py-8">
+            {submissionId ? (
+              <div className="rounded-xl border border-accent/40 bg-accent/5 p-6 md:p-10 text-center animate-in fade-in duration-500">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-accent">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  Submitting...
-                </span>
-              ) : (
-                "Book a Consultant"
-              )}
-            </Button>
-          </form>
+                </div>
+                <h2 className="mt-4 text-2xl font-medium text-foreground">Enquiry Received</h2>
+                <p className="mt-3 text-muted text-base max-w-md mx-auto leading-relaxed">
+                  Thank you. Your enquiry has been received. Our team will contact you during business hours to learn more about your project.
+                </p>
+                <div className="mt-6 inline-block rounded-md border border-border bg-white/5 px-4 py-2 text-xs font-mono text-muted">
+                  Reference: <span className="text-foreground font-semibold">{submissionId}</span>
+                </div>
+                <div className="mt-8">
+                  <Button
+                    onClick={() => {
+                      setSubmissionId(null);
+                      setFormData({
+                        name: "",
+                        phone: "",
+                        email: "",
+                        projectType: "Residential",
+                        location: "",
+                        budget: "",
+                        expectedStart: "",
+                        notes: "",
+                        agreeToTerms: false,
+                        website_fax_field: "",
+                      });
+                    }}
+                    variant="secondary"
+                  >
+                    Send Another Enquiry
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="relative">
+                {/* Full-form Loading Overlay */}
+                {isSubmitting && (
+                  <div className="absolute inset-0 z-30 flex flex-col items-center justify-center rounded-xl bg-background/85 backdrop-blur-sm p-6 text-center animate-in fade-in duration-300">
+                    <div className="relative flex h-16 w-16 items-center justify-center">
+                      <div className="absolute inset-0 rounded-full border-2 border-accent/20 animate-ping duration-1000" />
+                      <div className="h-12 w-12 rounded-full border-2 border-border border-t-accent animate-spin" />
+                      <div className="absolute h-3 w-3 rounded-full bg-accent" />
+                    </div>
+
+                    <h3 className="mt-6 text-xl font-medium text-foreground tracking-tight">
+                      Sending Your Project Enquiry...
+                    </h3>
+                    <p className="mt-2 text-sm text-muted max-w-xs leading-relaxed">
+                      Please wait a moment while we secure your details and notify the design team.
+                    </p>
+
+                    <div className="mt-5 flex items-center gap-1.5">
+                      <span className="h-1.5 w-6 rounded-full bg-accent animate-pulse" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#FAC551] animate-pulse" style={{ animationDelay: "150ms" }} />
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#35C9B4] animate-pulse" style={{ animationDelay: "300ms" }} />
+                    </div>
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} onFocus={handleFirstInteraction} className="space-y-6">
+                  <div>
+                    <h2 className="text-xl md:text-2xl font-medium">Start Your Project.</h2>
+                    {/* <p className="mt-1 text-sm text-muted">
+                    Tell us a little about your space. Our team will get in touch to understand what you’re planning.
+                  </p> */}
+                  </div>
+
+                  {/* Honeypot field for bot protection */}
+                  <input
+                    type="text"
+                    name="website_fax_field"
+                    value={formData.website_fax_field}
+                    onChange={(e) => setFormData({ ...formData, website_fax_field: e.target.value })}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className="hidden"
+                    aria-hidden="true"
+                  />
+
+                  <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                    {/* Field 1: Name */}
+                    <div>
+                      <FieldLabel>Full Name</FieldLabel>
+                      <input
+                        type="text"
+                        required
+                        minLength={2}
+                        maxLength={100}
+                        placeholder="e.g. Tanvir Ahmed"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className={inputClass}
+                      />
+                    </div>
+
+                    {/* Field 2: Email */}
+                    <div>
+                      <FieldLabel>Email Address</FieldLabel>
+                      <input
+                        type="email"
+                        required
+                        placeholder="e.g. tanvir@gmail.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className={inputClass}
+                      />
+                    </div>
+
+                    {/* Field 3: Phone */}
+                    <div>
+                      <FieldLabel>Phone Number</FieldLabel>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="e.g. 01712345678"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className={inputClass}
+                      />
+                    </div>
+
+                    {/* Field 4: Project Type */}
+                    <div>
+                      <FieldLabel>Project Type</FieldLabel>
+                      <div className="relative mt-2">
+                        <select
+                          required
+                          value={formData.projectType}
+                          onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                          className={selectClass}
+                        >
+                          <option value="Residential">Residential</option>
+                          <option value="Office-commercial">Office-commercial</option>
+                          <option value="Renovation">Renovation</option>
+                          <option value="Space planning-consultancy">Space planning-consultancy</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <ChevronDown />
+                      </div>
+                    </div>
+
+                    {/* Field 5: Location */}
+                    <div>
+                      <FieldLabel>Project Location</FieldLabel>
+                      <input
+                        type="text"
+                        required
+                        maxLength={150}
+                        placeholder="e.g. Bashundhara R/A, Dhaka"
+                        value={formData.location}
+                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        className={inputClass}
+                      />
+                    </div>
+
+                    {/* Field 6: Approximate Budget (Optional) */}
+                    <div>
+                      <FieldLabel required={false}>Approximate Budget</FieldLabel>
+                      <div className="relative mt-2">
+                        <select
+                          value={formData.budget}
+                          onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                          className={selectClass}
+                        >
+                          <option value="">Select Approximate Budget (Optional)</option>
+                          <option value="Below BDT 8 lakh">Below BDT 8 lakh</option>
+                          <option value="8–15 lakh">8–15 lakh</option>
+                          <option value="15–30 lakh">15–30 lakh</option>
+                          <option value="above 30 lakh">Above 30 lakh</option>
+                          <option value="not sure">Not sure</option>
+                        </select>
+                        <ChevronDown />
+                      </div>
+                    </div>
+
+                    {/* Field 7: Expected Start (Optional) */}
+                    <div className="sm:col-span-2">
+                      <FieldLabel required={false}>Expected Start</FieldLabel>
+                      <div className="relative mt-2">
+                        <select
+                          value={formData.expectedStart}
+                          onChange={(e) => setFormData({ ...formData, expectedStart: e.target.value })}
+                          className={selectClass}
+                        >
+                          <option value="">Select Expected Start (Optional)</option>
+                          <option value="Immediately">Immediately</option>
+                          <option value="within 1–3 months">Within 1–3 months</option>
+                          <option value="3–6 months">3–6 months</option>
+                          <option value="later">Later</option>
+                          <option value="not sure">Not sure</option>
+                        </select>
+                        <ChevronDown />
+                      </div>
+                    </div>
+
+                    {/* Optional Project Details */}
+                    <div className="sm:col-span-2">
+                      <FieldLabel required={false}>Tell Us About Your Space (Optional)</FieldLabel>
+                      <textarea
+                        rows={3}
+                        placeholder="Share any specific requirements, apartment size, or design preferences..."
+                        value={formData.notes}
+                        onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                        className={`${inputClass} resize-none`}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Consent & Privacy Notice */}
+                  <label className="flex items-start gap-2.5 pt-2 text-xs md:text-sm text-muted cursor-pointer">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={formData.agreeToTerms}
+                      onChange={(e) => setFormData({ ...formData, agreeToTerms: e.target.checked })}
+                      className="mt-0.5 h-4 w-4 accent-accent"
+                    />
+                    <span>
+                      I agree to the{" "}
+                      <a href="/terms-and-conditions" target="_blank" className="text-accent underline hover:text-accent/80">
+                        Terms &amp; Conditions
+                      </a>{" "}
+                      and{" "}
+                      <a href="/privacy-policy" target="_blank" className="text-accent underline hover:text-accent/80">
+                        Privacy Policy
+                      </a>. We protect your details and never send personal data to advertising platforms. *
+                    </span>
+                  </label>
+
+                  {/* Error Banner with Verified Phone/WhatsApp alternative */}
+                  {errorMessage && (
+                    <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-xs md:text-sm text-red-200">
+                      <p className="text-black">{errorMessage}</p>
+                      <p className="mt-2 text-xs text-muted">
+                        Direct contact:{" "}
+                        <a
+                          href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
+                          onClick={() => trackPhoneClick("contact_form_error_fallback")}
+                          className="text-accent underline mr-3"
+                        >
+                          {contactInfo.phone}
+                        </a>
+                        <a
+                          href="https://wa.me/8801629658114?text=Hello%20Jam%20Space%2C%20I%20would%20like%20to%20discuss%20a%20project."
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => trackWhatsAppClick("contact_form_error_fallback")}
+                          className="text-accent underline"
+                        >
+                          WhatsApp
+                        </a>
+                      </p>
+                    </div>
+                  )}
+
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full justify-center text-sm md:text-base font-medium py-3.5"
+                  >
+                    Send Project Enquiry
+                  </Button>
+                </form>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

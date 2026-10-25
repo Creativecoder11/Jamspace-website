@@ -11,6 +11,7 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { BrandGlyph } from "@/components/ui/BrandGlyph";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { mainNav } from "@/lib/data/navigation";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -81,7 +82,12 @@ export function Header() {
 
         <div className="hidden md:block">
           <MagneticButton>
-            <Button href="/contact">Book a Consultant</Button>
+            <Button
+              href="/contact"
+              onClick={() => trackConsultationCTAClick("header_desktop")}
+            >
+              Let&apos;s Discuss Your Project
+            </Button>
           </MagneticButton>
         </div>
 

@@ -4,8 +4,9 @@ import { SmoothScrollProvider } from "@/lib/lenis";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnimatedFavicon } from "@/components/ui/AnimatedFavicon";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { FacebookPixel } from "@/components/analytics/FacebookPixel";
+import { AttributionTracker } from "@/components/analytics/AttributionTracker";
 import "./globals.css";
 // import { Preloader } from "@/components/ui/Preloader";
 
@@ -47,6 +48,7 @@ export default function RootLayout({
 }>) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
   const fbPixelId = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
   return (
     <html lang="en" className={helveticaNow.variable}>
@@ -61,8 +63,10 @@ export default function RootLayout({
           <Footer />
         </SmoothScrollProvider>
 
+        {gtmId && <GoogleTagManager gtmId={gtmId} />}
         {gaId && <GoogleAnalytics gaId={gaId} />}
         {fbPixelId && <FacebookPixel pixelId={fbPixelId} />}
+        <AttributionTracker />
       </body>
     </html>
   );

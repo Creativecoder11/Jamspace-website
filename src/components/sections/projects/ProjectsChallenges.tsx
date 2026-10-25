@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import Image from "next/image";
 import type { Project } from "@/lib/types";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 const ArrowRight = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +46,14 @@ export default function ProjectsChallenges({ project }: { project: Project }) {
                             <div className="flex-1">
                                 <div className="w-full flex justify-between items-start gap-6 border-b border-border pb-1.5 md:pb-3">
                                     <p className="text-black text-sm md:text-base font-medium leading-snug">Ready to Create<br />Your Dream Space?</p>
-                                    <MagneticButton><Button href="/contact">Book a Consultant</Button></MagneticButton>
+                                    <MagneticButton>
+                                        <Button
+                                            href="/contact"
+                                            onClick={() => trackConsultationCTAClick("project_challenges_cta")}
+                                        >
+                                            Let&apos;s Discuss Your Project
+                                        </Button>
+                                    </MagneticButton>
                                 </div>
                             </div>
                         </div>

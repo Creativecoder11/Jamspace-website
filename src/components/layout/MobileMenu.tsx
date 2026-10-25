@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import type { NavLink } from "@/lib/types";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
+import { contactInfo } from "@/lib/data/footer";
+import { trackConsultationCTAClick, trackPhoneClick } from "@/lib/analytics";
 
 interface MobileMenuProps {
   links: NavLink[];
@@ -106,8 +108,15 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
           </nav>
 
           <div className="border-t border-foreground/10 px-5 py-6">
-            <Button href="/contact" onClick={onClose} tabIndex={isOpen ? 0 : -1}>
-              Book a Consultant
+            <Button
+              href="/contact"
+              onClick={() => {
+                trackConsultationCTAClick("mobile_menu");
+                onClose();
+              }}
+              tabIndex={isOpen ? 0 : -1}
+            >
+              Let&apos;s Discuss Your Project
             </Button>
           </div>
         </div>
@@ -119,8 +128,19 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
       {/* bottom-left contact info + socials */}
       <div className="shrink-0 px-4 pb-8">
         <div className="flex flex-col gap-1.5 mb-4 text-[#444444]">
-          <p className="text-sm leading-[120%]">+880 XXX XXX XXXX</p>
-          <p className="text-sm leading-[120%]">demo@jamroll.space</p>
+          <a
+            href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
+            onClick={() => trackPhoneClick("mobile_menu")}
+            className="text-sm leading-[120%] hover:text-accent"
+          >
+            {contactInfo.phone}
+          </a>
+          <a
+            href={`mailto:${contactInfo.email}`}
+            className="text-sm leading-[120%] hover:text-accent"
+          >
+            {contactInfo.email}
+          </a>
         </div>
         <div className="flex gap-3">
           <a
