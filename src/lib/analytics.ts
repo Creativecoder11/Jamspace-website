@@ -15,6 +15,11 @@ export function pushDataLayer(event: string, payload?: Record<string, unknown>):
     event,
     ...payload,
   });
+  console.log(
+    `%c[DataLayer] event: ${event}`,
+    "color: #F7931A; font-weight: bold; background: #FFF4E5; padding: 2px 6px; border-radius: 4px;",
+    payload
+  );
 }
 
 /**
@@ -47,20 +52,34 @@ export function trackProjectEnquirySuccess(data: {
     submission_id: data.submissionId,
   };
 
+  // 1. DataLayer for GTM (fires custom trigger "project_enquiry_success" & standard "lead")
   pushDataLayer("project_enquiry_success", payload);
+  pushDataLayer("lead", payload);
 
-  // GA4 key conversion event
-  sendGAEvent("event", "generate_lead", {
-    project_type: data.projectType,
-    form_name: "contact_us",
-    currency: "BDT",
-  });
+  // 2. GA4 key conversion event
+  try {
+    sendGAEvent("event", "generate_lead", {
+      project_type: data.projectType,
+      form_name: "contact_us",
+      currency: "BDT",
+      value: 0,
+      transaction_id: data.submissionId,
+    });
+  } catch (err) {
+    console.warn("[Analytics] GA4 generate_lead error:", err);
+  }
 
-  // Meta Pixel standard Lead event
-  trackFBEvent("Lead", {
-    content_name: data.projectType,
-    content_category: "Contact Us",
-  });
+  // 3. Meta Pixel standard Lead event
+  try {
+    trackFBEvent("Lead", {
+      content_name: data.projectType,
+      content_category: "Contact Us",
+      currency: "BDT",
+      value: 0,
+    });
+  } catch (err) {
+    console.warn("[Analytics] Meta Pixel Lead error:", err);
+  }
 }
 
 /**

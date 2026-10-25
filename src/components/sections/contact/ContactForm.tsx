@@ -256,13 +256,18 @@ export function ContactForm() {
       }
 
       const assignedId = result.submissionId || "JS-ENQUIRY";
-      setSubmissionId(assignedId);
 
-      // Trigger analytics conversions safely (NO PII)
-      trackProjectEnquirySuccess({
-        projectType: formData.projectType,
-        submissionId: assignedId,
-      });
+      // Trigger analytics conversions safely (NO PII) BEFORE switching view
+      try {
+        trackProjectEnquirySuccess({
+          projectType: formData.projectType,
+          submissionId: assignedId,
+        });
+      } catch (analyticsErr) {
+        console.warn("[Analytics] Conversion event dispatch failed:", analyticsErr);
+      }
+
+      setSubmissionId(assignedId);
     } catch (err) {
       console.error("Enquiry submission error:", err);
       trackProjectEnquiryError(err instanceof Error ? err.message : "submission_error");

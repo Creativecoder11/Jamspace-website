@@ -2,26 +2,24 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
-import { useEffect, Suspense } from "react";
+import { useEffect, useRef, Suspense } from "react";
 
 const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
 
 function FacebookPixelTracker({ pixelId }: { pixelId?: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const isInitialMount = useRef(true);
   const id = pixelId || FB_PIXEL_ID;
 
   useEffect(() => {
     if (!id) return;
-    if (
-      typeof window !== "undefined" &&
-      (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq
-    ) {
-      (window as unknown as { fbq: (...args: unknown[]) => void }).fbq(
-        "track",
-        "PageView"
-      );
+    // Skip duplicate PageView on initial mount since inline script fires it
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
     }
+    trackFBEvent("PageView");
   }, [pathname, searchParams, id]);
 
   return null;
@@ -30,6 +28,24 @@ function FacebookPixelTracker({ pixelId }: { pixelId?: string }) {
 export function FacebookPixel({ pixelId }: { pixelId?: string } = {}) {
   const id = pixelId || FB_PIXEL_ID;
   if (!id) return null;
+
+  useEffect(() => {
+    // Provide a test helper on window for debugging in DevTools Console
+    if (typeof window !== "undefined") {
+      (window as unknown as { testFBLead?: () => void }).testFBLead = () => {
+        trackFBEvent("Lead", {
+          content_name: "Test Residential Lead",
+          content_category: "Contact Us",
+          currency: "BDT",
+          value: 0,
+        });
+        console.log(
+          "%c[Meta Pixel Test] Dispatched test Lead event! Check Meta Pixel Helper extension now.",
+          "color: #00A86B; font-weight: bold;"
+        );
+      };
+    }
+  }, []);
 
   return (
     <>
@@ -51,6 +67,15 @@ export function FacebookPixel({ pixelId }: { pixelId?: string } = {}) {
           `,
         }}
       />
+      <noscript>
+        <img
+          height="1"
+          width="1"
+          style={{ display: "none" }}
+          src={`https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1`}
+          alt=""
+        />
+      </noscript>
       <Suspense fallback={null}>
         <FacebookPixelTracker pixelId={id} />
       </Suspense>
@@ -59,25 +84,63 @@ export function FacebookPixel({ pixelId }: { pixelId?: string } = {}) {
 }
 
 /**
- * Utility function to send custom standard or custom events to Facebook Pixel
- * e.g. trackFBEvent("Lead", { content_name: "Interior Design Consultation" })
+ * Robust utility function to send standard or custom events to Facebook Pixel.
+ * Even if the external fbevents.js script is delayed or still loading, this guarantees
+ * the call is queued in window.fbq.queue and not silently dropped.
+ *
+ * e.g. trackFBEvent("Lead", { content_name: "Residential" })
  */
 export function trackFBEvent(event: string, params?: Record<string, unknown>) {
-  if (
-    typeof window !== "undefined" &&
-    (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq
-  ) {
+  if (typeof window === "undefined") return;
+
+  const win = window as unknown as {
+    fbq?: ((...args: unknown[]) => void) & {
+      callMethod?: (...args: unknown[]) => void;
+      queue?: unknown[];
+      loaded?: boolean;
+      version?: string;
+    };
+    _fbq?: unknown;
+  };
+
+  // If window.fbq hasn't been set up yet, initialize the standard stub queue
+  if (!win.fbq) {
+    const stub = function (...args: unknown[]) {
+      if (stub.callMethod) {
+        stub.callMethod.apply(stub, args);
+      } else {
+        stub.queue = stub.queue || [];
+        stub.queue.push(args);
+      }
+    } as ((...args: unknown[]) => void) & {
+      callMethod?: (...args: unknown[]) => void;
+      queue?: unknown[];
+      loaded?: boolean;
+      version?: string;
+    };
+    stub.queue = [];
+    stub.loaded = false;
+    stub.version = "2.0";
+    if (!win._fbq) win._fbq = stub;
+    win.fbq = stub;
+  }
+
+  try {
     if (params) {
-      (window as unknown as { fbq: (...args: unknown[]) => void }).fbq(
-        "track",
-        event,
+      win.fbq("track", event, params);
+      console.log(
+        `%c[Meta Pixel] fbq('track', '${event}')`,
+        "color: #1877F2; font-weight: bold; background: #E7F3FF; padding: 2px 6px; border-radius: 4px;",
         params
       );
     } else {
-      (window as unknown as { fbq: (...args: unknown[]) => void }).fbq(
-        "track",
-        event
+      win.fbq("track", event);
+      console.log(
+        `%c[Meta Pixel] fbq('track', '${event}')`,
+        "color: #1877F2; font-weight: bold; background: #E7F3FF; padding: 2px 6px; border-radius: 4px;"
       );
     }
+  } catch (err) {
+    console.error(`[Meta Pixel] Error sending event '${event}':`, err);
   }
 }
