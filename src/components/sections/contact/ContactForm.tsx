@@ -385,7 +385,32 @@ export function ContactForm() {
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} onFocus={handleFirstInteraction} className="space-y-6">
+              <div className="relative">
+                {/* Full-form Loading Overlay */}
+                {isSubmitting && (
+                  <div className="absolute inset-0 z-30 flex flex-col items-center justify-center rounded-xl bg-background/85 backdrop-blur-sm p-6 text-center animate-in fade-in duration-300">
+                    <div className="relative flex h-16 w-16 items-center justify-center">
+                      <div className="absolute inset-0 rounded-full border-2 border-accent/20 animate-ping duration-1000" />
+                      <div className="h-12 w-12 rounded-full border-2 border-border border-t-accent animate-spin" />
+                      <div className="absolute h-3 w-3 rounded-full bg-accent" />
+                    </div>
+
+                    <h3 className="mt-6 text-xl font-medium text-foreground tracking-tight">
+                      Sending Your Project Enquiry...
+                    </h3>
+                    <p className="mt-2 text-sm text-muted max-w-xs leading-relaxed">
+                      Please wait a moment while we secure your details and notify the design team.
+                    </p>
+
+                    <div className="mt-5 flex items-center gap-1.5">
+                      <span className="h-1.5 w-6 rounded-full bg-accent animate-pulse" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#FAC551] animate-pulse" style={{ animationDelay: "150ms" }} />
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#35C9B4] animate-pulse" style={{ animationDelay: "300ms" }} />
+                    </div>
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} onFocus={handleFirstInteraction} className="space-y-6">
                 <div>
                   <h2 className="text-xl md:text-2xl font-medium">Start Your Project.</h2>
                   {/* <p className="mt-1 text-sm text-muted">
@@ -558,7 +583,7 @@ export function ContactForm() {
                 {/* Error Banner with Verified Phone/WhatsApp alternative */}
                 {errorMessage && (
                   <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-xs md:text-sm text-red-200">
-                    <p className="font-medium text-red-100">{errorMessage}</p>
+                    <p className="text-black">{errorMessage}</p>
                     <p className="mt-2 text-xs text-muted">
                       Direct contact:{" "}
                       <a
@@ -586,10 +611,11 @@ export function ContactForm() {
                   disabled={isSubmitting}
                   className="w-full justify-center text-sm md:text-base font-medium py-3.5"
                 >
-                  {isSubmitting ? "Sending Project Enquiry..." : "Send Project Enquiry"}
+                  Send Project Enquiry
                 </Button>
               </form>
-            )}
+            </div>
+          )}
           </div>
         </div>
       </div>
