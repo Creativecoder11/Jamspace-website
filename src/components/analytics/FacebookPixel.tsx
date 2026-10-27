@@ -3,6 +3,7 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { useEffect, useRef, Suspense } from "react";
+import { CONSENT_KEY } from "@/lib/consent";
 
 const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
 
@@ -62,20 +63,14 @@ export function FacebookPixel({ pixelId }: { pixelId?: string } = {}) {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
+            var jsConsent = null;
+            try { jsConsent = localStorage.getItem('${CONSENT_KEY}'); } catch (e) {}
+            fbq('consent', jsConsent === 'granted' ? 'grant' : 'revoke');
             fbq('init', '${id}');
             fbq('track', 'PageView');
           `,
         }}
       />
-      <noscript>
-        <img
-          height="1"
-          width="1"
-          style={{ display: "none" }}
-          src={`https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1`}
-          alt=""
-        />
-      </noscript>
       <Suspense fallback={null}>
         <FacebookPixelTracker pixelId={id} />
       </Suspense>

@@ -7,6 +7,8 @@ import { AnimatedFavicon } from "@/components/ui/AnimatedFavicon";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { FacebookPixel } from "@/components/analytics/FacebookPixel";
 import { AttributionTracker } from "@/components/analytics/AttributionTracker";
+import { CookieConsent } from "@/components/analytics/CookieConsent";
+import { consentDefaultsScript } from "@/lib/consent";
 import "./globals.css";
 // import { Preloader } from "@/components/ui/Preloader";
 
@@ -52,6 +54,10 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={helveticaNow.variable}>
+      <head>
+        {/* Google Consent Mode defaults — must run before GTM/GA load */}
+        <script dangerouslySetInnerHTML={{ __html: consentDefaultsScript }} />
+      </head>
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
         <AnimatedFavicon />
 
@@ -67,6 +73,7 @@ export default function RootLayout({
         {gaId && <GoogleAnalytics gaId={gaId} />}
         {fbPixelId && <FacebookPixel pixelId={fbPixelId} />}
         <AttributionTracker />
+        <CookieConsent />
       </body>
     </html>
   );
