@@ -1,7 +1,11 @@
 "use client";
 
+<<<<<<< HEAD
 import { useRef, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+=======
+import { useEffect, useRef, useState, type ReactNode } from "react";
+>>>>>>> 485e60f1ecd949b82e34e84f72cdc74f0ee48acd
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
 
@@ -17,6 +21,137 @@ import {
   trackPhoneClick,
 } from "@/lib/analytics";
 
+/* CUSTOM TOAST COMPONENT */
+type ToastType = "success" | "error";
+
+interface CustomToastProps {
+  type: ToastType;
+  message: string;
+  onClose: () => void;
+}
+
+const TOAST_DURATION = 5; // seconds
+
+function CustomToast({ type, message, onClose }: CustomToastProps) {
+  const toastRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<gsap.core.Tween | null>(null);
+  const onCloseRef = useRef(onClose);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  const isSuccess = type === "success";
+  const accent = isSuccess ? "#35C9B4" : "#E92A7B";
+  const title = isSuccess ? "Message sent" : "Something went wrong";
+
+  const dismiss = () => {
+    timelineRef.current?.kill();
+    gsap.to(toastRef.current, {
+      x: 40,
+      opacity: 0,
+      duration: 0.25,
+      ease: "power2.in",
+      onComplete: () => onCloseRef.current(),
+    });
+  };
+
+  useEffect(() => {
+    gsap.fromTo(
+      toastRef.current,
+      { x: 40, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }
+    );
+
+    // Countdown bar doubles as the auto-dismiss timer
+    timelineRef.current = gsap.fromTo(
+      barRef.current,
+      { scaleX: 1 },
+      {
+        scaleX: 0,
+        duration: TOAST_DURATION,
+        ease: "none",
+        onComplete: dismiss,
+      }
+    );
+
+    return () => {
+      timelineRef.current?.kill();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div
+      ref={toastRef}
+      role="alert"
+      aria-live="polite"
+      onMouseEnter={() => timelineRef.current?.pause()}
+      onMouseLeave={() => timelineRef.current?.resume()}
+      className="fixed left-4 right-4 top-4 z-50 overflow-hidden rounded-xl bg-[#F7F6F1] shadow-[0_12px_40px_-8px_rgba(0,0,0,0.25)] ring-1 ring-black/5 sm:left-auto sm:right-6 sm:top-6 sm:w-[380px]"
+    >
+      <div className="flex items-start gap-3 p-4">
+        {/* Icon */}
+        <div
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+          style={{ backgroundColor: `${accent}26` }} // 15% tint
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={accent}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            {isSuccess ? <path d="M20 6L9 17l-5-5" /> : <path d="M18 6L6 18M6 6l12 12" />}
+          </svg>
+        </div>
+
+        {/* Text */}
+        <div className="min-w-0 flex-1 pt-0.5">
+          <p className="text-sm font-semibold text-[#191919]">{title}</p>
+          <p className="mt-0.5 text-sm leading-snug text-[#191919]/70">{message}</p>
+        </div>
+
+        {/* Close */}
+        <button
+          onClick={dismiss}
+          aria-label="Close notification"
+          className="-mr-1 -mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#191919]/50 transition-colors hover:bg-black/5 hover:text-[#191919]"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Countdown bar */}
+      <div className="h-[3px] w-full bg-black/5">
+        <div
+          ref={barRef}
+          className="h-full origin-left"
+          style={{ backgroundColor: accent }}
+        />
+      </div>
+    </div>
+  );
+}
+
+/* ICONS */
 function IconBadge({ children }: { children: ReactNode }) {
   return (
     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-foreground/20 text-foreground">
@@ -27,13 +162,7 @@ function IconBadge({ children }: { children: ReactNode }) {
 
 function PinGlyph() {
   return (
-    <svg
-      width="15"
-      height="15"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
         d="M12 22s7-7.4 7-13a7 7 0 1 0-14 0c0 5.6 7 13 7 13Z"
         stroke="currentColor"
@@ -46,13 +175,7 @@ function PinGlyph() {
 
 function EnvelopeGlyph() {
   return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <rect
         x="2.5"
         y="4.5"
@@ -75,13 +198,7 @@ function EnvelopeGlyph() {
 
 function PhoneGlyph() {
   return (
-    <svg
-      width="15"
-      height="15"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
         d="M4 5c0-1 .8-2 2-2h2.2c.5 0 .9.3 1 .8l1 3.5c.1.4 0 .9-.3 1.2L8.6 10c1 2.3 2.9 4.2 5.2 5.2l1.5-1.3c.3-.3.8-.4 1.2-.3l3.5 1c.5.1.8.5.8 1V18c0 1.2-1 2-2.2 2C10.6 20 4 13.4 4 5Z"
         stroke="currentColor"
@@ -147,15 +264,21 @@ function FieldLabel({
   );
 }
 
+
 const inputClass =
   "mt-2 w-full border-b border-border bg-transparent pb-2 text-sm text-foreground placeholder:text-muted/70 focus:border-accent focus:outline-none transition-colors";
 
 const selectClass =
   "w-full appearance-none border-b border-border bg-transparent pb-2 pr-6 text-sm text-foreground focus:border-accent focus:outline-none transition-colors";
 
+const optionClass = "bg-background text-foreground pl-1";
+
+/* MAIN COMPONENT */
 export function ContactForm() {
   const containerRef = useRef<HTMLElement>(null);
   const formStartedRef = useRef(false);
+
+
 
   // Form State according to Playbook Section 03
   const [formData, setFormData] = useState({
@@ -174,6 +297,7 @@ export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ type: ToastType; message: string } | null>(null);
 
   useGSAP(
     () => {
@@ -268,6 +392,7 @@ export function ContactForm() {
         console.warn("[Analytics] Conversion event dispatch failed:", analyticsErr);
       }
 
+<<<<<<< HEAD
       router.push(`/thank-you?ref=${encodeURIComponent(assignedId)}`);
     } catch (err) {
       console.error("Enquiry submission error:", err);
@@ -276,12 +401,39 @@ export function ContactForm() {
         "We couldn't send your enquiry right now. Please try again, or contact us using the verified phone/WhatsApp option."
       );
       // Only reset on failure — on success the loading overlay stays up until /thank-you loads
+=======
+      setToast({
+        type: "success",
+        message: `Your enquiry has been received. Reference: ${assignedId}`,
+      });
+
+      setSubmissionId(assignedId);
+
+    } catch (err) {
+      console.error("Enquiry submission error:", err);
+      trackProjectEnquiryError(err instanceof Error ? err.message : "submission_error");
+
+      const msg =
+        "We couldn't send your enquiry right now. Please try again, or contact us using the verified phone/WhatsApp option.";
+      setErrorMessage(msg);
+      setToast({ type: "error", message: msg });
+    } finally {
+>>>>>>> 485e60f1ecd949b82e34e84f72cdc74f0ee48acd
       setIsSubmitting(false);
     }
   };
 
   return (
     <section ref={containerRef} className="mx-auto w-full md:pt-22">
+      {/* Render Toast if active */}
+      {toast && (
+        <CustomToast
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast(null)}
+        />
+      )}
+
       <div className="w-full md:border-t border-border md:border-b">
         <div className="mx-auto grid w-full max-w-[1340px] grid-cols-1 gap-8 md:gap-16 lg:grid-cols-2">
           {/* Left Column: Studio info & Direct contact channels */}
@@ -379,201 +531,155 @@ export function ContactForm() {
                 )}
 
                 <form onSubmit={handleSubmit} onFocus={handleFirstInteraction} className="space-y-6">
-                <div>
-                  <h2 className="text-xl md:text-2xl font-medium">Start Your Project.</h2>
-                  {/* <p className="mt-1 text-sm text-muted">
+                  <div>
+                    <h2 className="text-xl md:text-2xl font-medium">Start Your Project.</h2>
+                    {/* <p className="mt-1 text-sm text-muted">
                     Tell us a little about your space. Our team will get in touch to understand what you’re planning.
                   </p> */}
-                </div>
-
-                {/* Honeypot field for bot protection */}
-                <input
-                  type="text"
-                  name="website_fax_field"
-                  value={formData.website_fax_field}
-                  onChange={(e) => setFormData({ ...formData, website_fax_field: e.target.value })}
-                  tabIndex={-1}
-                  autoComplete="off"
-                  className="hidden"
-                  aria-hidden="true"
-                />
-
-                <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-                  {/* Field 1: Name */}
-                  <div>
-                    <FieldLabel>Full Name</FieldLabel>
-                    <input
-                      type="text"
-                      required
-                      minLength={2}
-                      maxLength={100}
-                      placeholder="e.g. Tanvir Ahmed"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className={inputClass}
-                    />
                   </div>
 
-                  {/* Field 2: Email */}
-                  <div>
-                    <FieldLabel>Email Address</FieldLabel>
-                    <input
-                      type="email"
-                      required
-                      placeholder="e.g. tanvir@gmail.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className={inputClass}
-                    />
-                  </div>
-
-                  {/* Field 3: Phone */}
-                  <div>
-                    <FieldLabel>Phone Number</FieldLabel>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="e.g. 01712345678"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className={inputClass}
-                    />
-                  </div>
-
-                  {/* Field 4: Project Type */}
-                  <div>
-                    <FieldLabel>Project Type</FieldLabel>
-                    <div className="relative mt-2">
-                      <select
-                        required
-                        value={formData.projectType}
-                        onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                        className={selectClass}
-                      >
-                        <option value="Residential">Residential</option>
-                        <option value="Office-commercial">Office-commercial</option>
-                        <option value="Renovation">Renovation</option>
-                        <option value="Space planning-consultancy">Space planning-consultancy</option>
-                        <option value="Other">Other</option>
-                      </select>
-                      <ChevronDown />
-                    </div>
-                  </div>
-
-                  {/* Field 5: Location */}
-                  <div>
-                    <FieldLabel>Project Location</FieldLabel>
-                    <input
-                      type="text"
-                      required
-                      maxLength={150}
-                      placeholder="e.g. Bashundhara R/A, Dhaka"
-                      value={formData.location}
-                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                      className={inputClass}
-                    />
-                  </div>
-
-                  {/* Field 6: Approximate Budget (Optional) */}
-                  <div>
-                    <FieldLabel required={false}>Approximate Budget</FieldLabel>
-                    <div className="relative mt-2">
-                      <select
-                        value={formData.budget}
-                        onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                        className={selectClass}
-                      >
-                        <option value="">Select Approximate Budget (Optional)</option>
-                        <option value="Below BDT 8 lakh">Below BDT 8 lakh</option>
-                        <option value="8–15 lakh">8–15 lakh</option>
-                        <option value="15–30 lakh">15–30 lakh</option>
-                        <option value="above 30 lakh">Above 30 lakh</option>
-                        <option value="not sure">Not sure</option>
-                      </select>
-                      <ChevronDown />
-                    </div>
-                  </div>
-
-                  {/* Field 7: Expected Start (Optional) */}
-                  <div className="sm:col-span-2">
-                    <FieldLabel required={false}>Expected Start</FieldLabel>
-                    <div className="relative mt-2">
-                      <select
-                        value={formData.expectedStart}
-                        onChange={(e) => setFormData({ ...formData, expectedStart: e.target.value })}
-                        className={selectClass}
-                      >
-                        <option value="">Select Expected Start (Optional)</option>
-                        <option value="Immediately">Immediately</option>
-                        <option value="within 1–3 months">Within 1–3 months</option>
-                        <option value="3–6 months">3–6 months</option>
-                        <option value="later">Later</option>
-                        <option value="not sure">Not sure</option>
-                      </select>
-                      <ChevronDown />
-                    </div>
-                  </div>
-
-                  {/* Optional Project Details */}
-                  <div className="sm:col-span-2">
-                    <FieldLabel required={false}>Tell Us About Your Space (Optional)</FieldLabel>
-                    <textarea
-                      rows={3}
-                      placeholder="Share any specific requirements, apartment size, or design preferences..."
-                      value={formData.notes}
-                      onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                      className={`${inputClass} resize-none`}
-                    />
-                  </div>
-                </div>
-
-                {/* Consent & Privacy Notice */}
-                <label className="flex items-start gap-2.5 pt-2 text-xs md:text-sm text-muted cursor-pointer">
+                  {/* Honeypot field for bot protection */}
                   <input
-                    type="checkbox"
-                    required
-                    checked={formData.agreeToTerms}
-                    onChange={(e) => setFormData({ ...formData, agreeToTerms: e.target.checked })}
-                    className="mt-0.5 h-4 w-4 accent-accent"
+                    type="text"
+                    name="website_fax_field"
+                    value={formData.website_fax_field}
+                    onChange={(e) => setFormData({ ...formData, website_fax_field: e.target.value })}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className="hidden"
+                    aria-hidden="true"
                   />
-                  <span>
-                    I agree to the{" "}
-                    <a href="/terms-and-conditions" target="_blank" className="text-accent underline hover:text-accent/80">
-                      Terms &amp; Conditions
-                    </a>{" "}
-                    and{" "}
-                    <a href="/privacy-policy" target="_blank" className="text-accent underline hover:text-accent/80">
-                      Privacy Policy
-                    </a>. We protect your details and never send personal data to advertising platforms. *
-                  </span>
-                </label>
 
-                {/* Error Banner with Verified Phone/WhatsApp alternative */}
-                {errorMessage && (
-                  <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-xs md:text-sm text-red-200">
-                    <p className="text-black">{errorMessage}</p>
-                    <p className="mt-2 text-xs text-muted">
-                      Direct contact:{" "}
-                      <a
-                        href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
-                        onClick={() => trackPhoneClick("contact_form_error_fallback")}
-                        className="text-accent underline mr-3"
-                      >
-                        {contactInfo.phone}
-                      </a>
-                      <a
-                        href="https://wa.me/8801629658114?text=Hello%20Jam%20Space%2C%20I%20would%20like%20to%20discuss%20a%20project."
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => trackWhatsAppClick("contact_form_error_fallback")}
-                        className="text-accent underline"
-                      >
-                        WhatsApp
-                      </a>
-                    </p>
+                  <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                    {/* Field 1: Name */}
+                    <div>
+                      <FieldLabel>Full Name</FieldLabel>
+                      <input
+                        type="text"
+                        required
+                        minLength={2}
+                        maxLength={100}
+                        placeholder="e.g. Tanvir Ahmed"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className={inputClass}
+                      />
+                    </div>
+
+                    {/* Field 2: Email */}
+                    <div>
+                      <FieldLabel>Email Address</FieldLabel>
+                      <input
+                        type="email"
+                        required
+                        placeholder="e.g. tanvir@gmail.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className={inputClass}
+                      />
+                    </div>
+
+                    {/* Field 3: Phone */}
+                    <div>
+                      <FieldLabel>Phone Number</FieldLabel>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="e.g. 01712345678"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className={inputClass}
+                      />
+                    </div>
+
+                    {/* Field 4: Project Type */}
+                    <div>
+                      <FieldLabel>Project Type</FieldLabel>
+                      <div className="relative mt-2">
+                        <select
+                          required
+                          value={formData.projectType}
+                          onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                          className={selectClass}
+                        >
+                          <option value="Residential">Residential</option>
+                          <option value="Office-commercial">Office-commercial</option>
+                          <option value="Renovation">Renovation</option>
+                          <option value="Space planning-consultancy">Space planning-consultancy</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <ChevronDown />
+                      </div>
+                    </div>
+
+                    {/* Field 5: Location */}
+                    <div>
+                      <FieldLabel>Project Location</FieldLabel>
+                      <input
+                        type="text"
+                        required
+                        maxLength={150}
+                        placeholder="e.g. Bashundhara R/A, Dhaka"
+                        value={formData.location}
+                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        className={inputClass}
+                      />
+                    </div>
+
+                    {/* Field 6: Approximate Budget (Optional) */}
+                    <div>
+                      <FieldLabel required={false}>Approximate Budget</FieldLabel>
+                      <div className="relative mt-2">
+                        <select
+                          value={formData.budget}
+                          onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                          className={selectClass}
+                        >
+                          <option value="">Select Approximate Budget (Optional)</option>
+                          <option value="Below BDT 8 lakh">Below BDT 8 lakh</option>
+                          <option value="8–15 lakh">8–15 lakh</option>
+                          <option value="15–30 lakh">15–30 lakh</option>
+                          <option value="above 30 lakh">Above 30 lakh</option>
+                          <option value="not sure">Not sure</option>
+                        </select>
+                        <ChevronDown />
+                      </div>
+                    </div>
+
+                    {/* Field 7: Expected Start (Optional) */}
+                    <div className="sm:col-span-2">
+                      <FieldLabel required={false}>Expected Start</FieldLabel>
+                      <div className="relative mt-2">
+                        <select
+                          value={formData.expectedStart}
+                          onChange={(e) => setFormData({ ...formData, expectedStart: e.target.value })}
+                          className={selectClass}
+                        >
+                          <option value="">Select Expected Start (Optional)</option>
+                          <option value="Immediately">Immediately</option>
+                          <option value="within 1–3 months">Within 1–3 months</option>
+                          <option value="3–6 months">3–6 months</option>
+                          <option value="later">Later</option>
+                          <option value="not sure">Not sure</option>
+                        </select>
+                        <ChevronDown />
+                      </div>
+                    </div>
+
+                    {/* Optional Project Details */}
+                    <div className="sm:col-span-2">
+                      <FieldLabel required={false}>Tell Us About Your Space (Optional)</FieldLabel>
+                      <textarea
+                        rows={3}
+                        placeholder="Share any specific requirements, apartment size, or design preferences..."
+                        value={formData.notes}
+                        onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                        className={`${inputClass} resize-none`}
+                      />
+                    </div>
                   </div>
-                )}
 
+<<<<<<< HEAD
                 <Button
                   type="submit"
                   disabled={isSubmitting}
@@ -583,6 +689,65 @@ export function ContactForm() {
                 </Button>
               </form>
             </div>
+=======
+                  {/* Consent & Privacy Notice */}
+                  <label className="flex items-start gap-2.5 pt-2 text-xs md:text-sm text-muted cursor-pointer">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={formData.agreeToTerms}
+                      onChange={(e) => setFormData({ ...formData, agreeToTerms: e.target.checked })}
+                      className="mt-0.5 h-4 w-4 accent-accent"
+                    />
+                    <span>
+                      I agree to the{" "}
+                      <a href="/terms-and-conditions" target="_blank" className="text-accent underline hover:text-accent/80">
+                        Terms &amp; Conditions
+                      </a>{" "}
+                      and{" "}
+                      <a href="/privacy-policy" target="_blank" className="text-accent underline hover:text-accent/80">
+                        Privacy Policy
+                      </a>. We protect your details and never send personal data to advertising platforms. *
+                    </span>
+                  </label>
+
+                  {/* Error Banner with Verified Phone/WhatsApp alternative */}
+                  {errorMessage && (
+                    <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-xs md:text-sm text-red-200">
+                      <p className="text-black">{errorMessage}</p>
+                      <p className="mt-2 text-xs text-muted">
+                        Direct contact:{" "}
+                        <a
+                          href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
+                          onClick={() => trackPhoneClick("contact_form_error_fallback")}
+                          className="text-accent underline mr-3"
+                        >
+                          {contactInfo.phone}
+                        </a>
+                        <a
+                          href="https://wa.me/8801629658114?text=Hello%20Jam%20Space%2C%20I%20would%20like%20to%20discuss%20a%20project."
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => trackWhatsAppClick("contact_form_error_fallback")}
+                          className="text-accent underline"
+                        >
+                          WhatsApp
+                        </a>
+                      </p>
+                    </div>
+                  )}
+
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full justify-center text-sm md:text-base font-medium py-3.5"
+                  >
+                    Send Project Enquiry
+                  </Button>
+                </form>
+              </div>
+            )}
+>>>>>>> 485e60f1ecd949b82e34e84f72cdc74f0ee48acd
           </div>
         </div>
       </div>

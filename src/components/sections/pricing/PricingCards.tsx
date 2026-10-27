@@ -83,7 +83,7 @@ export function PricingCards() {
 
             <div className="mt-3 md:mt-6">
               <MagneticButton>
-                <Button href="/about">Contact Us</Button>
+                <Button href="/contact">Contact Us</Button>
               </MagneticButton>
             </div>
           </div>

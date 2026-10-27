@@ -159,7 +159,7 @@ export default function DesignPhilosophySection() {
 
               <div className="mt-3 md:mt-6">
                 <MagneticButton>
-                  <Button href="/about">Learn More About Us</Button>
+                  <Button href="/contact">Start Your Project</Button>
                 </MagneticButton>
               </div>
             </div>
@@ -221,7 +221,7 @@ export default function DesignPhilosophySection() {
 
             <div className="flex items-center justify-start h-28 pl-5 md:border-r border-border">
               <MagneticButton>
-                <Button href="/about">Start Projects</Button>
+                <Button href="/projects">Explore Our Projects</Button>
               </MagneticButton>
             </div>
 

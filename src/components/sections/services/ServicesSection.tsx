@@ -70,7 +70,7 @@ export function ServicesSection() {
 
             <div className="mt-3 md:mt-6">
               <MagneticButton>
-                <Button href="/about">Start a Project</Button>
+                <Button href="/contact">Start a Project</Button>
               </MagneticButton>
             </div>
           </div>

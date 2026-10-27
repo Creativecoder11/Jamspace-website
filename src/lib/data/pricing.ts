@@ -25,7 +25,7 @@ export const pricingPackages: PricingPackage[] = [
     accent: "teal",
     description: "Ideal for transforming one room for everyone.",
     tag: "Elevate a Single Room",
-    price: "15,000 – ৳25,000",
+    price: "৳15,000 - ৳25,000",
     priceCaption: "Package pricing",
     included: ["Single room design.", "Layout & 3D design."],
   },

@@ -116,7 +116,7 @@ export default function MoreProjects({ currentSlug }: { currentSlug: string }) {
                         </p>
                         <div className="mt-3 md:mt-6">
                             <MagneticButton>
-                                <Button href="/about">Learn More About Us</Button>
+                                <Button href="/projects">Explore Our Projects</Button>
                             </MagneticButton>
                         </div>
                     </div>
