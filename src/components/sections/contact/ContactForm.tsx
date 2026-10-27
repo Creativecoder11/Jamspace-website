@@ -259,10 +259,6 @@ function FieldLabel({
   );
 }
 
-function ErrorMessage({ message }: { message?: string }) {
-  if (!message) return null;
-  return <p className="mt-1 text-xs text-red-500">{message}</p>;
-}
 
 const inputClass =
   "mt-2 w-full border-b border-border bg-transparent pb-2 text-sm text-foreground placeholder:text-muted/70 focus:border-accent focus:outline-none transition-colors";
