@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
 
@@ -171,7 +172,7 @@ export function ContactForm() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionId, setSubmissionId] = useState<string | null>(null);
+  const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useGSAP(
@@ -267,14 +268,14 @@ export function ContactForm() {
         console.warn("[Analytics] Conversion event dispatch failed:", analyticsErr);
       }
 
-      setSubmissionId(assignedId);
+      router.push(`/thank-you?ref=${encodeURIComponent(assignedId)}`);
     } catch (err) {
       console.error("Enquiry submission error:", err);
       trackProjectEnquiryError(err instanceof Error ? err.message : "submission_error");
       setErrorMessage(
         "We couldn't send your enquiry right now. Please try again, or contact us using the verified phone/WhatsApp option."
       );
-    } finally {
+      // Only reset on failure — on success the loading overlay stays up until /thank-you loads
       setIsSubmitting(false);
     }
   };
@@ -352,44 +353,6 @@ export function ContactForm() {
 
           {/* Right Column: Contact Us Form */}
           <div className="contact-reveal px-4 py-0 md:px-0 md:py-8">
-            {submissionId ? (
-              <div className="rounded-xl border border-accent/40 bg-accent/5 p-6 md:p-10 text-center animate-in fade-in duration-500">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/10 text-accent">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </div>
-                <h2 className="mt-4 text-2xl font-medium text-foreground">Enquiry Received</h2>
-                <p className="mt-3 text-muted text-base max-w-md mx-auto leading-relaxed">
-                  Thank you. Your enquiry has been received. Our team will contact you during business hours to learn more about your project.
-                </p>
-                <div className="mt-6 inline-block rounded-md border border-border bg-white/5 px-4 py-2 text-xs font-mono text-muted">
-                  Reference: <span className="text-foreground font-semibold">{submissionId}</span>
-                </div>
-                <div className="mt-8">
-                  <Button
-                    onClick={() => {
-                      setSubmissionId(null);
-                      setFormData({
-                        name: "",
-                        phone: "",
-                        email: "",
-                        projectType: "Residential",
-                        location: "",
-                        budget: "",
-                        expectedStart: "",
-                        notes: "",
-                        agreeToTerms: false,
-                        website_fax_field: "",
-                      });
-                    }}
-                    variant="secondary"
-                  >
-                    Send Another Enquiry
-                  </Button>
-                </div>
-              </div>
-            ) : (
               <div className="relative">
                 {/* Full-form Loading Overlay */}
                 {isSubmitting && (
@@ -620,7 +583,6 @@ export function ContactForm() {
                 </Button>
               </form>
             </div>
-          )}
           </div>
         </div>
       </div>
