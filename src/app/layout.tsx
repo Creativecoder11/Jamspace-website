@@ -59,14 +59,10 @@ export default function RootLayout({
         {/* Google Consent Mode defaults — must run before GTM/GA load */}
         <script dangerouslySetInnerHTML={{ __html: consentDefaultsScript }} />
 
-        {/* Google Tag Manager */}
+        {/* Google Tag Manager (Server-Side) */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${gtmId}');`,
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://data.jamroll.space/3m0aaxjfixcm.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','9lp=BAdFLjInVTEgKSpaPlIqRxteSkdXTBwPUAkZBBQFFA1DEAgIBQ8%3D');`,
           }}
         />
         {/* End Google Tag Manager */}
@@ -75,7 +71,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            src="https://data.jamroll.space/ns.html?id=GTM-PMJR3X8R"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
