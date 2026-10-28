@@ -4,7 +4,7 @@ import { SmoothScrollProvider } from "@/lib/lenis";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnimatedFavicon } from "@/components/ui/AnimatedFavicon";
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { FacebookPixel } from "@/components/analytics/FacebookPixel";
 import { AttributionTracker } from "@/components/analytics/AttributionTracker";
 import { CookieConsent } from "@/components/analytics/CookieConsent";
@@ -51,15 +51,38 @@ export default function RootLayout({
 }>) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
   const fbPixelId = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-PMJR3X8R";
 
   return (
     <html lang="en" className={helveticaNow.variable}>
       <head>
         {/* Google Consent Mode defaults — must run before GTM/GA load */}
         <script dangerouslySetInnerHTML={{ __html: consentDefaultsScript }} />
+
+        {/* Google Tag Manager */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${gtmId}');`,
+          }}
+        />
+        {/* End Google Tag Manager */}
       </head>
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
+
         <AnimatedFavicon />
 
         {/* <Preloader /> */}
@@ -70,7 +93,6 @@ export default function RootLayout({
           <Footer />
         </SmoothScrollProvider>
 
-        {gtmId && <GoogleTagManager gtmId={gtmId} />}
         {gaId && <GoogleAnalytics gaId={gaId} />}
         {fbPixelId && <FacebookPixel pixelId={fbPixelId} />}
         <AttributionTracker />
