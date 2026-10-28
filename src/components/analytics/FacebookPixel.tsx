@@ -65,7 +65,11 @@ export function FacebookPixel({ pixelId }: { pixelId?: string } = {}) {
             'https://connect.facebook.net/en_US/fbevents.js');
             var jsConsent = null;
             try { jsConsent = localStorage.getItem('${CONSENT_KEY}'); } catch (e) {}
-            fbq('consent', jsConsent === 'granted' ? 'grant' : 'revoke');
+            if (jsConsent === 'denied') {
+              fbq('consent', 'revoke');
+            } else {
+              fbq('consent', 'grant');
+            }
             fbq('init', '${id}');
             fbq('track', 'PageView');
           `,

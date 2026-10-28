@@ -258,6 +258,14 @@ export function ContactForm() {
 
       const assignedId = result.submissionId || "JS-ENQUIRY";
 
+      // Explicit consent grant on successful submission (user accepted terms)
+      try {
+        localStorage.setItem("js_cookie_consent", "granted");
+        if (typeof window !== "undefined") {
+          (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq?.("consent", "grant");
+        }
+      } catch {}
+
       // Trigger analytics conversions safely (NO PII) BEFORE switching view
       try {
         trackProjectEnquirySuccess({
@@ -268,7 +276,12 @@ export function ContactForm() {
         console.warn("[Analytics] Conversion event dispatch failed:", analyticsErr);
       }
 
-      router.push(`/thank-you?ref=${encodeURIComponent(assignedId)}`);
+      // Pass reference and project type to /thank-you page where ThankYouTracker guarantees Lead firing
+      setTimeout(() => {
+        router.push(
+          `/thank-you?ref=${encodeURIComponent(assignedId)}&type=${encodeURIComponent(formData.projectType)}`
+        );
+      }, 150);
     } catch (err) {
       console.error("Enquiry submission error:", err);
       trackProjectEnquiryError(err instanceof Error ? err.message : "submission_error");

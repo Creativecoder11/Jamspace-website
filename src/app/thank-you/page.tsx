@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { contactInfo } from "@/lib/data/footer";
+import { ThankYouTracker } from "@/components/analytics/ThankYouTracker";
 
 export const metadata: Metadata = {
   title: "Thank You | Jam Space",
@@ -14,11 +15,18 @@ export default async function ThankYouPage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const { ref } = await searchParams;
-  const reference = typeof ref === "string" ? ref : null;
+  const resolvedParams = await searchParams;
+  const refParam = resolvedParams.ref;
+  const typeParam = resolvedParams.type;
+
+  const reference = typeof refParam === "string" ? refParam : null;
+  const projectType = typeof typeParam === "string" ? typeParam : "Residential";
 
   return (
     <section className="py-24 md:py-40">
+      {/* Fires Meta Pixel Lead event for the thank you page */}
+      <ThankYouTracker submissionId={reference} projectType={projectType} />
+
       <Container className="max-w-2xl text-center">
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent/10 text-accent">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
