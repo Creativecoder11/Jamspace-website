@@ -4,7 +4,6 @@ import { SmoothScrollProvider } from "@/lib/lenis";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnimatedFavicon } from "@/components/ui/AnimatedFavicon";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { FacebookPixel } from "@/components/analytics/FacebookPixel";
 import { AttributionTracker } from "@/components/analytics/AttributionTracker";
 import { CookieConsent } from "@/components/analytics/CookieConsent";
@@ -49,7 +48,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
   const fbPixelId = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-PMJR3X8R";
 
@@ -89,7 +87,6 @@ export default function RootLayout({
           <Footer />
         </SmoothScrollProvider>
 
-        {gaId && <GoogleAnalytics gaId={gaId} />}
         {fbPixelId && <FacebookPixel pixelId={fbPixelId} />}
         <AttributionTracker />
         <CookieConsent />

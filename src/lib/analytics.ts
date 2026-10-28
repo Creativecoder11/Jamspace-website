@@ -1,12 +1,12 @@
 "use client";
 
-import { sendGAEvent } from "@next/third-parties/google";
 import { trackFBEvent } from "@/components/analytics/FacebookPixel";
 import type { AttributionData } from "@/lib/attribution";
 
 /**
- * Pushes events to window.dataLayer
- * Note: PII (Name, Phone, Email, Address, Message) must NEVER be included.
+ * Pushes events to window.dataLayer.
+ * GA4 and other Google tags are configured in GTM from these events —
+ * do not send gtag() events directly, or GA4 will count them twice.
  */
 export function pushDataLayer(event: string, payload?: Record<string, unknown>): void {
   if (typeof window === "undefined") return;
@@ -29,10 +29,6 @@ export function pushDataLayer(event: string, payload?: Record<string, unknown>):
 export function trackContactFormStart(projectType?: string): void {
   const pType = projectType || "Residential";
   pushDataLayer("contact_form_start", {
-    form_name: "contact_us",
-    project_type: pType,
-  });
-  sendGAEvent("event", "form_start", {
     form_name: "contact_us",
     project_type: pType,
   });
@@ -62,14 +58,14 @@ export interface ProjectEnquiryLeadData {
 /**
  * Track successful project enquiry submission
  * Maps to:
- * - DataLayer: project_enquiry_success, generate_lead, lead (with all form fields & user_data)
- * - GA4: generate_lead (Key Event with custom dimensions)
+ * - DataLayer: generate_lead (single lead event, with all form fields & user_data)
  * - Meta Pixel: Lead (Standard Event)
  */
 export function trackProjectEnquirySuccess(data: ProjectEnquiryLeadData): void {
   const attr = (data.attribution || {}) as Record<string, unknown>;
 
-  const payload: Record<string, unknown> = {
+  // 1. DataLayer for GTM: one lead event per submission
+  pushDataLayer("generate_lead", {
     form_name: "contact_us",
     submission_id: data.submissionId,
     project_type: data.projectType,
@@ -77,6 +73,8 @@ export function trackProjectEnquirySuccess(data: ProjectEnquiryLeadData): void {
     budget: data.budget || "not sure",
     expected_start: data.expectedStart || "not sure",
     notes: data.notes || "",
+    currency: "BDT",
+    value: 0,
     // Client contact info for GTM tags (Google Ads Enhanced Conversions, CRM webhooks)
     client_name: data.name || "",
     client_email: data.email || "",
@@ -96,47 +94,9 @@ export function trackProjectEnquirySuccess(data: ProjectEnquiryLeadData): void {
         country: "BD",
       },
     },
-  };
-
-  // 1. DataLayer for GTM: Push full form data under custom event "project_enquiry_success"
-  pushDataLayer("project_enquiry_success", payload);
-
-  // Also push standard "generate_lead" and "lead" events for easy GTM triggers
-  pushDataLayer("generate_lead", {
-    form_name: "contact_us",
-    submission_id: data.submissionId,
-    project_type: data.projectType,
-    location: data.location || "",
-    budget: data.budget || "not sure",
-    currency: "BDT",
-    value: 0,
   });
 
-  pushDataLayer("lead", {
-    form_name: "contact_us",
-    submission_id: data.submissionId,
-    project_type: data.projectType,
-    client_name: data.name || "",
-    client_email: data.email || "",
-    client_phone: data.phone || "",
-  });
-
-  // 2. GA4 key conversion event
-  try {
-    sendGAEvent("event", "generate_lead", {
-      project_type: data.projectType,
-      form_name: "contact_us",
-      currency: "BDT",
-      value: 0,
-      transaction_id: data.submissionId,
-      location: data.location || "",
-      budget: data.budget || "not sure",
-    });
-  } catch (err) {
-    console.warn("[Analytics] GA4 generate_lead error:", err);
-  }
-
-  // 3. Meta Pixel standard Lead event
+  // 2. Meta Pixel standard Lead event
   try {
     trackFBEvent("Lead", {
       content_name: data.projectType,
@@ -164,15 +124,11 @@ export function trackProjectEnquiryError(errorType: string): void {
  * Track primary consultation CTA click (e.g. "Let's Discuss Your Project", "Start a Project", "Book a Consultation")
  * Maps to:
  * - DataLayer: consultation_cta_click
- * - GA4: consultation_cta_click
  * - Meta Pixel: InitiateCheckout (Lead Intent)
  */
 export function trackConsultationCTAClick(location: string): void {
   pushDataLayer("consultation_cta_click", {
     cta_label: "Let's Discuss Your Project",
-    cta_location: location,
-  });
-  sendGAEvent("event", "consultation_cta_click", {
     cta_location: location,
   });
   try {
@@ -190,15 +146,10 @@ export function trackConsultationCTAClick(location: string): void {
  * Track WhatsApp contact link click
  * Maps to:
  * - DataLayer: whatsapp_contact_click
- * - GA4: whatsapp_contact_click
  * - Meta Pixel: Contact (Direct Chat Lead)
  */
 export function trackWhatsAppClick(location: string): void {
   pushDataLayer("whatsapp_contact_click", {
-    channel: "whatsapp",
-    click_location: location,
-  });
-  sendGAEvent("event", "whatsapp_contact_click", {
     channel: "whatsapp",
     click_location: location,
   });
@@ -218,15 +169,10 @@ export function trackWhatsAppClick(location: string): void {
  * Track phone tel: contact link click
  * Maps to:
  * - DataLayer: phone_contact_click
- * - GA4: phone_contact_click
  * - Meta Pixel: Contact (Direct Call Lead)
  */
 export function trackPhoneClick(location: string): void {
   pushDataLayer("phone_contact_click", {
-    channel: "phone",
-    click_location: location,
-  });
-  sendGAEvent("event", "phone_contact_click", {
     channel: "phone",
     click_location: location,
   });
@@ -246,15 +192,10 @@ export function trackPhoneClick(location: string): void {
  * Track mailto: email contact link click
  * Maps to:
  * - DataLayer: email_contact_click
- * - GA4: email_contact_click
  * - Meta Pixel: Contact (Direct Email Lead)
  */
 export function trackEmailClick(location: string): void {
   pushDataLayer("email_contact_click", {
-    channel: "email",
-    click_location: location,
-  });
-  sendGAEvent("event", "email_contact_click", {
     channel: "email",
     click_location: location,
   });
@@ -274,15 +215,10 @@ export function trackEmailClick(location: string): void {
  * Track high-value project or service detail view
  * Maps to:
  * - DataLayer: view_item
- * - GA4: view_item
  * - Meta Pixel: ViewContent
  */
 export function trackViewContent(title: string, category: string): void {
   pushDataLayer("view_item", {
-    item_name: title,
-    item_category: category,
-  });
-  sendGAEvent("event", "view_item", {
     item_name: title,
     item_category: category,
   });
