@@ -266,12 +266,29 @@ export function ContactForm() {
         }
       } catch {}
 
-      // Trigger analytics conversions safely (NO PII) BEFORE switching view
+      // Prepare full lead payload for DataLayer, GTM, GA4, Meta Pixel
+      const leadPayload = {
+        submissionId: assignedId,
+        projectType: formData.projectType,
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        email: formData.email.trim(),
+        location: formData.location.trim(),
+        budget: formData.budget || "not sure",
+        expectedStart: formData.expectedStart || "not sure",
+        notes: formData.notes.trim(),
+        attribution,
+      };
+
+      // Save to sessionStorage so /thank-you page can also reference it
       try {
-        trackProjectEnquirySuccess({
-          projectType: formData.projectType,
-          submissionId: assignedId,
-        });
+        sessionStorage.setItem("last_enquiry_data", JSON.stringify(leadPayload));
+        sessionStorage.setItem("js_last_tracked_lead", assignedId);
+      } catch {}
+
+      // Push all form data to Google Tag Manager dataLayer and fire conversion events
+      try {
+        trackProjectEnquirySuccess(leadPayload);
       } catch (analyticsErr) {
         console.warn("[Analytics] Conversion event dispatch failed:", analyticsErr);
       }

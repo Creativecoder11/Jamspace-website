@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { trackProjectEnquirySuccess } from "@/lib/analytics";
-import { trackFBEvent } from "@/components/analytics/FacebookPixel";
+import {
+  trackProjectEnquirySuccess,
+  pushDataLayer,
+  type ProjectEnquiryLeadData,
+} from "@/lib/analytics";
 
 interface ThankYouTrackerProps {
   submissionId?: string | null;
@@ -29,24 +32,43 @@ export function ThankYouTracker({
         win.fbq?.("consent", "grant");
       } catch {}
 
-      console.log(
-        `%c[Meta Pixel] Firing Lead event on /thank-you page for ref: ${id}`,
-        "color: #00A86B; font-weight: bold; font-size: 14px;"
-      );
+      let cachedData: Partial<ProjectEnquiryLeadData> = {};
+      let alreadyTracked = false;
 
-      // Direct Meta Pixel Lead call
-      trackFBEvent("Lead", {
-        content_name: type,
-        content_category: "Contact Us",
-        currency: "BDT",
-        value: 0,
-      });
+      try {
+        const lastTracked = sessionStorage.getItem("js_last_tracked_lead");
+        if (lastTracked === id) {
+          alreadyTracked = true;
+        }
+        const raw = sessionStorage.getItem("last_enquiry_data");
+        if (raw) {
+          cachedData = JSON.parse(raw);
+        }
+      } catch {}
 
-      // Dispatch GA4 generate_lead & GTM dataLayer
-      trackProjectEnquirySuccess({
-        projectType: type,
-        submissionId: id,
-      });
+      // If not already tracked by ContactForm submission, trigger full conversion
+      if (!alreadyTracked) {
+        trackProjectEnquirySuccess({
+          submissionId: id,
+          projectType: type,
+          name: cachedData.name,
+          phone: cachedData.phone,
+          email: cachedData.email,
+          location: cachedData.location,
+          budget: cachedData.budget,
+          expectedStart: cachedData.expectedStart,
+          notes: cachedData.notes,
+          attribution: cachedData.attribution,
+        });
+      } else {
+        // Form was already tracked on submit; push thank_you_view to dataLayer for GTM pageview-based tags
+        pushDataLayer("thank_you_view", {
+          submission_id: id,
+          project_type: type,
+          location: cachedData.location || "",
+          budget: cachedData.budget || "not sure",
+        });
+      }
     }
   }, [submissionId, projectType]);
 

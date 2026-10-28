@@ -2,6 +2,7 @@
 
 import { sendGAEvent } from "@next/third-parties/google";
 import { trackFBEvent } from "@/components/analytics/FacebookPixel";
+import type { AttributionData } from "@/lib/attribution";
 
 /**
  * Pushes events to window.dataLayer
@@ -45,26 +46,80 @@ export function trackContactFormStart(projectType?: string): void {
   }
 }
 
+export interface ProjectEnquiryLeadData {
+  submissionId: string;
+  projectType: string;
+  name?: string;
+  phone?: string;
+  email?: string;
+  location?: string;
+  budget?: string;
+  expectedStart?: string;
+  notes?: string;
+  attribution?: Partial<AttributionData> | Record<string, unknown>;
+}
+
 /**
  * Track successful project enquiry submission
  * Maps to:
- * - DataLayer: project_enquiry_success
- * - GA4: generate_lead (Key Event)
+ * - DataLayer: project_enquiry_success, generate_lead, lead (with all form fields & user_data)
+ * - GA4: generate_lead (Key Event with custom dimensions)
  * - Meta Pixel: Lead (Standard Event)
  */
-export function trackProjectEnquirySuccess(data: {
-  projectType: string;
-  submissionId: string;
-}): void {
-  const payload = {
-    project_type: data.projectType,
+export function trackProjectEnquirySuccess(data: ProjectEnquiryLeadData): void {
+  const attr = (data.attribution || {}) as Record<string, unknown>;
+
+  const payload: Record<string, unknown> = {
     form_name: "contact_us",
     submission_id: data.submissionId,
+    project_type: data.projectType,
+    location: data.location || "",
+    budget: data.budget || "not sure",
+    expected_start: data.expectedStart || "not sure",
+    notes: data.notes || "",
+    // Client contact info for GTM tags (Google Ads Enhanced Conversions, CRM webhooks)
+    client_name: data.name || "",
+    client_email: data.email || "",
+    client_phone: data.phone || "",
+    // Attribution metadata
+    utm_source: attr.utm_source || "unknown",
+    utm_medium: attr.utm_medium || "unknown",
+    utm_campaign: attr.utm_campaign || "unknown",
+    utm_content: attr.utm_content || "unknown",
+    utm_term: attr.utm_term || "",
+    // Enhanced Conversions format for Google Ads / GA4
+    user_data: {
+      email: data.email || "",
+      phone_number: data.phone || "",
+      address: {
+        city: data.location || "Dhaka",
+        country: "BD",
+      },
+    },
   };
 
-  // 1. DataLayer for GTM (fires custom trigger "project_enquiry_success" & standard "lead")
+  // 1. DataLayer for GTM: Push full form data under custom event "project_enquiry_success"
   pushDataLayer("project_enquiry_success", payload);
-  pushDataLayer("lead", payload);
+
+  // Also push standard "generate_lead" and "lead" events for easy GTM triggers
+  pushDataLayer("generate_lead", {
+    form_name: "contact_us",
+    submission_id: data.submissionId,
+    project_type: data.projectType,
+    location: data.location || "",
+    budget: data.budget || "not sure",
+    currency: "BDT",
+    value: 0,
+  });
+
+  pushDataLayer("lead", {
+    form_name: "contact_us",
+    submission_id: data.submissionId,
+    project_type: data.projectType,
+    client_name: data.name || "",
+    client_email: data.email || "",
+    client_phone: data.phone || "",
+  });
 
   // 2. GA4 key conversion event
   try {
@@ -74,6 +129,8 @@ export function trackProjectEnquirySuccess(data: {
       currency: "BDT",
       value: 0,
       transaction_id: data.submissionId,
+      location: data.location || "",
+      budget: data.budget || "not sure",
     });
   } catch (err) {
     console.warn("[Analytics] GA4 generate_lead error:", err);
@@ -86,6 +143,7 @@ export function trackProjectEnquirySuccess(data: {
       content_category: "Contact Us",
       currency: "BDT",
       value: 0,
+      lead_id: data.submissionId,
     });
   } catch (err) {
     console.warn("[Analytics] Meta Pixel Lead error:", err);
