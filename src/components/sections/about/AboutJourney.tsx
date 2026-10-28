@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { aboutJourneySteps } from "@/lib/data/about";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 const titleClass = {
   pink: "text-accent",
@@ -147,7 +148,12 @@ export function AboutJourney() {
 
                 <div className="mt-6">
                   <MagneticButton>
-                    <Button href="/contact">Start a Project</Button>
+                    <Button
+                      href="/contact"
+                      onClick={() => trackConsultationCTAClick("about_journey_cta")}
+                    >
+                      Start a Project
+                    </Button>
                   </MagneticButton>
                 </div>
               </div>

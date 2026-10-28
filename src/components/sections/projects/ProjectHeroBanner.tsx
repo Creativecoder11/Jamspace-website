@@ -1,10 +1,20 @@
+"use client";
+
+import { useEffect } from "react";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import Image from "next/image";
 import type { Project } from "@/lib/types";
+import { trackConsultationCTAClick, trackViewContent } from "@/lib/analytics";
 
 export default function ProjectHeroBanner({ project }: { project: Project }) {
+    useEffect(() => {
+        if (project?.name) {
+            trackViewContent(project.name, project.service || "Interior Design Project");
+        }
+    }, [project?.name, project?.service]);
+
     return (
         <section>
             <div className="mt-25 md:mt-30 md:border-y border-border">
@@ -19,7 +29,14 @@ export default function ProjectHeroBanner({ project }: { project: Project }) {
                     <div className="md:w-1/3 border-border md:pl-8 md:py-8 px-4 md:px-0">
                         <p className="text-muted">{project.heroDescription}</p>
                         <div className="mt-3 md:mt-6">
-                            <MagneticButton><Button href="/contact">Start a Project</Button></MagneticButton>
+                            <MagneticButton>
+                                <Button
+                                    href="/contact"
+                                    onClick={() => trackConsultationCTAClick(`project_hero_${project.slug}`)}
+                                >
+                                    Start a Project
+                                </Button>
+                            </MagneticButton>
                         </div>
                     </div>
                 </div>

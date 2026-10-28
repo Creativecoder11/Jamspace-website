@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { services } from "@/lib/data/services";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 function ArrowIcon({ className = "" }: { className?: string }) {
   return (
@@ -70,7 +71,12 @@ export function ServicesSection() {
 
             <div className="mt-3 md:mt-6">
               <MagneticButton>
-                <Button href="/contact">Start a Project</Button>
+                <Button
+                  href="/contact"
+                  onClick={() => trackConsultationCTAClick("services_overview_hero")}
+                >
+                  Start a Project
+                </Button>
               </MagneticButton>
             </div>
           </div>

@@ -10,6 +10,7 @@ import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { BlogCard } from "@/components/ui/BlogCard";
 import { blogs } from "@/lib/data/blogs";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 export function BlogsGrid() {
     const containerRef = useRef<HTMLElement>(null);
@@ -117,7 +118,10 @@ export function BlogsGrid() {
 
                             <div className="mt-3 md:mt-6">
                                 <MagneticButton>
-                                    <Button href="/contact">
+                                    <Button
+                                        href="/contact"
+                                        onClick={() => trackConsultationCTAClick("blogs_grid_header")}
+                                    >
                                         Start a Project
                                     </Button>
                                 </MagneticButton>

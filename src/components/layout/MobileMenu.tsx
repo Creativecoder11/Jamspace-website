@@ -7,7 +7,7 @@ import type { NavLink } from "@/lib/types";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import { contactInfo } from "@/lib/data/footer";
-import { trackConsultationCTAClick, trackPhoneClick } from "@/lib/analytics";
+import { trackConsultationCTAClick, trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 
 interface MobileMenuProps {
   links: NavLink[];
@@ -137,6 +137,10 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
           </a>
           <a
             href={`mailto:${contactInfo.email}`}
+            onClick={() => {
+              trackEmailClick("mobile_menu");
+              onClose();
+            }}
             className="text-sm leading-[120%] hover:text-accent"
           >
             {contactInfo.email}

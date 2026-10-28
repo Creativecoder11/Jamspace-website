@@ -8,6 +8,7 @@ import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { FacebookPixel } from "@/components/analytics/FacebookPixel";
 import { AttributionTracker } from "@/components/analytics/AttributionTracker";
 import { CookieConsent } from "@/components/analytics/CookieConsent";
+import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import { consentDefaultsScript } from "@/lib/consent";
 import "./globals.css";
 // import { Preloader } from "@/components/ui/Preloader";
@@ -74,6 +75,7 @@ export default function RootLayout({
         {fbPixelId && <FacebookPixel pixelId={fbPixelId} />}
         <AttributionTracker />
         <CookieConsent />
+        <FloatingWhatsApp />
       </body>
     </html>
   );

@@ -14,7 +14,7 @@ import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 
 import { footerColumns, contactInfo } from "@/lib/data/footer";
-import { trackConsultationCTAClick, trackPhoneClick } from "@/lib/analytics";
+import { trackConsultationCTAClick, trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 
 import Image from "next/image";
 
@@ -427,6 +427,7 @@ export function Footer() {
                     Phone:{" "}
                     <a
                       href={`tel:${contactInfo.phone.replace(/\s+/g, "")}`}
+                      onClick={() => trackPhoneClick("footer")}
                       className="hover:text-accent"
                     >
                       {contactInfo.phone}
@@ -437,6 +438,7 @@ export function Footer() {
                     Email:{" "}
                     <a
                       href={`mailto:${contactInfo.email}`}
+                      onClick={() => trackEmailClick("footer")}
                       className="hover:text-accent"
                     >
                       {contactInfo.email}

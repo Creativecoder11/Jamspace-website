@@ -10,6 +10,7 @@ import { BrandGlyph } from "@/components/ui/BrandGlyph";
 import { pricingPackages } from "@/lib/data/pricing";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 const headerClass = {
   pink: "bg-accent text-white",
@@ -83,7 +84,12 @@ export function PricingCards() {
 
             <div className="mt-3 md:mt-6">
               <MagneticButton>
-                <Button href="/contact">Contact Us</Button>
+                <Button
+                  href="/contact"
+                  onClick={() => trackConsultationCTAClick("pricing_overview_header")}
+                >
+                  Contact Us
+                </Button>
               </MagneticButton>
             </div>
           </div>
@@ -146,6 +152,11 @@ export function PricingCards() {
                 href="/contact"
                 variant="dark"
                 className="mt-4 md:mt-8 w-full justify-center"
+                onClick={() =>
+                  trackConsultationCTAClick(
+                    `pricing_package_${pkg.name.toLowerCase().replace(/\s+/g, "_")}`
+                  )
+                }
               >
                 Choose Package
               </Button>

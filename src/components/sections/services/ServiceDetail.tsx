@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import type { Service } from "@/lib/types";
+import { trackConsultationCTAClick, trackViewContent } from "@/lib/analytics";
 
 function CheckIcon() {
   return (
@@ -24,6 +25,12 @@ function CheckIcon() {
 
 export function ServiceDetail({ service }: { service: Service }) {
   const containerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (service?.title) {
+      trackViewContent(service.title, "Interior Service");
+    }
+  }, [service?.title]);
 
   useGSAP(
     () => {
@@ -69,7 +76,16 @@ export function ServiceDetail({ service }: { service: Service }) {
             <p className="text-lg text-muted">{service.description}</p>
           )}
           <div className="mt-6">
-            <Button href="/contact">Book a Consultation</Button>
+            <Button
+              href="/contact"
+              onClick={() =>
+                trackConsultationCTAClick(
+                  `service_detail_${(service.slug || service.title || "service").toLowerCase().replace(/\s+/g, "_")}`
+                )
+              }
+            >
+              Book a Consultation
+            </Button>
           </div>
         </div>
       </Container>

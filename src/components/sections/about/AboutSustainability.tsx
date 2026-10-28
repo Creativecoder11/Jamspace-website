@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { aboutSustainability } from "@/lib/data/about";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 export function AboutSustainability() {
   const containerRef = useRef<HTMLElement>(null);
@@ -70,7 +71,12 @@ export function AboutSustainability() {
           </p>
           <div className="mt-3 md:mt-6">
             <MagneticButton>
-              <Button href="/contact">Contact Us Now</Button>
+              <Button
+                href="/contact"
+                onClick={() => trackConsultationCTAClick("about_sustainability_header")}
+              >
+                Contact Us Now
+              </Button>
             </MagneticButton>
           </div>
         </div>

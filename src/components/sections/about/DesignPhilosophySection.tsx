@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { Button } from "@/components/ui/Button";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -159,7 +160,12 @@ export default function DesignPhilosophySection() {
 
               <div className="mt-3 md:mt-6">
                 <MagneticButton>
-                  <Button href="/contact">Start Your Project</Button>
+                  <Button
+                    href="/contact"
+                    onClick={() => trackConsultationCTAClick("design_philosophy_header")}
+                  >
+                    Start Your Project
+                  </Button>
                 </MagneticButton>
               </div>
             </div>

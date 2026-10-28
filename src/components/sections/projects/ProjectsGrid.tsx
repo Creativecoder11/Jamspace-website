@@ -14,6 +14,7 @@ import type { Project } from "@/lib/types";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { useRouter, useSearchParams } from "next/navigation";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 function PinIcon() {
   return (
@@ -180,7 +181,12 @@ export function ProjectsGrid() {
 
             <div className="mt-3 md:mt-6">
               <MagneticButton>
-                <Button href="/contact">Start a Project</Button>
+                <Button
+                  href="/contact"
+                  onClick={() => trackConsultationCTAClick("projects_grid_header")}
+                >
+                  Start a Project
+                </Button>
               </MagneticButton>
             </div>
           </div>

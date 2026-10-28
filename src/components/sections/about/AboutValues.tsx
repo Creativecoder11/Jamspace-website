@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { aboutValues } from "@/lib/data/about";
+import { trackConsultationCTAClick } from "@/lib/analytics";
 
 export function AboutValues() {
   const containerRef = useRef<HTMLElement>(null);
@@ -79,7 +80,12 @@ export function AboutValues() {
 
             <div className="mt-3 md:mt-6">
               <MagneticButton>
-                <Button href="/contact">Contact Us Now</Button>
+                <Button
+                  href="/contact"
+                  onClick={() => trackConsultationCTAClick("about_values_header")}
+                >
+                  Contact Us Now
+                </Button>
               </MagneticButton>
             </div>
           </div>
