@@ -89,7 +89,11 @@ export function FacebookPixel({ pixelId }: { pixelId?: string } = {}) {
  *
  * e.g. trackFBEvent("Lead", { content_name: "Residential" })
  */
-export function trackFBEvent(event: string, params?: Record<string, unknown>) {
+export function trackFBEvent(
+  event: string,
+  params?: Record<string, unknown>,
+  options?: Record<string, unknown>
+) {
   if (typeof window === "undefined") return;
 
   const win = window as unknown as {
@@ -124,16 +128,44 @@ export function trackFBEvent(event: string, params?: Record<string, unknown>) {
     win.fbq = stub;
   }
 
+  // Preserve and support Meta Test Events code (test_event_code)
+  let eventOptions = options ? { ...options } : undefined;
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const codeFromUrl = urlParams.get("test_event_code");
+    if (codeFromUrl) {
+      sessionStorage.setItem("meta_test_event_code", codeFromUrl);
+    }
+    const testCode = codeFromUrl || sessionStorage.getItem("meta_test_event_code");
+    if (testCode) {
+      eventOptions = { ...eventOptions, test_event_code: testCode };
+    }
+  } catch {}
+
   try {
     if (params) {
-      win.fbq("track", event, params);
-      console.log(
-        `%c[Meta Pixel] fbq('track', '${event}')`,
-        "color: #1877F2; font-weight: bold; background: #E7F3FF; padding: 2px 6px; border-radius: 4px;",
-        params
-      );
+      if (eventOptions) {
+        win.fbq("track", event, params, eventOptions);
+        console.log(
+          `%c[Meta Pixel] fbq('track', '${event}', params, options)`,
+          "color: #1877F2; font-weight: bold; background: #E7F3FF; padding: 2px 6px; border-radius: 4px;",
+          params,
+          eventOptions
+        );
+      } else {
+        win.fbq("track", event, params);
+        console.log(
+          `%c[Meta Pixel] fbq('track', '${event}')`,
+          "color: #1877F2; font-weight: bold; background: #E7F3FF; padding: 2px 6px; border-radius: 4px;",
+          params
+        );
+      }
     } else {
-      win.fbq("track", event);
+      if (eventOptions) {
+        win.fbq("track", event, {}, eventOptions);
+      } else {
+        win.fbq("track", event);
+      }
       console.log(
         `%c[Meta Pixel] fbq('track', '${event}')`,
         "color: #1877F2; font-weight: bold; background: #E7F3FF; padding: 2px 6px; border-radius: 4px;"

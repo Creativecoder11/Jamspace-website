@@ -276,11 +276,14 @@ export function ContactForm() {
         console.warn("[Analytics] Conversion event dispatch failed:", analyticsErr);
       }
 
-      // Pass reference and project type to /thank-you page where ThankYouTracker guarantees Lead firing
+      // Pass reference, project type, and all URL parameters (including test_event_code) to /thank-you
       setTimeout(() => {
-        router.push(
-          `/thank-you?ref=${encodeURIComponent(assignedId)}&type=${encodeURIComponent(formData.projectType)}`
+        const queryParams = new URLSearchParams(
+          typeof window !== "undefined" ? window.location.search : ""
         );
+        queryParams.set("ref", assignedId);
+        queryParams.set("type", formData.projectType);
+        router.push(`/thank-you?${queryParams.toString()}`);
       }, 150);
     } catch (err) {
       console.error("Enquiry submission error:", err);
