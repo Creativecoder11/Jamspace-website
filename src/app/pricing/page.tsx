@@ -13,7 +13,7 @@ export default function PricingPage() {
     <>
       <PageHero
         eyebrow="Pricing"
-        image="/images/hero-01.webp"
+        image="/images/hero 1.webp"
       />
       <PricingCards />
       <Faq />
