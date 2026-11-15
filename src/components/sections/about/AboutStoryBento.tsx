@@ -163,10 +163,7 @@ export function AboutStoryBento() {
     <section ref={containerRef} className="pt-15 md:pt-0 pb-15 md:py-20 px-4 md:px-0">
       <Container className="flex flex-col md:pt-14">
         <p className="story-fill text-xl md:text-3xl leading- md:leading-11 font-medium">
-          Founded in 2022, Jam Space is an interior design studio creating
-          thoughtful residential and commercial spaces through creativity,
-          functionality, and timeless craftsmanship. We transform ideas into
-          inspiring environments that reflect every client&apos;s unique vision.
+          Established in Dhaka in 2023, Jam Space brings together interiors, architecture, furniture, and consultancy & visualisation. We begin by listening, then develop ideas around how people live, work and experience a space.
         </p>
       </Container>
 
@@ -186,11 +183,7 @@ export function AboutStoryBento() {
               <div className="absolute bottom-4 left-4 right-4">
                 <div className="rounded-md border border-white/20 bg-white/10 p-4 backdrop-blur-md">
                   <p className="text-sm leading-relaxed text-white">
-                    Founded in 2022, Jam Space is an interior design studio
-                    creating thoughtful residential and commercial spaces
-                    through creativity, functionality, and timeless
-                    craftsmanship. We transform ideas into inspiring
-                    environments that reflect every client&apos;s unique vision.
+                    Clients can engage us for design alone. Where execution is separately commissioned, we coordinate the approved work through an agreed scope, quotation and timeline.
                   </p>
                 </div>
               </div>
@@ -402,8 +395,7 @@ export function AboutStoryBento() {
                 {/* text */}
                 <div>
                   <p className="text-[16px]">
-                    From homes to workplaces, we&apos;re creating thoughtfully
-                    designed spaces across Dhaka, one project at a time.
+                     From homes to workplaces, retail and hospitality, our work spans Dhaka and beyond.
                   </p>
                   <div className="h-1 my-5 border-b border-[#FFFFFF]/40"></div>
                 </div>

@@ -4,27 +4,27 @@ export const aboutStripImages: StripImage[] = [
   {
     image: "/images/bedroom.webp",
     alt: "Bedroom interior with upholstered wall panelling",
-    tickerText: ["BEDROOM INTERIOR", "RESIDENTIAL INTERIORS"],
+    tickerText: ["BEDROOM INTERIOR", "BEDROOM INTERIOR", "BEDROOM INTERIOR"],
   },
   {
     image: "/images/drawing-room.webp",
     alt: "Living room with marble feature wall and lounge seating",
-    tickerText: ["LIVING SPACE", "RESIDENTIAL INTERIORS"],
+    tickerText: ["LIVING SPACE", "LIVING SPACE", "LIVING SPACE"],
   },
   {
     image: "/images/kitchen.webp",
     alt: "Kitchen with island, bar stools and built-in cabinetry",
-    tickerText: ["KITCHEN INTERIOR", "BUILT-IN CABINETRY"],
+    tickerText: ["KITCHEN INTERIOR", "KITCHEN INTERIOR", "KITCHEN INTERIOR"],
   },
   {
     image: "/images/office.webp",
     alt: "Colourful workspace with built-in bookshelves",
-    tickerText: ["OFFICE INTERIOR", "COMMERCIAL INTERIORS"],
+    tickerText: ["OFFICE INTERIOR", "OFFICE INTERIOR", "OFFICE INTERIOR"],
   },
   {
     image: "/images/commercial.webp",
     alt: "Retail interior with arched display shelving",
-    tickerText: ["RETAIL INTERIOR", "COMMERCIAL INTERIORS"],
+    tickerText: ["RETAIL INTERIOR", "RETAIL INTERIOR", "RETAIL INTERIOR"],
   },
 ];
 
@@ -38,20 +38,18 @@ export const aboutMobileTexts = [
 export const aboutMissionVision: {
   key: "mission" | "vision";
   label: string;
-  lead: string;
+  // lead: string;
   text: string;
 }[] = [
     {
       key: "mission",
       label: "Mission",
-      lead: "Our mission",
-      text: "is to create thoughtfully designed spaces that enrich everyday living by combining creativity, functionality, and timeless craftsmanship. Through close collaboration and attention to detail, we transform every client's vision into meaningful environments that inspire for years to come.",
+      text: "To create thoughtful, people-centred design solutions that bring together aesthetics, functionality and purpose. Through collaboration, creativity and attention to detail, we transform individual needs and aspirations into spaces that enrich everyday experiences.",
     },
     {
-      key: "vision",
+      key: "vision",  
       label: "Vision",
-      lead: "Our vision",
-      text: "is to become a leading name in interior design, recognized for redefining everyday spaces with creativity and craftsmanship, and for setting new standards of quality across Bangladesh and beyond.",
+      text: "To shape a future where thoughtful, people-centred design improves everyday experiences, creating meaningful spaces that inspire connection, comfort and a better way of living and working.",
     },
   ];
 
@@ -140,9 +138,9 @@ export const aboutJourneySteps: {
 }[] = [
     {
       index: "01",
-      title: "Discover",
+      title: "Discover & Define",
       description:
-        "We understand your vision, lifestyle, and space before every design decision.",
+        "We listen to your needs and agree on the scope, approach and investment before detailed design begins.",
       accent: "yellow",
       icon: "/discover.svg",
     },
@@ -150,23 +148,23 @@ export const aboutJourneySteps: {
       index: "02",
       title: "Design",
       description:
-        "Ideas evolve into detailed layouts and realistic 3D visualizations.",
+        "We develop layouts, concepts and agreed deliverables, refining the design with your feedback at key reviews.",
       accent: "pink",
       icon: "/design.svg",
     },
     {
       index: "03",
-      title: "Deliver",
+      title: "Realise",
       description:
-        "Every detail is managed with precision, quality, and seamless coordination.",
+        "Where separately commissioned, we coordinate execution of the approved design.",
       accent: "pink",
       icon: "/deliver.svg",
     },
     {
       index: "04",
-      title: "Reveal",
+      title: "Deliver & Stay Connected",
       description:
-        "A final walkthrough ensures every space is complete and ready to enjoy.",
+        "We hand over the agreed deliverables, check in afterwards and welcome your feedback.",
       accent: "teal",
       icon: "/reveal.svg",
     },
@@ -212,20 +210,20 @@ export const aboutTeam: {
 export const aboutSustainability: { index: string; title: string; description: string }[] = [
   {
     index: "01",
-    title: "Environmental",
+    title: "Materials",
     description:
-      "We prioritize durable materials, efficient planning, and thoughtful design solutions that help reduce waste and support healthier indoor environments.",
+      "We consider durability, finish and maintenance when choosing materials for the way each space will be used.",
   },
   {
     index: "02",
-    title: "Economic",
+    title: "Layout",
     description:
-      "Our timeless designs and quality materials minimize future renovations, helping clients maximize their investment for years to come.",
+      "We plan around movement, storage and daily routines, from family life at home to customers and teams at work.",
   },
   {
     index: "03",
-    title: "Social",
+    title: "Feasibility",
     description:
-      "We create comfortable, accessible, and inspiring spaces that enhance everyday living, encourage meaningful collaboration, and promote overall well being for everyone who experiences them.",
+      "We consider detailing, budget and implementation as the design develops, so clients can make informed decisions before work proceeds.",
   },
 ];

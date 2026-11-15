@@ -75,13 +75,13 @@ export const services: Service[] = [
 export const homeServices: (Service & { href: string })[] = [
   {
     index: "01",
-    slug: "interiors",
-    title: "Interiors",
+    slug: "interiors-design",
+    title: "Interiors Design",
     heading: "Homes and Commercial Spaces",
     description:
       "We design residential and commercial interiors around everyday routines, the way teams work and how customers experience a space.",
     image: "/images/services-residential-1.webp",
-    href: "/services#interiors",
+    href: "/services#interiors_design",
     subServices: [
       { label: "Residential Interiors" },
       { label: "Commercial Interiors" },
@@ -91,13 +91,13 @@ export const homeServices: (Service & { href: string })[] = [
   },
   {
     index: "02",
-    slug: "architecture",
-    title: "Architecture",
+    slug: "architecture-design",
+    title: "Architectural Design",
     heading: "Buildings and Their Surroundings",
     description:
       "We develop concepts and layouts for residential and commercial buildings, considering how they relate to the site and how people will use them.",
     image: "/images/projects/pti/hero.webp",
-    href: "/services#architecture",
+    href: "/services#architecture_design",
     subServices: [
       { label: "Residential Buildings" },
       { label: "Commercial Buildings" },
@@ -107,13 +107,13 @@ export const homeServices: (Service & { href: string })[] = [
   },
   {
     index: "03",
-    slug: "furniture",
-    title: "Furniture",
+    slug: "custom-furniture",
+    title: "Custom Furniture",
     heading: "Furniture Designed for the Space",
     description:
       "We design bespoke pieces and built-in furniture around the proportions of a room, storage needs and everyday use.",
     image: "/images/projects/taqwaa/bento-mid.webp",
-    href: "/services#furniture",
+    href: "/services#custom_furniture",
     subServices: [
       { label: "Bespoke Furniture" },
       { label: "Cabinetry" },

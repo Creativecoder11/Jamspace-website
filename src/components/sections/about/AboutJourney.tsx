@@ -100,7 +100,7 @@ export function AboutJourney() {
         <div className="relative flex h-full max-w-335 mx-auto flex-col gap-10 px-4 md:px-0">
           <AnimatedHeading
             as="h2"
-            lines={["The Journey", "Behind Every Space."]}
+            lines={["Our Client", "Experience"]}
             className="text-4xl font-normal leading-tight text-white md:text-6xl md:leading-18"
           />
 
@@ -141,9 +141,7 @@ export function AboutJourney() {
             <div className="journey-copy flex justify-end items-center md:col-span-2 py-4 md:py-0">
               <div className="flex max-w-lg flex-col">
                 <p className="text-white/85">
-                  A seamless journey from the first conversation to the final
-                  handover, ensuring every detail is thoughtfully planned and
-                  expertly executed.
+                  We agree on scope before detailed design begins and invite your input at key reviews. Design-only projects move straight from design to handover. Execution is a separate commission.
                 </p>
 
                 <div className="mt-6">

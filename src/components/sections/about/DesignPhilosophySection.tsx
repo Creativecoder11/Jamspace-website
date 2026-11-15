@@ -24,25 +24,25 @@ interface BenefitItem {
 
 const BENEFITS = [
   {
-    title: "Vision\nDriven Design",
+    title: "Interiors",
     description:
-      "Every project starts by understanding your vision, creating spaces that are meaningful and uniquely yours.",
+      "Thoughtfully designed residential and commercial interiors that balance personal needs, aesthetics and everyday functionality.",
     accent: "pink",
   },
   {
-    title: "Thoughtful\nCraftsmanship",
+    title: "Architecture",
     description:
-      "We combine creativity and functionality to create interiors that are timeless, practical, and beautifully refined.",
+      "Purposeful architectural solutions that connect people, buildings and their surrounding environments.",
     accent: "gold",
   },
   {
-    title: "Collaborative\nJourney",
+    title: "Furniture",
     description:
-      "From the first consultation to the final reveal, we create a seamless and rewarding design experience together.",
+      "Bespoke furniture and built-in solutions designed around individual needs, practical use and spatial harmony.",
     accent: "teal",
   },
   {
-    title: "Lasting\nImpact",
+    title: "Consultancy &\n Visualisation",
     description:
       "We create interiors that inspire everyday living, enhance the way you experience your space, and stand the test of time.",
     accent: "pink",
@@ -146,16 +146,14 @@ export default function DesignPhilosophySection() {
             <div className="md:w-2/3 md:border-r border-border md:pr-0 pb-4 md:py-8">
               <AnimatedHeading
                 as="h2"
-                lines={["Designing Spaces", "That Feel Meaningful."]}
+                lines={["Designed", "Around You."]}
                 className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 md:mx-0"
               />
             </div>
 
             <div className="md:w-1/3 md:border-l border-border md:pl-8 md:py-8 md:mx-0">
               <p className="text-muted">
-                Discover the passion, purpose, and philosophy that shape every
-                space we create, transforming ideas into interiors that inspire
-                everyday living.
+                Jam Space is a multidisciplinary design studio in Dhaka. We design homes, workplaces and commercial spaces around the people who use them.
               </p>
 
               <div className="mt-3 md:mt-6">

@@ -61,13 +61,12 @@ export function AboutSustainability() {
       <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-start md:justify-between px-4 md:px-0">
         <AnimatedHeading
           as="h2"
-          lines={["Designing for", "a Better Tomorrow."]}
+          lines={["Design Decisions", "That Matter."]}
           className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
         />
         <div className="max-w-md">
           <p className="text-muted">
-            Every design decision is guided by responsibility, creating
-            spaces that are sustainable, functional, and built to last.
+            We consider how a space will be used, what its materials need to withstand and how the design can be delivered within the agreed scope.
           </p>
           <div className="mt-3 md:mt-6">
             <MagneticButton>
@@ -75,7 +74,7 @@ export function AboutSustainability() {
                 href="/contact"
                 onClick={() => trackConsultationCTAClick("about_sustainability_header")}
               >
-                Contact Us Now
+                Contact Us
               </Button>
             </MagneticButton>
           </div>
