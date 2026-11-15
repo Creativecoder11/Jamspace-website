@@ -2,23 +2,23 @@ import type { StatItem } from "@/lib/types";
 
 export const stats: StatItem[] = [
   {
-    value: 3,
-    suffix: "+",
-    label: "Years of Experience",
+    value: 2023,
+    suffix: "",
+    label: "Established",
     accent: "pink",
     icon: "lshape",
   },
   {
-    value: 44,
+    value: 52,
     suffix: "+",
-    label: "Projects Completed",
+    label: "Completed Projects",
     accent: "yellow",
     icon: "traiangle",
   },
   {
-    value: 95,
-    suffix: "%",
-    label: "Client Satisfaction",
+    value: 4,
+    suffix: "",
+    label: "Design Disciplines",
     accent: "teal",
     icon: "mshape",
   },

@@ -6,7 +6,7 @@ export const projects: Project[] = [
     slug: "taqwaa-residence",
     name: "Taqwaa Residence",
     location: "Jolshiri Abashan, Narayanganj",
-    category: "Residential Design",
+    category: "Residential Interiors",
     image: "/images/projects/taqwaa.webp",
     hero: true,
 
@@ -66,7 +66,7 @@ export const projects: Project[] = [
     slug: "casa-zaheen",
     name: "Casa Zaheen",
     location: "Jolshiri Abashan, Narayanganj",
-    category: "Residential Design",
+    category: "Residential Interiors",
     image: "/images/projects/casa-zaheen.webp",
     hero: true,
 
@@ -125,7 +125,7 @@ export const projects: Project[] = [
     slug: "eleni",
     name: "Eleni",
     location: "Banani 11",
-    category: "Commercial Design",
+    category: "Commercial Interiors",
     image: "/images/projects/eleni.webp",
     hero: true,
 
@@ -185,7 +185,7 @@ export const projects: Project[] = [
     slug: "greenhub-workspace",
     name: "Greenhub Workspace",
     location: "Green Road, Dhanmondi",
-    category: "Commercial Design",
+    category: "Commercial Interiors",
     image: "/images/projects/green-hub.webp",
     hero: true,
 
@@ -346,7 +346,7 @@ export const projects: Project[] = [
     slug: "pti",
     name: "PTI Skyline",
     location: "Kalshi, Mirpur",
-    category: "Residential Design",
+    category: "Architecture",
     image: "/images/projects/pti.webp",
     hero: true,
 

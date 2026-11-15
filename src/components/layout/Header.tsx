@@ -86,7 +86,7 @@ export function Header() {
               href="/contact"
               onClick={() => trackConsultationCTAClick("header_desktop")}
             >
-              Let&apos;s Discuss Your Project
+              Discuss Your Project
             </Button>
           </MagneticButton>
         </div>

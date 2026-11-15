@@ -70,18 +70,18 @@ export function About() {
           <div className="md:w-2/3  border-r border-border pr-4 md:pr-0 py-5 md:py-8">
             <AnimatedHeading
               as="h2"
-              lines={["Crafting Spaces", "That Inspire."]}
+              lines={["Design Begins", "with People"]}
               className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 mx-4 md:mx-0"
             />
           </div>
           <div className="md:border-l border-t border-border md:w-1/3 pl-5 md:pl-8 py-5 md:py-8 mx-0 md:mx-0">
             <p className="text-muted">
-              Explore a curated collection of spaces, details, and design
-              moments that reflect our passion for timeless interiors and
-              thoughtful craftsmanship.
+              We start by listening to how you live, work or welcome others.
+              That conversation guides the layout, materials and details, from
+              the first concept through to the agreed design.
             </p>
             <div className="mt-3 md:mt-6">
-              <Button href="/about">Learn More About Us</Button>
+              <Button href="/about">About Jam Space</Button>
             </div>
           </div>
         </div>

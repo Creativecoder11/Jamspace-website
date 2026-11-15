@@ -272,7 +272,7 @@ export function Footer() {
           >
             <AnimatedHeading
               as="h2"
-              lines={["Let's Design", "Your", "Dream Space."]}
+              lines={["Tell Us", "What You're", "Planning."]}
               className="text-3xl font-medium leading-tight text-white md:text-subheading"
             />
 
@@ -284,7 +284,7 @@ export function Footer() {
                   className="font-medium"
                   onClick={() => trackConsultationCTAClick("footer_banner")}
                 >
-                  Let&apos;s Discuss Your Project
+                  Discuss Your Project
                 </Button>
               </MagneticButton>
             </div>
@@ -305,9 +305,9 @@ export function Footer() {
 
             <div>
               <p className="mr-4 mt-10 text-base text-muted md:mt-4">
-                Jam Space creates timeless interiors that blend
-                creativity, functionality, and exceptional
-                craftsmanship.
+                Jam Space is a multidisciplinary design studio in
+                Dhaka working across interiors, architecture,
+                furniture, and consultancy &amp; visualisation.
               </p>
 
               <div className="mt-4 flex gap-3 md:mt-6">

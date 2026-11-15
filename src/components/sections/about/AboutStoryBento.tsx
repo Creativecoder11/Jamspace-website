@@ -227,7 +227,7 @@ export function AboutStoryBento() {
                     className={`stat-number flex text-start text-6xl md:text-7xl font-medium leading-none ${accentTextClass[stat.accent]
                       }`}
                   >
-                    <p>03</p>
+                    <p>{stats[0].value}</p>
                   </span>
 
                   <span
@@ -374,22 +374,22 @@ export function AboutStoryBento() {
                     className={`stat-number flex text-start text-6xl md:text-7xl font-medium leading-none ${accentTextClass[stat.accent]
                       }`}
                   >
-                    <p>44</p>
+                    <p>{stats[1].value}</p>
                   </span>
 
                   <span
                     className={`text-6xl md:text-7xl font-medium ${accentTextClass[stat.accent]
                       }`}
                   >
-                    +
+                    {stats[1].suffix}
                   </span>
                 </div>
 
                 {/* Bottom */}
                 <div>
-                  <p className="text-xl font-medium text-white">Projects</p>
+                  <p className="text-xl font-medium text-white">{stats[1].label}</p>
                   <p className="text-[16px] text-white">
-                    Over 20+ successful projects completed.
+                    Homes, workplaces and commercial spaces designed around the people who use them.
                   </p>
                 </div>
               </div>
@@ -516,21 +516,15 @@ export function AboutStoryBento() {
                   <span
                     className="flex text-white text-6xl md:text-7xl font-medium leading-none"
                   >
-                    <p>95</p>
-                  </span>
-
-                  <span
-                    className='text-6xl md:text-7xl text-white font-medium'
-                  >
-                    %
+                    <p>{String(stats[2].value).padStart(2, "0")}</p>
                   </span>
                 </div>
 
                 {/* Bottom */}
                 <div>
-                  <p className="text-xl font-medium text-white">Client Satisfaction</p>
+                  <p className="text-xl font-medium text-white">{stats[2].label}</p>
                   <p className="text-[16px] text-white">
-                    Consistently earning the trust and confidence of our clients.
+                    Interiors, architecture, furniture, and consultancy &amp; visualisation.
                   </p>
                 </div>
               </div>

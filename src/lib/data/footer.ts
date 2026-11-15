@@ -13,10 +13,10 @@ export const footerColumns: FooterColumn[] = [
   {
     title: "Services",
     links: [
-      { label: "Residential Design", href: "/services#residential-design" },
-      { label: "Commercial Design", href: "/services#commercial-design" },
-      { label: "3D Visualization", href: "/services#3d-visualization" },
-      { label: "Design Consultation", href: "/services#consultation-services" },
+      { label: "Interiors", href: "/services#interiors" },
+      { label: "Architecture", href: "/services#architecture" },
+      { label: "Furniture", href: "/services#furniture" },
+      { label: "Consultancy & Visualisation", href: "/services#consultancy-visualisation" },
     ],
   },
   {

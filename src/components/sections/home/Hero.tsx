@@ -99,7 +99,7 @@ export function Hero() {
     <section ref={containerRef} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} className="relative h-[100vh] min-h-[700px] mx-auto overflow-x-hidden overflow-y-hidden">
       <div ref={imageRef} className="absolute inset-0 overflow-x-hidden overflow-y-hidden">
         <div ref={imageCrossfadeRef} className="absolute inset-0">
-          <Image src={activeSlide.heroImage} alt={`Interior design project ${slide} of ${heroSlideCount} by Jam Space`} fill priority sizes="100vw" className="object-cover" />
+          <Image src={activeSlide.heroImage} alt={`${activeSlide.name} — ${activeSlide.category} by Jam Space`} fill priority sizes="100vw" className="object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/50 to-transparent" />
       </div>
@@ -108,8 +108,8 @@ export function Hero() {
         <div className="w-full md:border-t border-white/40">
           <div className="flex flex-col md:flex-row w-full max-w-335 mx-auto gap-10 items-start md:items-end justify-between">
             <div className="md:pb-10 px-4 md:px-0">
-              <AnimatedHeading as="h1" lines={["A Space", "of Your Own."]} className="text-[3rem] leading-[120%] font-normal md:leading-24 text-white md:text-hero" />
-              <p className="hero-subcopy text-base mt-6 max-w-md text-white/85">Every detail is carefully considered to create interiors that reflect your personality while delivering timeless quality.</p>
+              <AnimatedHeading as="h1" lines={["Designed", "Around You."]} className="text-[3rem] leading-[120%] font-normal md:leading-24 text-white md:text-hero" />
+              <p className="hero-subcopy text-base mt-6 max-w-md text-white/85">A multidisciplinary design studio in Dhaka, designing homes, workplaces and spaces around the people who use them.</p>
               <div className="hero-cta mt-4 md:mt-8">
                 <MagneticButton>
                   <Button
@@ -117,7 +117,7 @@ export function Hero() {
                     variant="light"
                     onClick={() => trackConsultationCTAClick("hero_home")}
                   >
-                    Let&apos;s Discuss Your Project
+                    Discuss Your Project
                   </Button>
                 </MagneticButton>
               </div>
@@ -128,7 +128,7 @@ export function Hero() {
             </div>
 
             <div className="flex w-full md:w-auto px-4 md:px-0 flex-col pb-10 gap-4">
-              <p className="text-lg text-white/80 md:ml-30">Our Recent Projects</p>
+              <p className="text-lg text-white/80 md:ml-30">Featured Projects</p>
               <div className="flex w-full flex-col md:flex-row items-stretch md:items-end">
                 <div className="mr-6 w-[100px] hidden md:flex flex-col items-center gap-3 text-white">
                   <span className="text-5xl font-sans font-normal">
@@ -150,6 +150,7 @@ export function Hero() {
                       <div className="text-white">
                         <p className="text-sm font-medium uppercase tracking-wide">{card.name}</p>
                         <p className="mt-1 flex items-center gap-1 text-[11px] text-white/85"><PinIcon />{card.location}</p>
+                        <p className="mt-1 text-[11px] uppercase tracking-wide text-white/70">{card.category}</p>
                       </div>
                       <div className="relative mt-3 flex-1 overflow-hidden rounded-sm">
                         <Image src={card.image} alt={`${card.name} — ${card.location}`} fill sizes="220px" className="object-cover" />

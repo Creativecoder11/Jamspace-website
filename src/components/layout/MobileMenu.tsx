@@ -116,7 +116,7 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
               }}
               tabIndex={isOpen ? 0 : -1}
             >
-              Let&apos;s Discuss Your Project
+              Discuss Your Project
             </Button>
           </div>
         </div>

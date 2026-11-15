@@ -31,14 +31,14 @@ const helveticaNow = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "Jam Space — Interior Design Studio in Dhaka", template: "%s | Jam Space",
+    default: "Jam Space | Multidisciplinary Design Studio in Dhaka", template: "%s | Jam Space",
   },
 
-  description: "Jam Space is a Dhaka-based interior design studio crafting timeless, functional interiors — from residential design to commercial spaces, 3D visualization, and consultation.",
+  description: "Jam Space is a multidisciplinary design studio in Dhaka, designing homes, workplaces and commercial spaces around the people who use them — across interiors, architecture, furniture, and consultancy & visualisation.",
 
   openGraph: {
-    title: "Jam Space — Interior Design Studio in Dhaka",
-    description: "Designed Beyond Walls. Timeless interiors that blend creativity, functionality, and exceptional craftsmanship.",
+    title: "Jam Space | Multidisciplinary Design Studio in Dhaka",
+    description: "Designed Around You. A multidisciplinary design studio in Dhaka, designing homes, workplaces and commercial spaces around the people who use them.",
     type: "website",
   },
 };

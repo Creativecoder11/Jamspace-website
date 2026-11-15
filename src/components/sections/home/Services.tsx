@@ -2,13 +2,14 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { BrandGlyph } from "@/components/ui/BrandGlyph";
-import { services } from "@/lib/data/services";
+import { homeServices as services } from "@/lib/data/services";
 
 function ArrowIcon({ className = "" }: { className?: string }) {
   return (
@@ -104,13 +105,13 @@ export function Services() {
       <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-start md:justify-between">
         <AnimatedHeading
           as="h2"
-          lines={["Designed", "for Every Space."]}
+          lines={["Our", "Services"]}
           className="text-[44px] md:text-6xl font-normal px-5 md:px-0 leading-[120%] md:leading-18"
         />
         <div className="md:max-w-md pl-5 md:pl-5 py-5 md:py-0 md:ms-0">
           <p className="text-muted">
-            From concept to completion, we deliver thoughtful design solutions
-            tailored to every space and every vision.
+            We work across four design disciplines. You can engage us for
+            design alone or commission execution under a separate agreement.
           </p>
           <div className="mt-3 md:mt-6">
             <Button href="/services">View All Services</Button>
@@ -236,22 +237,24 @@ export function Services() {
                         </div>
 
                         {/* Desktop Learn More */}
-                        <button
-                          type="button"
+                        <Link
+                          href={service.href}
+                          aria-label={`Learn more about ${service.title}`}
                           className="hidden md:inline-flex col-start-1 row-start-1 self-end justify-self-end mr-8 mb-8 items-center gap-2 text-white text-sm md:text-base group"
                         >
                           <span className="border-b border-white/60">Learn More</span>
                           <ArrowIcon className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                        </button>
+                        </Link>
 
                         {/* Mobile Learn More */}
-                        <button
-                          type="button"
+                        <Link
+                          href={service.href}
+                          aria-label={`Learn more about ${service.title}`}
                           className="md:hidden col-start-1 row-start-1 self-end justify-self-start ml-4 mb-6 flex items-center gap-2 text-white text-sm group"
                         >
                           <span className="border-b border-white/60">Learn More</span>
                           <ArrowIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                        </button>
+                        </Link>
                       </div>
 
 

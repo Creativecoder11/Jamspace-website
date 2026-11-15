@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
 
-const CIRCLE_TEXT = "* PLAY THE VIDEO * PLAY THE VIDEO * PLAY THE VIDEO * ";
+const CIRCLE_TEXT = "* WATCH THE FILM * WATCH THE FILM * WATCH THE FILM * ";
 
 export function VideoShowcase() {
   const containerRef = useRef<HTMLElement>(null);
@@ -93,7 +93,7 @@ export function VideoShowcase() {
           onClick={() => setIsOpen(true)}
           onMouseEnter={() => badgeRotationTween.current?.timeScale(4)}
           onMouseLeave={() => badgeRotationTween.current?.timeScale(1)}
-          aria-label="Play the video"
+          aria-label="Watch the film"
           className="absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center md:h-40 md:w-40"
         >
           <svg
@@ -119,7 +119,7 @@ export function VideoShowcase() {
             src="/icons/play.png"
             width={140}
             height={140}
-            alt="Play video icon"
+            alt=""
             className="relative z-10 h-20 w-20 md:h-[140px] md:w-[140px]"
           />
         </button>
@@ -129,7 +129,7 @@ export function VideoShowcase() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Jam Space video"
+          aria-label="Jam Space film"
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 p-6"
           onClick={() => setIsOpen(false)}
         >

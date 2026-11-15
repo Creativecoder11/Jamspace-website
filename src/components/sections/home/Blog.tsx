@@ -51,19 +51,19 @@ export function Blog() {
           <div className="md:w-2/3 w-4/5 border-r border-border py-8">
             <AnimatedHeading
               as="h2"
-              lines={["Design", "Insights."]}
+              lines={["Design", "Insights"]}
               className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 mx-4 md:mx-0"
             />
           </div>
 
           <div className="border-t md:border-t-0 border-border md:w-1/3 pl-4 md:pl-8 py-4 md:py-8 mx-0 md:mx-0">
             <p className="text-muted">
-              Explore expert tips, design trends, and practical ideas to help you
-              create spaces that are both beautiful and functional.
+              Practical ideas on planning spaces, choosing materials and using
+              visualisation to make design decisions clearer.
             </p>
 
             <div className="mt-3 md:mt-6">
-              <Button href="/about">Learn More About Us</Button>
+              <Button href="/blog">Read Design Insights</Button>
             </div>
           </div>
         </div>

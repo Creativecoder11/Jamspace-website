@@ -66,3 +66,75 @@ export const services: Service[] = [
     ],
   },
 ];
+
+/**
+ * Homepage services accordion — the four design disciplines.
+ * `href` points at the matching section of the Services page; update the
+ * anchors once the Services page is restructured around these disciplines.
+ */
+export const homeServices: (Service & { href: string })[] = [
+  {
+    index: "01",
+    slug: "interiors",
+    title: "Interiors",
+    heading: "Homes and Commercial Spaces",
+    description:
+      "We design residential and commercial interiors around everyday routines, the way teams work and how customers experience a space.",
+    image: "/images/services-residential-1.webp",
+    href: "/services#interiors",
+    subServices: [
+      { label: "Residential Interiors" },
+      { label: "Commercial Interiors" },
+      { label: "Renovation" },
+      { label: "Space Planning" },
+    ],
+  },
+  {
+    index: "02",
+    slug: "architecture",
+    title: "Architecture",
+    heading: "Buildings and Their Surroundings",
+    description:
+      "We develop concepts and layouts for residential and commercial buildings, considering how they relate to the site and how people will use them.",
+    image: "/images/projects/pti/hero.webp",
+    href: "/services#architecture",
+    subServices: [
+      { label: "Residential Buildings" },
+      { label: "Commercial Buildings" },
+      { label: "Façades" },
+      { label: "Rooftops & Outdoor Spaces" },
+    ],
+  },
+  {
+    index: "03",
+    slug: "furniture",
+    title: "Furniture",
+    heading: "Furniture Designed for the Space",
+    description:
+      "We design bespoke pieces and built-in furniture around the proportions of a room, storage needs and everyday use.",
+    image: "/images/projects/taqwaa/bento-mid.webp",
+    href: "/services#furniture",
+    subServices: [
+      { label: "Bespoke Furniture" },
+      { label: "Cabinetry" },
+      { label: "Built-In Storage" },
+      { label: "Shelving" },
+    ],
+  },
+  {
+    index: "04",
+    slug: "consultancy-visualisation",
+    title: "Consultancy & Visualisation",
+    heading: "Explore Your Options Before You Decide",
+    description:
+      "We provide design guidance, space planning and 2D and 3D visualisation to help you understand the possibilities for your project.",
+    image: "/images/services-consultation-1.webp",
+    href: "/services#consultancy-visualisation",
+    subServices: [
+      { label: "Design Consultation" },
+      { label: "Space Planning" },
+      { label: "2D Drawings" },
+      { label: "3D Visualisation" },
+    ],
+  },
+];

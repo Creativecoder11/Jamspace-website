@@ -3,53 +3,28 @@ import type { StripImage } from "@/lib/types";
 export const aboutStripImages: StripImage[] = [
   {
     image: "/images/bedroom.webp",
-    alt: "Bedroom interior",
-    tickerText: [
-      "RESIDENTIAL DESIGN",
-      "BEDROOM",
-      "CONTEMPORARY",
-      "LUXURY LIVING",
-    ],
+    alt: "Bedroom interior with upholstered wall panelling",
+    tickerText: ["BEDROOM INTERIOR", "RESIDENTIAL INTERIORS"],
   },
   {
     image: "/images/drawing-room.webp",
-    alt: "Reading nook with artwork",
-    tickerText: [
-      "INTERIOR DESIGN",
-      "MODERN LIVING",
-      "SOFT NEUTRALS",
-      "TIMELESS ELEGANCE",
-    ],
+    alt: "Living room with marble feature wall and lounge seating",
+    tickerText: ["LIVING SPACE", "RESIDENTIAL INTERIORS"],
   },
   {
     image: "/images/kitchen.webp",
-    alt: "Dining room",
-    tickerText: [
-      "KITCHEN INTERIOR",
-      "CONTEMPORARY LUXURY",
-      "FUNCTIONAL DESIGN",
-      "MATERIALITY",
-    ],
+    alt: "Kitchen with island, bar stools and built-in cabinetry",
+    tickerText: ["KITCHEN INTERIOR", "BUILT-IN CABINETRY"],
   },
   {
     image: "/images/office.webp",
-    alt: "Kitchen sink and window",
-    tickerText: [
-      "OFFICE INTERIOR",
-      "BOLD MATERIALS",
-      "CREATIVE SPACES",
-      "MODERN WORKPLACE",
-    ],
+    alt: "Colourful workspace with built-in bookshelves",
+    tickerText: ["OFFICE INTERIOR", "COMMERCIAL INTERIORS"],
   },
   {
     image: "/images/commercial.webp",
-    alt: "Kitchen stove detail",
-    tickerText: [
-      "RETAIL SPACE",
-      "DISPLAY ARCHITECTURE",
-      "ORGANIC FORMS",
-      "AMBIENT MOOD",
-    ],
+    alt: "Retail interior with arched display shelving",
+    tickerText: ["RETAIL INTERIOR", "COMMERCIAL INTERIORS"],
   },
 ];
 
@@ -118,27 +93,27 @@ export const aboutStorySnapshots: {
   icon: "lshape" | "traiangle" | "mshape";
 }[] = [
     {
-      value: 3,
-      suffix: "+",
-      label: "Years of Experience",
-      description: "Over 20+ successful projects completed.",
+      value: 2023,
+      suffix: "",
+      label: "Established",
+      description: "Designing homes, workplaces and commercial spaces in Dhaka since 2023.",
       accent: "yellow",
       icon: "lshape",
     },
     {
-      value: 44,
+      value: 52,
       suffix: "+",
-      label: "Projects",
+      label: "Completed Projects",
       description:
-        "From homes to workplaces, we're creating thoughtfully designed spaces across Dhaka, one project at a time.",
+        "From homes to workplaces, each project is designed around the people who use it.",
       accent: "pink",
       icon: "traiangle",
     },
     {
-      value: 95,
-      suffix: "%",
-      label: "Client Satisfaction",
-      description: "Consistently earning the trust and confidence of our clients.",
+      value: 4,
+      suffix: "",
+      label: "Design Disciplines",
+      description: "Interiors, architecture, furniture, and consultancy & visualisation.",
       accent: "teal",
       icon: "mshape",
     },

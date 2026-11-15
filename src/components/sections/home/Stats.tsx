@@ -102,9 +102,11 @@ export function Stats() {
                     </span>
                   ))}
               </span>
-              <span className={`text-7xl md:text-8xl font-medium ${accentTextClass[stat.accent]}`}>
-                {stat.suffix}
-              </span>
+              {stat.suffix && (
+                <span className={`text-7xl md:text-8xl font-medium ${accentTextClass[stat.accent]}`}>
+                  {stat.suffix}
+                </span>
+              )}
             </div>
             <p className="text-foreground text-center text-xl md:text-3xl">{stat.label}</p>
           </div>

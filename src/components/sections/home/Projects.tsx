@@ -147,13 +147,14 @@ export function Projects() {
       <Container className="flex flex-col gap-4 md:gap-8 md:flex-row md:items-end md:justify-between px-4 md:pt-22.5 pt-10 pb-10 md:px-0">
         <AnimatedHeading
           as="h2"
-          lines={["Spaces", "We've Transformed."]}
+          lines={["Selected", "Projects"]}
           className="text-[42px] md:text-6xl font-normal leading-[120%] md:leading-18"
         />
         <div className="max-w-md md:pl-5 md:ms-0">
           <p className="text-muted">
-            A curated collection of spaces thoughtfully designed to reflect each
-            client&apos;s vision, lifestyle, and purpose.
+            Explore homes, workplaces, retail spaces and architectural projects.
+            Each project shows how the design responds to its brief, its setting
+            and the people who use it.
           </p>
         </div>
       </Container>
@@ -245,7 +246,7 @@ export function Projects() {
                 target="_blank"
                 className="group inline-flex items-center gap-2 rounded-xl md:px-6 px-2 md:py-3 py-2 text-sm tracking-wide transition-colors duration-300 bg-accent text-accent-foreground font-medium hover:bg-foreground"
               >
-                See Details
+                View Project
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="12"
