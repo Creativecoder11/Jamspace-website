@@ -3,23 +3,23 @@ import type { FaqItem } from "@/lib/types";
 /** Shared across Pricing and Contact — both pages show the same FAQ list. */
 export const faqItems: FaqItem[] = [
   {
-    question: "What types of interior design projects do you undertake?",
+    question: "What’s the difference between Free Project Discovery and Jam Session?",
     answer:
-      "We specialize in residential and commercial interior design, along with 3D visualization and professional design consultation. Every project is tailored to your unique needs and vision.",
+      "Free Project Discovery is an introductory discussion to understand your project and suggest a next step. Jam Session is a paid, 60-minute professional consultation with personalised guidance and a brief written action summary. Custom drawings are excluded from both.",
   },
   {
-    question: "How does the design process work?",
+    question: "How is my design fee calculated?",
     answer:
-      "We begin with a consultation to understand your goals, followed by concept development, 3D visualization, material selection, and final execution — with your input at every stage.",
+      "We quote a fixed fee once we understand the scope, complexity and deliverables. Included drawings, visualisations and revision allowances are set out in your design agreement.",
   },
   {
-    question: "Can I see the design before construction begins?",
+    question: "Can I hire Jam Space for design only?",
     answer:
-      "Yes. Every project includes 3D renders and walkthroughs so you can review and approve the design before any construction work starts.",
+      "Yes. You can commission design alone. If you’d like Jam Space to execute the approved design, we’ll prepare a separate proposal and agreement.",
   },
   {
-    question: "How long does an interior design project take?",
+    question: "When will I know the project timeline?",
     answer:
-      "Timelines vary by scope, but most residential projects take 4–8 weeks for design and a few months for execution, depending on size and complexity.",
+      "We discuss your target dates during discovery and confirm the design timeline when we agree on the scope. If you commission execution, its schedule is set out in the separate proposal.",
   },
 ];

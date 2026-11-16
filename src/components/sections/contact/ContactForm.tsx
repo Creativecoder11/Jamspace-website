@@ -326,7 +326,7 @@ export function ContactForm() {
                 className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
               />
               <p className="mt-2 md:mt-4 max-w-md text-muted">
-                A Space of Your Own. Tell us a little about your space. Our team will get in touch to understand what you’re planning.
+                Tell us what you’re planning and how we can help. Our team will get in touch to discuss the next step.
               </p>
             </div>
 
