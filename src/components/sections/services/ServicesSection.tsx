@@ -65,8 +65,7 @@ export function ServicesSection() {
 
           <div className="md:w-1/3 md:border-l border-border md:pl-8 pb-4 md:py-8 mx-4 md:mx-0">
             <p className="text-muted">
-              Explore our range of interior design services, crafted to create
-              spaces that are functional, timeless, and uniquely yours.
+              Explore our four design disciplines for homes, workplaces and commercial spaces. Engage us for design alone or commission execution under a separate agreement.
             </p>
 
             <div className="mt-3 md:mt-6">

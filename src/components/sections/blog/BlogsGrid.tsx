@@ -111,9 +111,7 @@ export function BlogsGrid() {
                     <div className="md:w-1/3 md:pl-8 pb-4 md:py-8 px-4 md:px-0 flex items-center">
                         <div>
                             <p className="text-muted">
-                                Explore our latest insights, design ideas, expert
-                                tips, and inspiration to help you create spaces
-                                that feel beautiful and work effortlessly.
+                                Explore how we plan spaces, choose materials and develop ideas across interiors, architecture and furniture. Find practical guidance for decisions you’ll make along the way.
                             </p>
 
                             <div className="mt-3 md:mt-6">

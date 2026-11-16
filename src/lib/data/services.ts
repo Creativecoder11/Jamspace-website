@@ -3,9 +3,9 @@ import type { Service } from "@/lib/types";
 export const services: Service[] = [
   {
     index: "01",
-    slug: "residential-projects",
-    title: "Residential Design",
-    shortdescription: "Beautiful, functional homes tailored to your lifestyle.",
+    slug: "interiors-design",
+    title: "Interiors Design",
+    shortdescription: "Residential and commercial interiors designed around how people live, work and use a space.",
     heading: "Designing Homes That Feel Like Home",
     description:
       "Create warm, functional, and timeless interiors tailored to your lifestyle.",
@@ -19,10 +19,10 @@ export const services: Service[] = [
   },
   {
     index: "02",
-    slug: "commercial-projects",
-    title: "Commercial Design",
+    slug: "architecture-design",
+    title: "Architecture Design",
     heading: "Spaces Built for Business",
-    shortdescription: "Purposeful interiors that elevate work and business.",
+    shortdescription: "Design for residential and commercial buildings, façades and outdoor spaces, shaped by their site and use.",
     description:
       "Functional, on-brand commercial interiors designed to perform as well as they look.",
     image: "/images/services-commercial-1.webp",
@@ -35,10 +35,10 @@ export const services: Service[] = [
   },
   {
     index: "03",
-    slug: "contact",
-    title: "3D Visualization",
+    slug: "custom-furniture",
+    title: "Custom Furniture",
     heading: "See It Before It's Built",
-    shortdescription: "Realistic visuals that bring your ideas to life.",
+    shortdescription: "Bespoke furniture, cabinetry and built-in storage designed to fit the space and its everyday use.",
     description:
       "Photorealistic renders and walkthroughs that let you approve every detail up front.",
     image: "/images/services-3d-1.webp",
@@ -51,10 +51,10 @@ export const services: Service[] = [
   },
   {
     index: "04",
-    slug: "contact",
-    title: "Consultation Services",
+    slug: "consultancy-visualisation",
+    title: "Consultancy & Visualisation",
     heading: "Expert Guidance, Start to Finish",
-    shortdescription: "Expert guidance for confident design decisions.",
+    shortdescription: "Design guidance, space planning, and 2D and 3D visualisation to help you explore your options.",
     description:
       "One-on-one design consultation to help you plan, budget, and scope your project.",
     image: "/images/services-consultation-1.webp",

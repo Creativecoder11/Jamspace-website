@@ -166,16 +166,14 @@ export function ProjectsGrid() {
           <div className="md:w-2/3 md:border-r border-border pb-4 md:py-8">
             <AnimatedHeading
               as="h2"
-              lines={["Spaces", "That Inspire"]}
+              lines={["Explore", "Our Work"]}
               className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 mx-4 md:mx-0"
             />
           </div>
 
           <div className="md:w-1/3 md:border-l border-border md:pl-8 pb-4 md:py-8 mx-4 md:mx-0">
             <p className="text-muted">
-              Explore a curated collection of residential and commercial
-              interiors, thoughtfully designed to balance beauty, functionality,
-              and timeless living.
+              Explore residential interiors, commercial spaces and architectural projects. Each project shows how the design responds to its brief, its setting and the people who use it.
             </p>
 
             <div className="mt-3 md:mt-6">

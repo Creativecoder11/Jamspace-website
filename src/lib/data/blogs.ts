@@ -4,9 +4,9 @@ export const blogs: BlogPost[] = [
   {
     slug: "top-interior-design-trends-transforming-modern-homes",
     category: "Design Trends",
-    title: "Top Interior Design Trends Transforming Modern Homes.",
+    title: "Interior Design Ideas for Modern Homes",
     excerpt:
-      "Every design begins with understanding your vision, lifestyle, and goals, creating spaces that are both visually stunning and effortlessly functional.",
+      "Explore how layout, materials and finishes can respond to everyday routines and changing needs at home.",
     date: "July 12, 2026",
     image: "/images/blog-image-1.webp",
     heroImage: "/images/blogs/blog-1/blog-hero.webp",
@@ -14,38 +14,38 @@ export const blogs: BlogPost[] = [
     readTime: "6 min read",
 
     overview:
-      "Modern interior design is no longer just about aesthetics; it’s about creating environments that adapt to how we live, work, and connect with the spaces around us. Today’s most influential design trends focus on creating homes that feel personal, comfortable, sustainable, and visually timeless. From biophilic elements that bring the outdoors in, to multifunctional spaces that maximize every square foot, homeowners are looking for interiors that respond naturally to changing lifestyles. Thoughtful material choices, layered lighting, smart technology, and flexible layouts are becoming essential parts of creating spaces that feel both beautiful and effortless.",
+      "A modern home is shaped less by passing trends and more by how it is used each day. Layout, materials and finishes all play a part in how comfortable, practical and personal a space feels. Ideas such as flexible rooms, natural materials, layered lighting and built-in storage are popular because they respond to real routines: working from home, cooking and eating together, making space for children or guests, and finding quiet moments to rest. The most useful starting point is not a style, but a clear picture of how you live and how that might change over time.",
 
     overviewImage: "/images/blogs/blog-1/mid-image.webp",
 
     mainContent:
-      "As we move further into the decade, the line between indoor and outdoor living continues to blur. Homeowners are increasingly seeking materials that are not only beautiful but also durable, sustainable, and capable of aging gracefully over time. Natural stone, reclaimed wood, warm timber, textured fabrics, and low-VOC paints have become popular choices for creating interiors that feel grounded and connected to nature. At the same time, neutral palettes are being layered with warmer tones, organic textures, and carefully selected statement pieces to add personality without overwhelming the space. Furthermore, the integration of smart home technology is now seamlessly hidden within bespoke joinery, lighting systems, and architectural details, ensuring that functionality never compromises the visual harmony of a space. The result is an interior that feels sophisticated while remaining comfortable and practical for everyday life.",
+      "Materials and finishes influence how a home looks, how it feels to use and how it wears over time. Timber, stone, textured fabrics and matt surfaces can bring warmth and character, while hard-wearing finishes suit areas that see heavy daily use, such as kitchens, hallways and family rooms. A calm, consistent palette helps rooms connect, and a few considered pieces can add personality without making a space feel busy. Lighting and storage are just as important. A mix of general, task and accent lighting allows a room to work for different activities, and storage planned around what you actually own helps keep surfaces clear. Each choice is a balance between appearance, practicality, maintenance and budget, and the right balance will be different for every household.",
 
     bulletPoints: [
       {
-        heading: "Key Elements of Modern Design",
+        heading: "Ideas Worth Considering",
         items: [
-          "Biophilic design integrating natural light, organic materials, and indoor plants.",
-          "Multifunctional furniture for adaptable living spaces and changing daily routines.",
-          "Sustainable, eco-friendly material selections that balance beauty and durability.",
-          "Layered lighting systems that create atmosphere while supporting everyday activities.",
-          "Hidden smart-home technology for a clean, connected, and clutter-free aesthetic.",
+          "Flexible layouts that allow rooms to adapt as daily routines and household needs change.",
+          "Natural and durable materials chosen for how they look, feel and wear with everyday use.",
+          "Layered lighting that supports different activities at different times of day.",
+          "Built-in storage planned around what you own and where you use it.",
+          "A consistent palette of colours and finishes that helps rooms feel connected.",
         ],
       },
     ],
 
     sideBySideSections: [
       {
-        heading: "The Evolution of Living Spaces",
+        heading: "Designing Rooms That Adapt",
         content:
-          "In the past, rooms often had strict, single purposes. Today, the modern home is much more fluid, allowing spaces to adapt throughout the day. A dining area might double as a workspace, a kitchen can become a social gathering point, and a living room can seamlessly transition into an entertainment hub. This shift requires thoughtful space planning, where zoning is achieved through lighting, texture, furniture placement, and subtle changes in flooring rather than solid walls. Flexible furniture and integrated storage also help spaces respond to different needs without sacrificing their visual character. The goal is to create interiors that feel open and connected while still providing enough definition for each activity.",
+          "Many homes now ask rooms to do more than one job. A dining table may also be a place to work, a kitchen may be where people gather, and a living room may need to be both a family space and somewhere quiet to unwind. Rather than relying on walls, spaces can be defined through furniture placement, rugs, lighting and changes in flooring or finishes. Furniture that can be moved, extended or tucked away, along with storage that keeps work or play items out of sight, helps a room switch between uses. The aim is a space that feels open and connected, while still giving each activity enough definition to work well.",
         image: "/images/blogs/blog-1/the-evolution-of-living-spaces.webp",
         reverse: false,
       },
       {
-        heading: "Pros & Cons of Open-Plan Living",
+        heading: "Weighing Up Open-Plan Living",
         content:
-          "While open-plan layouts foster connection, improve natural light, and make smaller homes feel more spacious, they can also present challenges around privacy, noise, and organization. The solution lies in strategic material choices and thoughtful spatial planning. Plush rugs and upholstered furniture can absorb sound, while acoustic ceiling panels can be integrated discreetly into the architecture. Sliding partitions, curtains, and carefully positioned furniture can create flexible boundaries when privacy is needed without permanently closing off the space. With the right balance of openness and separation, an open-plan interior can provide the social benefits of connected living while still supporting quiet moments and focused activities.",
+          "Open-plan layouts can bring in more natural light, make smaller homes feel larger and keep people connected. They can also bring challenges with noise, cooking smells, privacy and keeping things tidy. Before removing walls or committing to an open layout, it is worth thinking about how the household uses the space at different times of day. Soft furnishings, rugs and upholstered pieces can help absorb sound, while sliding doors, screens, shelving or carefully placed furniture can create separation when it is needed. In some homes, a broken-plan layout, with partly divided zones, may offer a better balance between openness and privacy.",
         image: "/images/blogs/blog-1/pros-cons-of-open-plan-living.webp",
         reverse: true,
       },
@@ -54,10 +54,10 @@ export const blogs: BlogPost[] = [
 
   {
     slug: "how-to-plan-a-space-that-looks-beautiful-and-works-better",
-    category: "Design Guide",
-    title: "How to Plan a Space That Looks Beautiful and Works Better.",
+    category: "Design Guides",
+    title: "How to Plan a Space Around Everyday Use",
     excerpt:
-      "Every successful interior begins with thoughtful planning, balancing your lifestyle, daily routines, and personal taste to create a space that feels beautiful, comfortable, and naturally easy to live in.",
+      "Start with how people move, what they need to store and what they do each day. Those choices shape a layout that feels natural to use.",
     date: "July 12, 2026",
     image: "/images/blog-image-2.webp",
     heroImage: "/images/blogs/blog-2/hero.webp",
@@ -65,36 +65,37 @@ export const blogs: BlogPost[] = [
     readTime: "5 min read",
 
     overview:
-      "Planning a beautiful interior is about much more than choosing colors, furniture, and decorative details. The most successful spaces begin with a clear understanding of how people move, work, relax, and interact within them. From defining functional zones to considering natural light, storage, proportions, and circulation, every decision contributes to the overall experience. A well-planned home should feel effortless, with every element serving a purpose while still reflecting the personality of the people who live there.",
+      "A well-planned space starts with everyday use rather than furniture, colours or finishes. Before making any visual decisions, it helps to understand how people move through the space, what needs to be stored and which activities happen there each day. These practical questions shape the layout, and the layout shapes how comfortable and natural the space feels to use. Once the foundations are clear, materials, furniture and details can be chosen to support them.",
     overviewImage: "/images/blogs/blog-2/mid-image.webp",
 
     mainContent:
-      "The first step in planning any space is understanding how it will actually be used. Instead of starting with furniture or finishes, consider your daily routines and identify the activities that matter most. Think about where you naturally spend time, how people move between rooms, and which areas need flexibility throughout the day. From there, proportions, lighting, furniture placement, and storage can be carefully considered. Natural materials and a consistent palette help create visual continuity, while carefully selected statement pieces introduce character without overwhelming the room. When these elements are planned together, the result is a space that feels considered, practical, and visually balanced.",
+      "A simple way to begin is to walk through a typical day. Where do people enter and leave? Where are bags, shoes and coats dropped? Where does cooking, eating, working, relaxing or homework happen, and at what times? Noting these routines shows which areas need the most space, where storage should sit and which routes need to stay clear. From there, accurate measurements of the room, including doors, windows, radiators, sockets and ceiling heights, allow furniture and fittings to be planned at the right scale. Natural light, views and any fixed elements should also be considered early, as they often influence where certain activities work best. When layout, storage and lighting are planned together around real use, the finishing choices that follow have a much clearer purpose.",
 
     bulletPoints: [
       {
-        heading: "Planning Tips",
+        heading: "Planning Checklist",
         items: [
-          "Measure the space carefully before selecting furniture or finishes.",
-          "Prioritize natural light and keep important circulation paths open.",
-          "Create dedicated zones for work, relaxation, dining, and everyday activities.",
-          "Invest in quality foundational pieces that can evolve with your lifestyle.",
+          "List the activities that happen in the space and who uses it, and when.",
+          "Measure the room accurately, noting doors, windows, sockets and other fixed features.",
+          "Keep main walkways clear so people can move through the space comfortably.",
+          "Plan storage close to where items are used, based on what you need to keep.",
+          "Consider natural light and plan artificial lighting for each activity.",
         ],
       },
     ],
 
     sideBySideSections: [
       {
-        heading: "Flow and Function",
+        heading: "Planning for Movement",
         content:
-          "Good interior design starts with understanding movement. Every room should have a natural rhythm that allows people to move comfortably without constantly navigating around furniture or unnecessary obstacles. Thoughtful circulation creates a sense of openness, even in smaller spaces. Furniture should support the way a room is used rather than simply filling available floor area. By combining practical layouts with carefully considered proportions, designers can create interiors that feel intuitive, comfortable, and connected.",
+          "How people move through a space has a big effect on how it feels. Main routes, such as from the entrance to the kitchen or from the living area to the garden, should be kept clear and wide enough for comfortable use. Furniture placed across these paths can make a room feel cramped, even when there is enough floor area. It also helps to think about where people pause: by the door, at the kitchen worktop or beside a desk. Giving these points enough space and the right surfaces or storage makes daily routines feel easier and more natural.",
         image: "/images/blogs/blog-2/flow-and-function.webp",
         reverse: false,
       },
       {
-        heading: "Creating Balance",
+        heading: "Storage That Fits Daily Life",
         content:
-          "A well-designed interior does not need every element to match. Instead, balance comes from combining different materials, shapes, colors, and textures in a cohesive way. Soft furnishings can add warmth, while architectural details provide structure and definition. Layered lighting can further transform the atmosphere throughout the day, creating brighter areas for activity and softer zones for relaxation. The goal is to create visual harmony while leaving enough contrast and personality for the space to feel individual.",
+          "Storage works best when it is planned around what you own and where you use it. Coats and shoes need a place near the entrance, cooking equipment close to where food is prepared, and work or school items near the desk or table where they are used. Looking at what currently causes clutter is often a good guide to what is missing. Built-in joinery can make use of awkward corners, alcoves and full wall heights, while a mix of open and closed storage allows everyday items to stay within reach and others to be kept out of sight. Planning storage early also helps the finished space stay tidy and easy to maintain.",
         image: "/images/blogs/blog-2/creating-balance.webp",
         reverse: true,
       },
@@ -103,10 +104,10 @@ export const blogs: BlogPost[] = [
 
   {
     slug: "why-3d-visualization-is-essential-before-every-project",
-    category: "3D Visualization",
-    title: "Why 3D Visualization Is Essential Before Every Project.",
+    category: "3D Visualisation",
+    title: "When Is 3D Visualisation Useful?",
     excerpt:
-      "3D visualization brings design ideas to life before construction begins, helping clients understand materials, proportions, lighting, and atmosphere while making confident decisions before work starts.",
+      "See how 3D visuals can help you compare layouts, materials and lighting before decisions are finalised, when visualisation is part of the agreed scope.",
     date: "July 12, 2026",
     image: "/images/blog-image-3.webp",
     heroImage: "/images/blogs/blog-3/hero.webp",
@@ -114,36 +115,37 @@ export const blogs: BlogPost[] = [
     readTime: "6 min read",
 
     overview:
-      "3D visualization has become an essential part of the modern interior design process because it allows ideas to be experienced before they become physical spaces. Instead of relying solely on drawings, samples, or imagination, clients can see how furniture, materials, lighting, colors, and architectural details work together in a realistic environment. This creates a clearer design conversation and makes it easier to identify opportunities or potential issues before construction begins. The result is greater confidence, better communication, and a more predictable final outcome.",
+      "3D visualisation can make it easier to understand a design before decisions are finalised. Plans, drawings and material samples are essential, but they can be hard to picture as a finished room. 3D visuals show how layout, materials, furniture and lighting may work together, helping everyone involved discuss the design with a shared reference. It is not needed for every project, but it can be especially helpful when comparing options or when a space is difficult to imagine from drawings alone. Where it is used, the type and number of visuals are set out as part of the agreed project scope.",
     overviewImage: "/images/blogs/blog-3/mid.webp",
 
     mainContent:
-      "Before construction begins, every major design decision can be explored through detailed digital visualization. Our process allows us to experiment with different layouts, materials, lighting conditions, and furniture arrangements without making costly physical changes. Clients can understand the scale and proportions of a room and see how natural and artificial light will influence the atmosphere at different times of the day. This collaborative approach also makes revisions much easier, allowing the design team and client to refine the concept together. By resolving important decisions digitally, 3D visualization helps reduce uncertainty and ensures that the final space closely reflects the original vision.",
+      "Visualisation tends to be most useful at points where a decision is hard to make on paper. It can help when comparing two or three layout options, testing how a material or colour may look across a large surface, or understanding how a room might feel with different lighting. It can also support conversations about scale and proportion, such as the size of a kitchen island, the height of joinery or the spacing of furniture. Because changes are easier to explore before work begins, visuals can help bring questions forward and give you more confidence in your choices. They are a representation, however, rather than an exact preview. Real materials, natural light and on-site conditions can vary, so visuals work best alongside drawings, samples and conversations with the design team.",
 
     bulletPoints: [
       {
-        heading: "Benefits of 3D Visualization",
+        heading: "When 3D Visuals Can Help",
         items: [
-          "Accurate visualization of materials, colors, furniture, and architectural details.",
-          "Realistic lighting simulations that show how the atmosphere changes throughout the day.",
-          "Early identification of proportion, layout, and spatial planning issues.",
-          "Greater cost control by reducing unexpected changes during construction.",
+          "Comparing different layout options before one is chosen.",
+          "Reviewing how materials, colours and finishes may work together in a space.",
+          "Understanding how lighting may affect the feel of a room.",
+          "Checking scale and proportion for key pieces such as joinery, islands or furniture.",
+          "Sharing the design with family members or other people involved in the decision.",
         ],
       },
     ],
 
     sideBySideSections: [
       {
-        heading: "The Rendering Process",
+        heading: "How 3D Visuals Are Created",
         content:
-          "Creating a convincing interior visualization begins with an accurate digital model of the proposed space. Architectural dimensions, furniture, finishes, lighting, and decorative elements are carefully introduced before realistic materials and textures are applied. Once the environment is built, lighting is adjusted to recreate the intended atmosphere and highlight important architectural features. Multiple views can then be produced, giving clients a complete understanding of how the finished interior will look and feel from different perspectives.",
+          "Visuals are usually based on the agreed layout and measurements for the space. A digital model is built to reflect the room's proportions, along with key elements such as joinery, furniture and fixtures. Materials, colours and finishes are then applied, and lighting is set up to give a sense of the intended atmosphere. One or more views can be produced depending on what needs to be reviewed. The level of detail, number of views and any rounds of revisions depend on what has been included in the project scope, so it is worth agreeing these points at the start.",
         image: "/images/blogs/blog-3/rendering-process.webp",
         reverse: false,
       },
       {
-        heading: "From Vision to Reality",
+        heading: "Using Visuals to Make Decisions",
         content:
-          "The greatest value of visualization is the confidence it creates before construction starts. Design decisions that may feel difficult to imagine on paper become much easier to evaluate when presented in a realistic environment. Clients can compare materials, test alternative layouts, and make informed changes while the project is still flexible. This reduces uncertainty throughout the build and creates a stronger connection between the original concept and the finished interior, ensuring every important detail contributes to the final experience.",
+          "3D visuals are most valuable when they are used to answer specific questions. Before reviewing them, it can help to know which decisions you are trying to make, such as choosing between two layouts or confirming a material palette. Looking at the visuals alongside physical samples and drawings gives a fuller picture, since colours and textures can appear differently on screen. Feedback can then be used to refine the design while it is still flexible. Treated as one part of the design process, rather than a guarantee of the final result, visualisation can support clearer conversations and more confident choices.",
         image: "/images/blogs/blog-3/from-vision-to-reality.webp",
         reverse: true,
       },
