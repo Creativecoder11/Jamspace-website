@@ -88,7 +88,7 @@ export function BlogsGrid() {
     );
 
     const filterClass = (isActive: boolean) =>
-        `w-fit text-left transition-colors ${isActive
+        `w-fit whitespace-nowrap text-left transition-colors ${isActive
             ? "text-lg md:text-3xl font-medium text-foreground"
             : "text-lg md:text-3xl font-normal text-[#1919194D] hover:text-foreground"
         }`;
