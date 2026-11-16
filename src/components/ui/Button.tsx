@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "light" | "inverse" | "dark" | "projectbtn";
+type ButtonVariant = "primary" | "secondary" | "outline" | "light" | "inverse" | "dark" | "projectbtn";
 
 interface BaseProps {
   variant?: ButtonVariant;
@@ -16,6 +16,9 @@ const variants: Record<ButtonVariant, string> = {
   primary: "bg-accent text-accent-foreground font-medium hover:bg-foreground",
   secondary:
     "border border-foreground/20 text-foreground hover:border-foreground",
+  // Accent outline — pairs with a primary button (e.g. Thank You page).
+  outline:
+    "border border-accent text-accent hover:bg-accent hover:text-accent-foreground",
   // For use over photos: white outline, matches the Hero/Services/Video CTAs.
   light:
     "border border-white/70 text-white hover:bg-white hover:text-foreground",
