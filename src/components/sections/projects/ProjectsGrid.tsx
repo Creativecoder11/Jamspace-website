@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
@@ -13,7 +13,7 @@ import { projects } from "@/lib/data/projects";
 import type { Project } from "@/lib/types";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { trackConsultationCTAClick } from "@/lib/analytics";
 
 function PinIcon() {
@@ -78,12 +78,19 @@ function ProjectCard({ project }: { project: Project }) {
 
 export function ProjectsGrid() {
   const containerRef = useRef<HTMLElement>(null);
-  const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-
   const selectedCategory = searchParams.get("category");
+
+  // Filter client-side: the native History API syncs with useSearchParams
+  // without a server round-trip or scroll reset (unlike router.push).
+  const selectCategory = (category: string | null) => {
+    if (category === selectedCategory) return;
+    const url = category
+      ? `/projects?category=${encodeURIComponent(category)}`
+      : "/projects";
+    window.history.pushState(null, "", url);
+  };
 
   const categories = Array.from(new Set(projects.map((p) => p.category)));
   const filtered = selectedCategory
@@ -125,31 +132,8 @@ export function ProjectsGrid() {
     },
     {
       scope: containerRef,
-      dependencies: [activeCategory],
+      dependencies: [selectedCategory],
       revertOnUpdate: true,
-    }
-  );
-
-  useGSAP(
-    () => {
-      gsap.fromTo(
-        ".project-card",
-        {
-          opacity: 0,
-          y: 20,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          stagger: 0.06,
-          ease: "power3.out",
-        }
-      );
-    },
-    {
-      scope: containerRef,
-      dependencies: [activeCategory],
     }
   );
 
@@ -200,7 +184,7 @@ export function ProjectsGrid() {
             <nav className="mt-4 flex flex-col gap-1 md:gap-3">
               <button
                 type="button"
-                onClick={() => router.push("/projects")}
+                onClick={() => selectCategory(null)}
                 aria-pressed={!selectedCategory}
                 className={filterClass(!selectedCategory)}
               >
@@ -212,9 +196,7 @@ export function ProjectsGrid() {
                 <button
                   key={category}
                   type="button"
-                  onClick={() =>
-                    router.push(`/projects?category=${encodeURIComponent(category)}`)
-                  }
+                  onClick={() => selectCategory(category)}
                   aria-pressed={selectedCategory === category}
                   className={filterClass(selectedCategory === category)}
                 >

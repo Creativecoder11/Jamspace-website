@@ -229,9 +229,9 @@ export function Footer() {
     <footer ref={containerRef} className="bg-background">
       {/* CTA */}
       <div className="pb-13 pt-13 md:pb-25 md:pt-25">
-        <p className="mb-8 text-center text-sm text-muted">
+        {/* <p className="mb-8 text-center text-sm text-muted">
           Bring Your Vision to Life
-        </p>
+        </p> */}
 
         <div className="relative h-65 overflow-hidden md:h-100">
           {/* Moving image track */}

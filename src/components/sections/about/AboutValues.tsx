@@ -66,16 +66,14 @@ export function AboutValues() {
           <div className="md:w-2/3 md:border-r border-border pb-4 md:py-8">
             <AnimatedHeading
               as="h2"
-              lines={["Designing Spaces", "That Feel Meaningful."]}
+              lines={["Our Values"]}
               className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 mx-4 md:mx-0"
             />
           </div>
 
           <div className="md:w-1/3 md:border-l border-border md:pl-8 md:py-8 mx-4 md:mx-0">
             <p className="text-muted">
-              Discover the passion, purpose, and philosophy that shape every
-              space we create, transforming ideas into interiors that inspire
-              everyday living.
+              Every project has different priorities. These principles guide the decisions we make from the first conversation through to handover.
             </p>
 
             <div className="mt-3 md:mt-6">

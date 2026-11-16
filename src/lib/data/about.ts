@@ -4,7 +4,7 @@ export const aboutStripImages: StripImage[] = [
   {
     image: "/images/bedroom.webp",
     alt: "Bedroom interior with upholstered wall panelling",
-    tickerText: ["BEDROOM INTERIOR", "BEDROOM INTERIOR", "BEDROOM INTERIOR"],
+    tickerText: ["BEDROOM LAYOUT", "BEDROOM LAYOUT", "BEDROOM LAYOUT"],
   },
   {
     image: "/images/drawing-room.webp",
@@ -14,17 +14,17 @@ export const aboutStripImages: StripImage[] = [
   {
     image: "/images/kitchen.webp",
     alt: "Kitchen with island, bar stools and built-in cabinetry",
-    tickerText: ["KITCHEN INTERIOR", "KITCHEN INTERIOR", "KITCHEN INTERIOR"],
+    tickerText: ["KITCHEN SPACE", "KITCHEN SPACE", "KITCHEN SPACE"],
   },
   {
     image: "/images/office.webp",
     alt: "Colourful workspace with built-in bookshelves",
-    tickerText: ["OFFICE INTERIOR", "OFFICE INTERIOR", "OFFICE INTERIOR"],
+    tickerText: ["OFFICE LOBBY", "OFFICE LOBBY", "OFFICE LOBBY"],
   },
   {
     image: "/images/commercial.webp",
     alt: "Retail interior with arched display shelving",
-    tickerText: ["RETAIL INTERIOR", "RETAIL INTERIOR", "RETAIL INTERIOR"],
+    tickerText: ["RETAIL OUTLET", "RETAIL OUTLET", "RETAIL OUTLET"],
   },
 ];
 
@@ -118,15 +118,15 @@ export const aboutStorySnapshots: {
   ];
 
 export const aboutValues: { label: string; accent: Accent }[] = [
-  { label: "Creativity", accent: "pink" },
-  { label: "Sustainability", accent: "yellow" },
-  { label: "Quality", accent: "teal" },
-  { label: "Innovation", accent: "teal" },
-  { label: "Client - Centric", accent: "pink" },
-  { label: "Integrity", accent: "yellow" },
-  { label: "Collaboration", accent: "yellow" },
+  { label: "Understanding People", accent: "pink" },
+  { label: "Design with Purpose", accent: "yellow" },
+  { label: "Creative Thinking", accent: "teal" },
+  { label: "Working Together", accent: "teal" },
+  { label: "Taking Responsibility", accent: "pink" },
+  { label: "Clear Scope", accent: "yellow" },
+  { label: "Budget Awareness", accent: "yellow" },
   { label: "Attention to Detail", accent: "teal" },
-  { label: "Flexibility", accent: "pink" },
+  { label: "Material Reuse", accent: "pink" },
 ];
 
 export const aboutJourneySteps: {
@@ -138,33 +138,33 @@ export const aboutJourneySteps: {
 }[] = [
     {
       index: "01",
-      title: "Discover & Define",
+      title: "Proposal",
       description:
-        "We listen to your needs and agree on the scope, approach and investment before detailed design begins.",
+        "If you choose execution, we provide a separate proposal covering scope, specifications, cost and timeline.",
       accent: "yellow",
       icon: "/discover.svg",
     },
     {
       index: "02",
-      title: "Design",
+      title: "Realise",
       description:
-        "We develop layouts, concepts and agreed deliverables, refining the design with your feedback at key reviews.",
+        "Where separately commissioned, we coordinate execution of the approved design under the agreed contract.",
       accent: "pink",
       icon: "/design.svg",
     },
     {
       index: "03",
-      title: "Realise",
+      title: "Deliver",
       description:
-        "Where separately commissioned, we coordinate execution of the approved design.",
+        "We review the agreed scope and hand over the deliverables. Final design files follow written approval and final payment.",
       accent: "pink",
       icon: "/deliver.svg",
     },
     {
       index: "04",
-      title: "Deliver & Stay Connected",
+      title: "Connection",
       description:
-        "We hand over the agreed deliverables, check in afterwards and welcome your feedback.",
+        "After handover, we check in, welcome feedback and remain available for relevant support.",
       accent: "teal",
       icon: "/reveal.svg",
     },

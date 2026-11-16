@@ -76,9 +76,7 @@ export function About() {
           </div>
           <div className="md:border-l border-t border-border md:w-1/3 pl-5 md:pl-8 py-5 md:py-8 mx-0 md:mx-0">
             <p className="text-muted">
-              We start by listening to how you live, work or welcome others.
-              That conversation guides the layout, materials and details, from
-              the first concept through to the agreed design.
+              Use short labels that describe the image shown, such as Bedroom Interior, Reading Nook, Dining Space, Kitchen Detail or Built-In Storage.
             </p>
             <div className="mt-3 md:mt-6">
               <Button href="/about">About Jam Space</Button>

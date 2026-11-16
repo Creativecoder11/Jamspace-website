@@ -24,19 +24,19 @@ interface BenefitItem {
 
 const BENEFITS = [
   {
-    title: "Interiors",
+    title: "Interiors Design",
     description:
       "Thoughtfully designed residential and commercial interiors that balance personal needs, aesthetics and everyday functionality.",
     accent: "pink",
   },
   {
-    title: "Architecture",
+    title: "Architectural Design",
     description:
       "Purposeful architectural solutions that connect people, buildings and their surrounding environments.",
     accent: "gold",
   },
   {
-    title: "Furniture",
+    title: "Custom Furniture",
     description:
       "Bespoke furniture and built-in solutions designed around individual needs, practical use and spatial harmony.",
     accent: "teal",
@@ -44,7 +44,7 @@ const BENEFITS = [
   {
     title: "Consultancy &\n Visualisation",
     description:
-      "We create interiors that inspire everyday living, enhance the way you experience your space, and stand the test of time.",
+      "Expert design guidance, planning and visualisation to help transform ideas into clear, considered design directions.",
     accent: "pink",
   },
 ].slice(0, 4) as BenefitItem[];

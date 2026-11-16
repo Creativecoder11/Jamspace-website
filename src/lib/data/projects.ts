@@ -346,7 +346,7 @@ export const projects: Project[] = [
     slug: "pti",
     name: "PTI Skyline",
     location: "Kalshi, Mirpur, Dhaka",
-    category: "Mixed-Use Architecture",
+    category: "Architectural Design",
     image: "/images/projects/pti.webp",
     hero: true,
 
