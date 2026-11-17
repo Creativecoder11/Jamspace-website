@@ -409,7 +409,7 @@ export function AboutStoryBento() {
             <div className="flex h-full flex-col xl:flex-row gap-10 xl:gap-8">
               <div className="flex min-w-0 flex-1 flex-col">
                 {/* heading */}
-                <h3 className="text-[28px] md:text-[20px] leading-[1.15] font-medium">
+                <h3 className="text-[18px] md:text-[20px] leading-[1.15] font-medium">
                   We design homes around how people live and commercial spaces
                   around how people work, shop and gather
                 </h3>
