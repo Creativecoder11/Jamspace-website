@@ -132,3 +132,70 @@ export interface FaqItem {
   question: string;
   answer: string;
 }
+
+export interface ServiceLink {
+  label: string;
+  href: string;
+}
+
+/** Content for a service details page (/services/[slug]). Numbering like "(01)" is added automatically. */
+export interface ServiceDetailContent {
+  /** Used in image alt text, e.g. "Interior Design". */
+  name: string;
+  meta: { title: string; description: string };
+  hero: {
+    /** Each entry is one line of the big heading. */
+    titleLines: string[];
+    intro: string;
+    cta: ServiceLink;
+    stripImages: string[];
+    about: string;
+  };
+  included: {
+    intro: string;
+    cta: ServiceLink;
+    items: { title: string; image: string }[];
+  };
+  approach: {
+    intro: string;
+    cta: ServiceLink;
+    /** Text link shown beside the steps. */
+    projectsLink: ServiceLink;
+    image: string;
+    steps: { title: string; description: string }[];
+  };
+  relatedProjects: {
+    intro: string;
+    cta: ServiceLink;
+    /** Label on each project card, e.g. "View Project". */
+    cardLabel: string;
+    /**
+     * `slug` must match a project in src/lib/data/projects.ts — its image and link
+     * come from there. Name, location and category default to the case study's
+     * own values; set them here only to override.
+     */
+    projects: { slug: string; name?: string; location?: string; category?: string }[];
+  };
+  whyChoose: {
+    intro: string;
+    cta: ServiceLink;
+    /** Layout is designed for 4 cards. */
+    reasons: { title: string; description: string }[];
+  };
+  audience: {
+    /** Badge shown above each slide title, e.g. "Ideal For". */
+    label: string;
+    slides: { audience: string; image: string }[];
+  };
+  faq: {
+    intro: string;
+    items: FaqItem[];
+  };
+  /** The closing panel in the footer on this service's page. */
+  closing: {
+    titleLines: string[];
+    cta: ServiceLink;
+    /** Optional text link under the button. */
+    secondaryCta?: ServiceLink;
+  };
+}

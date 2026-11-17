@@ -10,15 +10,15 @@ import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { Container } from "@/components/ui/Container";
+import type { ServiceDetailContent } from "@/lib/types";
 
-export default function ResidentialHeroSection() {
+export default function ResidentialHeroSection({
+  content,
+}: {
+  content: ServiceDetailContent["hero"];
+}) {
   const ctaTrackRef = useRef<HTMLDivElement>(null);
-  const ctaStripImages = [
-    "/images/cta-strip-01.webp",
-    "/images/cta-strip-02.webp",
-    "/images/cta-strip-03.webp",
-    "/images/cta-strip-04.webp",
-  ];
+  const ctaStripImages = content.stripImages;
 
   useGSAP(() => {
     if (ctaTrackRef.current) {
@@ -67,20 +67,17 @@ export default function ResidentialHeroSection() {
             <div className="md:w-2/3 md:border-r border-border pt-4 md:py-8">
               <AnimatedHeading
                 as="h2"
-                lines={["Residential", "Design."]}
+                lines={content.titleLines}
                 className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
               />
             </div>
 
             <div className="md:w-1/3 pb-4 md:py-8 md:pl-8">
-              <p className="text-muted">
-                Thoughtfully designed homes that balance comfort, functionality,
-                and timeless aesthetics to reflect the way you live.
-              </p>
+              <p className="text-muted">{content.intro}</p>
 
               <div className="mt-3 md:mt-6">
                 <MagneticButton>
-                  <Button href="/about">Start a Project</Button>
+                  <Button href={content.cta.href}>{content.cta.label}</Button>
                 </MagneticButton>
               </div>
             </div>
@@ -109,10 +106,7 @@ export default function ResidentialHeroSection() {
         <Container className="py-12 md:py-20 px-4 md:px-0">
           <p>About the Service:</p>
           <p className="story-fill mt-2.5 text-2xl md:text-[27px] leading-8 md:leading-10 md:pr-16">
-            Your home should be more than just a place to live. Our residential
-            design service creates interiors that reflect your lifestyle,
-            maximize functionality, and bring lasting comfort through thoughtful
-            planning, refined materials, and timeless design.
+            {content.about}
           </p>
         </Container>
       </section>

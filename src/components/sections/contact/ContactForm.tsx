@@ -314,7 +314,7 @@ export function ContactForm() {
   };
 
   return (
-    <section ref={containerRef} className="mx-auto w-full md:pt-22">
+    <section ref={containerRef} id="start-your-project" className="mx-auto w-full md:pt-22">
       <div className="w-full md:border-t border-border md:border-b">
         <div className="mx-auto grid w-full max-w-[1340px] grid-cols-1 gap-8 md:gap-16 lg:grid-cols-2">
           {/* Left Column: Studio info & Direct contact channels */}

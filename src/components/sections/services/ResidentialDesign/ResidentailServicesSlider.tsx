@@ -5,19 +5,13 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 
 import { gsap } from "@/lib/animations/gsap";
+import type { ServiceDetailContent } from "@/lib/types";
 
 interface SlideItem {
   index: string;
   audience: string;
   image: string;
 }
-
-const slides: SlideItem[] = [
-  { index: "01", audience: "New Homeowners.", image: "/images/services-residential-01.webp" },
-  { index: "02", audience: "Growing Families.", image: "/images/about-strip-04.webp" },
-  { index: "03", audience: "Empty Nesters.", image: "/images/about-strip-05.webp" },
-  { index: "04", audience: "Design Enthusiasts.", image: "/images/about-strip-02.webp" },
-];
 
 /** Desktop pin/scrub timing — improved UX */
 const PIN_TOP_OFFSET = 80;
@@ -46,14 +40,22 @@ function CornerMark({ className = "" }: { className?: string }) {
   );
 }
 
-function SlideContent({ slide }: { slide: SlideItem }) {
+function SlideContent({
+  slide,
+  total,
+  label,
+}: {
+  slide: SlideItem;
+  total: number;
+  label: string;
+}) {
   return (
     <div className="absolute inset-0 z-10 flex flex-col justify-between p-6 md:p-10 lg:p-12">
       <div className="slide-top flex items-start justify-between">
         <CornerMark className="hidden rotate-180 md:block" />
         <span className="slide-index font-normal text-white">
           <span className="text-base md:text-5xl">{slide.index}</span>
-          <span className="text-base md:text-xl">/{String(slides.length).padStart(2, "0")}</span>
+          <span className="text-base md:text-xl">/{String(total).padStart(2, "0")}</span>
         </span>
       </div>
 
@@ -61,11 +63,11 @@ function SlideContent({ slide }: { slide: SlideItem }) {
         <div className="slide-copy">
           <span className="block overflow-hidden">
             <span className="slide-badge inline-block rounded-full bg-accent-yellow px-3 py-1 text-xs font-normal text-foreground">
-              Our Services Ideal For-
+              {label}
             </span>
           </span>
 
-          <h3 className="mt-3 text-5xl font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
+          <h3 className="mt-3 text-[40px] font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
             <span className="block overflow-hidden">
               <span className="slide-line inline-block">{slide.audience}</span>
             </span>
@@ -101,7 +103,18 @@ function revealText(
   if (top) tl.fromTo(top, { y: -15, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.4, ease: "power3.out" }, at + 0.4);
 }
 
-export default function ResidentialServicesSlider() {
+export default function ResidentialServicesSlider({
+  content,
+  serviceName,
+}: {
+  content: ServiceDetailContent["audience"];
+  serviceName: string;
+}) {
+  const slides: SlideItem[] = content.slides.map((slide, i) => ({
+    ...slide,
+    index: String(i + 1).padStart(2, "0"),
+  }));
+
   const containerRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
@@ -309,7 +322,7 @@ export default function ResidentialServicesSlider() {
             >
               <Image
                 src={slide.image}
-                alt={`Residential design ideal for ${slide.audience.replace(/\.$/, "")}`}
+                alt={`${serviceName} ideal for ${slide.audience.replace(/\.$/, "")}`}
                 fill
                 sizes="100vw"
                 priority={index === 0}
@@ -320,7 +333,7 @@ export default function ResidentialServicesSlider() {
 
             <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-black/25" />
 
-            <SlideContent slide={slide} />
+            <SlideContent slide={slide} total={slides.length} label={content.label} />
           </div>
         ))}
 
@@ -347,7 +360,7 @@ export default function ResidentialServicesSlider() {
           >
             <Image
               src={slide.image}
-              alt={`Residential design ideal for ${slide.audience.replace(/\.$/, "")}`}
+              alt={`${serviceName} ideal for ${slide.audience.replace(/\.$/, "")}`}
               fill
               sizes="88vw"
               priority={index === 0}
@@ -357,7 +370,7 @@ export default function ResidentialServicesSlider() {
 
             <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-black/25" />
 
-            <SlideContent slide={slide} />
+            <SlideContent slide={slide} total={slides.length} label={content.label} />
           </div>
         ))}
       </div>

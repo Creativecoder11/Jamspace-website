@@ -3,8 +3,8 @@ import type { Service } from "@/lib/types";
 export const services: Service[] = [
   {
     index: "01",
-    slug: "interiors-design",
-    title: "Interiors Design",
+    slug: "interior-design",
+    title: "Interior Design",
     shortdescription: "Residential and commercial interiors designed around how people live, work and use a space.",
     heading: "Designing Homes That Feel Like Home",
     description:
@@ -19,8 +19,8 @@ export const services: Service[] = [
   },
   {
     index: "02",
-    slug: "architecture-design",
-    title: "Architecture Design",
+    slug: "architectural-design",
+    title: "Architectural Design",
     heading: "Spaces Built for Business",
     shortdescription: "Design for residential and commercial buildings, façades and outdoor spaces, shaped by their site and use.",
     description:

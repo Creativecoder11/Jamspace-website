@@ -2,14 +2,22 @@ import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import Image from "next/image";
+import Link from "next/link";
+import type { ServiceDetailContent } from "@/lib/types";
 
-export default function ResidentailApproach() {
+export default function ResidentailApproach({
+  content,
+  serviceName,
+}: {
+  content: ServiceDetailContent["approach"];
+  serviceName: string;
+}) {
   return (
     <section className="relative mt-20 md:mt-22.5 overflow-hidden">
       {/* Background Image */}
       <Image
-        src="/images/cta-strip-03.webp" // Change to your image
-        alt="Residential Approach"
+        src={content.image}
+        alt={`${serviceName} approach`}
         fill
         className="object-cover"
         priority
@@ -32,14 +40,11 @@ export default function ResidentailApproach() {
             </div>
 
             <div className="py-4 md:mx-0 md:w-1/3 md:py-8 md:pl-8">
-              <p className="text-white/80">
-                Everything you need to transform your home into a thoughtfully
-                designed, functional, and timeless living space.
-              </p>
+              <p className="text-white/80">{content.intro}</p>
 
               <div className="mt-3 md:mt-6">
                 <MagneticButton>
-                  <Button href="/about">Start a Project</Button>
+                  <Button href={content.cta.href}>{content.cta.label}</Button>
                 </MagneticButton>
               </div>
             </div>
@@ -49,41 +54,28 @@ export default function ResidentailApproach() {
         {/* Approach List */}
         <div className="mx-auto mt-10 flex max-w-335 flex-col gap-10 md:mt-20 md:flex-row md:items-end md:justify-between">
           <div className="w-full md:w-[30%]">
-            <a
-              href="/project"
+            <Link
+              href={content.projectsLink.href}
               className="inline-flex items-center text-white transition-opacity hover:opacity-80"
             >
-              See Our Project ↗
-            </a>
+              {content.projectsLink.label} ↗
+            </Link>
           </div>
 
           <div className="flex w-full flex-col gap-8 md:w-[70%] md:gap-12.5">
-            <div className="flex flex-col gap-3 border-b border-white/30 pb-4 md:flex-row md:items-end md:justify-between">
-              <p className="text-2xl text-white md:text-3xl">
-                (01) Understand
-              </p>
-              <p className="max-w-sm text-base text-white/80">
-                Every project begins with your goals and lifestyle.
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-3 border-b border-white/30 pb-4 md:flex-row md:items-end md:justify-between">
-              <p className="text-2xl text-white md:text-3xl">
-                (02) Create
-              </p>
-              <p className="max-w-sm text-base text-white/80">
-                Thoughtful concepts tailored to your space.
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-3 border-b border-white/30 pb-4 md:flex-row md:items-end md:justify-between">
-              <p className="text-2xl text-white md:text-3xl">
-                (03) Refine
-              </p>
-              <p className="max-w-sm text-base text-white/80">
-                Every detail is carefully reviewed before delivery.
-              </p>
-            </div>
+            {content.steps.map((step, i) => (
+              <div
+                key={step.title}
+                className="flex flex-col gap-3 border-b border-white/30 pb-4 md:flex-row md:items-end md:justify-between"
+              >
+                <p className="text-2xl text-white md:text-3xl">
+                  ({String(i + 1).padStart(2, "0")}) {step.title}
+                </p>
+                <p className="max-w-sm text-base text-white/80">
+                  {step.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

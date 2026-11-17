@@ -8,41 +8,23 @@ import { CustomEase } from "gsap/CustomEase";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import type { ServiceDetailContent } from "@/lib/types";
 
 gsap.registerPlugin(CustomEase);
 if (!CustomEase.get("brandEase")) {
     CustomEase.create("brandEase", "0.24, 0.43, 0.15, 0.97");
 }
 
-const services = [
-    {
-        title: "(01) Space Planning",
-        image: "/images/cta-strip-01.webp",
-    },
-    {
-        title: "(02) Interior Styling",
-        image: "/images/cta-strip-02.webp",
-    },
-    {
-        title: "(03) Furniture Selection",
-        image: "/images/cta-strip-03.webp",
-    },
-    {
-        title: "(04) Lighting Design",
-        image: "/images/cta-strip-01.webp",
-    },
-    {
-        title: "(05) Material Selection",
-        image: "/images/cta-strip-02.webp",
-    },
-    {
-        title: "(06) 3D Visualization",
-        image: "/images/cta-strip-03.webp",
-    },
-];
-
-export default function ResidentialIncludedServices() {
-    const [activeImage, setActiveImage] = useState(services[0].image);
+export default function ResidentialIncludedServices({
+    content,
+}: {
+    content: ServiceDetailContent["included"];
+}) {
+    const services = content.items.map((item, i) => ({
+        title: `(${String(i + 1).padStart(2, "0")}) ${item.title}`,
+        image: item.image,
+    }));
+    const [activeImage, setActiveImage] = useState(services[0]?.image ?? "");
     const itemRefs = useRef<Map<string, HTMLLIElement>>(new Map());
 
     const getAccentColor = () => {
@@ -89,14 +71,11 @@ export default function ResidentialIncludedServices() {
                     </div>
 
                     <div className="mx-4 pb-4 md:mx-0 md:w-1/3 md:border-l border-border md:py-8 md:pl-8">
-                        <p className="text-muted">
-                            Everything you need to transform your home into a thoughtfully
-                            designed, functional, and timeless living space.
-                        </p>
+                        <p className="text-muted">{content.intro}</p>
 
                         <div className="mt-3 md:mt-6">
                             <MagneticButton>
-                                <Button href="/about">Start a Project</Button>
+                                <Button href={content.cta.href}>{content.cta.label}</Button>
                             </MagneticButton>
                         </div>
                     </div>
@@ -108,12 +87,14 @@ export default function ResidentialIncludedServices() {
                 {/* Image */}
                 <div className="w-full border-b border-border py-4 px-4 md:w-1/2 md:border-b-0 md:border-r md:py-12 md:pr-12">
                     <div className="relative h-80 md:h-103.25 w-full overflow-hidden">
-                        <Image
-                            src={activeImage}
-                            alt="Service"
-                            fill
-                            className="object-cover transition-opacity duration-500"
-                        />
+                        {activeImage && (
+                            <Image
+                                src={activeImage}
+                                alt="Service"
+                                fill
+                                className="object-cover transition-opacity duration-500"
+                            />
+                        )}
                     </div>
                 </div>
 

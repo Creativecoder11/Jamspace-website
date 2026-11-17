@@ -7,6 +7,7 @@ import { gsap } from "@/lib/animations/gsap";
 import { Container } from "@/components/ui/Container";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { faqItems } from "@/lib/data/faq";
+import type { FaqItem } from "@/lib/types";
 
 function ToggleIcon({ open }: { open: boolean }) {
   return (
@@ -31,8 +32,20 @@ function ToggleIcon({ open }: { open: boolean }) {
   );
 }
 
-/** Shared FAQ accordion — used on both the Pricing and Contact pages. */
-export function Faq() {
+const defaultIntro =
+  "Find answers to the most common questions about our services, design process, timelines, and how we bring your vision to life.";
+
+/**
+ * Shared FAQ accordion — used on the Pricing, Contact and service pages.
+ * Without props it shows the general FAQ from src/lib/data/faq.ts.
+ */
+export function Faq({
+  items = faqItems,
+  intro = defaultIntro,
+}: {
+  items?: FaqItem[];
+  intro?: string;
+} = {}) {
   const containerRef = useRef<HTMLElement>(null);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -79,14 +92,11 @@ export function Faq() {
           lines={["Frequently", "Asked Questions"]}
           className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
         />
-        <p className="max-w-xs text-muted">
-          Find answers to the most common questions about our services,
-          design process, timelines, and how we bring your vision to life.
-        </p>
+        <p className="max-w-xs text-muted">{intro}</p>
       </Container>
 
       <Container className="mt-3 md:mt-10 px-4 md:px-0">
-        {faqItems.map((faq, i) => {
+        {items.map((faq, i) => {
           const isOpen = i === openIndex;
           return (
             <div key={faq.question} className="faq-row border-b border-border">

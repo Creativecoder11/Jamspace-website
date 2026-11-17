@@ -14,6 +14,8 @@ import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 
 import { footerColumns, contactInfo } from "@/lib/data/footer";
+import { serviceDetails, type ServiceDetailSlug } from "@/lib/data/serviceDetails";
+import type { ServiceDetailContent } from "@/lib/types";
 import { trackConsultationCTAClick, trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 
 import Image from "next/image";
@@ -29,9 +31,21 @@ const ctaStripImages = [
   "/images/cta-strip-8.webp",
 ];
 
+const defaultClosing: ServiceDetailContent["closing"] = {
+  titleLines: ["Tell Us", "What You're", "Planning."],
+  cta: { label: "Discuss Your Project", href: "/contact" },
+};
+
 export function Footer() {
   const pathname = usePathname();
   const router = useRouter();
+
+  // Service detail pages set their own closing panel heading and link.
+  const serviceSlug = pathname.match(/^\/services\/([^/]+)/)?.[1];
+  const closing: ServiceDetailContent["closing"] =
+    serviceSlug && Object.hasOwn(serviceDetails, serviceSlug)
+      ? serviceDetails[serviceSlug as ServiceDetailSlug].closing
+      : defaultClosing;
 
   const containerRef = useRef<HTMLElement>(null);
   const ctaTrackRef = useRef<HTMLDivElement>(null);
@@ -268,26 +282,35 @@ export function Footer() {
           {/* CTA Panel */}
           <div
             // ref={ctaPanelRef}
-            className="absolute left-1/2 top-1/2 z-10 flex h-full w-3/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 border-l-24 border-r-24 border-[#F7F6F1] bg-accent p-4 text-center md:aspect-4/5 md:h-full md:w-100"
+            className="absolute left-1/2 top-1/2 z-10 flex h-full w-4/5 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 border-l-24 border-r-24 border-[#F7F6F1] bg-accent p-4 text-center md:aspect-4/5 md:h-full md:w-105"
           >
             <AnimatedHeading
               as="h2"
-              lines={["Tell Us", "What You're", "Planning."]}
-              className="text-3xl font-medium leading-tight text-white md:text-subheading"
+              lines={closing.titleLines}
+              className="text-[28px] font-medium leading-tight text-white md:text-subheading"
             />
 
             <div ref={ctaButtonRef}>
               <MagneticButton>
                 <Button
-                  href="/contact"
+                  href={closing.cta.href}
                   variant="inverse"
                   className="font-medium"
                   onClick={() => trackConsultationCTAClick("footer_banner")}
                 >
-                  Discuss Your Project
+                  {closing.cta.label}
                 </Button>
               </MagneticButton>
             </div>
+
+            {closing.secondaryCta && (
+              <Link
+                href={closing.secondaryCta.href}
+                className="-mt-2 text-sm text-white underline underline-offset-4 transition-opacity hover:opacity-80"
+              >
+                {closing.secondaryCta.label}
+              </Link>
+            )}
           </div>
         </div>
       </div>
