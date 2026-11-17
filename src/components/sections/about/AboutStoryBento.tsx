@@ -7,6 +7,7 @@ import { gsap, ScrollTrigger, SplitText } from "@/lib/animations/gsap";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { stats } from "@/lib/data/stats";
+import { locations } from "@/lib/data/locations";
 import BangladeshMap from "@/components/ui/BangladeshMap";
 
 const CIRCLE_TEXT = "* PLAY THE VIDEO * PLAY THE VIDEO * PLAY THE VIDEO * ";
@@ -149,21 +150,27 @@ export function AboutStoryBento() {
             badgeRotationTween.current?.kill();
             split.revert();
           };
-        }
+        },
       );
 
       return () => mm.revert();
     },
     {
       scope: containerRef,
-    }
+    },
   );
 
   return (
-    <section ref={containerRef} className="pt-15 md:pt-0 pb-15 md:py-20 px-4 md:px-0">
+    <section
+      ref={containerRef}
+      className="pt-15 md:pt-0 pb-15 md:py-20 px-4 md:px-0"
+    >
       <Container className="flex flex-col md:pt-14">
         <p className="story-fill text-xl md:text-3xl leading- md:leading-11 font-medium">
-          Established in Dhaka in 2023, Jam Space brings together interiors, architecture, furniture, and consultancy & visualisation. We begin by listening, then develop ideas around how people live, work and experience a space.
+          Established in Dhaka in 2023, Jam Space brings together interiors,
+          architecture, furniture, and consultancy & visualisation. We begin by
+          listening, then develop ideas around how people live, work and
+          experience a space.
         </p>
       </Container>
 
@@ -183,7 +190,9 @@ export function AboutStoryBento() {
               <div className="absolute bottom-4 left-4 right-4">
                 <div className="rounded-md border border-white/20 bg-white/10 p-4 backdrop-blur-md">
                   <p className="text-sm leading-relaxed text-white">
-                    Clients can engage us for design alone. Where execution is separately commissioned, we coordinate the approved work through an agreed scope, quotation and timeline.
+                    Clients can engage us for design alone. Where execution is
+                    separately commissioned, we coordinate the approved work
+                    through an agreed scope, quotation and timeline.
                   </p>
                 </div>
               </div>
@@ -217,23 +226,26 @@ export function AboutStoryBento() {
                   </svg>
 
                   <span
-                    className={`stat-number flex text-start text-6xl md:text-7xl font-medium leading-none ${accentTextClass[stat.accent]
-                      }`}
+                    className={`stat-number flex text-start text-6xl md:text-7xl font-medium leading-none ${
+                      accentTextClass[stat.accent]
+                    }`}
                   >
                     <p>{stats[0].value}</p>
                   </span>
 
                   <span
-                    className={`text-6xl md:text-7xl font-medium ${accentTextClass[stat.accent]
-                      }`}
+                    className={`text-6xl md:text-7xl font-medium ${
+                      accentTextClass[stat.accent]
+                    }`}
                   >
                     {stat.suffix}
                   </span>
                 </div>
 
                 <p
-                  className={`text-center text-xl text-foreground ${accentTextClass[stat.accent]
-                    }`}
+                  className={`text-center text-xl text-foreground ${
+                    accentTextClass[stat.accent]
+                  }`}
                 >
                   {stat.label}
                 </p>
@@ -335,7 +347,6 @@ export function AboutStoryBento() {
                   </div>
                 </div>
               )}
-
             </div>
           </div>
         </div>
@@ -364,15 +375,17 @@ export function AboutStoryBento() {
                   </svg>
 
                   <span
-                    className={`stat-number flex text-start text-6xl md:text-7xl font-medium leading-none ${accentTextClass[stat.accent]
-                      }`}
+                    className={`stat-number flex text-start text-6xl md:text-7xl font-medium leading-none ${
+                      accentTextClass[stat.accent]
+                    }`}
                   >
                     <p>{stats[1].value}</p>
                   </span>
 
                   <span
-                    className={`text-6xl md:text-7xl font-medium ${accentTextClass[stat.accent]
-                      }`}
+                    className={`text-6xl md:text-7xl font-medium ${
+                      accentTextClass[stat.accent]
+                    }`}
                   >
                     {stats[1].suffix}
                   </span>
@@ -380,9 +393,12 @@ export function AboutStoryBento() {
 
                 {/* Bottom */}
                 <div>
-                  <p className="text-xl font-medium text-white">{stats[1].label}</p>
+                  <p className="text-xl font-medium text-white">
+                    {stats[1].label}
+                  </p>
                   <p className="text-[16px] text-white">
-                    Homes, workplaces and commercial spaces designed around the people who use them.
+                    Homes, workplaces and commercial spaces designed around the
+                    people who use them.
                   </p>
                 </div>
               </div>
@@ -390,96 +406,76 @@ export function AboutStoryBento() {
           </div>
 
           <div className="w-full md:w-[50%] text-white p-5 bg-[#231F20]">
-            <div className="flex flex-col md:flex-row gap-3 md:gap-8">
-              <div className="flex flex-col w-full md:w-1/2">
-                {/* text */}
+            <div className="flex h-full flex-col xl:flex-row gap-10 xl:gap-8">
+              <div className="flex min-w-0 flex-1 flex-col">
+                {/* heading */}
+                <h3 className="text-[28px] md:text-[20px] leading-[1.15] font-medium">
+                  We design homes around how people live and commercial spaces
+                  around how people work, shop and gather
+                </h3>
+
+                <div className="my-6 border-t-1 border-white/20" />
+
+                {/* locations: 01–05 left column, 06–10 right column */}
+                <ul className="grid grid-cols-2 grid-rows-5 grid-flow-col gap-x-4 md:gap-x-6 gap-y-4 text-sm">
+                  {locations.map(({ name }, i) => (
+                    <li key={name} className="flex items-center gap-2">
+                      <span className="text-[#E92A7B] tabular-nums">
+                        ({String(i + 1).padStart(2, "0")})
+                      </span>
+                      <span className="whitespace-nowrap">{`// ${name}`}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* plus row */}
                 <div>
-                  <p className="text-[16px]">
-                     From homes to workplaces, retail and hospitality, our work spans Dhaka and beyond.
-                  </p>
-                  <div className="h-1 my-5 border-b border-[#FFFFFF]/40"></div>
-                </div>
-                {/* left list */}
-                <div className="flex gap-5 items-center">
-                  <div className="flex flex-col gap-2.5">
-                    <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(01)</span> {"// Jolshiri"}
-                    </p>
-                    <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(02)</span> {"// Gulshan"}
-                    </p>
-                    <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(03)</span> {"// Nikunjo"}
-                    </p>
-                    <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(04)</span> {"// Bashundhara"}
-                    </p>
+                  <div
+                    className="mt-auto pt-12 flex justify-between"
+                    aria-hidden="true"
+                  >
+                    {Array.from({ length: 8 }).map((_, i) => (
+                      <svg
+                        key={i}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="8"
+                        height="8"
+                        viewBox="0 0 8 8"
+                        fill="none"
+                      >
+                        <path
+                          d="M8 3.34839V4.65156H4.70377V8H3.31401V4.65156H0V3.34839H3.31401V0H4.70377V3.34839H8Z"
+                          fill="#F8C452"
+                        />
+                      </svg>
+                    ))}
                   </div>
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="102"
-                      height="8"
-                      viewBox="0 0 102 8"
-                      fill="none"
-                    >
-                      <path
-                        d="M102 3.34839V4.65156H98.7038V8H97.314V4.65156H94V3.34839H97.314V0H98.7038V3.34839H102Z"
-                        fill="#F8C452"
-                      />
-                      <path
-                        d="M55 3.34839V4.65156H51.7038V8H50.314V4.65156H47V3.34839H50.314V0H51.7038V3.34839H55Z"
-                        fill="#F8C452"
-                      />
-                      <path
-                        d="M8 3.34839V4.65156H4.70377V8H3.31401V4.65156H0V3.34839H3.31401V0H4.70377V3.34839H8Z"
-                        fill="#F8C452"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                {/* right list */}
-                <div className="flex gap-12 mt-5 items-center">
-                  <div className="w-[30%]">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="102"
-                      height="8"
-                      viewBox="0 0 102 8"
-                      fill="none"
-                    >
-                      <path
-                        d="M102 3.34839V4.65156H98.7038V8H97.314V4.65156H94V3.34839H97.314V0H98.7038V3.34839H102Z"
-                        fill="#F8C452"
-                      />
-                      <path
-                        d="M55 3.34839V4.65156H51.7038V8H50.314V4.65156H47V3.34839H50.314V0H51.7038V3.34839H55Z"
-                        fill="#F8C452"
-                      />
-                      <path
-                        d="M8 3.34839V4.65156H4.70377V8H3.31401V4.65156H0V3.34839H3.31401V0H4.70377V3.34839H8Z"
-                        fill="#F8C452"
-                      />
-                    </svg>
-                  </div>
-                  <div className="flex flex-col gap-2.5">
-                    <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(01)</span> {"// Rampura"}
-                    </p>
-                    <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(01)</span> {"// Dhanmondi"}
-                    </p>
-                    <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(01)</span> {"// Mirpur DOHS"}
-                    </p>
-                    <p className="border-b border-[#FFFFFF]/40">
-                      <span className="text-[#E92A7B]">(01)</span> {"// Banani"}
-                    </p>
+                  <div
+                    className="mt-auto pt-6 flex justify-between"
+                    aria-hidden="true"
+                  >
+                    {Array.from({ length: 8 }).map((_, i) => (
+                      <svg
+                        key={i}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="8"
+                        height="8"
+                        viewBox="0 0 8 8"
+                        fill="none"
+                      >
+                        <path
+                          d="M8 3.34839V4.65156H4.70377V8H3.31401V4.65156H0V3.34839H3.31401V0H4.70377V3.34839H8Z"
+                          fill="#F8C452"
+                        />
+                      </svg>
+                    ))}
                   </div>
                 </div>
               </div>
-              <div className="w-full md:w-1/2 pr-9 md:pr-0">
-                <BangladeshMap />
+
+              {/* map */}
+              <div className="flex w-full xl:w-[40%] shrink-0 items-center justify-center">
+                <BangladeshMap className="max-w-[300px] xl:max-w-none" />
               </div>
             </div>
           </div>
@@ -505,18 +501,19 @@ export function AboutStoryBento() {
                     />
                   </svg>
 
-                  <span
-                    className="flex text-white text-6xl md:text-7xl font-medium leading-none"
-                  >
+                  <span className="flex text-white text-6xl md:text-7xl font-medium leading-none">
                     <p>{String(stats[2].value).padStart(2, "0")}</p>
                   </span>
                 </div>
 
                 {/* Bottom */}
                 <div>
-                  <p className="text-xl font-medium text-white">{stats[2].label}</p>
+                  <p className="text-xl font-medium text-white">
+                    {stats[2].label}
+                  </p>
                   <p className="text-[16px] text-white">
-                    Interiors, architecture, furniture, and consultancy &amp; visualisation.
+                    Interiors, architecture, furniture, and consultancy &amp;
+                    visualisation.
                   </p>
                 </div>
               </div>
