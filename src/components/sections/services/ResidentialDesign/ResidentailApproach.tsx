@@ -24,7 +24,7 @@ export default function ResidentailApproach({
       />
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/45" />
+      <div className="absolute inset-0 bg-black/5" />
 
       {/* Content */}
       <div className="relative py-16 md:py-22.5 z-10 px-4 md:px-0">

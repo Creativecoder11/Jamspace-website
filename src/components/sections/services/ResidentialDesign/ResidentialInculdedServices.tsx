@@ -135,7 +135,7 @@ export default function ResidentialIncludedServices({
                                 onMouseLeave={() => handleLeave(service.title)}
                                 onFocus={() => handleEnter(service.title, service.image)}
                                 onBlur={() => handleLeave(service.title)}
-                                className="cursor-pointer text-2xl md:text-3xl"
+                                className="cursor-pointer text-2xl md:text-2xl"
                             >
                                 {service.title}
                             </li>

@@ -27,10 +27,16 @@ export const serviceDetails = {
       cta: { label: "Discuss Your Project", href: enquiryHref("interiors") },
       // Alternates residential and commercial work.
       stripImages: [
-        "/images/projects/taqwaa/hero.webp",
-        "/images/projects/eleni/hero.webp",
-        "/images/projects/zaheen/hero.webp",
-        "/images/projects/green-hub/hero.webp",
+        "/images/services/interior-design/carousel/Mask group-1.webp",
+        "/images/services/interior-design/carousel/Mask group-2.webp",
+        "/images/services/interior-design/carousel/Mask group-3.webp",
+        "/images/services/interior-design/carousel/Mask group-4.webp",
+        "/images/services/interior-design/carousel/Mask group-5.webp",
+        "/images/services/interior-design/carousel/Mask group-6.webp",
+        "/images/services/interior-design/carousel/Mask group-7.webp",
+        "/images/services/interior-design/carousel/Mask group-8.webp",
+        "/images/services/interior-design/carousel/Mask group-9.webp",
+        "/images/services/interior-design/carousel/Mask group.webp",
       ],
       about:
         "Jam Space designs residential and commercial interiors, from individual rooms to full homes, workplaces and retail spaces. We plan layouts, finishes and details around how people use the space and what the project needs to achieve.",
@@ -40,12 +46,13 @@ export const serviceDetails = {
         "Your scope can include layouts, lighting, finishes, furniture and visualisation, depending on what your project needs.",
       cta: { label: "Start a Project", href: enquiryHref("interiors") },
       items: [
-        { title: "Space Planning", image: "/images/cta-strip-1.webp" },
-        { title: "Interior Concepts", image: "/images/cta-strip-2.webp" },
-        { title: "Furniture & Joinery", image: "/images/cta-strip-3.webp" },
-        { title: "Lighting Design", image: "/images/cta-strip-1.webp" },
-        { title: "Materials & Finishes", image: "/images/cta-strip-2.webp" },
-        { title: "3D Visualisation", image: "/images/cta-strip-3.webp" },
+        { title: "Bespoke Furniture", image: "/images/services/interior-design/included/Mask group.webp" },
+        { title: "Wardrobes & Fitted Storage", image: "/images/services/interior-design/included/Mask group-1.webp" },
+        { title: "Kitchen Cabinetry", image: "/images/services/interior-design/included/Mask group-2.webp" },
+        { title: "Shelving & Display Units", image: "/images/services/interior-design/included/Mask group-3.webp" },
+        { title: "Materials & Hardware", image: "/images/services/interior-design/included/Mask group-4.webp" },
+        { title: "Furniture Drawings & Detailing", image: "/images/services/interior-design/included/Mask group-5.webp" },
+        
       ],
     },
     approach: {
@@ -53,7 +60,7 @@ export const serviceDetails = {
         "We start with how the space will be used, develop a design direction and refine it with your feedback.",
       cta: { label: "Discuss Your Project", href: enquiryHref("interiors") },
       projectsLink: { label: "See Our Projects", href: "/projects" },
-      image: "/images/cta-strip-3.webp",
+      image: "/images/services/interior-design/our approach.webp",
       steps: [
         {
           title: "Understand",
@@ -126,10 +133,10 @@ export const serviceDetails = {
       label: "Ideal For",
       // Two residential, two commercial.
       slides: [
-        { audience: "New Homeowners", image: "/images/projects/taqwaa/slider1.webp" },
-        { audience: "Homeowners Renovating", image: "/images/projects/zaheen/slider1.webp" },
-        { audience: "Workplace Teams", image: "/images/projects/green-hub/slider1.webp" },
-        { audience: "Retail & Hospitality Businesses", image: "/images/projects/eleni/slider1.webp" },
+        { audience: "New Homeowners", image: "/images/services/interior-design/scroll-image/design highlights image.webp" },
+        { audience: "Homeowners Renovating", image: "/images/services/interior-design/scroll-image/design highlights image-2.webp" },
+        { audience: "Workplace Teams", image: "/images/services/interior-design/scroll-image/design highlights image-1.webp" },
+        { audience: "Retail & Hospitality Businesses", image: "/images/services/interior-design/scroll-image/design highlights image-3.webp" },
       ],
     },
     faq: {
@@ -179,10 +186,14 @@ export const serviceDetails = {
       // PTI Skyline renders (residential tower + commercial base).
       // TODO: add residential building images (e.g. The Regent, Aranya) once verified.
       stripImages: [
-        "/images/projects/pti/bento3.webp",
-        "/images/projects/pti/after.webp",
-        "/images/projects/pti/bento-mid.webp",
-        "/images/projects/pti/challenges1.webp",
+        "/images/services/architectural-design/carousel/Mask group.webp",
+        "/images/services/architectural-design/carousel/Mask group-1.webp",
+        "/images/services/architectural-design/carousel/Mask group-2.webp",
+        "/images/services/architectural-design/carousel/Mask group-3.webp",
+        "/images/services/architectural-design/carousel/Mask group-4.webp",
+        "/images/services/architectural-design/carousel/Mask group-5.webp",
+        "/images/services/architectural-design/carousel/Mask group-6.webp",
+        "/images/services/architectural-design/carousel/Mask group-7.webp",
       ],
       about:
         "Jam Space develops building concepts and floor plans for residential, commercial and mixed-use projects. We study the site and brief, then explore the building’s footprint, overall form and how space is allocated across floors before refining the design.",
@@ -192,12 +203,12 @@ export const serviceDetails = {
         "We can develop floor plans, façades and outdoor layouts. Your agreement specifies which drawings and visuals you’ll receive.",
       cta: { label: "Start a Project", href: enquiryHref("architecture") },
       items: [
-        { title: "Site & Brief Review", image: "/images/projects/pti/before.webp" },
-        { title: "Building Concepts", image: "/images/projects/pti/bento4.webp" },
-        { title: "Spatial Planning", image: "/images/projects/pti/bento2.webp" },
-        { title: "Façade & Exterior Design", image: "/images/projects/pti/challenges2.webp" },
-        { title: "Rooftop & Outdoor Design", image: "/images/projects/pti/hero.webp" },
-        { title: "Architectural Visualisation", image: "/images/projects/pti/bento8.webp" },
+        { title: "Site & Brief Review", image: "/images/services/architectural-design/included/Mask group.webp" },
+        { title: "Building Concepts", image: "/images/services/architectural-design/included/Mask group-1.webp" },
+        { title: "Spatial Planning", image: "/images/services/architectural-design/included/Mask group-2.webp" },
+        { title: "Façade & Exterior Design", image: "/images/services/architectural-design/included/Mask group-3.webp" },
+        { title: "Rooftop & Outdoor Design", image: "/images/services/architectural-design/included/Mask group-4.webp" },
+        { title: "Architectural Visualisation", image: "/images/services/architectural-design/included/Mask group-5.webp" },
       ],
     },
     approach: {
@@ -205,7 +216,7 @@ export const serviceDetails = {
         "We compare building concepts, testing how each uses the site and accommodates the spaces the project needs.",
       cta: { label: "Discuss Your Project", href: enquiryHref("architecture") },
       projectsLink: { label: "See Our Projects", href: "/projects" },
-      image: "/images/projects/pti/slider4.webp",
+      image: "/images/services/architectural-design/our approach.webp",
       steps: [
         {
           title: "Understand",
@@ -269,10 +280,10 @@ export const serviceDetails = {
     audience: {
       label: "Ideal For",
       slides: [
-        { audience: "Homeowners Planning a Build", image: "/images/projects/pti/slider1.webp" },
-        { audience: "Commercial Property Owners", image: "/images/projects/pti/slider2.webp" },
-        { audience: "Mixed-Use Developers", image: "/images/projects/pti/bento6.webp" },
-        { audience: "Owners Updating Exteriors", image: "/images/projects/pti/slider3.webp" },
+        { audience: "Homeowners Planning a Build", image: "/images/services/architectural-design/included/design highlights image.webp" },
+        { audience: "Commercial Property Owners", image: "/images/services/architectural-design/included/design highlights image-1.webp" },
+        { audience: "Mixed-Use Developers", image: "/images/services/architectural-design/included/design highlights image-2.webp" },
+        { audience: "Owners Updating Exteriors", image: "/images/services/architectural-design/included/design highlights image-3.webp" },
       ],
     },
     faq: {
@@ -321,10 +332,17 @@ export const serviceDetails = {
       cta: { label: "Discuss Your Project", href: enquiryHref("furniture") },
       // Alternates residential and commercial furniture.
       stripImages: [
-        "/images/projects/taqwaa/after.webp",
-        "/images/projects/eleni/bento2.webp",
-        "/images/projects/zaheen/bento7.webp",
-        "/images/projects/green-hub/challenges1.webp",
+        "/images/services/custom-furniture/carousel/Mask group.webp",
+        "/images/services/custom-furniture/carousel/Mask group-1.webp",
+        "/images/services/custom-furniture/carousel/Mask group-2.webp",
+        "/images/services/custom-furniture/carousel/Mask group-3.webp",
+        "/images/services/custom-furniture/carousel/Mask group-4.webp",
+        "/images/services/custom-furniture/carousel/Mask group-5.webp",
+        "/images/services/custom-furniture/carousel/Mask group-6.webp",
+        "/images/services/custom-furniture/carousel/Mask group-7.webp",
+        "/images/services/custom-furniture/carousel/Mask group-8.webp",
+        "/images/services/custom-furniture/carousel/Mask group-9.webp",
+
       ],
       about:
         "Jam Space designs freestanding furniture, cabinetry and built-in storage. We work out what each piece needs to hold or support, how it fits the room and how it will be made. Production and installation can be commissioned separately.",
@@ -334,12 +352,12 @@ export const serviceDetails = {
         "Commission a standalone piece or a coordinated set. We agree on the design deliverables before work begins.",
       cta: { label: "Start a Project", href: enquiryHref("furniture") },
       items: [
-        { title: "Bespoke Freestanding Furniture", image: "/images/projects/taqwaa/bento3.webp" },
-        { title: "Wardrobes & Fitted Storage", image: "/images/projects/zaheen/challenges2.webp" },
-        { title: "Kitchen Cabinetry", image: "/images/projects/taqwaa/slider2.webp" },
-        { title: "Shelving & Display Units", image: "/images/projects/eleni/bento6.webp" },
-        { title: "Materials & Hardware", image: "/images/projects/taqwaa/challenges2.webp" },
-        { title: "Furniture Drawings & Detailing", image: "/images/services-consultation-1.webp" },
+        { title: "Bespoke Freestanding Furniture", image: "/images/services/custom-furniture/included/Mask group.webp" },
+        { title: "Wardrobes & Fitted Storage", image: "/images/services/custom-furniture/included/Mask group-1.webp" },
+        { title: "Kitchen Cabinetry", image: "/images/services/custom-furniture/included/Mask group-2.webp", },
+        { title: "Shelving & Display Units", image: "/images/services/custom-furniture/included/Mask group-3.webp" },
+        { title: "Materials & Hardware", image: "/images/services/custom-furniture/included/Mask group-4.webp" },
+        { title: "Furniture Drawings & Detailing", image: "/images/services/custom-furniture/included/Mask group-5.webp" },
       ],
     },
     approach: {
@@ -347,7 +365,7 @@ export const serviceDetails = {
         "We establish what the furniture must do, develop options and agree on the details before any production begins.",
       cta: { label: "Discuss Your Project", href: enquiryHref("furniture") },
       projectsLink: { label: "See Our Projects", href: "/projects" },
-      image: "/images/projects/taqwaa/bento8.webp",
+      image: "/images/services/custom-furniture/our approach.webp",
       steps: [
         {
           title: "Understand",
@@ -410,10 +428,10 @@ export const serviceDetails = {
       label: "Ideal For",
       // Two residential, two commercial.
       slides: [
-        { audience: "Homeowners Planning Built-Ins", image: "/images/projects/taqwaa/slider3.webp" },
-        { audience: "Renters Who Need Movable Furniture", image: "/images/projects/zaheen/slider1.webp" },
-        { audience: "Workplaces Planning Storage", image: "/images/projects/green-hub/slider2.webp" },
-        { audience: "Retailers Planning Displays", image: "/images/projects/eleni/slider2.webp" },
+        { audience: "Homeowners Planning Built-Ins", image: "/images/services/custom-furniture/scroll-image/design highlights image.webp" },
+        { audience: "Renters Who Need Movable Furniture", image: "/images/services/custom-furniture/scroll-image/design highlights image-1.webp" },
+        { audience: "Workplaces Planning Storage", image: "/images/services/custom-furniture/scroll-image/design highlights image-2.webp" },
+        { audience: "Retailers Planning Displays", image: "/images/services/custom-furniture/scroll-image/design highlights image-3.webp" },
       ],
     },
     faq: {
@@ -461,10 +479,16 @@ export const serviceDetails = {
       cta: { label: "Discuss Your Project", href: enquiryHref("consultancy-visualisation") },
       // Consultation, then commercial / residential / commercial renders.
       stripImages: [
-        "/images/services-consultation-1.webp",
-        "/images/projects/eleni/bento6.webp",
-        "/images/projects/zaheen/hero.webp",
-        "/images/projects/green-hub/hero.webp",
+        "/images/services/consultancy/carousel/Mask group.webp",
+        "/images/services/consultancy/carousel/Mask group-1.webp",
+        "/images/services/consultancy/carousel/Mask group-2.webp",
+        "/images/services/consultancy/carousel/Mask group-3.webp",
+        "/images/services/consultancy/carousel/Mask group-4.webp",
+        "/images/services/consultancy/carousel/Mask group-5.webp",
+        "/images/services/consultancy/carousel/Mask group-6.webp",
+        "/images/services/consultancy/carousel/Mask group-7.webp",
+        "/images/services/consultancy/carousel/Mask group-8.webp",
+        "/images/services/consultancy/carousel/Mask group-9.webp",
       ],
       about:
         "Jam Space helps homeowners and businesses assess design options before committing to a direction. Commission advice, space planning or visualisation for a specific brief. We agree whether you need a written summary, 2D drawings, 3D visuals or a combination.",
@@ -474,12 +498,12 @@ export const serviceDetails = {
         "Choose the support you need, from an initial consultation to drawings and visuals for a defined brief.",
       cta: { label: "Start a Project", href: enquiryHref("consultancy-visualisation") },
       items: [
-        { title: "Design Consultation", image: "/images/services-consultation-1.webp" },
-        { title: "Concept Development", image: "/images/projects/taqwaa/hero.webp" },
-        { title: "Space Planning", image: "/images/projects/green-hub/after.webp" },
-        { title: "Material & Finish Guidance", image: "/images/projects/zaheen/bento4.webp" },
-        { title: "2D Design Drawings", image: "/images/planningImg1.png" },
-        { title: "3D Visualisation", image: "/images/projects/eleni/hero.webp" },
+        { title: "Design Consultation", image: "/images/services/consultancy/included/Mask group.webp", },
+        { title: "Concept Development", image: "/images/services/consultancy/included/Mask group-1.webp" },
+        { title: "Space Planning", image: "/images/services/consultancy/included/Mask group-2.webp" },
+        { title: "Material & Finish Guidance", image: "/images/services/consultancy/included/Mask group-3.webp" },
+        { title: "2D Design Drawings", image: "/images/services/consultancy/included/Mask group-4.webp" },
+        { title: "3D Visualisation", image: "/images/services/consultancy/included/Mask group-5.webp" },
       ],
     },
     approach: {
@@ -487,7 +511,7 @@ export const serviceDetails = {
         "We identify the decision you need to make, review what you already have and agree what will help.",
       cta: { label: "Discuss Your Project", href: enquiryHref("consultancy-visualisation") },
       projectsLink: { label: "See Our Projects", href: "/projects" },
-      image: "/images/projects/green-hub/slider3.webp",
+      image: "/images/services/consultancy/our approach.webp",
       steps: [
         {
           title: "Understand",
@@ -545,10 +569,10 @@ export const serviceDetails = {
       label: "Ideal For",
       // Two residential, two commercial.
       slides: [
-        { audience: "Homeowners Weighing Layouts", image: "/images/projects/zaheen/slider2.webp" },
-        { audience: "Businesses Planning a Space", image: "/images/projects/green-hub/slider1.webp" },
-        { audience: "Owners Reviewing a Concept", image: "/images/projects/taqwaa/slider4.webp" },
-        { audience: "Teams Needing 3D Visuals", image: "/images/projects/eleni/slider3.webp" },
+        { audience: "Homeowners Weighing Layouts", image: "/images/services/consultancy/scroll-image/design highlights image.webp" },
+        { audience: "Businesses Planning a Space", image: "/images/services/consultancy/scroll-image/design highlights image-1.webp" },
+        { audience: "Owners Reviewing a Concept", image: "/images/services/consultancy/scroll-image/design highlights image-2.webp" },
+        { audience: "Teams Needing 3D Visuals", image: "/images/services/consultancy/scroll-image/design highlights image-3.webp" },
       ],
     },
     faq: {

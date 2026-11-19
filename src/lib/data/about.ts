@@ -162,7 +162,7 @@ export const aboutJourneySteps: {
     },
     {
       index: "04",
-      title: "Connection",
+      title: "Connect",
       description:
         "After handover, we check in, welcome feedback and remain available for relevant support.",
       accent: "teal",
