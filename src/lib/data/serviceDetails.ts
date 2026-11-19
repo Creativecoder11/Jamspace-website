@@ -46,12 +46,12 @@ export const serviceDetails = {
         "Your scope can include layouts, lighting, finishes, furniture and visualisation, depending on what your project needs.",
       cta: { label: "Start a Project", href: enquiryHref("interiors") },
       items: [
-        { title: "Bespoke Furniture", image: "/images/services/interior-design/included/Mask group.webp" },
-        { title: "Wardrobes & Fitted Storage", image: "/images/services/interior-design/included/Mask group-1.webp" },
-        { title: "Kitchen Cabinetry", image: "/images/services/interior-design/included/Mask group-2.webp" },
-        { title: "Shelving & Display Units", image: "/images/services/interior-design/included/Mask group-3.webp" },
-        { title: "Materials & Hardware", image: "/images/services/interior-design/included/Mask group-4.webp" },
-        { title: "Furniture Drawings & Detailing", image: "/images/services/interior-design/included/Mask group-5.webp" },
+        { title: "Bespoke Furniture", image: "/images/services/interior-design/Included/Mask group.webp" },
+        { title: "Wardrobes & Fitted Storage", image: "/images/services/interior-design/Included/Mask group-1.webp" },
+        { title: "Kitchen Cabinetry", image: "/images/services/interior-design/Included/Mask group-2.webp" },
+        { title: "Shelving & Display Units", image: "/images/services/interior-design/Included/Mask group-3.webp" },
+        { title: "Materials & Hardware", image: "/images/services/interior-design/Included/Mask group-4.webp" },
+        { title: "Furniture Drawings & Detailing", image: "/images/services/interior-design/Included/Mask group-5.webp" },
         
       ],
     },
@@ -280,10 +280,10 @@ export const serviceDetails = {
     audience: {
       label: "Ideal For",
       slides: [
-        { audience: "Homeowners Planning a Build", image: "/images/services/architectural-design/included/design highlights image.webp" },
-        { audience: "Commercial Property Owners", image: "/images/services/architectural-design/included/design highlights image-1.webp" },
-        { audience: "Mixed-Use Developers", image: "/images/services/architectural-design/included/design highlights image-2.webp" },
-        { audience: "Owners Updating Exteriors", image: "/images/services/architectural-design/included/design highlights image-3.webp" },
+        { audience: "Homeowners Planning a Build", image: "/images/services/architectural-design/scroll-image/design highlights image.webp" },
+        { audience: "Commercial Property Owners", image: "/images/services/architectural-design/scroll-image/design highlights image-1.webp" },
+        { audience: "Mixed-Use Developers", image: "/images/services/architectural-design/scroll-image/design highlights image-2.webp" },
+        { audience: "Owners Updating Exteriors", image: "/images/services/architectural-design/scroll-image/design highlights image-3.webp" },
       ],
     },
     faq: {
