@@ -8,11 +8,66 @@ interface ClientEmailData {
   location: string;
 }
 
+interface BrandedEmailContent {
+  title: string;
+  ribbon: string[];
+  name: string;
+  paragraphs: string[];
+  calloutText: string;
+  whatsappText: string;
+}
+
 /**
  * Returns the exact HTML template matching the client's PDF design specification.
  */
 export function getClientConfirmationEmailHtml(data: ClientEmailData): string {
   const { name, submissionId, projectType, location } = data;
+
+  return renderBrandedEmail({
+    title: "Jam Space — Enquiry Confirmation",
+    ribbon: [`Ref ID: ${submissionId}`, `Project Type: ${projectType}`, `Location: ${location}`],
+    name,
+    paragraphs: [
+      "Thank you for reaching out to Jam Space. We have received your project enquiry and our design team is excited to learn more about your vision.",
+      "Our coordinator will contact you during business hours (9:00 AM – 7:00 PM) to understand your requirements and discuss the next steps.",
+    ],
+    calloutText:
+      "If you have any immediate questions or floor plans to share, feel free to reply directly to this email or reach us on WhatsApp:",
+    whatsappText: `Hello Jam Space, referencing my enquiry ${submissionId}`,
+  });
+}
+
+interface BookingEmailData {
+  name: string;
+  bookingId: string;
+  amountLabel: string;
+  duration: string;
+}
+
+/** Client confirmation for a paid design session (invoice PDF is attached separately). */
+export function getBookingConfirmationEmailHtml(data: BookingEmailData): string {
+  const { name, bookingId, amountLabel, duration } = data;
+
+  return renderBrandedEmail({
+    title: "Jam Space — Design Session Confirmed",
+    ribbon: [`Booking Ref: ${bookingId}`, `Paid: ${amountLabel}`, `Session: ${duration}`],
+    name,
+    paragraphs: [
+      "Thank you for booking a design session with Jam Space. Your payment has been received and your session is confirmed.",
+      "A member of our design team will contact you within one business day (9:00 AM – 7:00 PM) to schedule your session at a time that suits you. Your invoice is attached to this email for your records.",
+    ],
+    calloutText:
+      "To help us prepare, feel free to reply with floor plans, photos of your space or inspiration images — or reach us on WhatsApp:",
+    whatsappText: `Hello Jam Space, referencing my design session booking ${bookingId}`,
+  });
+}
+
+/** Shared branded layout behind every client-facing email. */
+function renderBrandedEmail(content: BrandedEmailContent): string {
+  const { title, ribbon, name, paragraphs, calloutText, whatsappText } = content;
+  const separator = `
+                <span style="margin: 0 8px; color: #E92A7B; opacity: 0.6;">|</span>
+                `;
 
   return `
 <!DOCTYPE html>
@@ -20,7 +75,7 @@ export function getClientConfirmationEmailHtml(data: ClientEmailData): string {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jam Space — Enquiry Confirmation</title>
+  <title>${title}</title>
   <!--[if mso]>
   <style type="text/css">
     body, table, td, h1, p, a { font-family: Arial, sans-serif !important; }
@@ -70,11 +125,7 @@ export function getClientConfirmationEmailHtml(data: ClientEmailData): string {
           <tr>
             <td style="border-top: 1px solid #f29bbd; border-bottom: 1px solid #f29bbd; padding: 10px 16px; background-color: #fff9fb; text-align: center;">
               <p style="margin: 0; font-size: 11.5px; font-weight: 600; color: #E92A7B; letter-spacing: 0.2px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                <span>Ref ID: ${submissionId}</span>
-                <span style="margin: 0 8px; color: #E92A7B; opacity: 0.6;">|</span>
-                <span>Project Type: ${projectType}</span>
-                <span style="margin: 0 8px; color: #E92A7B; opacity: 0.6;">|</span>
-                <span>Location: ${location}</span>
+                ${ribbon.map((item) => `<span>${item}</span>`).join(separator)}
               </p>
             </td>
           </tr>
@@ -92,12 +143,13 @@ export function getClientConfirmationEmailHtml(data: ClientEmailData): string {
           <!-- Main Body Copy -->
           <tr>
             <td style="padding: 0 36px 8px 36px; background-color: #ffffff;">
-              <p style="margin: 0 0 16px; font-size: 14.5px; line-height: 1.6; color: #333333; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                Thank you for reaching out to Jam Space. We have received your project enquiry and our design team is excited to learn more about your vision.
-              </p>
-              <p style="margin: 0 0 24px; font-size: 14.5px; line-height: 1.6; color: #333333; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                Our coordinator will contact you during business hours (9:00 AM – 7:00 PM) to understand your requirements and discuss the next steps.
-              </p>
+              ${paragraphs
+                .map(
+                  (text, i) => `<p style="margin: 0 0 ${i === paragraphs.length - 1 ? 24 : 16}px; font-size: 14.5px; line-height: 1.6; color: #333333; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                ${text}
+              </p>`,
+                )
+                .join("\n              ")}
             </td>
           </tr>
 
@@ -108,9 +160,9 @@ export function getClientConfirmationEmailHtml(data: ClientEmailData): string {
                 <tr>
                   <td style="padding: 18px 20px;">
                     <p style="margin: 0 0 14px; font-size: 13.5px; line-height: 1.5; color: #2e2e2e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                      If you have any immediate questions or floor plans to share, feel free to reply directly to this email or reach us on WhatsApp:
+                      ${calloutText}
                     </p>
-                    <a href="https://wa.me/8801629658114?text=Hello%20Jam%20Space%2C%20referencing%20my%20enquiry%20${submissionId}" target="_blank" style="color: #E92A7B; font-weight: 600; font-size: 14px; text-decoration: underline; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                    <a href="https://wa.me/8801629658114?text=${encodeURIComponent(whatsappText)}" target="_blank" style="color: #E92A7B; font-weight: 600; font-size: 14px; text-decoration: underline; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                       Chat on WhatsApp (+880 1629658114)
                     </a>
                   </td>

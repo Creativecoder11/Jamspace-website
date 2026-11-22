@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  // Pricing was replaced by Packages — keep old links and search results working.
+  async redirects() {
+    return [{ source: "/pricing", destination: "/packages", permanent: true }];
+  },
 };
 
 export default nextConfig;

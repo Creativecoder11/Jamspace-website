@@ -393,5 +393,63 @@ export const projects: Project[] = [
       { index: "03", audience: "Layered Façade.", image: "/images/projects/pti/slider3.webp" },
       { index: "04", audience: "Mixed-Use Planning.", image: "/images/projects/pti/slider4.webp" },
     ]
+  },
+
+  // TODO: placeholder images and video path — replace with Blue Horizon media,
+  // then add `hero: true` if it should appear in the homepage hero.
+  {
+    index: "08",
+    slug: "blue-horizon",
+    name: "Blue Horizon",
+    location: "Jolshiri Abashan",
+    category: "Residential Interiors",
+    image: "/images/drawing-room.webp",
+
+    year: "2025",
+    service: "Residential Design",
+    style: "Neo-Classical",
+    heroImage: "/images/projects-bg-01.webp",
+    heroDescription: "A neo-classical duplex residence where timeless architectural detailing meets the warmth and richness of natural wood.",
+    testimonial: {
+      quote: "“Blue Horizon beautifully brings together timeless neo-classical elegance and the natural warmth of wood. Every space feels thoughtfully designed, with a harmonious balance of aesthetics, comfort, and functionality.”",
+      author: "Mr. Sheikh Mahmudul Hasan",
+      role: "Deputy Director, Centre for Bay of Bengal Studies",
+    },
+
+    overview: "Blue Horizon is a neo-classical duplex shaped by understated elegance, natural warmth, and everyday comfort. Rich wood finishes, classical mouldings, and an earthy palette create a cohesive interior language across both levels.",
+    bentoImages: [
+      "/images/about-strip-01.webp", "/images/about-strip-04.webp",
+      "/images/about-strip-05.webp", "/images/cta-strip-6.webp",
+      "/images/kitchen.webp", "/images/bedroom.webp",
+      "/images/about-strip-02.webp", "/images/cta-strip-7.webp",
+    ],
+    videoSrc: "/videos/blue-horizon.mp4",
+    videoPoster: "/images/cta-strip-3.webp",
+
+    scopeUnderstanding: "Clear zoning separates shared family spaces from private areas.",
+    scopeMaterials: "Natural wood, warm neutrals, marble textures, and refined mouldings.",
+    scopeDescription: "Complete interior design, space planning, material detailing, and lighting design for the duplex.",
+
+    beforeImage: "/images/before.webp",
+    afterImage: "/images/after.webp",
+
+    challengesMainImage: "/images/challenges-main.png",
+    challengesBottomImage: "/images/challenges-small.png",
+    challengesIntro: "Four key design considerations shaped the character and functionality of the duplex.",
+    challengesRows: [
+      { challenge: "Neo-Classical Warmth", solution: "Balanced wood, mouldings, and warm neutrals." },
+      { challenge: "Two-Level Cohesion", solution: "Unified finishes and detailing across both levels." },
+      { challenge: "Everyday Functionality", solution: "Planned practical spaces for everyday family life." },
+      { challenge: "Personalised Detailing", solution: "Tailored finishes to reflect the client's preferences." },
+    ],
+    enquiryText: "Let's bring your vision to life with thoughtful design.",
+
+    highlightLabel: "Design Highlights",
+    highlightSlides: [
+      { index: "01", audience: "Rich Wooden Expressions", image: "/images/cta-strip-5.webp" },
+      { index: "02", audience: "Neo-Classical Detailing", image: "/images/about-strip-06.png" },
+      { index: "03", audience: "Warm, Harmonious Materials", image: "/images/cta-strip-8.webp" },
+      { index: "04", audience: "Timeless Two-Level Cohesion", image: "/images/projects-thumb-01.webp" },
+    ],
   }
 ];

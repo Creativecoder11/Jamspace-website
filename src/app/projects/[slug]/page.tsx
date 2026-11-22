@@ -41,7 +41,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
             <ProjectsBeforeAfter project={project} />
             <ProjectsChallenges project={project} />
-            <DesignHighlightSilde slides={project.highlightSlides} />
+            <DesignHighlightSilde slides={project.highlightSlides} label={project.highlightLabel} />
             <MoreProjects currentSlug={project.slug} />
         </section>
     );

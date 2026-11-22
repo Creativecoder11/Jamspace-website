@@ -231,3 +231,51 @@ export function trackViewContent(title: string, category: string): void {
     console.warn("[Analytics] Meta Pixel ViewContent error:", err);
   }
 }
+
+/**
+ * Design session booking funnel (Packages page modal → SSLCommerz → thank-you).
+ * - booking_modal_open    : modal opened
+ * - begin_checkout / InitiateCheckout : details submitted, redirecting to the gateway
+ * - purchase / Purchase   : payment validated (fired on the booking thank-you page)
+ */
+export function trackBookingModalOpen(location: string): void {
+  pushDataLayer("booking_modal_open", { cta_location: location });
+}
+
+export function trackBookingCheckout(bookingId: string, value: number): void {
+  pushDataLayer("begin_checkout", {
+    form_name: "design_session_booking",
+    booking_id: bookingId,
+    currency: "BDT",
+    value,
+  });
+  try {
+    trackFBEvent("InitiateCheckout", {
+      content_name: "Design Session",
+      currency: "BDT",
+      value,
+    });
+  } catch (err) {
+    console.warn("[Analytics] Meta Pixel InitiateCheckout error:", err);
+  }
+}
+
+export function trackBookingPurchase(bookingId: string, value: number): void {
+  pushDataLayer("purchase", {
+    transaction_id: bookingId,
+    currency: "BDT",
+    value,
+    items: [{ item_id: "design_session", item_name: "Design Session", price: value, quantity: 1 }],
+  });
+  try {
+    trackFBEvent("Purchase", {
+      content_name: "Design Session",
+      content_type: "product",
+      currency: "BDT",
+      value,
+      order_id: bookingId,
+    });
+  } catch (err) {
+    console.warn("[Analytics] Meta Pixel Purchase error:", err);
+  }
+}

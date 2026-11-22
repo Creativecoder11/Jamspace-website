@@ -24,12 +24,12 @@ const variants: Record<ButtonVariant, string> = {
     "border border-white/70 text-white hover:bg-white hover:text-foreground",
   // Solid white pill with accent text — the CTA section's button on a pink panel.
   inverse: "bg-white text-accent hover:bg-foreground hover:text-white",
-  // Solid near-black pill — pricing cards' "Choose Package" CTA.
+  // Solid near-black pill — package cards' "Choose Package" CTA.
   dark: "bg-foreground text-white hover:bg-accent",
   projectbtn: "bg-accent text-accent-foreground font-medium hover:bg-foreground px-2 py-2"
 };
 
-function Arrow() {
+export function ButtonArrow() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +53,11 @@ type NativeButtonProps = BaseProps &
 
 export type ButtonProps = LinkButtonProps | NativeButtonProps;
 
+/** Button classes, for plain <a> elements (file downloads) that must skip Next's client routing. */
+export function buttonClasses(variant: ButtonVariant = "primary", className = "") {
+  return `${base} ${variants[variant]} ${className}`;
+}
+
 /** Pill CTA. Renders a Next Link when `href` is passed, otherwise a <button>. */
 export function Button({
   variant = "primary",
@@ -61,14 +66,14 @@ export function Button({
   children,
   ...rest
 }: ButtonProps) {
-  const classes = `${base} ${variants[variant]} ${className}`;
+  const classes = buttonClasses(variant, className);
 
   if ("href" in rest && rest.href) {
     const { href, ...linkRest } = rest as LinkButtonProps;
     return (
       <Link href={href} className={classes} {...linkRest}>
         {children}
-        {showArrow && <Arrow />}
+        {showArrow && <ButtonArrow />}
       </Link>
     );
   }
@@ -77,7 +82,7 @@ export function Button({
   return (
     <button type="button" className={classes} {...buttonRest}>
       {children}
-      {showArrow && <Arrow />}
+      {showArrow && <ButtonArrow />}
     </button>
   );
 }

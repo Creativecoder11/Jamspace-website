@@ -69,10 +69,16 @@ export interface Project {
   // Challenges
   challengesMainImage: string;
   challengesBottomImage: string;
+  /** Optional short line under the "Challenges & Solutions" heading. */
+  challengesIntro?: string;
   challengesRows: { challenge: string; solution: string }[];
+  /** Optional supporting line under "Ready to Create Your Dream Space?". */
+  enquiryText?: string;
 
   // Highlight Slides
   highlightSlides: { index: string; audience: string; image: string }[];
+  /** Badge on each highlight slide; defaults to "Our Services Ideal For-". */
+  highlightLabel?: string;
 }
 
 export interface Testimonial {
@@ -117,15 +123,13 @@ export type StripImage = {
   tickerText: string[];
 };
 
-export interface PricingPackage {
-  name: string;
+export interface DesignPackage {
+  stage: string;
   accent: "pink" | "yellow" | "teal";
-  description: string;
+  icon: "discover" | "design" | "deliver";
   tag: string;
-  price: string;
-  unit?: string;
-  priceCaption: string;
-  included: string[];
+  title: string;
+  points: string[];
 }
 
 export interface FaqItem {

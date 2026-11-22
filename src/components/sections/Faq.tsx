@@ -36,7 +36,7 @@ const defaultIntro =
   "Find answers to the most common questions about our services, design process, timelines, and how we bring your vision to life.";
 
 /**
- * Shared FAQ accordion — used on the Pricing, Contact and service pages.
+ * Shared FAQ accordion — used on the Packages, Contact and service pages.
  * Without props it shows the general FAQ from src/lib/data/faq.ts.
  */
 export function Faq({

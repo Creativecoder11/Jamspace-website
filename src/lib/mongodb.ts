@@ -37,3 +37,12 @@ export async function getLeadsCollection() {
   return client.db(dbName).collection("leads");
 }
 
+
+export async function getBookingsCollection() {
+  if (!clientPromise) {
+    return null;
+  }
+  const client = await clientPromise;
+  const dbName = process.env.DB_NAME || "jamspace";
+  return client.db(dbName).collection("bookings");
+}

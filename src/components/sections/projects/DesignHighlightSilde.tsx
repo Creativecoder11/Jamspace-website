@@ -21,7 +21,7 @@ function CornerMark({ className = "" }: { className?: string }) {
     );
 }
 
-function SlideContent({ slide, totalSlides }: { slide: SlideItem, totalSlides: number }) {
+function SlideContent({ slide, totalSlides, label }: { slide: SlideItem, totalSlides: number, label: string }) {
     return (
         <div className="absolute inset-0 z-10 flex flex-col justify-between p-6 md:p-10 lg:p-12">
             <div className="slide-top flex items-start justify-between">
@@ -34,7 +34,7 @@ function SlideContent({ slide, totalSlides }: { slide: SlideItem, totalSlides: n
             <div className="flex items-end justify-between gap-6">
                 <div className="slide-copy">
                     <span className="block overflow-hidden">
-                        <span className="slide-badge inline-block rounded-full bg-accent-yellow px-3 py-1 text-xs font-normal text-foreground">Our Services Ideal For-</span>
+                        <span className="slide-badge inline-block rounded-full bg-accent-yellow px-3 py-1 text-xs font-normal text-foreground">{label}</span>
                     </span>
                     <h3 className="mt-3 text-5xl font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
                         <span className="-mb-2 block overflow-hidden pb-2 md:-mb-3 md:pb-3">
@@ -63,7 +63,7 @@ function revealText(tl: gsap.core.Timeline, slide: HTMLElement, at: number, reve
     if (top) tl.fromTo(top, { y: -15, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.4, ease: "power3.out" }, at + 0.4);
 }
 
-export default function DesignHighlightSilde({ slides }: { slides: SlideItem[] }) {
+export default function DesignHighlightSilde({ slides, label = "Our Services Ideal For-" }: { slides: SlideItem[]; label?: string }) {
     const containerRef = useRef<HTMLElement>(null);
     const pinRef = useRef<HTMLDivElement>(null);
     const hintRef = useRef<HTMLDivElement>(null);
@@ -173,7 +173,7 @@ export default function DesignHighlightSilde({ slides }: { slides: SlideItem[] }
                             <Image src={slide.image} alt={`Residential design ideal for ${slide.audience.replace(/\.$/, "")}`} fill sizes="100vw" priority={index === 0} loading={index === 0 ? "eager" : "lazy"} className="object-cover" />
                         </div>
                         <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-black/25" />
-                        <SlideContent slide={slide} totalSlides={slides.length} />
+                        <SlideContent slide={slide} totalSlides={slides.length} label={label} />
                     </div>
                 ))}
                 <div ref={hintRef} className="pointer-events-none absolute bottom-10 left-1/2 z-20 -translate-x-1/2 text-sm text-white/80">Scroll to Explore ↓</div>
@@ -183,7 +183,7 @@ export default function DesignHighlightSilde({ slides }: { slides: SlideItem[] }
                     <div key={slide.index} ref={(el) => { mobileSlideRefs.current[index] = el; }} className="relative h-[50svh] w-[88vw] shrink-0 snap-center overflow-hidden rounded-2xl">
                         <Image src={slide.image} alt={`Residential design ideal for ${slide.audience.replace(/\.$/, "")}`} fill sizes="88vw" priority={index === 0} loading={index === 0 ? "eager" : "lazy"} className="object-cover" />
                         <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/10 to-black/25" />
-                        <SlideContent slide={slide} totalSlides={slides.length} />
+                        <SlideContent slide={slide} totalSlides={slides.length} label={label} />
                     </div>
                 ))}
             </div>

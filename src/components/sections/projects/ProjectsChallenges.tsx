@@ -25,6 +25,9 @@ export default function ProjectsChallenges({ project }: { project: Project }) {
                     </div>
                     <div className="flex-1 flex flex-col">
                         <h3 className="text-xl md:text-3xl text-accent font-medium">Challenges & Solutions</h3>
+                        {project.challengesIntro && (
+                            <p className="mt-2 text-muted text-base">{project.challengesIntro}</p>
+                        )}
                         <ul className="mt-4 md:mt-5">
                             {project.challengesRows.map((row) => (
                                 <li key={row.challenge} className="border-b border-border py-3 md:py-4">
@@ -45,7 +48,12 @@ export default function ProjectsChallenges({ project }: { project: Project }) {
                             </div>
                             <div className="flex-1">
                                 <div className="w-full flex justify-between items-start gap-6 border-b border-border pb-1.5 md:pb-3">
-                                    <p className="text-black text-sm md:text-base font-medium leading-snug">Ready to Create<br />Your Dream Space?</p>
+                                    <div>
+                                        <p className="text-black text-sm md:text-base font-medium leading-snug">Ready to Create<br />Your Dream Space?</p>
+                                        {project.enquiryText && (
+                                            <p className="mt-1 text-muted text-sm">{project.enquiryText}</p>
+                                        )}
+                                    </div>
                                     <MagneticButton>
                                         <Button
                                             href="/contact"

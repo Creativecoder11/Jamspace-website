@@ -6,5 +6,5 @@ export const mainNav: NavLink[] = [
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
   { label: "Blog", href: "/blog" },
-  { label: "Pricing", href: "/pricing" },
+  { label: "Packages", href: "/packages" },
 ];

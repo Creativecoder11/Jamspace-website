@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import nodemailer from "nodemailer";
 import { getLeadsCollection } from "@/lib/mongodb";
+import { getMailTransporter, getMailAddresses } from "@/lib/mailer";
 import {
   getClientConfirmationEmailHtml,
   getClientConfirmationAttachments,
@@ -28,26 +28,6 @@ function cleanupRecentSubmissions() {
       recentSubmissions.delete(key);
     }
   }
-}
-
-// Nodemailer SMTP Transporter helper
-function getMailTransporter() {
-  const host = process.env.SMTP_HOST || process.env.NEXT_SMTP_HOST;
-  const port = parseInt(process.env.SMTP_PORT || process.env.NEXT_SMTP_PORT || "465", 10);
-  const secure = process.env.SMTP_SECURE === "true" || port === 465;
-  const user = process.env.SMTP_USER || process.env.NEXT_SMTP_USER;
-  const pass = process.env.SMTP_PASS || process.env.NEXT_SMTP_PASSWORD;
-
-  if (!host || !user || !pass) {
-    return null;
-  }
-
-  return nodemailer.createTransport({
-    host,
-    port,
-    secure,
-    auth: { user, pass },
-  });
 }
 
 export async function POST(request: Request) {
@@ -216,9 +196,7 @@ export async function POST(request: Request) {
 
     // 9. Send Emails (Admin Notification + Client Confirmation)
     const transporter = getMailTransporter();
-    const smtpUser = process.env.SMTP_USER || process.env.NEXT_SMTP_USER || "info@jamroll.space";
-    const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || smtpUser;
-    const fromAddress = process.env.SMTP_FROM || `"Jam Space" <${smtpUser}>`;
+    const { adminEmail, fromAddress } = getMailAddresses();
 
     if (transporter) {
       // 9a. Admin Notification Email
