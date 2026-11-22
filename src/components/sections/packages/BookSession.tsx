@@ -83,8 +83,8 @@ export function BookSession({ autoOpen = false }: { autoOpen?: boolean }) {
       <div className="md:border-y border-border">
         <div className="mx-auto flex max-w-335 flex-col md:flex-row">
           {/* Left — session details */}
-          <div className="session-reveal flex flex-col md:w-[41%] md:border-r border-border">
-            <div className="px-4 pb-6 md:px-0 md:pb-8 md:pr-8 md:pt-8">
+          <div className="session-reveal flex flex-col md:w-[41%]  md:border-l border-border">
+            <div className="px-4 pb-6 md:px-0 md:pb-8 md:pr-8 md:pl-8 md:pt-8">
               <AnimatedHeading
                 as="h2"
                 lines={[...designSession.titleLines]}
@@ -106,7 +106,7 @@ export function BookSession({ autoOpen = false }: { autoOpen?: boolean }) {
               </div>
             </div>
 
-            <div className="border-t border-border px-4 pt-6 md:px-0 md:pr-8 md:pt-8 md:pb-8">
+            <div className="border-t border-border px-4 pt-6 md:px-0 md:pr-8 md:pt-6 md:pl-8 md:pb-8">
               <p className="border-b border-border pb-4 text-xl md:text-2xl">What&apos;s Included?</p>
               <ul className="mt-4 space-y-3 md:mt-6">
                 {designSession.included.map((item) => (
