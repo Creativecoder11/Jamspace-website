@@ -3,7 +3,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { BlogsGrid } from "@/components/sections/blog/BlogsGrid";
 
 export const metadata: Metadata = {
-    title: "Interior Design Insights & Ideas | Jam Space",
+    title: "Design Insights | Jam Space",
     description:
         "Explore Jam Space's interior design insights, expert tips, design trends, and practical ideas for creating beautiful and functional spaces in Dhaka.",
 };

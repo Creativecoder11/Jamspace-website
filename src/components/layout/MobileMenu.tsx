@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { NavLink } from "@/lib/types";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import { contactInfo } from "@/lib/data/footer";
+import { navMenus } from "@/lib/data/navigation";
 import { trackConsultationCTAClick, trackPhoneClick, trackEmailClick } from "@/lib/analytics";
 
 interface MobileMenuProps {
@@ -51,6 +52,7 @@ function ActiveCorners() {
 
 export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
   const pathname = usePathname();
+  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -67,7 +69,8 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
       aria-modal="true"
       aria-label="Site menu"
       aria-hidden={!isOpen}
-      className={`fixed inset-x-0 top-20 z-40 flex h-[calc(100dvh-5rem)] flex-col bg-background transition-opacity duration-300 md:hidden ${isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+      data-lenis-prevent
+      className={`fixed inset-x-0 top-20 z-40 flex h-[calc(100dvh-5rem)] flex-col overflow-y-auto bg-background transition-opacity duration-300 md:hidden ${isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
     >
       {/* top split: logo | nav */}
@@ -88,7 +91,76 @@ export function MobileMenu({ links, isOpen, onClose }: MobileMenuProps) {
           <nav aria-label="Mobile" className="py-4 px-6">
             <ul className="flex flex-col items-end gap-4 text-right">
               {links.map((link) => {
+                const menu = navMenus[link.href];
                 const isActive = pathname === link.href;
+
+                if (menu) {
+                  const isExpanded = expandedMenu === link.href;
+                  // Dropdown parents (Services) show active state as accent text, not corners
+                  const isSectionActive = isActive || pathname.startsWith(`${link.href}/`);
+                  const submenuId = `mobile-submenu-${link.href.slice(1)}`;
+                  return (
+                    <li key={link.href} className="flex flex-col items-end">
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setExpandedMenu(isExpanded ? null : link.href)}
+                          aria-expanded={isExpanded}
+                          aria-controls={submenuId}
+                          aria-label={`${link.label} menu`}
+                          tabIndex={isOpen ? 0 : -1}
+                          className={`flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-foreground/10 hover:text-accent ${isExpanded ? "text-accent" : "text-foreground"}`}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="7"
+                            viewBox="0 0 10 6"
+                            fill="none"
+                            aria-hidden="true"
+                            className={`transition-transform duration-300 motion-reduce:transition-none ${isExpanded ? "rotate-180" : ""}`}
+                          >
+                            <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </button>
+                        <Link
+                          href={link.href}
+                          onClick={onClose}
+                          aria-current={isActive ? "page" : undefined}
+                          tabIndex={isOpen ? 0 : -1}
+                          className={`relative inline-block px-1 py-1 text-[28px] font-medium hover:text-accent ${isSectionActive ? "text-accent" : "text-foreground"}`}
+                        >
+                          {link.label}
+                        </Link>
+                      </div>
+
+                      <div
+                        id={submenuId}
+                        className={`grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none ${isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                      >
+                        <ul className="flex flex-col items-end gap-2.5 overflow-hidden">
+                          {menu.map((item, i) => {
+                            const isCurrent = pathname === item.href;
+                            return (
+                              <li key={item.href} className={i === 0 ? "pt-3" : ""}>
+                                <Link
+                                  href={item.href}
+                                  onClick={onClose}
+                                  aria-current={isCurrent ? "page" : undefined}
+                                  tabIndex={isOpen && isExpanded ? 0 : -1}
+                                  className={`inline-block text-right text-[17px] leading-[130%] hover:text-accent ${isCurrent ? "text-accent" : "text-muted"}`}
+                                >
+                                  {item.label}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </li>
+                  );
+                }
+
                 return (
                   <li key={link.href}>
                     <Link

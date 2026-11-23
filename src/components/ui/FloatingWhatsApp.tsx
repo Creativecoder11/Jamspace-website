@@ -18,7 +18,7 @@ export function FloatingWhatsApp() {
       </span>
 
       <a
-        href="https://wa.me/8801629658114?text=Hello%20Jam%20Space%2C%20I%20would%20like%20to%20discuss%20an%20interior%20project."
+        href="https://wa.me/8801629658114?text=Hello%20Jam%20Space%2C%20I%E2%80%99d%20like%20to%20discuss%20a%20project"
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleClick}

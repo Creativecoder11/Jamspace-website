@@ -24,7 +24,7 @@ interface BenefitItem {
 
 const BENEFITS = [
   {
-    title: "Interiors Design",
+    title: "Interior Design",
     description:
       "Thoughtfully designed residential and commercial interiors that balance personal needs, aesthetics and everyday functionality.",
     accent: "pink",

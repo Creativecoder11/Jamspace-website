@@ -3,6 +3,8 @@ export interface NavLink {
   href: string;
 }
 
+export type NavMenuItem = NavLink;
+
 export interface FooterColumn {
   title: string;
   links: NavLink[];
@@ -130,6 +132,7 @@ export interface DesignPackage {
   tag: string;
   title: string;
   points: string[];
+  ctaLabel: string;
 }
 
 export interface FaqItem {

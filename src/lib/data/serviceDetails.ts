@@ -4,19 +4,12 @@ import type { ServiceDetailContent } from "@/lib/types";
 const enquiryHref = (service: string) =>
   `/contact?enquiry=design&service=${service}#start-your-project`;
 
-/**
- * Content for each service details page, keyed by the service slug
- * (matches the folder name under src/app/services/).
- *
- * Architectural Design, Custom Furniture and Consultancy & Visualisation
- * currently reuse the Interior Design copy and images as placeholders —
- * everything marked TODO still needs its real content.
- */
+
 export const serviceDetails = {
   "interior-design": {
     name: "Interior Design",
     meta: {
-      title: "Interior Design",
+      title: "Interior Design Services",
       description:
         "We design homes and commercial spaces around everyday routines, the way teams work and how customers use a space.",
     },
@@ -46,12 +39,12 @@ export const serviceDetails = {
         "Your scope can include layouts, lighting, finishes, furniture and visualisation, depending on what your project needs.",
       cta: { label: "Start a Project", href: enquiryHref("interiors") },
       items: [
-        { title: "Bespoke Furniture", image: "/images/services/interior-design/Included/Mask group.webp" },
-        { title: "Wardrobes & Fitted Storage", image: "/images/services/interior-design/Included/Mask group-1.webp" },
-        { title: "Kitchen Cabinetry", image: "/images/services/interior-design/Included/Mask group-2.webp" },
-        { title: "Shelving & Display Units", image: "/images/services/interior-design/Included/Mask group-3.webp" },
-        { title: "Materials & Hardware", image: "/images/services/interior-design/Included/Mask group-4.webp" },
-        { title: "Furniture Drawings & Detailing", image: "/images/services/interior-design/Included/Mask group-5.webp" },
+        { title: "Space Planning", image: "/images/services/interior-design/included/Mask group.webp" },
+        { title: "Interior Concepts", image: "/images/services/interior-design/included/Mask group-1.webp" },
+        { title: "Furniture & Joinery", image: "/images/services/interior-design/included/Mask group-2.webp" },
+        { title: "Lighting Design", image: "/images/services/interior-design/included/Mask group-3.webp" },
+        { title: "Materials & Hardware", image: "/images/services/interior-design/included/Mask group-4.webp" },
+        { title: "3D Visualisation", image: "/images/services/interior-design/included/Mask group-5.webp" },
         
       ],
     },
@@ -174,7 +167,7 @@ export const serviceDetails = {
   "architectural-design": {
     name: "Architectural Design",
     meta: {
-      title: "Architectural Design",
+      title: "Architectural Design Services",
       description:
         "We design homes and commercial buildings, starting with what the site can accommodate and what the building needs to do.",
     },
@@ -206,7 +199,7 @@ export const serviceDetails = {
         { title: "Site & Brief Review", image: "/images/services/architectural-design/included/Mask group.webp" },
         { title: "Building Concepts", image: "/images/services/architectural-design/included/Mask group-1.webp" },
         { title: "Spatial Planning", image: "/images/services/architectural-design/included/Mask group-2.webp" },
-        { title: "Façade & Exterior Design", image: "/images/services/architectural-design/included/Mask group-3.webp" },
+        { title: "Facade & Exterior Design", image: "/images/services/architectural-design/included/Mask group-3.webp" },
         { title: "Rooftop & Outdoor Design", image: "/images/services/architectural-design/included/Mask group-4.webp" },
         { title: "Architectural Visualisation", image: "/images/services/architectural-design/included/Mask group-5.webp" },
       ],
@@ -321,9 +314,9 @@ export const serviceDetails = {
   "custom-furniture": {
     name: "Custom Furniture",
     meta: {
-      title: "Custom Furniture",
+      title: "Custom Furniture Services",
       description:
-        "We design custom furniture and fitted storage for homes and businesses, from a single piece to a coordinated set.",
+        "We design and builds custom furniture and fitted storage for homes and businesses, from a single piece to a coordinated set.",
     },
     hero: {
       titleLines: ["Bespoke", "Furniture."],
@@ -468,7 +461,7 @@ export const serviceDetails = {
   "consultancy-visualisation": {
     name: "Consultancy & Visualisation",
     meta: {
-      title: "Consultancy & Visualisation",
+      title: "Consultancy & Visualisation Services",
       description:
         "Get professional advice on a design decision, compare layouts or see how a proposal could look before committing.",
     },

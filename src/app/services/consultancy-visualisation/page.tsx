@@ -6,6 +6,7 @@ import ResidentialHeroSection from "@/components/sections/services/ResidentialDe
 import ResidentialInculdedServices from "@/components/sections/services/ResidentialDesign/ResidentialInculdedServices";
 import ServiceRelatedProjects from "@/components/sections/services/ResidentialDesign/ServiceRelatedProjects";
 import { Faq } from "@/components/sections/Faq";
+import { BookSession } from "@/components/sections/packages/BookSession";
 import { serviceDetails } from "@/lib/data/serviceDetails";
 
 const content = serviceDetails["consultancy-visualisation"];
@@ -21,6 +22,7 @@ export default function ConsultancyVisualisationPage() {
       <ResidentialHeroSection content={content.hero} />
       <ResidentialInculdedServices content={content.included} />
       <ResidentailApproach content={content.approach} serviceName={content.name} />
+      <BookSession ctaLocation="consultancy_visualisation_book_session" />
       <ServiceRelatedProjects content={content.relatedProjects} />
       <ResidentailWhyChoose content={content.whyChoose} />
       <ResidentailServicesSlider content={content.audience} serviceName={content.name} />

@@ -4,7 +4,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { ProjectsGrid } from "@/components/sections/projects/ProjectsGrid";
 
 export const metadata: Metadata = {
-  title: "Interior Design Projects in Dhaka | Jam Space",
+  title: "Interior Design & Architecture Projects",
   description:
     "Explore Jam Space interior design projects in Dhaka, featuring thoughtfully designed residential and commercial spaces, from modern homes to inspiring workspaces.",
 };

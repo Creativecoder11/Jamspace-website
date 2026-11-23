@@ -125,8 +125,8 @@ export function PackageCards() {
 
                 <ul className="mt-4 flex-1 space-y-3 md:mt-6">
                   {pkg.points.map((point) => (
-                    <li key={point} className="flex items-start gap-2 text-sm text-muted">
-                      <BrandGlyph shape="step" color="pink" className="mt-1 h-3 w-3 shrink-0" />
+                    <li key={point} className="flex items-center gap-2 text-sm text-muted">
+                      <BrandGlyph shape="step" color="pink" className=" h-3 w-3 shrink-0" />
                       {point}
                     </li>
                   ))}
@@ -140,7 +140,7 @@ export function PackageCards() {
                     trackConsultationCTAClick(`packages_${pkg.stage.toLowerCase()}`)
                   }
                 >
-                  Choose Package
+                  {pkg.ctaLabel}
                 </Button>
               </div>
             </div>

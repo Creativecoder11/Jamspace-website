@@ -75,13 +75,13 @@ export const services: Service[] = [
 export const homeServices: (Service & { href: string })[] = [
   {
     index: "01",
-    slug: "interiors-design",
-    title: "Interiors Design",
+    slug: "interior-design",
+    title: "Interior Design",
     heading: "Homes and Commercial Spaces",
     description:
       "We design residential and commercial interiors around everyday routines, the way teams work and how customers experience a space.",
     image: "/images/services-residential-1.webp",
-    href: "/services#interiors_design",
+    href: "/services/interior-design",
     subServices: [
       { label: "Residential Interiors" },
       { label: "Commercial Interiors" },
@@ -91,13 +91,13 @@ export const homeServices: (Service & { href: string })[] = [
   },
   {
     index: "02",
-    slug: "architecture-design",
+    slug: "architectural-design",
     title: "Architectural Design",
     heading: "Buildings and Their Surroundings",
     description:
       "We develop concepts and layouts for residential and commercial buildings, considering how they relate to the site and how people will use them.",
     image: "/images/projects/pti/hero.webp",
-    href: "/services#architecture_design",
+    href: "/services/architectural-design",
     subServices: [
       { label: "Residential Buildings" },
       { label: "Commercial Buildings" },
@@ -111,9 +111,9 @@ export const homeServices: (Service & { href: string })[] = [
     title: "Custom Furniture",
     heading: "Furniture Designed for the Space",
     description:
-      "We design bespoke pieces and built-in furniture around the proportions of a room, storage needs and everyday use.",
+      "We design and build bespoke furniture, cabinetry and fitted storage for homes and businesses, with production and installation agreed for each commission.",
     image: "/images/projects/taqwaa/bento-mid.webp",
-    href: "/services#custom_furniture",
+    href: "/services/custom-furniture",
     subServices: [
       { label: "Bespoke Furniture" },
       { label: "Cabinetry" },
@@ -129,7 +129,7 @@ export const homeServices: (Service & { href: string })[] = [
     description:
       "We provide design guidance, space planning and 2D and 3D visualisation to help you understand the possibilities for your project.",
     image: "/images/services-consultation-1.webp",
-    href: "/services#consultancy-visualisation",
+    href: "/services/consultancy-visualisation",
     subServices: [
       { label: "Design Consultation" },
       { label: "Space Planning" },

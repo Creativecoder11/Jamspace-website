@@ -39,8 +39,15 @@ function InfoChip({
 /**
  * "Book a Design Session." — the paid consultation, opens the booking modal.
  * `autoOpen` is set when arriving from "Try Again" on the payment-cancelled page.
+ * `ctaLocation` tags the analytics event so each page using this section is tracked separately.
  */
-export function BookSession({ autoOpen = false }: { autoOpen?: boolean }) {
+export function BookSession({
+  autoOpen = false,
+  ctaLocation = "packages_book_session",
+}: {
+  autoOpen?: boolean;
+  ctaLocation?: string;
+}) {
   const containerRef = useRef<HTMLElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(autoOpen);
 
@@ -134,7 +141,7 @@ export function BookSession({ autoOpen = false }: { autoOpen?: boolean }) {
             <p className="mt-2 text-sm text-muted md:mt-4">{designSession.ctaText}</p>
             <Button
               className="mt-4 w-full justify-center md:mt-6"
-              onClick={() => openModal("packages_book_session")}
+              onClick={() => openModal(ctaLocation)}
             >
               Book a Session
             </Button>
