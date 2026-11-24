@@ -7,17 +7,32 @@ import ResidentialInculdedServices from "@/components/sections/services/Resident
 import ServiceRelatedProjects from "@/components/sections/services/ResidentialDesign/ServiceRelatedProjects";
 import { Faq } from "@/components/sections/Faq";
 import { serviceDetails } from "@/lib/data/serviceDetails";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 
 const content = serviceDetails["interior-design"];
 
-export const metadata: Metadata = {
+const path = "/services/interior-design";
+
+export const metadata: Metadata = pageMetadata({
   title: content.meta.title,
   description: content.meta.description,
-};
+  path,
+  image: content.hero.stripImages[0],
+});
 
 export default function InteriorDesignPage() {
   return (
     <div>
+      <JsonLd
+        data={[
+          serviceJsonLd({ name: "Interior Design", description: content.meta.description, path }),
+          breadcrumbJsonLd([
+            { name: "Services", path: "/services" },
+            { name: "Interior Design", path },
+          ]),
+        ]}
+      />
       <ResidentialHeroSection content={content.hero} />
       <ResidentialInculdedServices content={content.included} />
       <ResidentailApproach content={content.approach} serviceName={content.name} />

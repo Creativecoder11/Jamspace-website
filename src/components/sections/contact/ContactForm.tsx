@@ -321,7 +321,7 @@ export function ContactForm() {
           <div className="contact-reveal mx-4 flex flex-col justify-between border-border pt-8 pb-8 md:mx-0 md:border-r">
             <div>
               <AnimatedHeading
-                as="h1"
+                as="h2"
                 lines={["Let's Discuss", "Your Project."]}
                 className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
               />

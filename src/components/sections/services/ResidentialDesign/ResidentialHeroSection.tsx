@@ -66,7 +66,7 @@ export default function ResidentialHeroSection({
           <div className="mx-auto flex flex-col md:flex-row max-w-335 md:items-start md:justify-between gap-2 md:gap-0">
             <div className="md:w-2/3 md:border-r border-border pt-4 md:py-8">
               <AnimatedHeading
-                as="h2"
+                as="h1"
                 lines={content.titleLines}
                 className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18"
               />

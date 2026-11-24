@@ -21,7 +21,7 @@ export default function ProjectHeroBanner({ project }: { project: Project }) {
                 <div className="flex flex-col md:flex-row max-w-335 mx-auto items-start justify-between">
                     <div className="md:w-2/3 md:border-r border-border md:pr-0 pb-4 md:py-12">
                         <AnimatedHeading
-                            as="h2"
+                            as="h1"
                             lines={project.name.split(" ").length === 1 ? [project.name.toUpperCase(), " "] : project.name.split(" ")}
                             className="text-[44px] md:text-6xl font-normal leading-[120%] md:leading-18 px-4 md:px-0"
                         />

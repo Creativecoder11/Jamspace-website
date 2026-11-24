@@ -3,12 +3,15 @@ import { PageHero } from "@/components/sections/PageHero";
 import { BookSession } from "@/components/sections/packages/BookSession";
 import { PackageCards } from "@/components/sections/packages/PackageCards";
 import { Faq } from "@/components/sections/Faq";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Interior Design Packages in Dhaka | Jam Space",
   description:
-    "Book a 60-minute interior design session with Jam Space, or explore our packages — from complimentary project discovery to personalised design and full execution in Dhaka.",
-};
+    "Compare Jam Space interior design packages in Dhaka — from a 60-minute design session to full design and execution. Pick the support your project needs.",
+  path: "/packages",
+});
 
 export default async function PackagesPage({
   searchParams,
@@ -19,6 +22,7 @@ export default async function PackagesPage({
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: "Packages", path: "/packages" }])} />
       <PageHero eyebrow="Packages" image="/images/hero 1.webp" />
       <BookSession autoOpen={book === "session"} />
       <PackageCards />

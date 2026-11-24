@@ -2,15 +2,20 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
 import { ContactForm } from "@/components/sections/contact/ContactForm";
 import { Faq } from "@/components/sections/Faq";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact an Interior Designer in Dhaka | Jam Space",
-  description: "Get in touch with Jam Space, an interior design studio in Dhaka, to discuss your residential or commercial project and bring your vision to life.",
-};
+  description:
+    "Discuss your project with Jam Space, an interior design and architecture studio in Dhaka. Call, email or send us your brief and our team will get in touch.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: "Contact Us", path: "/contact" }])} />
       <PageHero eyebrow="Contact" image="/images/about-strip-03.webp" />
       <ContactForm />
 

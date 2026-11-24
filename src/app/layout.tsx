@@ -9,6 +9,8 @@ import { AttributionTracker } from "@/components/analytics/AttributionTracker";
 import { CookieConsent } from "@/components/analytics/CookieConsent";
 import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
 import { consentDefaultsScript } from "@/lib/consent";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 // import { Preloader } from "@/components/ui/Preloader";
 
@@ -29,17 +31,38 @@ const helveticaNow = localFont({
   ],
 });
 
+const HOME_TITLE = "Jam Space | Multidisciplinary Design Studio in Dhaka";
+const HOME_DESCRIPTION =
+  "Jam Space is a Dhaka design studio for interior design, architecture, custom furniture and 3D visualisation — homes and workplaces designed around you.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Jam Space | Multidisciplinary Design Studio in Dhaka", template: "%s | Jam Space",
+    default: HOME_TITLE,
+    template: `%s | ${SITE_NAME}`,
   },
-
-  description: "Jam Space is a multidisciplinary design studio in Dhaka, designing homes, workplaces and commercial spaces around the people who use them — across interiors, architecture, furniture, and consultancy & visualisation.",
-
+  description: HOME_DESCRIPTION,
+  applicationName: SITE_NAME,
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
   openGraph: {
-    title: "Jam Space | Multidisciplinary Design Studio in Dhaka",
-    description: "Designed Around You. A multidisciplinary design studio in Dhaka, designing homes, workplaces and commercial spaces around the people who use them.",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    url: "/",
+    siteName: SITE_NAME,
+    locale: "en_US",
     type: "website",
+    images: [{ url: DEFAULT_OG_IMAGE, alt: "Interior designed by Jam Space, Dhaka" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
@@ -76,6 +99,8 @@ export default function RootLayout({
           />
         </noscript>
         {/* End Google Tag Manager (noscript) */}
+
+        <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
 
         <AnimatedFavicon />
 

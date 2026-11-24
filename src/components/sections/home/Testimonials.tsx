@@ -151,9 +151,9 @@ export function Testimonials() {
                 </p>
 
                 <div className="flex flex-col gap-1 mt-4 md:mt-18">
-                  <h1 className="text-base font-bold md:text-xl">
+                  <p className="text-base font-bold md:text-xl">
                     {card.name}
-                  </h1>
+                  </p>
                   <p className="text-sm text-muted md:text-base">
                     {card.role}
                   </p>

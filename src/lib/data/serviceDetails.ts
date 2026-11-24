@@ -11,7 +11,7 @@ export const serviceDetails = {
     meta: {
       title: "Interior Design Services",
       description:
-        "We design homes and commercial spaces around everyday routines, the way teams work and how customers use a space.",
+        "Residential and commercial interior design in Dhaka — space planning, materials, lighting and furniture, designed around how you live, work and use a space.",
     },
     hero: {
       titleLines: ["Interior", "Design."],
@@ -169,7 +169,7 @@ export const serviceDetails = {
     meta: {
       title: "Architectural Design Services",
       description:
-        "We design homes and commercial buildings, starting with what the site can accommodate and what the building needs to do.",
+        "Architectural design for homes and commercial buildings in Dhaka — concepts, layouts, façades and outdoor spaces shaped by the site and how it will be used.",
     },
     hero: {
       titleLines: ["Architectural", "Design."],
@@ -316,7 +316,7 @@ export const serviceDetails = {
     meta: {
       title: "Custom Furniture Services",
       description:
-        "We design and builds custom furniture and fitted storage for homes and businesses, from a single piece to a coordinated set.",
+        "Bespoke furniture, cabinetry and built-in storage designed and built for homes and businesses in Dhaka — from a single piece to a fully coordinated set.",
     },
     hero: {
       titleLines: ["Bespoke", "Furniture."],
@@ -463,7 +463,7 @@ export const serviceDetails = {
     meta: {
       title: "Consultancy & Visualisation Services",
       description:
-        "Get professional advice on a design decision, compare layouts or see how a proposal could look before committing.",
+        "Expert design advice, space planning and 2D and 3D visualisation in Dhaka. Compare layouts and see how your space will look before you commit.",
     },
     hero: {
       titleLines: ["Consultancy &", "Visualisation."],
