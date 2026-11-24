@@ -43,7 +43,7 @@ export const serviceDetails = {
         { title: "Interior Concepts", image: "/images/services/interior-design/included/Mask group-1.webp" },
         { title: "Furniture & Joinery", image: "/images/services/interior-design/included/Mask group-2.webp" },
         { title: "Lighting Design", image: "/images/services/interior-design/included/Mask group-3.webp" },
-        { title: "Materials & Hardware", image: "/images/services/interior-design/included/Mask group-4.webp" },
+        { title: "Materials & Finishes", image: "/images/services/interior-design/included/Mask group-4.webp" },
         { title: "3D Visualisation", image: "/images/services/interior-design/included/Mask group-5.webp" },
         
       ],
@@ -227,7 +227,7 @@ export const serviceDetails = {
     },
     relatedProjects: {
       intro:
-        "See how PTI Skyline separates public and private circulation, alongside two residential building studies.",
+        "Explore PTI Skyline, a proposed mixed-use building with commercial space at street level and homes above.",
       cta: { label: "View All Projects", href: "/projects" },
       cardLabel: "View Project",
       projects: [
@@ -321,7 +321,7 @@ export const serviceDetails = {
     hero: {
       titleLines: ["Bespoke", "Furniture."],
       intro:
-        "We design custom furniture and fitted storage for homes and businesses, from a single piece to a coordinated set.",
+        "We design and build custom furniture and fitted storage for homes and businesses, from a single piece to a coordinated set.",
       cta: { label: "Discuss Your Project", href: enquiryHref("furniture") },
       // Alternates residential and commercial furniture.
       stripImages: [
@@ -338,7 +338,7 @@ export const serviceDetails = {
 
       ],
       about:
-        "Jam Space designs freestanding furniture, cabinetry and built-in storage. We work out what each piece needs to hold or support, how it fits the room and how it will be made. Production and installation can be commissioned separately.",
+        "Jam Space designs and builds freestanding furniture, cabinetry and built-in storage. We consider what each piece needs to do, how it fits the room and how it will be made. Production and installation are separately commissioned, with scope, quotation and timeline agreed before work begins.",
     },
     included: {
       intro:
@@ -448,7 +448,7 @@ export const serviceDetails = {
         {
           question: "Can Jam Space make and install the furniture?",
           answer:
-            "Where separately commissioned, we can support production and installation of the approved design. We agree on the scope, quotation and timeline for that work separately.",
+            "Yes. We build and install the approved furniture where separately commissioned. Production and installation have their own agreed scope, quotation and timeline.",
         },
       ],
     },
@@ -469,7 +469,7 @@ export const serviceDetails = {
       titleLines: ["Consultancy &", "Visualisation."],
       intro:
         "Get professional advice on a design decision, compare layouts or see how a proposal could look before committing.",
-      cta: { label: "Discuss Your Project", href: enquiryHref("consultancy-visualisation") },
+      cta: { label: "Book a Jam Session.", href: enquiryHref("consultancy-visualisation") },
       // Consultation, then commercial / residential / commercial renders.
       stripImages: [
         "/images/services/consultancy/carousel/Mask group.webp",

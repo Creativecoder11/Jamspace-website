@@ -351,17 +351,17 @@ export const projects: Project[] = [
     hero: true,
 
     year: "2025",
-    service: "Residential Design",
-    style: "Modern",
+    service: "Architectural Design",
+    style: "Mixed-Use Building",
     heroImage: "/images/projects/pti/hero.webp",
-    heroDescription: "PTI is a contemporary residential tower that treats landscape as part of its architectural identity. Layered balconies, planted terraces, and warm lighting bring depth and greenery, connecting modern urban living with nature.",
+    heroDescription: "PTI Skyline is a proposed mixed-use building in Kalshi, Mirpur. The design places commercial space at street level and homes above, with projecting balconies and planted terraces shaping the residential floors.",
     testimonial: {
-      quote: "“PTI Skyline was envisioned as a contemporary mixed-use development that brings together a strong commercial presence with comfortable residential living. The design creates a distinctive architectural identity while responding thoughtfully to the needs of both functions.”",
-      author: "PTI",
-      role: "Residential Building"
+      quote: "PTI Skyline explores the transition from the activity of the street to the privacy of home. The building expresses that shift as it rises, from a glazed commercial frontage to the layered balconies and planted terraces above.",
+      author: "PTI Skyline",
+      role: "Mixed-Use Building"
     },
 
-    overview: "PTI Skyline is a contemporary mixed-use development combining commercial spaces with modern residential living. The design uses clean architectural forms, layered balconies, greenery, and warm lighting to create a distinctive yet welcoming urban presence.",
+    overview: "PTI Skyline is organised as a glazed commercial base with a residential tower above. Vertical bays give the base a clear street frontage, while projecting balcony slabs set a horizontal rhythm across the upper floors. The contrast makes the two uses legible within one building.",
     bentoImages: [
       "/images/projects/pti/bento1.webp", "/images/projects/pti/bento2.webp",
       "/images/projects/pti/bento3.webp", "/images/projects/pti/bento4.webp",
@@ -371,9 +371,9 @@ export const projects: Project[] = [
     videoSrc: "/videos/pti.mp4",
     videoPoster: "/images/projects/pti/bento5.webp",
 
-    scopeUnderstanding: "Balances commercial activity with private, comfortable residential zones.",
-    scopeMaterials: "Durable contemporary finishes, textured façades, warm wood accents, glass, and greenery",
-    scopeDescription: "Architectural design covering space planning, façade development, material selection, landscape integration, and lighting design.",
+    scopeUnderstanding: "The plan brings commercial activity to the street and places the homes above it. Commercial and residential circulation are organised separately to distinguish public access from everyday residential movement.",
+    scopeMaterials: "Light-toned façade planes contrast with recessed glazing and darker balcony rails. Planters sit within the balcony composition, while the dusk renders show how lighting picks out the depth of the façade and the terraces above.",
+    scopeDescription: "Architectural design for the mixed-use programme, including spatial planning, façade development, material selection, landscape integration and lighting design.",
 
     beforeImage: "/images/projects/pti/before.webp",
     afterImage: "/images/projects/pti/after.webp",

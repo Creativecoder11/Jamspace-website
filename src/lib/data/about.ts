@@ -140,7 +140,7 @@ export const aboutJourneySteps: {
       index: "01",
       title: "Proposal",
       description:
-        "If you choose execution, we provide a separate proposal covering scope, specifications, cost and timeline.",
+        "We discuss your brief and agree on the design scope, fee and timeline. Execution, if requested, is covered by a separate proposal.",
       accent: "yellow",
       icon: "/discover.svg",
     },
@@ -148,7 +148,7 @@ export const aboutJourneySteps: {
       index: "02",
       title: "Realise",
       description:
-        "Where separately commissioned, we coordinate execution of the approved design under the agreed contract.",
+        "We develop the design with your input at agreed reviews. Where separately commissioned, we coordinate execution of the approved design.",
       accent: "pink",
       icon: "/design.svg",
     },

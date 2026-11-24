@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { useId, useRef, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/animations/gsap";
@@ -8,6 +8,16 @@ import { gsap } from "@/lib/animations/gsap";
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { Button } from "@/components/ui/Button";
 import { contactInfo } from "@/lib/data/footer";
+import {
+  CONTACT_SERVICES,
+  getDependentKeys,
+  getFieldOptions,
+  getServiceConfig,
+  isFieldVisible,
+  validateServiceDetails,
+  type ServiceDetails,
+  type ServiceField,
+} from "@/lib/data/contactForm";
 import { getAttribution } from "@/lib/attribution";
 import {
   trackContactFormStart,
@@ -136,13 +146,56 @@ function ChevronDown() {
 function FieldLabel({
   children,
   required = true,
+  htmlFor,
+  as = "label",
 }: {
   children: ReactNode;
   required?: boolean;
+  htmlFor?: string;
+  as?: "label" | "legend";
+}) {
+  const content = (
+    <>
+      {children} {required && <span className="text-accent">*</span>}
+    </>
+  );
+  if (as === "legend") {
+    return <legend className="block text-sm font-medium text-foreground">{content}</legend>;
+  }
+  return (
+    <label htmlFor={htmlFor} className="block text-sm font-medium text-foreground">
+      {content}
+    </label>
+  );
+}
+
+/** Pill-style checkbox / radio used for multi-select and single-choice groups. */
+function ChoiceChip({
+  type,
+  name,
+  label,
+  checked,
+  onChange,
+}: {
+  type: "checkbox" | "radio";
+  name: string;
+  label: string;
+  checked: boolean;
+  onChange: () => void;
 }) {
   return (
-    <label className="block text-sm font-medium text-foreground">
-      {children} {required && <span className="text-accent">*</span>}
+    <label className="cursor-pointer">
+      <input
+        type={type}
+        name={name}
+        value={label}
+        checked={checked}
+        onChange={onChange}
+        className="peer sr-only"
+      />
+      <span className="inline-flex items-center rounded-full border border-border px-3.5 py-1.5 text-sm text-foreground/80 transition-colors hover:border-foreground/40 peer-checked:border-accent peer-checked:bg-accent/10 peer-checked:text-accent peer-focus-visible:ring-2 peer-focus-visible:ring-accent/40">
+        {label}
+      </span>
     </label>
   );
 }
@@ -153,27 +206,34 @@ const inputClass =
 const selectClass =
   "w-full appearance-none border-b border-border bg-transparent pb-2 pr-6 text-sm text-foreground focus:border-accent focus:outline-none transition-colors";
 
+const initialFormData = {
+  name: "",
+  phone: "",
+  email: "",
+  service: "",
+  location: "",
+  budget: "",
+  expectedStart: "",
+  notes: "",
+  agreeToTerms: false,
+  website_fax_field: "", // honeypot
+};
+
 export function ContactForm() {
   const containerRef = useRef<HTMLElement>(null);
   const formStartedRef = useRef(false);
+  const fieldId = useId();
 
   // Form State according to Playbook Section 03
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    projectType: "Residential",
-    location: "",
-    budget: "",
-    expectedStart: "",
-    notes: "",
-    agreeToTerms: false,
-    website_fax_field: "", // honeypot
-  });
+  const [formData, setFormData] = useState(initialFormData);
+  // Service-specific answers (see src/lib/data/contactForm.ts)
+  const [details, setDetails] = useState<ServiceDetails>({});
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const service = getServiceConfig(formData.service);
 
   useGSAP(
     () => {
@@ -196,8 +256,34 @@ export function ContactForm() {
   const handleFirstInteraction = () => {
     if (!formStartedRef.current) {
       formStartedRef.current = true;
-      trackContactFormStart(formData.projectType);
+      trackContactFormStart(formData.service || "Not selected");
     }
+  };
+
+  // Changing the service clears every service-specific answer.
+  const handleServiceChange = (label: string) => {
+    setFormData((prev) => ({ ...prev, service: label }));
+    setDetails({});
+  };
+
+  // Setting a field clears the answers of fields whose options depend on it.
+  const updateDetail = (key: string, value: string | string[]) => {
+    setDetails((prev) => {
+      const next: ServiceDetails = { ...prev };
+      if (prev[key] !== value && service) {
+        for (const dependent of getDependentKeys(service, key)) delete next[dependent];
+      }
+      if (value === "" || (Array.isArray(value) && value.length === 0)) delete next[key];
+      else next[key] = value;
+      return next;
+    });
+  };
+
+  const toggleMulti = (key: string, option: string, allOptions: string[]) => {
+    const current = Array.isArray(details[key]) ? (details[key] as string[]) : [];
+    const next = current.includes(option) ? current.filter((o) => o !== option) : [...current, option];
+    // Keep the original option order regardless of click order.
+    updateDetail(key, allOptions.filter((o) => next.includes(o)));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -221,6 +307,18 @@ export function ContactForm() {
       return;
     }
 
+    if (!service) {
+      setErrorMessage("Please select the service you need.");
+      return;
+    }
+
+    // Service-specific required fields (multi-selects and radios aren't covered by native validation)
+    const detailsCheck = validateServiceDetails(service, details);
+    if (!detailsCheck.ok) {
+      setErrorMessage(detailsCheck.error);
+      return;
+    }
+
     if (!formData.agreeToTerms) {
       setErrorMessage("Please accept the terms and privacy policy to continue.");
       return;
@@ -231,29 +329,35 @@ export function ContactForm() {
     try {
       const attribution = getAttribution();
 
-      const payload = {
-        name: formData.name.trim(),
-        phone: formData.phone.trim(),
-        email: formData.email.trim(),
-        projectType: formData.projectType,
-        location: formData.location.trim(),
-        budget: formData.budget || "not sure",
-        expectedStart: formData.expectedStart || "not sure",
-        notes: formData.notes.trim(),
-        attribution,
-        website_fax_field: formData.website_fax_field,
-      };
+      const body = new FormData();
+      body.append("name", formData.name.trim());
+      body.append("phone", formData.phone.trim());
+      body.append("email", formData.email.trim());
+      body.append("service", service.label);
+      body.append("details", JSON.stringify(detailsCheck.details));
+      body.append("location", formData.location.trim());
+      body.append("budget", formData.budget || "not sure");
+      body.append("expectedStart", formData.expectedStart || "not sure");
+      body.append("notes", formData.notes.trim());
+      body.append("attribution", JSON.stringify(attribution));
+      body.append("website_fax_field", formData.website_fax_field);
 
       const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body,
       });
 
-      const result = await res.json();
+      const result = await res.json().catch(() => ({}));
 
       if (!res.ok || !result.accepted) {
-        throw new Error(result.error || "Submission failed");
+        // 400s carry a validation message the customer can act on — show it as-is.
+        if (res.status === 400 && typeof result.error === "string") {
+          trackProjectEnquiryError(result.error);
+          setErrorMessage(result.error);
+          setIsSubmitting(false);
+          return;
+        }
+        throw new Error(result.error || `Submission failed (${res.status})`);
       }
 
       const assignedId = result.submissionId || "JS-ENQUIRY";
@@ -269,7 +373,7 @@ export function ContactForm() {
       // Prepare full lead payload for DataLayer, GTM, GA4, Meta Pixel
       const leadPayload = {
         submissionId: assignedId,
-        projectType: formData.projectType,
+        projectType: service.label,
         name: formData.name.trim(),
         phone: formData.phone.trim(),
         email: formData.email.trim(),
@@ -293,13 +397,13 @@ export function ContactForm() {
         console.warn("[Analytics] Conversion event dispatch failed:", analyticsErr);
       }
 
-      // Pass reference, project type, and all URL parameters (including test_event_code) to /thank-you
+      // Pass reference, service, and all URL parameters (including test_event_code) to /thank-you
       setTimeout(() => {
         const queryParams = new URLSearchParams(
           typeof window !== "undefined" ? window.location.search : ""
         );
         queryParams.set("ref", assignedId);
-        queryParams.set("type", formData.projectType);
+        queryParams.set("type", service.label);
         router.push(`/thank-you?${queryParams.toString()}`);
       }, 150);
     } catch (err) {
@@ -311,6 +415,97 @@ export function ContactForm() {
       // Only reset on failure — on success the loading overlay stays up until /thank-you loads
       setIsSubmitting(false);
     }
+  };
+
+  const renderServiceField = (field: ServiceField) => {
+    if (!isFieldVisible(field, details)) return null;
+    const id = `${fieldId}-${field.key}`;
+    const options = getFieldOptions(field, details);
+    const value = details[field.key];
+
+    if (field.kind === "select") {
+      return (
+        <div key={field.key}>
+          <FieldLabel required={field.required} htmlFor={id}>
+            {field.label}
+          </FieldLabel>
+          <div className="relative mt-2">
+            <select
+              id={id}
+              required={field.required}
+              value={typeof value === "string" ? value : ""}
+              onChange={(e) => updateDetail(field.key, e.target.value)}
+              className={selectClass}
+            >
+              <option value="" disabled={field.required}>
+                Select {field.label}
+                {field.required ? "" : " (Optional)"}
+              </option>
+              {options.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+            <ChevronDown />
+          </div>
+        </div>
+      );
+    }
+
+    if (field.kind === "number") {
+      return (
+        <div key={field.key}>
+          <FieldLabel required={field.required} htmlFor={id}>
+            {field.label}
+          </FieldLabel>
+          <div className="relative">
+            <input
+              id={id}
+              type="number"
+              inputMode="decimal"
+              min={1}
+              step="any"
+              required={field.required}
+              placeholder={`${field.placeholder ?? ""}${field.required ? "" : " (Optional)"}`.trim()}
+              aria-describedby={field.unit ? `${id}-unit` : undefined}
+              value={typeof value === "string" ? value : ""}
+              onChange={(e) => updateDetail(field.key, e.target.value)}
+              className={`${inputClass} pr-14`}
+            />
+            {field.unit && (
+              <span id={`${id}-unit`} className="pointer-events-none absolute right-0 bottom-2 text-xs text-muted">
+                {field.unit}
+              </span>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // multi / radio — chip groups span the full row
+    const isMulti = field.kind === "multi";
+    const selected = isMulti ? (Array.isArray(value) ? value : []) : [];
+    return (
+      <fieldset key={field.key} className="sm:col-span-2">
+        <FieldLabel as="legend" required={field.required}>
+          {field.label}
+          {isMulti && <span className="ml-1 text-xs font-normal text-muted">(Select all that apply)</span>}
+        </FieldLabel>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {options.map((opt) => (
+            <ChoiceChip
+              key={opt}
+              type={isMulti ? "checkbox" : "radio"}
+              name={id}
+              label={opt}
+              checked={isMulti ? selected.includes(opt) : value === opt}
+              onChange={() => (isMulti ? toggleMulti(field.key, opt, options) : updateDetail(field.key, opt))}
+            />
+          ))}
+        </div>
+      </fieldset>
+    );
   };
 
   return (
@@ -434,12 +629,14 @@ export function ContactForm() {
                 <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                   {/* Field 1: Name */}
                   <div>
-                    <FieldLabel>Full Name</FieldLabel>
+                    <FieldLabel htmlFor={`${fieldId}-name`}>Full Name</FieldLabel>
                     <input
+                      id={`${fieldId}-name`}
                       type="text"
                       required
                       minLength={2}
                       maxLength={100}
+                      autoComplete="name"
                       placeholder="e.g. Tanvir Ahmed"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -449,10 +646,12 @@ export function ContactForm() {
 
                   {/* Field 2: Email */}
                   <div>
-                    <FieldLabel>Email Address</FieldLabel>
+                    <FieldLabel htmlFor={`${fieldId}-email`}>Email Address</FieldLabel>
                     <input
+                      id={`${fieldId}-email`}
                       type="email"
                       required
+                      autoComplete="email"
                       placeholder="e.g. tanvir@gmail.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -462,10 +661,12 @@ export function ContactForm() {
 
                   {/* Field 3: Phone */}
                   <div>
-                    <FieldLabel>Phone Number</FieldLabel>
+                    <FieldLabel htmlFor={`${fieldId}-phone`}>Phone Number</FieldLabel>
                     <input
+                      id={`${fieldId}-phone`}
                       type="tel"
                       required
+                      autoComplete="tel"
                       placeholder="e.g. 01712345678"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -473,30 +674,47 @@ export function ContactForm() {
                     />
                   </div>
 
-                  {/* Field 4: Project Type */}
+                  {/* Field 4: Service */}
                   <div>
-                    <FieldLabel>Project Type</FieldLabel>
+                    <FieldLabel htmlFor={`${fieldId}-service`}>Service</FieldLabel>
                     <div className="relative mt-2">
                       <select
+                        id={`${fieldId}-service`}
                         required
-                        value={formData.projectType}
-                        onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                        value={formData.service}
+                        onChange={(e) => handleServiceChange(e.target.value)}
                         className={selectClass}
                       >
-                        <option value="Residential">Residential</option>
-                        <option value="Office-commercial">Office-commercial</option>
-                        <option value="Renovation">Renovation</option>
-                        <option value="Space planning-consultancy">Space planning-consultancy</option>
-                        <option value="Other">Other</option>
+                        <option value="" disabled>
+                          Select a Service
+                        </option>
+                        {CONTACT_SERVICES.map((s) => (
+                          <option key={s.slug} value={s.label}>
+                            {s.label}
+                          </option>
+                        ))}
                       </select>
                       <ChevronDown />
                     </div>
                   </div>
 
+                  {/* Service-specific fields — appear once a service is chosen */}
+                  {service && (
+                    <div className="sm:col-span-2 border-l-2 border-accent/40 pl-4 md:pl-6">
+                      <p className="text-xs font-medium uppercase tracking-wider text-muted">
+                        {service.label} Details
+                      </p>
+                      <div className="mt-4 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                        {service.fields.map(renderServiceField)}
+                      </div>
+                    </div>
+                  )}
+
                   {/* Field 5: Location */}
                   <div>
-                    <FieldLabel>Project Location</FieldLabel>
+                    <FieldLabel htmlFor={`${fieldId}-location`}>Project Location</FieldLabel>
                     <input
+                      id={`${fieldId}-location`}
                       type="text"
                       required
                       maxLength={150}
@@ -509,9 +727,10 @@ export function ContactForm() {
 
                   {/* Field 6: Approximate Budget (Optional) */}
                   <div>
-                    <FieldLabel required={false}>Approximate Budget</FieldLabel>
+                    <FieldLabel required={false} htmlFor={`${fieldId}-budget`}>Approximate Budget</FieldLabel>
                     <div className="relative mt-2">
                       <select
+                        id={`${fieldId}-budget`}
                         value={formData.budget}
                         onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                         className={selectClass}
@@ -529,9 +748,10 @@ export function ContactForm() {
 
                   {/* Field 7: Expected Start (Optional) */}
                   <div className="sm:col-span-2">
-                    <FieldLabel required={false}>Expected Start</FieldLabel>
+                    <FieldLabel required={false} htmlFor={`${fieldId}-start`}>Expected Start</FieldLabel>
                     <div className="relative mt-2">
                       <select
+                        id={`${fieldId}-start`}
                         value={formData.expectedStart}
                         onChange={(e) => setFormData({ ...formData, expectedStart: e.target.value })}
                         className={selectClass}
@@ -549,10 +769,12 @@ export function ContactForm() {
 
                   {/* Optional Project Details */}
                   <div className="sm:col-span-2">
-                    <FieldLabel required={false}>Tell Us About Your Space (Optional)</FieldLabel>
+                    <FieldLabel required={false} htmlFor={`${fieldId}-notes`}>Tell Us About Your Project (Optional)</FieldLabel>
                     <textarea
+                      id={`${fieldId}-notes`}
                       rows={3}
-                      placeholder="Share any specific requirements, apartment size, or design preferences..."
+                      maxLength={2000}
+                      placeholder="Share your requirements, timeline, or anything else we should know..."
                       value={formData.notes}
                       onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                       className={`${inputClass} resize-none`}
@@ -583,7 +805,7 @@ export function ContactForm() {
 
                 {/* Error Banner with Verified Phone/WhatsApp alternative */}
                 {errorMessage && (
-                  <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-xs md:text-sm text-red-200">
+                  <div role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-xs md:text-sm text-red-200">
                     <p className="text-black">{errorMessage}</p>
                     <p className="mt-2 text-xs text-muted">
                       Direct contact:{" "}

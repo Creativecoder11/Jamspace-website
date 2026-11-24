@@ -55,7 +55,7 @@ export default function ProjectHeroBanner({ project }: { project: Project }) {
                 <div className="absolute inset-x-0 bottom-8">
                     <div className="max-w-335 mx-auto px-4 md:px-0 flex justify-end">
                         <div className="max-w-70 mx-auto md:mx-0 md:max-w-95 bg-white/10 backdrop-blur-md border border-white/20 p-4 md:p-8 text-white">
-                            <Image src="/icons/quote.svg" width={24} height={24} alt="Quote" className="mb-5" />
+                            {/* <Image src="/icons/quote.svg" width={24} height={24} alt="Quote" className="mb-5" /> */}
                             <p className="text-sm md:text-base leading-5 md:leading-7 text-white/90">{project.testimonial.quote}</p>
                             <div className="mt-3 md:mt-6">
                                 <h4 className="font-medium text-base md:text-lg">{project.testimonial.author}</h4>

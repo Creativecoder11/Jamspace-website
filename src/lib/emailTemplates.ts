@@ -25,7 +25,7 @@ export function getClientConfirmationEmailHtml(data: ClientEmailData): string {
 
   return renderBrandedEmail({
     title: "Jam Space — Enquiry Confirmation",
-    ribbon: [`Ref ID: ${submissionId}`, `Project Type: ${projectType}`, `Location: ${location}`],
+    ribbon: [`Ref ID: ${submissionId}`, `Service: ${projectType}`, `Location: ${location}`],
     name,
     paragraphs: [
       "Thank you for reaching out to Jam Space. We have received your project enquiry and our design team is excited to learn more about your vision.",

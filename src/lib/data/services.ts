@@ -38,7 +38,7 @@ export const services: Service[] = [
     slug: "custom-furniture",
     title: "Custom Furniture",
     heading: "See It Before It's Built",
-    shortdescription: "Bespoke furniture, cabinetry and built-in storage designed to fit the space and its everyday use.",
+    shortdescription: "Bespoke furniture, cabinetry and fitted storage designed and built for the space and its everyday use.",
     description:
       "Photorealistic renders and walkthroughs that let you approve every detail up front.",
     image: "/images/services-3d-1.webp",

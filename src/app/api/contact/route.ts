@@ -2,21 +2,27 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { getLeadsCollection } from "@/lib/mongodb";
-import { getMailTransporter, getMailAddresses } from "@/lib/mailer";
+import { getMailTransporter, getMailAddresses, escapeHtml } from "@/lib/mailer";
 import {
   getClientConfirmationEmailHtml,
   getClientConfirmationAttachments,
 } from "@/lib/emailTemplates";
+import {
+  describeServiceDetails,
+  getServiceConfig,
+  validateServiceDetails,
+} from "@/lib/data/contactForm";
 
 export const runtime = "nodejs";
 
-const VALID_PROJECT_TYPES = [
-  "Residential",
-  "Office-commercial",
-  "Renovation",
-  "Space planning-consultancy",
-  "Other",
-];
+function parseJsonField(value: string): unknown {
+  if (!value) return null;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
+}
 
 // In-memory set for deduplication / idempotency (within a 60 second window)
 const recentSubmissions = new Map<string, number>();
@@ -32,24 +38,39 @@ function cleanupRecentSubmissions() {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    let form: FormData;
+    try {
+      form = await request.formData();
+    } catch {
+      return NextResponse.json(
+        { accepted: false, error: "Invalid submission. Please refresh the page and try again." },
+        { status: 400 }
+      );
+    }
+    const field = (key: string, max = 500) => {
+      const value = form.get(key);
+      return typeof value === "string" ? value.trim().slice(0, max) : "";
+    };
 
     // 1. Anti-spam honeypot check
-    if (body.website_fax_field) {
+    if (field("website_fax_field")) {
       return NextResponse.json({ accepted: false, error: "Bot detected" }, { status: 400 });
     }
 
     // 2. Extract and sanitize fields
-    const name = typeof body.name === "string" ? body.name.trim() : "";
-    const phone = typeof body.phone === "string" ? body.phone.trim() : "";
-    const email = typeof body.email === "string" ? body.email.trim() : "";
-    const projectType = typeof body.projectType === "string" ? body.projectType.trim() : "";
-    const location = typeof body.location === "string" ? body.location.trim() : "";
-    const budget = typeof body.budget === "string" ? body.budget.trim() : "not sure";
-    const expectedStart = typeof body.expectedStart === "string" ? body.expectedStart.trim() : "not sure";
-    const notes = typeof body.notes === "string" ? body.notes.trim() : "";
+    const name = field("name", 200);
+    const phone = field("phone", 50);
+    const email = field("email", 200);
+    const serviceLabel = field("service", 100);
+    const location = field("location", 200);
+    const budget = field("budget", 100) || "not sure";
+    const expectedStart = field("expectedStart", 100) || "not sure";
+    const notes = field("notes", 2000);
 
-    const attribution = body.attribution || {
+    const rawAttribution = parseJsonField(field("attribution", 4000));
+    const attribution = (
+      rawAttribution && typeof rawAttribution === "object" ? rawAttribution : null
+    ) as Record<string, string> | null || {
       utm_source: "unattributed / unknown",
       utm_medium: "unattributed / unknown",
       utm_campaign: "unattributed / unknown",
@@ -86,12 +107,21 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!projectType || !VALID_PROJECT_TYPES.includes(projectType)) {
+    const service = getServiceConfig(serviceLabel);
+    if (!service) {
       return NextResponse.json(
-        { accepted: false, error: "Please select an approved project type" },
+        { accepted: false, error: "Please select the service you need" },
         { status: 400 }
       );
     }
+    const projectType = service.label;
+
+    const detailsResult = validateServiceDetails(service, parseJsonField(field("details", 4000)));
+    if (!detailsResult.ok) {
+      return NextResponse.json({ accepted: false, error: detailsResult.error }, { status: 400 });
+    }
+    const serviceDetails = detailsResult.details;
+    const detailRows = describeServiceDetails(service, serviceDetails);
 
     if (!location || location.length < 2 || location.length > 150) {
       return NextResponse.json(
@@ -102,7 +132,7 @@ export async function POST(request: Request) {
 
     // 4. Idempotency / Double submit guard
     cleanupRecentSubmissions();
-    const idempotencyKey = `${cleanPhone}_${projectType}_${location.toLowerCase()}`;
+    const idempotencyKey = `${cleanPhone}_${service.slug}_${location.toLowerCase()}`;
     const now = Date.now();
     if (recentSubmissions.has(idempotencyKey)) {
       return NextResponse.json(
@@ -127,19 +157,24 @@ export async function POST(request: Request) {
       name,
       phone,
       email,
+      // `projectType` now holds the selected service; kept under this name so
+      // existing sheet columns, dashboards and analytics keep working.
       projectType,
+      service: projectType,
+      serviceDetails,
+      serviceDetailsSummary: detailRows.map(([label, value]) => `${label}: ${value}`).join(" | "),
       location,
-      budget: budget || "not sure",
-      expectedStart: expectedStart || "not sure",
+      budget,
+      expectedStart,
       notes,
       attribution: {
-        utm_source: attribution.utm_source || "unattributed / unknown",
-        utm_medium: attribution.utm_medium || "unattributed / unknown",
-        utm_campaign: attribution.utm_campaign || "unattributed / unknown",
-        utm_content: attribution.utm_content || "unattributed / unknown",
-        utm_term: attribution.utm_term || "",
-        landing_page: attribution.landing_page || "",
-        referrer: attribution.referrer || "direct",
+        utm_source: String(attribution.utm_source || "unattributed / unknown").slice(0, 300),
+        utm_medium: String(attribution.utm_medium || "unattributed / unknown").slice(0, 300),
+        utm_campaign: String(attribution.utm_campaign || "unattributed / unknown").slice(0, 300),
+        utm_content: String(attribution.utm_content || "unattributed / unknown").slice(0, 300),
+        utm_term: String(attribution.utm_term || "").slice(0, 300),
+        landing_page: String(attribution.landing_page || "").slice(0, 500),
+        referrer: String(attribution.referrer || "direct").slice(0, 500),
       },
       status: "New",
     };
@@ -209,20 +244,26 @@ export async function POST(request: Request) {
           </div>
           <div style="padding: 24px; background-color: #fafafa;">
             <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-              <tr><td style="padding: 8px 0; color: #666; width: 140px;">Client Name:</td><td style="padding: 8px 0; font-weight: 600;">${name}</td></tr>
-              <tr><td style="padding: 8px 0; color: #666;">Phone:</td><td style="padding: 8px 0; font-weight: 600;"><a href="tel:${cleanPhone}" style="color: #E92A7B; text-decoration: none;">${phone}</a></td></tr>
-              <tr><td style="padding: 8px 0; color: #666;">Email:</td><td style="padding: 8px 0; font-weight: 600;"><a href="mailto:${email}" style="color: #E92A7B; text-decoration: none;">${email}</a></td></tr>
-              <tr><td style="padding: 8px 0; color: #666;">Project Type:</td><td style="padding: 8px 0; font-weight: 600;">${projectType}</td></tr>
-              <tr><td style="padding: 8px 0; color: #666;">Location:</td><td style="padding: 8px 0; font-weight: 600;">${location}</td></tr>
-              <tr><td style="padding: 8px 0; color: #666;">Budget:</td><td style="padding: 8px 0;">${budget}</td></tr>
-              <tr><td style="padding: 8px 0; color: #666;">Expected Start:</td><td style="padding: 8px 0;">${expectedStart}</td></tr>
-              ${notes ? `<tr><td style="padding: 8px 0; color: #666; vertical-align: top;">Notes:</td><td style="padding: 8px 0; white-space: pre-wrap;">${notes}</td></tr>` : ""}
+              <tr><td style="padding: 8px 0; color: #666; width: 140px;">Client Name:</td><td style="padding: 8px 0; font-weight: 600;">${escapeHtml(name)}</td></tr>
+              <tr><td style="padding: 8px 0; color: #666;">Phone:</td><td style="padding: 8px 0; font-weight: 600;"><a href="tel:${escapeHtml(cleanPhone)}" style="color: #E92A7B; text-decoration: none;">${escapeHtml(phone)}</a></td></tr>
+              <tr><td style="padding: 8px 0; color: #666;">Email:</td><td style="padding: 8px 0; font-weight: 600;"><a href="mailto:${escapeHtml(email)}" style="color: #E92A7B; text-decoration: none;">${escapeHtml(email)}</a></td></tr>
+              <tr><td style="padding: 8px 0; color: #666;">Service:</td><td style="padding: 8px 0; font-weight: 600;">${escapeHtml(projectType)}</td></tr>
+              ${detailRows
+                .map(
+                  ([label, value]) =>
+                    `<tr><td style="padding: 8px 0 8px 12px; color: #666; vertical-align: top;">${escapeHtml(label)}:</td><td style="padding: 8px 0;">${escapeHtml(value)}</td></tr>`
+                )
+                .join("")}
+              <tr><td style="padding: 8px 0; color: #666;">Location:</td><td style="padding: 8px 0; font-weight: 600;">${escapeHtml(location)}</td></tr>
+              <tr><td style="padding: 8px 0; color: #666;">Budget:</td><td style="padding: 8px 0;">${escapeHtml(budget)}</td></tr>
+              <tr><td style="padding: 8px 0; color: #666;">Expected Start:</td><td style="padding: 8px 0;">${escapeHtml(expectedStart)}</td></tr>
+              ${notes ? `<tr><td style="padding: 8px 0; color: #666; vertical-align: top;">Notes:</td><td style="padding: 8px 0; white-space: pre-wrap;">${escapeHtml(notes)}</td></tr>` : ""}
             </table>
 
             <div style="margin-top: 20px; padding: 12px; background: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 12px; color: #555;">
               <strong style="color: #111;">Attribution &amp; Source:</strong><br/>
-              Source: ${leadRecord.attribution.utm_source} | Medium: ${leadRecord.attribution.utm_medium} | Campaign: ${leadRecord.attribution.utm_campaign}<br/>
-              Landing Page: ${leadRecord.attribution.landing_page} | Referrer: ${leadRecord.attribution.referrer}
+              Source: ${escapeHtml(leadRecord.attribution.utm_source)} | Medium: ${escapeHtml(leadRecord.attribution.utm_medium)} | Campaign: ${escapeHtml(leadRecord.attribution.utm_campaign)}<br/>
+              Landing Page: ${escapeHtml(leadRecord.attribution.landing_page)} | Referrer: ${escapeHtml(leadRecord.attribution.referrer)}
             </div>
 
             <div style="margin-top: 24px; text-align: center;">
@@ -235,10 +276,10 @@ export async function POST(request: Request) {
       // 9b. Client Confirmation Email matching the exact PDF specification
       const clientEmailSubject = `We've Received Your Project Enquiry — Jam Space (${submissionId})`;
       const clientEmailHtml = getClientConfirmationEmailHtml({
-        name,
+        name: escapeHtml(name),
         submissionId,
-        projectType,
-        location,
+        projectType: escapeHtml(projectType),
+        location: escapeHtml(location),
       });
       const clientAttachments = getClientConfirmationAttachments();
 
@@ -247,6 +288,7 @@ export async function POST(request: Request) {
           transporter.sendMail({
             from: fromAddress,
             to: adminEmail,
+            replyTo: email,
             subject: adminEmailSubject,
             html: adminEmailHtml,
           }),

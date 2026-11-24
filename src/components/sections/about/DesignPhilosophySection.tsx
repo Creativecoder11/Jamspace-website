@@ -38,7 +38,7 @@ const BENEFITS = [
   {
     title: "Custom Furniture",
     description:
-      "Bespoke furniture and built-in solutions designed around individual needs, practical use and spatial harmony.",
+      "Bespoke furniture, cabinetry and fitted storage designed and built for homes and businesses, with production and installation agreed for each commission.",
     accent: "teal",
   },
   {
