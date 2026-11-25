@@ -36,7 +36,7 @@ function SlideContent({ slide, totalSlides, label }: { slide: SlideItem, totalSl
                     <span className="block overflow-hidden">
                         <span className="slide-badge inline-block rounded-full bg-accent-yellow px-3 py-1 text-xs font-normal text-foreground">{label}</span>
                     </span>
-                    <h3 className="mt-3 text-5xl font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
+                    <h3 className="mt-3 text-3xl font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
                         <span className="-mb-2 block overflow-hidden pb-2 md:-mb-3 md:pb-3">
                             <span className="slide-line inline-block">{slide.audience}</span>
                         </span>

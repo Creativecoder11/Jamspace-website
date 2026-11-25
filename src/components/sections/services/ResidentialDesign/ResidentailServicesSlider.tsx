@@ -67,7 +67,7 @@ function SlideContent({
             </span>
           </span>
 
-          <h3 className="mt-3 text-[40px] font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
+          <h3 className="mt-3 text-3xl font-normal leading-[1.05] text-white md:text-6xl lg:text-7xl">
             <span className="block overflow-hidden">
               <span className="slide-line inline-block">{slide.audience}</span>
             </span>

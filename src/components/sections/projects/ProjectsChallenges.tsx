@@ -42,14 +42,14 @@ export default function ProjectsChallenges({ project }: { project: Project }) {
                                 </li>
                             ))}
                         </ul>
-                        <div className="mt-8 md:mt-auto md:pt-8 flex flex-col md:flex-row items-end gap-6 md:gap-10">
-                            <div className="relative w-[150px] h-[150px] md:w-[210px] md:h-[210px] shrink-0 overflow-hidden">
-                                <Image src={project.challengesBottomImage} alt="Bathroom interior" fill sizes="210px" className="object-cover" />
+                        <div className="mt-8 md:mt-auto md:pt-8 flex flex-col md:flex-row md:items-end gap-6 md:gap-10">
+                            <div className="relative w-full aspect-square md:aspect-auto md:w-[210px] md:h-[210px] shrink-0 overflow-hidden">
+                                <Image src={project.challengesBottomImage} alt="Bathroom interior" fill sizes="(min-width: 768px) 210px, 100vw" className="object-cover" />
                             </div>
-                            <div className="flex-1">
-                                <div className="w-full flex justify-between items-start gap-6 border-b border-border pb-1.5 md:pb-3">
+                            <div className="w-full md:flex-1">
+                                <div className="w-full flex flex-col items-start gap-4 border-b border-border pb-4 md:flex-row md:justify-between md:gap-6 md:pb-3">
                                     <div>
-                                        <p className="text-black text-sm md:text-base font-medium leading-snug">Ready to Create<br />Your Dream Space?</p>
+                                        <p className="text-black text-lg md:text-base font-medium leading-snug">Ready to Create<br className="hidden md:block" /> Your Dream Space?</p>
                                         {project.enquiryText && (
                                             <p className="mt-1 text-muted text-sm">{project.enquiryText}</p>
                                         )}

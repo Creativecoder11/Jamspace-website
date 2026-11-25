@@ -183,18 +183,13 @@ export function About() {
               />
 
               <div className="absolute bottom-0 left-0 w-full p-4 text-white">
-                <div className="flex flex-col gap-1">
-                  {item.tickerText.map((text, textIndex) => (
-                    <div
-                      key={textIndex}
-                      className="flex items-center gap-2"
-                    >
-                      <span className="mb-1 text-2xl leading-none">•</span>
-                      <p className="text-base font-normal uppercase leading-tight tracking-wide">
-                        {text}
-                      </p>
-                    </div>
-                  ))}
+                {/* tickerText repeats the label for the desktop marquee;
+                    mobile shows it once. */}
+                <div className="flex items-center gap-2">
+                  <span className="mb-1 text-2xl leading-none">•</span>
+                  <p className="text-base font-normal uppercase leading-tight tracking-wide">
+                    {item.tickerText[0]}
+                  </p>
                 </div>
               </div>
             </div>
