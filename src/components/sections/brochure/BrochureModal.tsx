@@ -121,8 +121,8 @@ export function BrochureModal({ onClose }: { onClose: () => void }) {
     };
   }, [lenis]);
 
-  // Size the book to the stage. Landscape pages (and narrow screens) show one page at a
-  // time at full height; portrait pages show as a two-page spread.
+  // Size the book to the stage: the largest two-page spread that fits, or one page at a
+  // time on narrow screens.
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage || !pdf) return;
@@ -130,7 +130,7 @@ export function BrochureModal({ onClose }: { onClose: () => void }) {
     const measure = () => {
       const { clientWidth: w, clientHeight: h } = stage;
       if (!w || !h) return;
-      const portrait = w < PORTRAIT_BELOW || pdf.ratio > 1;
+      const portrait = w < PORTRAIT_BELOW;
       const cols = portrait ? 1 : 2;
       let pageH = h;
       let pageW = pageH * pdf.ratio;
@@ -287,7 +287,7 @@ export function BrochureModal({ onClose }: { onClose: () => void }) {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-100 flex items-center justify-center bg-foreground/60 p-0 backdrop-blur-sm md:p-6"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-[#efebe4] backdrop-blur-sm"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -298,7 +298,7 @@ export function BrochureModal({ onClose }: { onClose: () => void }) {
         aria-modal="true"
         aria-labelledby={titleId}
         data-lenis-prevent
-        className="relative flex h-full w-full max-w-343 flex-col bg-background md:h-[calc(100dvh-3rem)]"
+        className="relative flex h-full w-full flex-col bg-[#efebe4]"
       >
         {/* Toolbar */}
         <div className="flex h-16 shrink-0 items-center justify-between gap-4 border-b border-border px-4 md:h-18 md:px-6">
@@ -351,7 +351,7 @@ export function BrochureModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Stage */}
-        <div className="relative min-h-0 flex-1 overflow-hidden px-4 py-8 md:px-24 md:py-10">
+        <div className="relative min-h-0 flex-1 overflow-hidden px-4 py-6 md:px-20 md:py-6">
           <div ref={stageRef} className="flex h-full w-full items-center justify-center">
             {status === "ready" && (
               <div
@@ -389,7 +389,7 @@ export function BrochureModal({ onClose }: { onClose: () => void }) {
                 onClick={flipPrev}
                 disabled={atStart}
                 aria-label="Previous page"
-                className={`absolute left-6 top-1/2 hidden -translate-y-1/2 md:flex ${navButton}`}
+                className={`absolute left-4 top-1/2 hidden -translate-y-1/2 md:flex ${navButton}`}
               >
                 <ChevronLeft className="h-5 w-5" strokeWidth={1.75} />
               </button>
@@ -398,7 +398,7 @@ export function BrochureModal({ onClose }: { onClose: () => void }) {
                 onClick={flipNext}
                 disabled={atEnd}
                 aria-label="Next page"
-                className={`absolute right-6 top-1/2 hidden -translate-y-1/2 md:flex ${navButton}`}
+                className={`absolute right-4 top-1/2 hidden -translate-y-1/2 md:flex ${navButton}`}
               >
                 <ChevronRight className="h-5 w-5" strokeWidth={1.75} />
               </button>
