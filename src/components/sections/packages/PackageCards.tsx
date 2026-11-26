@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { Armchair, FileSearch, Layers, type LucideIcon } from "lucide-react";
+import Image from "next/image";
 import { gsap, ScrollTrigger } from "@/lib/animations/gsap";
 
 import { Container } from "@/components/ui/Container";
@@ -26,10 +26,10 @@ const cardBgClass = {
   teal: "bg-accent-teal/5",
 } as const;
 
-const icons: Record<DesignPackage["icon"], LucideIcon> = {
-  discover: FileSearch,
-  design: Armchair,
-  deliver: Layers,
+const icons: Record<DesignPackage["icon"], string> = {
+  discover: "/discover.svg",
+  design: "/design.svg",
+  deliver: "/deliver.svg",
 };
 
 /** "Find Your Perfect Fit." — Discover / Design / Deliver packages. */
@@ -100,20 +100,18 @@ export function PackageCards() {
 
       <Container className="flex flex-col gap-4 md:gap-0 mt-6 md:mt-12.5 overflow-hidden md:border border-border lg:flex-row px-4 md:px-0">
         {designPackages.map((pkg, i) => {
-          const Icon = icons[pkg.icon];
           return (
             <div
               key={pkg.stage}
-              className={`package-card flex flex-1 flex-col border-border ${
-                i > 0 ? "border-t lg:border-l lg:border-t-0" : ""
-              }`}
+              className={`package-card flex flex-1 flex-col border-border ${i > 0 ? "border-t lg:border-l lg:border-t-0" : ""
+                }`}
             >
               <div className={`px-3 md:px-6 py-2 md:py-3 ${headerClass[pkg.accent]}`}>
                 <p className="text-base md:text-lg font-medium">{pkg.stage}</p>
               </div>
 
               <div className={`flex flex-1 flex-col p-4 md:p-6 ${cardBgClass[pkg.accent]} md:bg-transparent`}>
-                <Icon className="h-10 w-10 text-foreground md:h-12 md:w-12" strokeWidth={1.25} aria-hidden="true" />
+                <Image src={icons[pkg.icon]} alt="" width={48} height={48} className="h-10 w-10 md:h-12 md:w-12" />
 
                 <span className="mt-6 md:mt-10 inline-block w-fit rounded-full bg-accent-yellow px-3 py-1 text-xs font-normal text-foreground">
                   {pkg.tag}

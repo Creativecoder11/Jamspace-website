@@ -408,7 +408,7 @@ export const projects: Project[] = [
     year: "2025",
     service: "Residential Design",
     style: "Neo-Classical",
-    heroImage: "/images/projects-bg-01.webp",
+    heroImage: "/images/projects/blue-horizon/hero.webp",
     heroDescription: "A neo-classical duplex residence where timeless architectural detailing meets the warmth and richness of natural wood.",
     testimonial: {
       quote: "“Blue Horizon beautifully brings together timeless neo-classical elegance and the natural warmth of wood. Every space feels thoughtfully designed, with a harmonious balance of aesthetics, comfort, and functionality.”",
@@ -418,23 +418,23 @@ export const projects: Project[] = [
 
     overview: "Blue Horizon is a neo-classical duplex shaped by understated elegance, natural warmth, and everyday comfort. Rich wood finishes, classical mouldings, and an earthy palette create a cohesive interior language across both levels.",
     bentoImages: [
-      "/images/about-strip-01.webp", "/images/about-strip-04.webp",
-      "/images/about-strip-05.webp", "/images/cta-strip-6.webp",
-      "/images/kitchen.webp", "/images/bedroom.webp",
-      "/images/about-strip-02.webp", "/images/cta-strip-7.webp",
+      "/images/projects/blue-horizon/bento1.webp", "/images/projects/blue-horizon/bento2.webp",
+      "/images/projects/blue-horizon/bento3.webp", "/images/projects/blue-horizon/bento4.webp",
+      "/images/projects/blue-horizon/bento-mid.webp", "/images/projects/blue-horizon/bento6.webp",
+      "/images/projects/blue-horizon/bento7.webp", "/images/projects/blue-horizon/bento8.webp"
     ],
     videoSrc: "/videos/blue-horizon.mp4",
-    videoPoster: "/images/cta-strip-3.webp",
+    videoPoster: "/images/projects/blue-horizon/bento5.webp",
 
     scopeUnderstanding: "Clear zoning separates shared family spaces from private areas.",
     scopeMaterials: "Natural wood, warm neutrals, marble textures, and refined mouldings.",
     scopeDescription: "Complete interior design, space planning, material detailing, and lighting design for the duplex.",
 
-    beforeImage: "/images/before.webp",
-    afterImage: "/images/after.webp",
+    beforeImage: "/images/projects/blue-horizon/before.webp",
+    afterImage: "/images/projects/blue-horizon/after.webp",
 
-    challengesMainImage: "/images/challenges-main.png",
-    challengesBottomImage: "/images/challenges-small.png",
+    challengesMainImage: "/images/projects/blue-horizon/challenges1.webp",
+    challengesBottomImage: "/images/projects/blue-horizon/challenges2.webp",
     challengesIntro: "Four key design considerations shaped the character and functionality of the duplex.",
     challengesRows: [
       { challenge: "Neo-Classical Warmth", solution: "Balanced wood, mouldings, and warm neutrals." },
@@ -446,10 +446,10 @@ export const projects: Project[] = [
 
     highlightLabel: "Design Highlights",
     highlightSlides: [
-      { index: "01", audience: "Rich Wooden Expressions", image: "/images/cta-strip-5.webp" },
-      { index: "02", audience: "Neo-Classical Detailing", image: "/images/about-strip-06.png" },
-      { index: "03", audience: "Warm, Harmonious Materials", image: "/images/cta-strip-8.webp" },
-      { index: "04", audience: "Timeless Two-Level Cohesion", image: "/images/projects-thumb-01.webp" },
+      { index: "01", audience: "Rich Wooden Expressions", image: "/images/projects/blue-horizon/slider1.webp" },
+      { index: "02", audience: "Neo-Classical Detailing", image: "/images/projects/blue-horizon/slider2.webp" },
+      { index: "03", audience: "Warm, Harmonious Materials", image: "/images/projects/blue-horizon/slider3.webp" },
+      { index: "04", audience: "Timeless Two-Level Cohesion", image: "/images/projects/blue-horizon/slider4.webp" },
     ],
   }
 ];
