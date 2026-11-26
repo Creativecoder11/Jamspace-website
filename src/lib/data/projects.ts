@@ -403,7 +403,7 @@ export const projects: Project[] = [
     name: "Blue Horizon",
     location: "Jolshiri Abashan",
     category: "Residential Interiors",
-    image: "/images/drawing-room.webp",
+    image: "/images/projects/blue-horizon.webp",
 
     year: "2025",
     service: "Residential Design",
