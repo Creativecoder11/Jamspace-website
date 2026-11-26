@@ -160,7 +160,7 @@ export default function ProjectsStoryBento({
                             className="absolute inset-0 h-full w-full object-cover"
                         />
 
-                        <button
+                        {/* <button
                             type="button"
                             onClick={() => setIsOpen(true)}
                             onMouseEnter={() =>
@@ -172,7 +172,7 @@ export default function ProjectsStoryBento({
                             aria-label="Play the video"
                             className="absolute left-1/2 top-1/2 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center md:h-40 md:w-40"
                         >
-                            {/* Rotating text */}
+                            
                             <svg
                                 ref={badgeRef}
                                 className="video-badge-circle absolute -inset-6.25 h-[calc(100%+50px)] w-[calc(100%+50px)]"
@@ -202,7 +202,7 @@ export default function ProjectsStoryBento({
                                 </text>
                             </svg>
 
-                            {/* Play icon */}
+                            
                             <Image
                                 src="/icons/play.png"
                                 width={140}
@@ -210,7 +210,7 @@ export default function ProjectsStoryBento({
                                 alt=""
                                 className="relative z-10"
                             />
-                        </button>
+                        </button> */}
                     </div>
 
                     {/* Image 6 */}
