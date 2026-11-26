@@ -1,4 +1,5 @@
 import type { FooterColumn, NavLink } from "@/lib/types";
+import { brochure } from "@/lib/data/brochure";
 
 export const footerColumns: FooterColumn[] = [
   {
@@ -22,7 +23,7 @@ export const footerColumns: FooterColumn[] = [
   {
     title: "Resources",
     links: [
-      { label: "Download Brochure", href: "/brochure.pdf" },
+      { label: brochure.title, href: brochure.href },
       { label: "FAQs", href: "/contact#faq" },
       { label: "Privacy Policy", href: "/privacy-policy" },
       { label: "Terms & Conditions", href: "/terms-and-conditions" },

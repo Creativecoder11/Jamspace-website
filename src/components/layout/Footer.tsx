@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { usePathname, useRouter } from "next/navigation";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/animations/gsap";
@@ -10,6 +11,14 @@ import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { brochure } from "@/lib/data/brochure";
+import { trackBrochureOpen } from "@/lib/analytics";
+
+// The flip book (pdf.js + page-flip) only downloads when the brochure is opened.
+const BrochureModal = dynamic(
+  () => import("@/components/sections/brochure/BrochureModal").then((m) => m.BrochureModal),
+  { ssr: false },
+);
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 
@@ -53,6 +62,17 @@ export function Footer() {
   const ctaButtonRef = useRef<HTMLDivElement>(null);
 
   const MARQUEE_GROUPS = 4;
+
+  const [isBrochureOpen, setIsBrochureOpen] = useState(false);
+  const closeBrochure = useCallback(() => setIsBrochureOpen(false), []);
+
+  // "Brochure" opens the flip book; Cmd/Ctrl/Shift/middle-click still opens the PDF itself.
+  const handleBrochureClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    trackBrochureOpen("footer");
+    setIsBrochureOpen(true);
+  };
 
   // Handle same-page hash links manually.
   const handleHashClick = (
@@ -422,15 +442,26 @@ export function Footer() {
                   <ul className="mt-3 space-y-1.5 text-sm text-muted md:mt-4 md:space-y-3">
                     {column.links.map((link) => (
                       <li key={link.href}>
-                        <Link
-                          href={link.href}
-                          onClick={(e) =>
-                            handleHashClick(e, link.href)
-                          }
-                          className="hover:text-accent"
-                        >
-                          {link.label}
-                        </Link>
+                        {link.href === brochure.href ? (
+                          <a
+                            href={link.href}
+                            onClick={handleBrochureClick}
+                            aria-haspopup="dialog"
+                            className="hover:text-accent"
+                          >
+                            {link.label}
+                          </a>
+                        ) : (
+                          <Link
+                            href={link.href}
+                            onClick={(e) =>
+                              handleHashClick(e, link.href)
+                            }
+                            className="hover:text-accent"
+                          >
+                            {link.label}
+                          </Link>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -511,6 +542,7 @@ export function Footer() {
           </p>
         </Container>
       </div>
+      {isBrochureOpen && <BrochureModal onClose={closeBrochure} />}
     </footer>
   );
 }

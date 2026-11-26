@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { Clock, Tag } from "lucide-react";
+import { Clock, Tag, X } from "lucide-react";
 import { gsap } from "@/lib/animations/gsap";
 
 import { AnimatedHeading } from "@/components/ui/AnimatedHeading";
@@ -113,16 +113,34 @@ export function BookSession({
               </div>
             </div>
 
-            <div className="border-t border-border px-4 pt-6 md:px-0 md:pr-8 md:pt-6 md:pl-8 md:pb-8">
-              <p className="border-b border-border pb-4 text-xl md:text-2xl">What&apos;s Included?</p>
-              <ul className="mt-4 space-y-3 md:mt-6">
-                {designSession.included.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-muted">
-                    <BrandGlyph shape="step" color="pink" className="h-3 w-3 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            <div className="grid gap-8 border-t border-border px-4 pt-6 sm:grid-cols-2 sm:gap-6 md:grid-cols-1 md:gap-10 md:px-0 md:pr-8 md:pt-6 md:pl-8 md:pb-8 xl:grid-cols-2 xl:gap-6">
+              <div>
+                <p className="whitespace-nowrap border-b border-border pb-4 text-xl md:text-2xl">What&apos;s Included?</p>
+                <ul className="mt-4 space-y-3 md:mt-6">
+                  {designSession.included.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted">
+                      <BrandGlyph shape="step" color="pink" className="mt-1 h-3 w-3 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="whitespace-nowrap border-b border-border pb-4 text-xl md:text-2xl">What&apos;s Excluded?</p>
+                <ul className="mt-4 space-y-3 md:mt-6">
+                  {designSession.excluded.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-muted">
+                      <span
+                        aria-hidden="true"
+                        className="mt-1 flex h-3 w-3 shrink-0 items-center justify-center bg-muted text-background"
+                      >
+                        <X className="h-2.5 w-2.5" strokeWidth={3} />
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
 

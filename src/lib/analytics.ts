@@ -279,3 +279,16 @@ export function trackBookingPurchase(bookingId: string, value: number): void {
     console.warn("[Analytics] Meta Pixel Purchase error:", err);
   }
 }
+
+/**
+ * Brochure flip book (footer "Brochure" link → modal).
+ * - brochure_open     : flip-book modal opened
+ * - brochure_download : PDF downloaded from the modal
+ */
+export function trackBrochureOpen(location: string): void {
+  pushDataLayer("brochure_open", { cta_location: location });
+}
+
+export function trackBrochureDownload(location: string): void {
+  pushDataLayer("brochure_download", { cta_location: location });
+}

@@ -2,24 +2,25 @@ import type { DesignPackage } from "@/lib/types";
 
 /** The paid, bookable consultation. `price` is the amount charged via SSLCommerz. */
 export const designSession = {
-  titleLines: ["Book a Design", "Session."],
+  titleLines: ["Book a Jam", "Session."],
   description:
-    "Get expert guidance for your interior design project. Discuss your ideas, understand your options, & discover the right direction with Jam Space.",
+    "Bring a design question, a plan or an idea. We help you review your options and decide what to do next.",
   price: 3000,
   priceLabel: "BDT 3,000",
   duration: "60 Minutes",
   durationCaption: "Focused Consultation",
   productName: "Jam Space Design Session (60 Minutes)",
   included: [
-    "Personalized professional guidance.",
-    "Brief introductory discussion.",
-    "Recommended next steps.",
-    "Written action summary.",
+    "Professional design guidance",
+    "Review of your questions",
+    "Recommended next steps",
+    "Brief written action summary",
   ],
+  excluded: ["Custom layouts", "Custom drawings"],
   image: "/images/bedroom.webp",
-  ctaTitle: "Ready to Discuss Your Space?",
+  ctaTitle: "What would you like to discuss?",
   ctaText:
-    "Book your session with Jam Space and take the first step towards your design vision.",
+    "Choose an available date and time. All times are shown in Bangladesh Standard Time (UTC+6).",
 } as const;
 
 export const designPackages: DesignPackage[] = [

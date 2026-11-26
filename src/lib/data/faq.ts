@@ -3,9 +3,9 @@ import type { FaqItem } from "@/lib/types";
 /** Shared across Packages and Contact — both pages show the same FAQ list. */
 export const faqItems: FaqItem[] = [
   {
-    question: "What’s the difference between Free Project Discovery and a Design Session?",
+    question: "How does Free Project Discovery differ from a Jam Session?",
     answer:
-      "Free Project Discovery is an introductory discussion to understand your project and suggest a next step. A Design Session is a paid, 60-minute professional consultation with personalised guidance and a brief written action summary. Custom drawings are excluded from both.",
+      "Free Project Discovery is an introductory discussion about your project and the relevant service. Jam Session is a paid, 60-minute consultation with personalised guidance and a brief written action summary. Custom layouts and drawings are excluded from both.",
   },
   {
     question: "How is my design fee calculated?",
